@@ -3,10 +3,13 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use Illuminate\Support\Facades\Auth;
+
 // load controllers
 use App\Http\Controllers\Api\AuthController;
-
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Api\StableController;
+use App\Http\Controllers\Api\HorseController;
+use App\Http\Controllers\Api\CoachController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +32,23 @@ Auth::routes(['verify' => true]);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
+
+// User API
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout']);
+
+// Stable API
+Route::post('stable', [StableController::class, 'store']);
+Route::put('stable/{stable}', [StableController::class, 'update']);
+Route::delete('stable/{stable}', [StableController::class, 'destroy']);
+
+// Horse API
+Route::post('horse', [HorseController::class, 'store']);
+Route::put('horse/{horse}', [HorseController::class, 'update']);
+Route::delete('horse/{horse}', [HorseController::class, 'destroy']);
+
+// Coach API
+Route::post('coach', [CoachController::class, 'store']);
+Route::put('coach/{coach}', [CoachController::class, 'update']);
+Route::delete('coach/{coach}', [CoachController::class, 'destroy']);
