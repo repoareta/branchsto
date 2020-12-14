@@ -22,7 +22,7 @@ class HorseController extends Controller
         
         return response()->json([
             "success" => true,
-            "message" => "Coach List show successfully.",
+            "message" => "Horse List show successfully.",
             "data"    => $horse
         ]);
     }
