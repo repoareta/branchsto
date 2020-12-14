@@ -18,7 +18,13 @@ class StableController extends Controller
      */
     public function index()
     {
-        //
+        $stable = Stable::all();
+        
+        return response()->json([
+            "success" => true,
+            "message" => "Stable List show successfully.",
+            "data"    => $stable
+        ]);
     }
 
     /**
