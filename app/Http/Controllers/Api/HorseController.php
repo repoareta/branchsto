@@ -18,7 +18,13 @@ class HorseController extends Controller
      */
     public function index()
     {
-        //
+        $horse = Horse::all();
+        
+        return response()->json([
+            "success" => true,
+            "message" => "Coach List show successfully.",
+            "data"    => $horse
+        ]);
     }
 
     /**
