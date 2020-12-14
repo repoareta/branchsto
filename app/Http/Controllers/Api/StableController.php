@@ -76,6 +76,11 @@ class StableController extends Controller
         $stable->address = $request->address;
         $stable->user_id = $request->user_id;
 
+        if ($request->file('logo')) {
+            $stable->logo = $request->file('logo')->getClientOriginalName();
+            $logo_new_path = $request->file('logo')->storeAs('stable/logo', $stable->logo, 'public');
+        }
+
         $stable->save();
 
         return response()->json([
