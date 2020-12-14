@@ -33,22 +33,20 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
-// User API
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout']);
-
 // Stable API
+Route::get('stable', [StableController::class, 'index']);
 Route::post('stable', [StableController::class, 'store']);
 Route::put('stable/{stable}', [StableController::class, 'update']);
 Route::delete('stable/{stable}', [StableController::class, 'destroy']);
 
 // Horse API
+Route::get('horse', [HorseController::class, 'index']);
 Route::post('horse', [HorseController::class, 'store']);
 Route::put('horse/{horse}', [HorseController::class, 'update']);
 Route::delete('horse/{horse}', [HorseController::class, 'destroy']);
 
 // Coach API
+Route::get('coach', [CoachController::class, 'index']);
 Route::post('coach', [CoachController::class, 'store']);
 Route::put('coach/{coach}', [CoachController::class, 'update']);
 Route::delete('coach/{coach}', [CoachController::class, 'destroy']);

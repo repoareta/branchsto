@@ -18,7 +18,13 @@ class CoachController extends Controller
      */
     public function index()
     {
-        //
+        $coach = Coach::all();
+        
+        return response()->json([
+            "success" => true,
+            "message" => "Coach List show successfully.",
+            "data"    => $coach
+        ]);
     }
 
     /**
