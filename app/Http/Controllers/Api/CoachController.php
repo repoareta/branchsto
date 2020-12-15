@@ -22,7 +22,7 @@ class CoachController extends Controller
         
         return response()->json([
             "success" => true,
-            "message" => "Coach List show successfully.",
+            "message" => "Coach list show successfully.",
             "data"    => $coach
         ]);
     }
