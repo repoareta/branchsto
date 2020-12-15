@@ -74,7 +74,7 @@ class CoachController extends Controller
 
         if ($request->file('photo')) {
             $coach->photo = $request->file('photo')->getClientOriginalName();
-            $logo_new_path = $request->file('photo')->storeAs('coach/photo', $coach->photo, 'public');
+            $photo_new_path = $request->file('photo')->storeAs('coach/photo', $coach->photo, 'public');
         }
 
         $coach->save();
@@ -150,7 +150,7 @@ class CoachController extends Controller
 
         if ($request->file('photo')) {
             $coach->photo = $request->file('photo')->getClientOriginalName();
-            $logo_new_path = $request->file('photo')->storeAs('coach/photo', $coach->photo, 'public');
+            $photo_new_path = $request->file('photo')->storeAs('coach/photo', $coach->photo, 'public');
         }
 
         $coach->save();
