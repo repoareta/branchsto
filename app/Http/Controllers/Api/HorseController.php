@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 // load model
 use App\Models\Horse;
+use App\Models\Stable;
 
 class HorseController extends Controller
 {
@@ -95,6 +96,15 @@ class HorseController extends Controller
             "success" => true,
             "message" => "Horse show successfully.",
             "data"    => $horse
+        ]);
+    }
+
+    public function showByStableId(Stable $stable)
+    {
+        return response()->json([
+            "success" => true,
+            "message" => "Horse by stable id show successfully.",
+            "data"    => $stable->horse
         ]);
     }
 

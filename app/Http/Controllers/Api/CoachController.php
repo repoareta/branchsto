@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 // load model
 use App\Models\Coach;
+use App\Models\Stable;
 
 class CoachController extends Controller
 {
@@ -98,6 +99,15 @@ class CoachController extends Controller
             "success" => true,
             "message" => "Coach show successfully.",
             "data"    => $coach
+        ]);
+    }
+
+    public function showByStableId(Stable $stable)
+    {
+        return response()->json([
+            "success" => true,
+            "message" => "Coach by stable id show successfully.",
+            "data"    => $stable->coach
         ]);
     }
 
