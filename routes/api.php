@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\StableController;
 use App\Http\Controllers\Api\HorseController;
 use App\Http\Controllers\Api\CoachController;
+use App\Http\Controllers\Api\PackageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,3 +57,10 @@ Route::put('coach/{coach}', [CoachController::class, 'update']);
 Route::delete('coach/{coach}', [CoachController::class, 'destroy']);
 Route::get('coach/{coach}', [CoachController::class, 'show']);
 Route::get('coach-by-stable/{stable}', [CoachController::class, 'showByStableId']);
+
+// Package API
+Route::get('package', [PackageController::class, 'index']);
+Route::post('package', [PackageController::class, 'store']);
+Route::put('package/{package}', [PackageController::class, 'update']);
+Route::delete('package/{package}', [PackageController::class, 'destroy']);
+Route::get('package/{package}', [PackageController::class, 'show']);
