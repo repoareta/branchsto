@@ -50,6 +50,8 @@ class PackageController extends Controller
             'name'           => 'required',
             'description'    => 'required',
             'price'          => 'required',
+            'user_id'        => 'required',
+            'stable_id'      => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -64,6 +66,7 @@ class PackageController extends Controller
         $package->description    = $request->description;
         $package->price          = $request->price;
         $package->user_id        = $request->user_id;
+        $package->stable_id      = $request->stable_id;
 
         if ($request->file('photo')) {
             $package->photo = $request->file('photo')->getClientOriginalName();
@@ -119,6 +122,8 @@ class PackageController extends Controller
             'name'           => 'required',
             'description'    => 'required',
             'price'          => 'required',
+            'user_id'        => 'required',
+            'stable_id'      => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -133,6 +138,7 @@ class PackageController extends Controller
         $package->description    = $request->description;
         $package->price          = $request->price;
         $package->user_id        = $request->user_id;
+        $package->stable_id      = $request->stable_id;
 
         if ($request->file('photo')) {
             $package->photo = $request->file('photo')->getClientOriginalName();
@@ -143,7 +149,7 @@ class PackageController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => "Package updated successfully.",
+            'message' => "Package created successfully.",
             'data'    => $package
         ]);
     }
