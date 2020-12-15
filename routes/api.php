@@ -38,15 +38,18 @@ Route::get('stable', [StableController::class, 'index']);
 Route::post('stable', [StableController::class, 'store']);
 Route::put('stable/{stable}', [StableController::class, 'update']);
 Route::delete('stable/{stable}', [StableController::class, 'destroy']);
+Route::get('stable/{stable}', [StableController::class, 'show']);
 
 // Horse API
 Route::get('horse', [HorseController::class, 'index']);
 Route::post('horse', [HorseController::class, 'store']);
 Route::put('horse/{horse}', [HorseController::class, 'update']);
 Route::delete('horse/{horse}', [HorseController::class, 'destroy']);
+Route::get('horse/{horse}', [HorseController::class, 'show']);
 
 // Coach API
 Route::get('coach', [CoachController::class, 'index']);
 Route::post('coach', [CoachController::class, 'store']);
 Route::put('coach/{coach}', [CoachController::class, 'update']);
 Route::delete('coach/{coach}', [CoachController::class, 'destroy']);
+Route::get('coach/{coach}', [CoachController::class, 'show']);
