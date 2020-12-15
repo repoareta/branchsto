@@ -72,6 +72,11 @@ class CoachController extends Controller
         $coach->stable_id      = $request->stable_id;
         $coach->user_id        = $request->user_id;
 
+        if ($request->file('photo')) {
+            $coach->photo = $request->file('photo')->getClientOriginalName();
+            $photo_new_path = $request->file('photo')->storeAs('coach/photo', $coach->photo, 'public');
+        }
+
         $coach->save();
 
         return response()->json([
@@ -142,6 +147,11 @@ class CoachController extends Controller
         $coach->certified      = $request->certified;
         $coach->stable_id      = $request->stable_id;
         $coach->user_id        = $request->user_id;
+
+        if ($request->file('photo')) {
+            $coach->photo = $request->file('photo')->getClientOriginalName();
+            $photo_new_path = $request->file('photo')->storeAs('coach/photo', $coach->photo, 'public');
+        }
 
         $coach->save();
 
