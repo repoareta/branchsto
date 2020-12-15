@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
+// load model
+use App\Models\Slot;
 
 class SlotController extends Controller
 {
@@ -14,7 +18,13 @@ class SlotController extends Controller
      */
     public function index()
     {
-        //
+        $slot = Slot::all();
+        
+        return response()->json([
+            "success" => true,
+            "message" => "Slot List show successfully.",
+            "data"    => $slot
+        ]);
     }
 
     /**
@@ -33,9 +43,36 @@ class SlotController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Slot $slot)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'date_start' => 'required',
+            'date_end'   => 'required',
+            'capacity'   => 'required',
+            'user_id'    => 'required',
+            'package_id' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => $validator->errors()
+            ], 400);
+        }
+        
+        $slot->date_start = $request->date_start;
+        $slot->date_end = $request->date_end;
+        $slot->capacity = $request->capacity;
+        $slot->user_id = $request->user_id;
+        $slot->package_id = $request->package_id;
+
+        $slot->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => "Slot created successfully.",
+            'data'    => $slot
+        ]);
     }
 
     /**
@@ -44,9 +81,13 @@ class SlotController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Slot $slot)
     {
-        //
+        return response()->json([
+            "success" => true,
+            "message" => "Slot show successfully.",
+            "data" => $slot
+        ]);
     }
 
     /**
@@ -67,9 +108,36 @@ class SlotController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Slot $slot)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'date_start' => 'required',
+            'date_end'   => 'required',
+            'capacity'   => 'required',
+            'user_id'    => 'required',
+            'package_id' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => $validator->errors()
+            ], 400);
+        }
+        
+        $slot->date_start = $request->date_start;
+        $slot->date_end = $request->date_end;
+        $slot->capacity = $request->capacity;
+        $slot->user_id = $request->user_id;
+        $slot->package_id = $request->package_id;
+
+        $slot->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => "Slot updated successfully.",
+            'data'    => $slot
+        ]);
     }
 
     /**
@@ -78,8 +146,13 @@ class SlotController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Slot $slot)
     {
-        //
+        $slot->delete();
+
+        return response()->json([
+            "success" => true,
+            "message" => "Slot deleted successfully."
+        ]);
     }
 }
