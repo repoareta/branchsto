@@ -47,6 +47,7 @@ Route::post('horse', [HorseController::class, 'store']);
 Route::put('horse/{horse}', [HorseController::class, 'update']);
 Route::delete('horse/{horse}', [HorseController::class, 'destroy']);
 Route::get('horse/{horse}', [HorseController::class, 'show']);
+Route::get('horse-by-stable/{stable}', [HorseController::class, 'showByStableId']);
 
 // Coach API
 Route::get('coach', [CoachController::class, 'index']);
@@ -54,3 +55,4 @@ Route::post('coach', [CoachController::class, 'store']);
 Route::put('coach/{coach}', [CoachController::class, 'update']);
 Route::delete('coach/{coach}', [CoachController::class, 'destroy']);
 Route::get('coach/{coach}', [CoachController::class, 'show']);
+Route::get('coach-by-stable/{stable}', [CoachController::class, 'showByStableId']);
