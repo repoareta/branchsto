@@ -41,4 +41,12 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the stable associated with the user.
+     */
+    public function stable()
+    {
+        return $this->hasOne(Stable::class);
+    }
 }

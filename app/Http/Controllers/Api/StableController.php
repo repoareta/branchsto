@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 // load model
 use App\Models\Stable;
+use App\Models\User;
 
 class StableController extends Controller
 {
@@ -102,6 +103,15 @@ class StableController extends Controller
             "success" => true,
             "message" => "Stable show successfully.",
             "data" => $stable
+        ]);
+    }
+
+    public function showByUserId(User $user)
+    {
+        return response()->json([
+            "success" => true,
+            "message" => "Stable by user id show successfully.",
+            "data"    => $user->stable
         ]);
     }
 

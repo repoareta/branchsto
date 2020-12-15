@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Stable extends Model
 {
     use HasFactory;
+
+    /**
+    * Get the owner of stable
+    */
+    public function user()
+    {
+        return $this->belongsTo(User::class)->withDefault();
+    }
 }

@@ -39,6 +39,7 @@ Route::post('stable', [StableController::class, 'store']);
 Route::put('stable/{stable}', [StableController::class, 'update']);
 Route::delete('stable/{stable}', [StableController::class, 'destroy']);
 Route::get('stable/{stable}', [StableController::class, 'show']);
+Route::get('stable-by-user/{user}', [StableController::class, 'showByUserId']);
 
 // Horse API
 Route::get('horse', [HorseController::class, 'index']);
