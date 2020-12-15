@@ -16,4 +16,20 @@ class Stable extends Model
     {
         return $this->belongsTo(User::class)->withDefault();
     }
+
+    /**
+    * Get the horses of stable
+    */
+    public function horse()
+    {
+        return $this->hasMany(Horse::class);
+    }
+
+    /**
+    * Get the coaches of stable
+    */
+    public function coach()
+    {
+        return $this->hasMany(Coach::class);
+    }
 }

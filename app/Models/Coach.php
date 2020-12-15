@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Coach extends Model
 {
     use HasFactory;
+
+    /**
+    * Get the owner of coach
+    */
+    public function stable()
+    {
+        return $this->belongsTo(Stable::class);
+    }
 }
