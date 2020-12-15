@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\StableController;
 use App\Http\Controllers\Api\HorseController;
 use App\Http\Controllers\Api\CoachController;
 use App\Http\Controllers\Api\PackageController;
+use App\Http\Controllers\Api\SlotController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,3 +65,10 @@ Route::post('package', [PackageController::class, 'store']);
 Route::put('package/{package}', [PackageController::class, 'update']);
 Route::delete('package/{package}', [PackageController::class, 'destroy']);
 Route::get('package/{package}', [PackageController::class, 'show']);
+
+// Slot API
+Route::get('slot', [SlotController::class, 'index']);
+Route::post('slot', [SlotController::class, 'store']);
+Route::put('slot/{slot}', [SlotController::class, 'update']);
+Route::delete('slot/{slot}', [SlotController::class, 'destroy']);
+Route::get('slot/{slot}', [SlotController::class, 'show']);
