@@ -36,7 +36,7 @@ Auth::routes(['verify' => true]);
 // User API
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout']);
+Route::post('/logout/{user}', [AuthController::class, 'logout']);
 
 // Stable API
 Route::get('stable', [StableController::class, 'index']);
