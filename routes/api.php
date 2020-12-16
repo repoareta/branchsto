@@ -91,6 +91,7 @@ Route::post('booking-detail', [BookingDetailController::class, 'store']);
 Route::put('booking-detail/{booking_detail}', [BookingDetailController::class, 'update']);
 Route::delete('booking-detail/{booking_detail}', [BookingDetailController::class, 'destroy']);
 Route::get('booking-detail/{booking_detail}', [BookingDetailController::class, 'show']);
+Route::get('booking-detail-by-booking/{booking}', [BookingDetailController::class, 'showByBookingId']);
 
 // Payment API
 Route::get('payment', [PaymentController::class, 'index']);

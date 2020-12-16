@@ -4,12 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
-// load model
-use App\Models\Booking;
-
-class BookingController extends Controller
+class PaymentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,13 +14,7 @@ class BookingController extends Controller
      */
     public function index()
     {
-        $booking = Booking::all();
-        
-        return response()->json([
-            "success" => true,
-            "message" => "Booking List show successfully.",
-            "data"    => $booking
-        ]);
+        //
     }
 
     /**
@@ -43,30 +33,9 @@ class BookingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Booking $booking)
+    public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'user_id'     => 'required',
-            'price_total' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => $validator->errors()
-            ], 400);
-        }
-        
-        $booking->user_id     = $request->user_id;
-        $booking->price_total = $request->price_total;
-
-        $booking->save();
-
-        return response()->json([
-            'success' => true,
-            'message' => "Booking created successfully.",
-            'data'    => $booking
-        ]);
+        //
     }
 
     /**
@@ -78,15 +47,6 @@ class BookingController extends Controller
     public function show($id)
     {
         //
-    }
-
-    public function showByBookingId(Booking $booking)
-    {
-        return response()->json([
-            "success" => true,
-            "message" => "Booking detail by booking id show successfully.",
-            "data"    => $booking->booking_detail
-        ]);
     }
 
     /**
