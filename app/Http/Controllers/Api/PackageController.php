@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 // load model
 use App\Models\Package;
+use App\Models\Stable;
 
 class PackageController extends Controller
 {
@@ -94,6 +95,15 @@ class PackageController extends Controller
             "success" => true,
             "message" => "Package show successfully.",
             "data"    => $package
+        ]);
+    }
+
+    public function showByStableId(Stable $stable)
+    {
+        return response()->json([
+            "success" => true,
+            "message" => "Package by stable id show successfully.",
+            "data"    => $stable->package
         ]);
     }
 

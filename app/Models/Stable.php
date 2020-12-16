@@ -32,4 +32,12 @@ class Stable extends Model
     {
         return $this->hasMany(Coach::class);
     }
+
+    /**
+    * Get the coaches of stable
+    */
+    public function package()
+    {
+        return $this->hasMany(Package::class);
+    }
 }
