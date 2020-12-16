@@ -65,6 +65,7 @@ Route::post('package', [PackageController::class, 'store']);
 Route::put('package/{package}', [PackageController::class, 'update']);
 Route::delete('package/{package}', [PackageController::class, 'destroy']);
 Route::get('package/{package}', [PackageController::class, 'show']);
+Route::get('package-by-stable/{stable}', [PackageController::class, 'showByStableId']);
 
 // Slot API
 Route::get('slot', [SlotController::class, 'index']);
@@ -72,3 +73,4 @@ Route::post('slot', [SlotController::class, 'store']);
 Route::put('slot/{slot}', [SlotController::class, 'update']);
 Route::delete('slot/{slot}', [SlotController::class, 'destroy']);
 Route::get('slot/{slot}', [SlotController::class, 'show']);
+Route::get('slot-by-package/{package}', [SlotController::class, 'showByPackageId']);

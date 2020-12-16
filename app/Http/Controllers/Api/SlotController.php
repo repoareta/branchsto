@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 // load model
 use App\Models\Slot;
+use App\Models\Package;
 
 class SlotController extends Controller
 {
@@ -87,6 +88,15 @@ class SlotController extends Controller
             "success" => true,
             "message" => "Slot show successfully.",
             "data" => $slot
+        ]);
+    }
+
+    public function showByPackageId(Package $package)
+    {
+        return response()->json([
+            "success" => true,
+            "message" => "Slot by package id show successfully.",
+            "data"    => $package->slot
         ]);
     }
 
