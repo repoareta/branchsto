@@ -12,6 +12,9 @@ use App\Http\Controllers\Api\HorseController;
 use App\Http\Controllers\Api\CoachController;
 use App\Http\Controllers\Api\PackageController;
 use App\Http\Controllers\Api\SlotController;
+use App\Http\Controllers\Api\BookingController;
+use App\Http\Controllers\Api\BookingDetailController;
+use App\Http\Controllers\Api\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,3 +77,25 @@ Route::put('slot/{slot}', [SlotController::class, 'update']);
 Route::delete('slot/{slot}', [SlotController::class, 'destroy']);
 Route::get('slot/{slot}', [SlotController::class, 'show']);
 Route::get('slot-by-package/{package}', [SlotController::class, 'showByPackageId']);
+
+// Booking CLass API
+Route::get('booking', [BookingController::class, 'index']);
+Route::post('booking', [BookingController::class, 'store']);
+Route::put('booking/{booking}', [BookingController::class, 'update']);
+Route::delete('booking/{booking}', [BookingController::class, 'destroy']);
+Route::get('booking/{booking}', [BookingController::class, 'show']);
+
+// Booking CLass Detail API
+Route::get('booking-detail', [BookingDetailController::class, 'index']);
+Route::post('booking-detail', [BookingDetailController::class, 'store']);
+Route::put('booking-detail/{booking_detail}', [BookingDetailController::class, 'update']);
+Route::delete('booking-detail/{booking_detail}', [BookingDetailController::class, 'destroy']);
+Route::get('booking-detail/{booking_detail}', [BookingDetailController::class, 'show']);
+
+// Payment API
+Route::get('payment', [PaymentController::class, 'index']);
+Route::post('payment', [PaymentController::class, 'store']);
+Route::put('payment/{payment}', [PaymentController::class, 'update']);
+Route::delete('payment/{payment}', [PaymentController::class, 'destroy']);
+Route::get('payment/{payment}', [PaymentController::class, 'show']);
+Route::get('payment/{payment}/approval', [PaymentController::class, 'approval']);
