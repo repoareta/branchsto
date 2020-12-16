@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 
 // load controllers
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ForgotPasswordController;
+use App\Http\Controllers\Api\ResetPasswordController;
 use App\Http\Controllers\Api\StableController;
 use App\Http\Controllers\Api\HorseController;
 use App\Http\Controllers\Api\CoachController;
@@ -37,6 +39,9 @@ Auth::routes(['verify' => true]);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout/{user}', [AuthController::class, 'logout']);
+
+Route::post('/password/email', [ForgotPasswordController::class, 'sendResetLinkEmail']);
+Route::post('/password/reset', [ResetPasswordController::class, 'reset']);
 
 // Stable API
 Route::get('stable', [StableController::class, 'index']);
