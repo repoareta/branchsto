@@ -1,0 +1,407 @@
+/* // Large devices (desktops, less than 1200px) */
+@media (max-width: 1199.98px) {
+    /* Navigasi */
+    .header-menu .menu-nav > .menu-item > .menu-link .menu-text {        
+        font-size: 12px;
+    }
+    .sidebar {
+        width: 300px;
+    }
+    .dashboard .carousel-content {    
+        left: 30px;
+        top: 30px;
+        width: 60%;
+    }
+    .dashboard .carousel-content .subtitle {        
+        font-size: 16px;
+    }
+    .dashboard .carousel-content .title {
+        font-size: 20px;
+    }
+    .dashboard .carousel-content .btn-join-class {        
+        padding: 10px 20px;
+    }
+    .title-text{
+        font-size: 20px;
+    }
+    .lastest-competitions .header-competitions .title {        
+        font-size: 14px;
+    }
+    .lastest-competitions .header-competitions {
+        position: absolute;
+        left: 20px;
+        top: 20px;
+        width: 80%;
+    }
+    .lastest-competitions .header-competitions .subtitle {
+        font-size: 12px;
+    }
+    .lastest-competitions .body-competitions .table img {
+        width: 20px;
+        border-radius: 50%;
+    }
+    .lastest-competitions .body-competitions .table {
+        font-weight: normal;
+        font-size: 8px;
+        color: #2a4158;
+    }
+    .sidebar .tab-content-rank .table tbody {
+        font-weight: normal;
+        font-size: 12px;
+        color: #2a4158;
+    }
+    .stable .stable-body .card-action img {
+        width: 80px;
+    }
+    .stable .stable-body .card-action .title-card {
+        font-size: 24px;
+    }
+    .stable .stable-body .card-action .subtitle-card {        
+        font-size: 16px;
+    }
+    .stable .stable-body .card-action .text {
+        margin-left: 10px;
+    }
+    
+}
+@media (max-width: 1107.98px) {
+    .stable .stable-header .profile .btn-edit span{
+        display: none;
+    }
+}
+
+/* // Medium devices (tablets, less than 992px) */
+@media (min-width: 992px){
+    .header {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        height: 80px;
+        -webkit-transition: height 0.3s ease;
+        transition: height 0.3s ease;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 110px;
+        z-index: 97;
+        background: #ffffff;
+    }
+    .header-fixed[data-header-scroll="on"] .header {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 110px;
+        z-index: 97;
+        height: 80px;
+        -webkit-box-shadow: 0 10px 30px 0 rgba(82, 63, 105, 0.08);
+        box-shadow: 0 10px 30px 0 rgba(82, 63, 105, 0.08);
+        -webkit-transition: height 0.3s ease;
+        transition: height 0.3s ease;
+        -webkit-animation: header-scroll-animation 0.5s ease 1;
+        animation: header-scroll-animation 0.5s ease 1;
+    }
+    .header-fixed[data-header-scroll="on"] .header .header-wrapper {
+        background-color: #ffffff;
+    }
+}
+@media (max-width: 991.98px) {
+    .wrapper {
+        margin: 0px;
+        margin-left: 0px;
+        margin-right: 0px;
+        padding-top: 0;
+        background-color: #ffffff;
+    }
+    .wrapper.wrapper-data {
+        margin: 0px;
+        margin-left: 40px;
+        margin-right: 40px;
+        padding-top: 0;
+        background-color: #ffffff;
+    }
+    .dashboard {
+        margin-top: 30px;
+    }
+    .sidebar {
+        z-index: 1001;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        overflow-y: auto;
+        -webkit-transition: left 0.3s ease, right 0.3s ease, bottom 0.3s ease, top 0.3s ease;
+        transition: left 0.3s ease, right 0.3s ease, bottom 0.3s ease, top 0.3s ease;
+        left: -370px;
+        width: 350px;
+    }
+    .sidebar.active{
+        left: 0;
+        overflow-x: auto;
+    }
+    .sidebar-menu-wrapper-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        overflow: hidden;
+        z-index: 1000;
+        -webkit-animation: animation-offcanvas-fade-in 0.6s ease 1;
+        animation: animation-offcanvas-fade-in 0.6s ease 1;
+        background: rgba(0, 0, 0, 0.1);
+    }
+    .dashboard .carousel-content .subtitle {        
+        font-size: 16px;
+    }
+    .dashboard .carousel-content .title {
+        font-size: 25px;
+    }
+    .dashboard .carousel-content .btn-join-class {        
+        padding: 10px 20px;
+    }
+    .title-text{
+        font-size: 25px;
+    }
+    .lastest-competitions .header-competitions .title {
+        font-size: 30px;
+    }
+    .lastest-competitions .header-competitions {
+        left: 30px;
+        top: 50px;
+    }
+    .lastest-competitions .header-competitions .subtitle {
+        font-size: 18px;
+    }
+    .lastest-competitions .body-competitions .table img {
+        width: 30px;
+        border-radius: 50%;
+    }
+    .lastest-competitions .body-competitions .table {
+        font-weight: normal;
+        font-size: 14px;
+        color: #2a4158;
+    }
+    .stable .stable-header .profile {
+        margin-left: 15px;
+        margin-right: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .stable .stable-header .profile .stable-name {
+        font-size: 28px;
+    }
+
+    .stable .stable-header .profile .stable-desc {
+        font-size: 16px;
+        color: #FFFFFF;
+    }
+    .stable .stable-body.data {
+        padding: 0;
+        padding-top: 55px;
+    }
+    .stable-body .card-action img {
+        width: 60px;
+    }
+    .stable-body .card-action .title-card {
+        font-size: 20px;
+    }
+    .stable .stable-body .card-action .subtitle-card {
+        font-size: 13px;
+    }
+    .nav.step-form{
+        justify-content: center;
+    }
+    .step-form .nav-link ,.step-form .nav-link.active {
+        padding: 10px 15px;
+        margin-bottom: 10px;
+    }
+    .profile{
+        margin-top: 0;
+    }
+    .stable{
+        margin-top: 0;
+    }
+}
+
+/* // Small devices (landscape phones, less than 768px) */
+@media (max-width: 767.98px) {
+    .dashboard .carousel-content .title {
+        font-size: 22px;
+    }
+    .dashboard .carousel-content .subtitle {
+        font-size: 14px;
+    }
+    .lastest-competitions .header-competitions .title {
+        font-size: 25px;
+    }
+    .lastest-competitions .header-competitions .subtitle {
+        font-size: 18px;
+    }
+    .stable .stable-header .profile {
+        flex-direction: column;
+    }
+    .stable .stable-header .profile .btn-edit span {
+        display: inline-block;
+    }
+    .stable .stable-body .card-action {
+        margin-bottom: 20px;
+    }
+    .stable .d-flex{
+        display: block !important;
+    }
+    .stable .d-flex .breadcrumb{
+        margin-left: 0;
+    }
+    .stable .stable-header .profile .profile-item .text {        
+        padding: 20px 0;
+    }
+    .profile .premium-or-not .card-premium {
+        margin: 0 20px;
+        margin-top: -60px;
+    }
+    .verify-email .email-container {
+        width: 80%;
+    }
+}
+
+/* // Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) { 
+    .lastest-competitions .header-competitions {
+        left: 30px;
+        top: 30px;
+    }
+    .lastest-competitions .header-competitions .title {
+        font-size: 20px;
+    }
+    .lastest-competitions .header-competitions .subtitle {
+        font-size: 15px;
+    }
+    .dashboard .carousel-content {
+        width: 80%;
+    }
+    .dashboard .carousel-content .title {
+        font-size: 20px;
+    }
+    .dashboard .carousel-content .subtitle {
+        font-size: 12px;
+    }
+    .dashboard .carousel-content .btn-join-class {
+        border: 1px solid #2a4158;
+        box-sizing: border-box;
+        border-radius: 5px;
+        background: #f4b93d;
+        font-weight: bold;
+        font-size: 12px;
+        color: #ffffff;
+        padding: 5px 10px;
+    }
+    .stable .stable-header .profile .profile-item .text {
+        margin-left: 10px;
+        margin-top: 10px;
+    }
+    .stable .stable-header .profile .profile-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .stable .stable-header .profile .btn-edit {
+        margin-top: 20px;
+    }
+    .profile .premium-or-not img {
+        height: 30px;
+    }
+    .profile .premium-or-not .title {
+        font-size: 10px;
+    }
+    .profile .premium-or-not .subtitle {
+        font-size: 12px;
+    }
+    .competition-card .live {
+        right: 20px;
+        top: 20px;
+    }
+    .verify-email .email-container {
+        width: 95%;
+    }    
+}
+@media (max-width: 480px) {
+    .dashboard {
+        margin-top: 30px;
+        padding: 0 30px;
+    }
+    .lastest-competitions .col-6 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .dashboard .carousel-item img, .dashboard .banner img {
+        border-radius: 10px;
+        height: 200px;
+    }
+    .lastest-competitions .card-competitions img {
+        width: 100%;
+        max-height: 250px;
+    }
+    .lastest-competitions .header-competitions .title {
+        font-size: 25px;
+    }
+    .lastest-competitions .header-competitions .subtitle {
+        font-size: 15px;
+    }
+    .stable .stable-header .profile .stable-name {
+        font-size: 24px;
+    }
+    .stable .stable-header .profile .stable-desc {
+        font-size: 12px;
+    }
+    .stable .stable-header .profile .btn-edit {
+        font-size: 12px;
+        padding: 10px 15px;
+    }
+    .stable .stable-header .profile .email-number {
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .stable .stable-header .profile .number {
+        margin-left: 0px;
+        margin-top: 5px;
+    }
+    .checkout-body .bank-number .card-bank {
+        align-items: center;
+        flex-direction: column;
+        margin-bottom: 10px;
+    }
+    .checkout-body .bank-number .bank {
+        display: flex;
+        justify-content: start;
+        flex-direction: column;
+        align-items: center;
+    }
+    .checkout-body .bank-number img {
+        margin-bottom: 10px;
+    }
+    .checkout-body .bank-number .text {
+        text-align: center;
+        margin-left: 0;
+        margin-bottom: 10px;
+    }
+    .checkout-body .bank-number .copy-icon {
+        margin-left: 0;
+    }
+    .profile .premium-or-not .card-premium {
+        padding: 15px 20px;
+    }
+    .profile .premium-or-not .title-unpremium {
+        font-size: 18px;
+    }
+    .profile .premium-or-not .subtitle-unpremium {
+        font-size: 12px;
+    }
+} 

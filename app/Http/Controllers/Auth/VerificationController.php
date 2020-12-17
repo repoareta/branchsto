@@ -28,6 +28,10 @@ class VerificationController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
+    public function verifikasi()
+    {
+        return view('verifikasi/index');
+    }
     /**
      * Create a new controller instance.
      *

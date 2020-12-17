@@ -3,15 +3,18 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
-use App\Models\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Validator;
+
+use App\Http\Requests\Register;
+use App\Http\Requests\ResetPassword;
 
 class RegisterController extends Controller
 {
-    /*
+    /*gis
     |--------------------------------------------------------------------------
     | Register Controller
     |--------------------------------------------------------------------------
@@ -22,14 +25,12 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
-
     /**
      * Where to redirect users after registration.
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = 'login.loginForm';
 
     /**
      * Create a new controller instance.
@@ -41,6 +42,27 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    public function showRegistrationForm()
+    {
+        return view('auth.register');
+    }
+    public function register(Register $request)
+    {
+        $regisuser = Http::post('http://185.201.9.73/branchsto/public/api/register',[
+            'email'         => $request->email,
+            'password'      => $request->password,
+            'name'          => $request->name,
+        ]);  
+                
+        if ($regisuser->getStatusCode() == 200) {
+            Auth::attempt($request->only('email', 'password'));
+            Alert::success('Register Success.', 'Segera lakukan verifikasi email.')->persistent(true)->autoClose(3600);
+            return redirect()->route('verifikasi.index');
+        }else{
+            Alert::info('Register Failed.', 'Try Again.')->persistent(true)->autoClose(3600);
+            return redirect()->route('login.loginForm');
+        }    
+    }
     /**
      * Get a validator for an incoming registration request.
      *
