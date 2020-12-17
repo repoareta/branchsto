@@ -16,4 +16,12 @@ class BookingDetail extends Model
     {
         return $this->belongsTo(Booking::class);
     }
+
+    /**
+    * Get the owner of coach
+    */
+    public function package()
+    {
+        return $this->belongsTo(Package::class);
+    }
 }

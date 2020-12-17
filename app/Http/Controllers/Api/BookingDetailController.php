@@ -59,9 +59,9 @@ class BookingDetailController extends Controller
             ], 400);
         }
         
-        $booking_detail->package_id     = $request->user_id;
-        $booking_detail->booking_id     = $request->price_total;
-        $booking_detail->price_subtotal = $request->price_total;
+        $booking_detail->package_id     = $request->package_id;
+        $booking_detail->booking_id     = $request->booking_id;
+        $booking_detail->price_subtotal = $request->price_subtotal;
 
         $booking_detail->save();
 
@@ -81,6 +81,15 @@ class BookingDetailController extends Controller
     public function show($id)
     {
         //
+    }
+
+    public function showByBookingId(Booking $booking)
+    {
+        return response()->json([
+            "success" => true,
+            "message" => "Booking detail by booking id show successfully.",
+            "data"    => $booking->booking_detail
+        ]);
     }
 
     /**

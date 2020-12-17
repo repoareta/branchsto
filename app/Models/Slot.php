@@ -16,4 +16,12 @@ class Slot extends Model
     {
         return $this->belongsTo(Package::class);
     }
+
+    /**
+     * The products that belong to the shop.
+     */
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

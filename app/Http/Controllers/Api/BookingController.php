@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Validator;
 // load model
 use App\Models\Booking;
 
+// load plugin
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+
 class BookingController extends Controller
 {
     /**
@@ -75,17 +78,12 @@ class BookingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
-
-    public function showByBookingId(Booking $booking)
+    public function show(Booking $booking)
     {
         return response()->json([
             "success" => true,
-            "message" => "Booking detail by booking id show successfully.",
-            "data"    => $booking->booking_detail
+            "message" => "Booking show successfully.",
+            "data"    => $booking
         ]);
     }
 
@@ -121,5 +119,74 @@ class BookingController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function payment(Request $request, Booking $booking)
+    {
+        $validator = Validator::make($request->all(), [
+            'photo'      => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => $validator->errors()
+            ], 400);
+        }
+
+        $booking->updated_at = date('Y-m-d H:i:s');
+
+        if ($request->file('photo')) {
+            $booking->photo = $request->file('photo')->getClientOriginalName();
+            $image_path = $request->file('photo')->storeAs('booking/photo', $booking->photo, 'public');
+        }
+
+        $booking->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => "Booking payment created successfully.",
+            'data'    => $booking
+        ]);
+    }
+
+    public function approval(Request $request, Booking $booking)
+    {
+        $validator = Validator::make($request->all(), [
+            'approval_by'     => 'required',
+            'approval_status' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => $validator->errors()
+            ], 400);
+        }
+
+        $booking->approval_by     = $request->approval_by;
+        $booking->approval_at     = date('Y-m-d H:i:s');
+        $booking->approval_status = $request->approval_status;
+
+        $booking->save();
+
+        // generate QrCode for each sloton package that have been ordered
+        foreach ($booking->booking_detail as $key => $booking_detail) {
+            foreach ($booking_detail->package->slot as $key_slot => $slot) {
+                $slot->users()->attach(
+                    $booking->user_id,
+                    [
+                        'qr_code' => QrCode::generate('Make me into a QrCode!'),
+                        'qr_code_status' => 'available'
+                    ]
+                );
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => "Booking approval updated successfully.",
+            'data'    => $booking
+        ]);
     }
 }
