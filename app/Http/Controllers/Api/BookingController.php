@@ -11,6 +11,7 @@ use App\Models\Booking;
 
 // load plugin
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\Storage;
 
 class BookingController extends Controller
 {
@@ -173,11 +174,19 @@ class BookingController extends Controller
         // generate QrCode for each sloton package that have been ordered
         foreach ($booking->booking_detail as $key => $booking_detail) {
             foreach ($booking_detail->package->slot as $key_slot => $slot) {
+                $image = QrCode::format('png')
+                ->size(200)
+                ->generate(url("/api/slot/{$slot->id}/user/{$booking->user_id}/confirmation"));
+
+                $output_file = '/img/qr-code/img-' . time() . '.png';
+
+                Storage::disk('local')->put($output_file, $image);
+                
                 $slot->users()->attach(
                     $booking->user_id,
                     [
-                        'qr_code' => QrCode::generate('Make me into a QrCode!'),
-                        'qr_code_status' => 'available'
+                        'qr_code'        => $output_file,
+                        'qr_code_status' => "available"
                     ]
                 );
             }

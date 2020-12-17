@@ -55,6 +55,6 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function slots()
     {
-        return $this->belongsToMany(Slot::class);
+        return $this->belongsToMany(Slot::class)->withTimestamps();
     }
 }
