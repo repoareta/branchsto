@@ -82,12 +82,13 @@ Route::put('slot/{slot}', [SlotController::class, 'update']);
 Route::delete('slot/{slot}', [SlotController::class, 'destroy']);
 Route::get('slot/{slot}', [SlotController::class, 'show']);
 Route::get('slot-by-package/{package}', [SlotController::class, 'showByPackageId']);
+Route::get('slot/{slot}/user/{user}/confirmation', [SlotController::class, 'confirmation']);
 
 // Booking CLass API
 Route::get('booking', [BookingController::class, 'index']);
 Route::post('booking', [BookingController::class, 'store']);
 Route::get('booking/{booking}', [BookingController::class, 'show']);
-Route::put('booking/{booking}/payment', [BookingController::class, 'payment']);
+Route::post('booking/{booking}/payment', [BookingController::class, 'payment']);
 Route::put('booking/{booking}/approval', [BookingController::class, 'approval']);
 
 // Booking CLass Detail API

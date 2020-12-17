@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 // load model
 use App\Models\Slot;
 use App\Models\Package;
+use App\Models\User;
 
 class SlotController extends Controller
 {
@@ -164,5 +165,15 @@ class SlotController extends Controller
             "success" => true,
             "message" => "Slot deleted successfully."
         ]);
+    }
+
+    public function confirmation(Slot $slot, User $user)
+    {
+        $slot->users()->updateExistingPivot(
+            $user->id,
+            [ 'qr_code_status' => 'confirmed' ]
+        );
+
+        return "slot confirmed";
     }
 }
