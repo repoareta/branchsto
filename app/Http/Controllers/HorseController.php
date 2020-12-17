@@ -72,7 +72,6 @@ class HorseController extends Controller
 
     public function store(Horse $request)
     {
-        dd($request);
         $status = Http::post('http://185.201.9.73/branchsto/public/api/horse',[
             'name'            => $request->name,
             'owner'           => $request->owner,
