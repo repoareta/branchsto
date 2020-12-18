@@ -189,6 +189,8 @@ class BookingController extends Controller
                         'qr_code_status' => "available"
                     ]
                 );
+
+                sleep(1); // add delay 1 seconds
             }
         }
 
