@@ -17,12 +17,6 @@
                     <div class="form-group">
                         <label>Stable Name</label>
                         <input type="text" name="name" id="" class="form-control">
-                        <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
-                        <input type="hidden" name="owner" value="{{Auth::user()->name}}">
-                        <input type="hidden" name="manager" value="-">
-                        <input type="hidden" name="capacity_of_stable" value="0">
-                        <input type="hidden" name="capacity_of_arena" value="0">
-                        <input type="hidden" name="number_of_coach" value="0">
                     </div>
                     <div class="form-group">
                         <label>Address</label>

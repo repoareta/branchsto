@@ -50,7 +50,7 @@
                                             <div class="col-4">
                                                 <label>Horse Name</label>
                                                 <input type="text" class="form-control" name="name" placeholder="Horse name" autocomplete='off'>
-                                                <input type="hidden" value="{{$data['data']['id']}}" class="form-control" name="stable_id">
+                                                <input type="hidden" value="{{$data_stable->id}}" class="form-control" name="stable_id">
                                             </div>
                                             <div class="col-4">
                                                 <label>Horse Owner</label>
@@ -61,9 +61,9 @@
                                             <div class="col-4">
                                                 <label>Sex</label>
                                                 <select class="form-control" name="sex">
-                                                    <option value="">Sex</option>
-                                                    <option value="Male">Male</option>
-                                                    <option value="Female">Female</option>
+                                                    <option value="Stallion">Stallion</option>
+                                                    <option value="Mare">Mare</option>
+                                                    <option value="Gelding">Gelding</option>
                                                 </select>
                                             </div>
                                             <div class="col-4">
@@ -91,7 +91,11 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-add-new mr-2">SAVE DATA</button>
+                                            @if ($data == 1)
+                                                <button type="submit" class="btn btn-add-new mr-2">SAVE DATA</button>
+                                            @else
+                                                <span id="add-horse" class="btn btn-add-new mr-2">SAVE DATA</span>
+                                            @endif
                                             <a href="{{route('horse.index')}}" class="btn btn-secondary">Back</a>
                                         </div>
                                     </form>
@@ -113,11 +117,25 @@
 <!--end::Main-->
 @endsection
 @push('add-script')
-{!! JsValidator::formRequest('App\Http\Requests\Horse', '#formhorse') !!}
+{!! JsValidator::formRequest('App\Http\Requests\HorseStore', '#formhorse') !!}
 <script>
     $(document).ready( function () {
         $('#dataTable').DataTable();
-        $("#dataTable_filter").append("<button class='btn btn-add-new'>Add New +</button>")
+        $("#dataTable_filter").append("<button class='btn btn-add-new'>Add New +</button>");
+        $('#add-horse').on('click', function(e){
+			e.preventDefault();
+
+            Swal.fire({
+                title: "Full Horse Capacity.",
+                text: "Cencel",
+                icon: "info",
+                buttonsStyling: false,
+                confirmButtonText: "Ok",
+                customClass: {
+                    confirmButton: "btn btn-dark"
+                }
+            })
+        })
     } );
 </script>
 @endpush

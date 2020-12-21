@@ -29,7 +29,7 @@
 							<div class="d-flex align-items-baseline flex-wrap mr-5">
 								<!--begin::Page Title-->
 								<h4 class="title-text mb-0">
-                                    EDIT PACKAGE
+                                    PACKAGE
                                 </h4>
 								<!--end::Page Title-->
 								<!--begin::Breadcrumb-->
@@ -38,38 +38,38 @@
 										<a href="" class="text-muted">HOME</a>
 									</li>
 									<li class="breadcrumb-item">
-										<a href="" class="text-muted">MANAGE STABLE</a>
+										<a href="" class="text-muted">MANAGE PACKAGE</a>
 									</li>
 									<li class="breadcrumb-item">
-										<a href="" class="text-muted">EDIT PACKAGE</a>
+										<a href="" class="text-muted">PACKAGE</a>
 									</li>
 								</ul>
 								<!--end::Breadcrumb-->
 							</div>
                             <form action="{{route('package.update')}}" method="POST" id="formpackage">
-                                @csrf @method('put')
+                                @csrf
                                 <div class="card mt-10">
                                     <div class="card-body">
                                         <div class="form-group row">
                                             <div class="col-12 col-sm-6 col-md-5 col-lg-4 mb-3">
                                                 <label>Name Package</label>
-                                                <input type="text" class="form-control" name="name" value="{{$data['data']['name']}}">
-                                                <input type="hidden" class="form-control" name="stable_id" value="{{$data['data']['stable_id']}}">
-                                                <input type="hidden" class="form-control" name="package_id" value="{{$data['data']['id']}}">
+                                                <input type="text" class="form-control" name="name" value="{{$data->name}}">
+                                                <input type="hidden" class="form-control" name="stable_id" value="{{$data->stable_id}}">
+                                                <input type="hidden" class="form-control" name="package_id" value="{{$data->id}}">
                                             </div>
                                             <div class="col-12 col-sm-6 col-md-5 col-lg-4 mb-3">
                                                 <label>Package Number</label>
-                                                <input type="text" name="package_number" class="form-control" value="{{$data['data']['package_number']}}">
+                                                <input type="text" name="package_number" class="form-control" value="{{$data->package_number}}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-12 col-sm-6 col-md-5 col-lg-4 mb-3">
                                                 <label>Description</label>
-                                                <textarea type="text" class="form-control" name="description" >{{$data['data']['description']}}</textarea>
+                                                <textarea type="text" class="form-control" name="description" >{{$data->description}}</textarea>
                                             </div>
                                             <div class="col-12 col-sm-6 col-md-5 col-lg-4 mb-3">
                                                 <label>Price</label>
-                                                <input type="text" class="form-control" name="price" value="{{$data['data']['price']}}">
+                                                <input type="text" class="form-control" name="price" value="{{$data->price}}">
                                             </div>												
                                         </div>
                                         {{-- <div class="form-group row">
@@ -98,7 +98,7 @@
                                         <div class="card">
                                             <div class="card-body">
                                                 <div class="d-flex justify-content-between align-items-center">
-                                                    <h5 class="title-text">EDIT SLOT</h5>
+                                                    <h5 class="title-text">LIST SESSION</h5>
                                                     <button  type="button" class="btn btn-add-new" id="openDetail">ADD NEW +</button>
                                                 </div>
                                                 <table class="table table-striped" id="kt_table">
@@ -115,7 +115,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group mt-5">
-                                            <button type="submit" class="btn btn-add-new mr-2">SAVE DATA</button>
+                                            <button type="submit" class="btn btn-add-new mr-2">SUBMIT</button>
                                             <a href="{{route('package.index')}}" class="btn btn-secondary">Back</a>
                                         </div>											
                                     </div>
@@ -131,32 +131,75 @@
                             <div class="modal-content">
                                 <div class="modal-header ">
                                     <h4 class="title-text " id="title_modal" data-state="add">
-                                        ADD SLOT
+                                        ADD SESSION
                                     </h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <i aria-hidden="true" class="ki ki-close"></i>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    
-                                    <form id="formslot">
+                                    @php
+                                        date_default_timezone_set('Asia/Jakarta');
+                                        $time = date('H:i');
+                                    @endphp
+                                    <form action="{{route('package.slot.detail.store')}}" method="POST">
+                                        @csrf
                                         <div class="form-group row">
-                                            <div class="col-6">
-                                                <label>Start Date</label>
+                                            <div class="col-11">
+                                                <label>Date</label>
                                                 <input type="hidden" class="form-control" name="id" id="id">
-                                                <input type="hidden" class="form-control" name="package_id" id="package_id">
-                                                <input type="text" class="form-control tanggal" name="date_start" id="date_start" autocomplete='off'>
-                                            </div>
-                                            <div class="col-6">
-                                                <label>End Date</label>
-                                                <input type="text" class="form-control tanggal" name="date_end" id="date_end" autocomplete='off'>
+                                                <input type="date" class="form-control" name="tanggal1" id="date_start">
+                                                <input type="hidden" class="form-control" name="package_id" value="{{$data->id}}">
                                             </div>	
                                         </div>	
                                         <div class="form-group row">											
                                             <div class="col-6">
-                                                <label>Capacity</label>
-                                                <input type="number" class="form-control" name="capacity" id="capacity" placeholder="Capacitiy">
+                                                <label>Session</label>
+                                                <input type="text" class="form-control" name="time[]" value="08:00">
                                             </div>																								
+                                            <div class="col-5">
+                                                <label>Capacity</label>
+                                                <input type="text" class="form-control" name="capacity[]" value="0">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">											
+                                            <div class="col-6">
+                                                <label>Session</label>
+                                                <input type="text" class="form-control" name="time[]" value="09:00">
+                                            </div>																								
+                                            <div class="col-5">
+                                                <label>Capacity</label>
+                                                <input type="text" class="form-control" name="capacity[]" value="0">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row" id="after-add-more">											
+                                            <div class="col-6">
+                                                <label>Session</label>
+                                                <input type="text" class="form-control" name="time[]" value="10:00">
+                                            </div>																								
+                                            <div class="col-5">
+                                                <label>Capacity</label>
+                                                <input type="text" class="form-control" name="capacity[]" value="0">
+                                            </div>																								
+                                            <div class="col-1">
+                                                <label for=""></label>
+                                                <i class="fas fa-plus-circle pointer-link text-dark icon-2x mt-10" id="add-more"></i> 
+                                            </div>
+                                        </div>
+                                        <div hidden id="copy">
+                                            <div  class="form-group row">											
+                                                <div class="col-6">
+                                                    <label>Session</label>
+                                                    <input type="text" class="form-control" name="time[]" value="{{date('H:i')}}">
+                                                </div>																								
+                                                <div class="col-5">
+                                                    <label>Capacity</label>
+                                                    <input type="text" class="form-control" name="capacity[]" value="0">
+                                                </div>																								
+                                                <div class="col-1">
+                                                    <i class="fas fa-times-circle pointer-link text-danger icon-2x mt-10" id="remove"></i> 
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">											
@@ -179,13 +222,13 @@
 <!--end::Main-->
 @endsection
 @push('add-script')
-{!! JsValidator::formRequest('App\Http\Requests\Package', '#formpackage') !!}
-{!! JsValidator::formRequest('App\Http\Requests\Slot', '#formslot') !!}
+{!! JsValidator::formRequest('App\Http\Requests\PackageStore', '#formpackage') !!}
+{!! JsValidator::formRequest('App\Http\Requests\SlotStore', '#formslot') !!}
 <script>
     function refreshTable() {
 		var table = $('#kt_table').DataTable();
 		table.clear();
-		table.ajax.url("{{ route('package.slot.detail.index.json', ['package_id' => $data['data']['id']])}}").load(function() {
+		table.ajax.url("{{ route('package.slot.detail.index.json', ['package_id' => $data->id])}}").load(function() {
 			// Callback loads updated row count into a DOM element
 			// (a Bootstrap badge on a menu item in this case):
 			var rowCount = table.rows().count();
@@ -194,13 +237,22 @@
 		});
 	}
     $(document).ready( function () {
+        $("#add-more").click(function(){ 
+          var html = $("#copy").html();
+          $("#after-add-more").after(html);
+        });
+
+        // saat tombol remove dklik control group akan dihapus 
+        $("body").on("click","#remove",function(){ 
+            $(this).parents(".form-group").remove();
+        });
         var t = $('#kt_table').DataTable({
             scrollX   : true,
             processing: true,
             searching: false,
             lengthChange: false,
             pageLength: 200,
-            ajax: "{{ route('package.slot.detail.index.json', ['package_id' => $data['data']['id']]) }}",
+            ajax: "{{ route('package.slot.detail.index.json', ['package_id' => $data->id]) }}",
             columns: [
                 {data: 'profile', name: 'profile', orderable: false, searchable: false, class:'radio-button'},
                 {data: 'start_date', name: 'start_date'},
@@ -236,7 +288,7 @@
                 } else {
                     url = "{{ route('package.slot.detail.update', [
                         'id'          => ':id',
-                        'package_id'  => $data['data']['id'],
+                        'package_id'  => $data->id,
                         'date_start'  => ':date_start',
                         'date_end'    => ':date_end',
                         'capacity'    => ':capacity'
@@ -253,7 +305,7 @@
                     type: "POST",
                     data: {
                         id: id,
-                        package_id:"{{ $data['data']['id']}}",
+                        package_id:"{{ $data->id}}",
                         date_start: date_start,
                         date_end: date_end,
                         capacity: capacity,
@@ -305,7 +357,7 @@
                         dataType: 'json',
                         data: {
                             "id": id,
-                            "package_id":"{{ $data['data']['id']}}",
+                            "package_id":"{{ $data->id}}",
                             "session": false,
                             "_token": "{{ csrf_token() }}",
                         },
@@ -337,19 +389,19 @@
                 type: 'GET',
                 data: {
                     "id": id,
-                    "package_id":"{{ $data['data']['id']}}",
+                    "package_id":"{{ $data->id}}",
                     "session": false,
                     "_token": "{{ csrf_token() }}",
                 },
                 success: function (response) {
                     // update stuff
                     // append value
-                    $('#id').val(response['data']['id']);
-                    $('#user_id').val(response['data']['user_id']);
-                    $('#package_id').val(response['data']['package_id']);
-                    $('#date_start').val(response['data']['date_start']);
-                    $('#date_end').val(response['data']['date_end']);
-                    $('#capacity').val(response['data']['capacity']);
+                    $('#id').val(response.id);
+                    $('#user_id').val(response.user_id);
+                    $('#package_id').val(response.package_id);
+                    $('#date_start').val(response.date_start);
+                    $('#date_end').val(response.date_end);
+                    $('#capacity').val(response.capacity);
                     // title
                     $('#title_modal').text('Edit data slot');
                     $('#title_modal').data('state', 'update');

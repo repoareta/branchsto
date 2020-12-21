@@ -113,7 +113,7 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
         route::get('create', [PackageController::class, 'create'])->name('create');
         route::post('store', [PackageController::class, 'store'])->name('store');
         route::get('edit/{id}', [PackageController::class, 'edit'])->name('edit');
-        route::put('update', [PackageController::class, 'update'])->name('update');
+        route::post('update', [PackageController::class, 'update'])->name('update');
         route::delete('delete', [PackageController::class, 'delete'])->name('delete');
 
         Route::name('slot.')->group(function () {
@@ -150,7 +150,7 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
         route::get('add/package', [RidingClassController::class, 'addToCart'])->name('booking.addCart');
         route::post('booking/payment', [RidingClassController::class, 'booking_payment'])->name('booking.payment');
         route::get('booking/detail', [RidingClassController::class, 'booking_detail'])->name('booking.detail');
-        route::post('confirmation/payment', [RidingClassController::class, 'confirmation_payment'])->name('confirmasion.payment');
+        route::post('confirmation/payment', [RidingClassController::class, 'history_order'])->name('confirmasion.payment');
         route::get('booking/list', [RidingClassController::class, 'booking_list_qrcode'])->name('booking.list.qrcode');
         route::get('history/order', [RidingClassController::class, 'history_order'])->name('history.order');
     });

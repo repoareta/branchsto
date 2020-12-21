@@ -8,12 +8,16 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
+// load model
+use App\Models\Slot;
+
 //load form request (for validation)
-use App\Http\Requests\Slot;
+use App\Http\Requests\SlotStore;
+use Symfony\Component\Console\Input\Input;
 
 class SlotController extends Controller
 {
-    public function store(Slot $request)
+    public function store(Slot $request,SlotStore $SlotStore)
     {
         $status = Http::post('http://185.201.9.73/branchsto/public/api/slot',[
             'package_number' => $request->package_number,
@@ -32,102 +36,38 @@ class SlotController extends Controller
         }   
     }
 
-    public function detail_index_json(Request $request, $package_id = null)
+    public function detail_index_json(Request $request)
     {
-        if (session('data_list') and $request->package_id == 'null') {
-            $list_details = session('data_list');
-            $list_detail=[];
-            foreach($list_details as $row)
-            {
-                $list_detail[] =$row;
-            }
-            return datatables()->of($list_detail)
-            ->addColumn('profile', function ($list_detail) {
-                return "1";
-            })
-            ->addColumn('start_date', function ($list_detail) {
-                return $list_detail['date_start'];
-            })
-            ->addColumn('end_date', function ($list_detail) {
-                return $list_detail['date_end'];
-            })
-            ->addColumn('capacity', function ($list_detail) {
-                return $list_detail['capacity'];
-            })
-            ->addColumn('action', function ($list_detail) {
-                return 
-                    "
-                        <i class='fas fa-pen edit-slot pointer-link' data-id='".$list_detail['id']."'></i>
-                        <i class='fas fa-eye '></i>
-                        <i class='fas fa-trash delete-slot pointer-link' data-id='".$list_detail['id']."'></i>
-                    ";
-            })
-            ->rawColumns(['profile','action'])
-            ->make(true);
-        } else {
-
-           $dataa= Http::get('http://185.201.9.73/branchsto/public/api/slot-by-package/'.$request->package_id);
-           $list_detail=[];
-           if ($dataa->ok() == true) {
-               foreach ($dataa['data'] as $row) {
-                   $list_detail[] = $row;
-               }
-            }
-            return datatables()->of($list_detail)
-            ->addColumn('profile', function ($list_detail) {
-                return "1";
-            })
-            ->addColumn('start_date', function ($list_detail) {
-                return $list_detail['date_start'];
-            })
-            ->addColumn('end_date', function ($list_detail) {
-                return $list_detail['date_end'];
-            })
-            ->addColumn('capacity', function ($list_detail) {
-                return $list_detail['capacity'];
-            })
-            ->addColumn('action', function ($list_detail) {
-                return 
-                    "
-                        <i class='fas fa-pen edit-slot pointer-link' data-id='".$list_detail['id']."'></i>
-                        <i class='fas fa-eye '></i>
-                        <i class='fas fa-trash delete-slot pointer-link' data-id='".$list_detail['id']."'></i>
-                    ";
-            })
-            ->rawColumns(['profile','action'])
-            ->make(true);
-        }
+        $data = Slot::where('package_id',$request->package_id)->get();
+        return datatables()->of($data)
+        ->addColumn('profile', function ($data) {
+            return "1";
+        })
+        ->addColumn('start_date', function ($data) {
+            return $data->date_start;
+        })
+        ->addColumn('end_date', function ($data) {
+            return $data->date_end;
+        })
+        ->addColumn('capacity', function ($data) {
+            return $data->capacity;
+        })
+        ->addColumn('action', function ($data) {
+            return 
+                "
+                    <i class='fas fa-pen edit-slot pointer-link' data-id='".$data->id."'></i>
+                    <i class='fas fa-eye '></i>
+                    <i class='fas fa-trash delete-slot pointer-link' data-id='".$data->id."'></i>
+                ";
+        })
+        ->rawColumns(['profile','action'])
+        ->make(true);
 
     }
 
-    public function detail_store(Request $request)
+    public function detail_store(SlotStore $request,Slot $slot)
     {
-        $data_list = [
-            'id'            => $request->id,      
-            'date_start'    => $request->date_start,
-            'date_end'      => $request->date_end,
-            'capacity'      => $request->capacity,
-            'user_id'       => Auth::user()->id,
-            'package_id'    => $request->package_id 
-        ];
-        if ($request->session == 'true') {
-            if (session('data_list')) {
-                session()->push('data_list', $data_list);
-            } else {
-                session()->put('data_list', []);
-                session()->push('data_list', $data_list);
-            }
-        }else{
-            $status = Http::post('http://185.201.9.73/branchsto/public/api/slot',[
-                'date_start'    => $request->date_start,
-                'date_end'      => $request->date_end,
-                'capacity'      => $request->capacity,
-                'user_id'       => Auth::user()->id,
-                'package_id'    => $request->package_id
-            ]);
-        }
-        return response()->json();
-
+        
     }
 
     public function detail_show(Request $request)
@@ -188,19 +128,8 @@ class SlotController extends Controller
 
     public function detail_delete(Request $request)
     {
-        // dd($id);
-        if (session('data_list') and $request->session == 'true' ) {
-            // delete session
-            foreach (session('data_list') as $key => $value) {
-                if ($value['id'] == $request->id) {
-                    session()->forget("data_list.$key");
-                }
-            }
-        } else {
-            // delete Database
+        // delete Database
             Http::delete('http://185.201.9.73/branchsto/public/api/slot/'.$request->id);
-
-        }
         return response()->json();
 
     }

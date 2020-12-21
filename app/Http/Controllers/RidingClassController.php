@@ -9,17 +9,30 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
 
+// load model
+use App\Models\Stable;
+use App\Models\Package;
+
 class RidingClassController extends Controller
 {
     public function search_list_class(Request $request)
     {
-        $datas= Http::get('http://185.201.9.73/branchsto/public/api/package');
-        $data=[];
-        foreach($datas['data'] as $row)
-        {
-            $data[] = $row;
+        $Query = Package::select('*');                        
+
+        if ($request->has('name') && $request->name != null) {
+            $Query->where(function ($query) use ($request) {
+                $query->orWhereRaw("lower(name) like '%" . strtolower($request->name) . "%'");
+            });
         }
-        return view('riding_class.list-package',compact('data'));
+        if ($request->has('date') && $request->date != null){
+            $Query->where('date', $request->date);
+        }            
+        if ($request->has('time') && $request->time != null){
+            $Query->where('time', $request->time);
+        }            
+
+        $data = $Query->get();
+        return view('riding_class.list-package',compact('data'));               
     }
     public function booking_class(Request $request)
     {
@@ -84,14 +97,15 @@ class RidingClassController extends Controller
         return view('riding_class.payment',compact('data'));
 
     }
-    public function booking_list_qrcode()
-    {
-        $data= Http::get('http://185.201.9.73/branchsto/public/api/package/'.$id)->json();
-        return view('riding_class.booking-detail',compact('data'));
-    }
     public function history_order()
     {
         $data= Http::get('http://185.201.9.73/branchsto/public/api/stable-by-user/'.Auth::user()->id)->json();
+        $data= Http::get('http://185.201.9.73/branchsto/public/api/stable-by-user/'.Auth::user()->id)->json();
         return view('riding_class.history_order',compact('data'));
+    }
+    public function booking_list_qrcode()
+    {
+        $data= Http::get('http://185.201.9.73/branchsto/public/api/package')->json();
+        return view('riding_class.booking-detail',compact('data'));
     }
 }

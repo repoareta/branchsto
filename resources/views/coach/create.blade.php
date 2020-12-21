@@ -41,39 +41,47 @@
                                         @csrf								
                                         <div class="form-group row">
                                             <div class="col-4">
-                                                <input type="hidden" class="form-control" name="stable_id" value="{{$data['data']['id']}}">
-                                                <input type="text" class="form-control" name="name" placeholder="Horse name">
+                                                <label>Coach Name</label>
+                                                <input type="hidden" class="form-control" name="stable_id" value="{{$data_stable->id}}">
+                                                <input type="text" class="form-control" name="name" placeholder="Coach name">
                                             </div>
                                             <div class="col-4">
+                                                <label>Birth Date</label>
                                                 <input type="date" class="form-control" name="birth_date" placeholder="Birth Date">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-4">
+                                                <label>Sex</label>
                                                 <select class="form-control" name="sex">
-                                                    <option value="">Sex</option>
                                                     <option value="Male">Male</option>
                                                     <option value="Female">Female</option>
                                                 </select>
                                             </div>
                                             <div class="col-4">
+                                                <label>Contact Number</label>
                                                 <input type="text" class="form-control" name="contact_number" placeholder="Contact Number">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-4">
+                                                <label>Experience</label>
                                                 <input type="text" class="form-control" name="experience" placeholder="Experience">
                                             </div>
                                             <div class="col-4">
+                                                <label>Certified</label>
                                                 <select class="form-control" name="certified">
-                                                    <option value="">Certified</option>
-                                                    <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
+                                                    <option value="Yes">Yes</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="form-group">
+                                        @if ($data == 1)
                                             <button type="submit" class="btn btn-add-new mr-2">SAVE DATA</button>
+                                        @else
+                                            <span id="add-coach" class="btn btn-add-new mr-2">SAVE DATA</span>
+                                        @endif                                            
                                             <a href="{{route('coach.index')}}" class="btn btn-secondary">Back</a>
                                         </div>
                                     </form>
@@ -95,11 +103,25 @@
 <!--end::Main-->
 @endsection
 @push('add-script')
-{!! JsValidator::formRequest('App\Http\Requests\Coach', '#formcoach') !!}
+{!! JsValidator::formRequest('App\Http\Requests\CoachStore', '#formcoach') !!}
 <script>
     $(document).ready( function () {
         $('#dataTable').DataTable();
-        $("#dataTable_filter").append("<button class='btn btn-add-new'>Add New +</button>")
+        $("#dataTable_filter").append("<button class='btn btn-add-new'>Add New +</button>");
+        $('#add-coach').on('click', function(e){
+			e.preventDefault();
+
+            Swal.fire({
+                title: "Full Coach Capacity.",
+                text: "Cencel",
+                icon: "info",
+                buttonsStyling: false,
+                confirmButtonText: "Ok",
+                customClass: {
+                    confirmButton: "btn btn-dark"
+                }
+            })
+        })
     } );
 </script>
 @endpush
