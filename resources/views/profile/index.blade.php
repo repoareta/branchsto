@@ -33,25 +33,25 @@
 									<div class="card-body-premium">
 										<img src="{{url('assets/media/branchsto/gem-silver-icon.svg')}}" alt="">
 										<div class="title">Premium</div>
-										<div class="subtitle">Unesgitered</div>										
+										<div class="subtitle">Unregistered</div>										
 									</div>
 									@if ($data == null)
 										<div class="card-body-premium pointer-link" data-toggle="modal" data-target="#modalStableRegist">
 											<img src="{{url('assets/media/branchsto/chess-silver-icon.svg')}}" alt="">
 											<div class="title">Stable</div>
-											<div class="subtitle">Resgitered</div>												
+											<div class="subtitle">Unregistered</div>												
 										</div>
 									@else
 										<div class="card-body-premium pointer-link" data-toggle="modal" id="form-stable">
 											<img src="{{url('assets/media/branchsto/chess-gold-icon.svg')}}" alt="">
 											<div class="title">Stable</div>
-											<div class="subtitle">Resgitered</div>												
+											<div class="subtitle">Registered</div>												
 										</div>
 									@endif
 									<div class="card-body-premium">
 										<img src="{{url('assets/media/branchsto/event-silver-icon.svg')}}" alt="">
 										<div class="title">EO</div>
-										<div class="subtitle">Unresgitered</div>												
+										<div class="subtitle">Unregistered</div>												
 									</div>
 								</div>
 							</div>

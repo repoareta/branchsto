@@ -33,6 +33,10 @@
 										{{$data->address}}
 									</div>
 									<div class="email-number">
+										<div class="email">
+											<img src="{{url('assets/media/branchsto/contact_person.svg')}}" alt="">
+											{{$data->contact_person}}
+										</div>
 										<div class="number">
 											<img src="{{url('assets/media/branchsto/cell.svg')}}" alt="">
 											{{$data->contact_number}}

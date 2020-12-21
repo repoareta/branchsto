@@ -8,7 +8,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
 
 // load model
-use App\Models\stable;
+use App\Models\Stable;
 
 //load form request (for validation)
 use App\Http\Requests\StableStore;
