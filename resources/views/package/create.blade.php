@@ -54,7 +54,7 @@
                                             <div class="col-12 col-sm-6 col-md-5 col-lg-4 mb-3">
                                                 <label>Name Package</label>
                                                 <input type="text" class="form-control" name="name" placeholder="Name class or rides">
-                                                <input type="hidden" class="form-control" name="stable_id" value="{{$data['data']['id']}}">
+                                                <input type="hidden" class="form-control" name="stable_id" value="{{$data_stable->id}}">
                                             </div>
                                             <div class="col-12 col-sm-6 col-md-5 col-lg-4 mb-3">
                                                 <label>Package Number</label>
@@ -94,27 +94,8 @@
                                             </div>
                                         </div>											 --}}
                                         </form>
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <h5 class="title-text">ADD SESSION</h5>
-                                                    <button  type="button" class="btn btn-add-new" id="openDetail">ADD NEW +</button>
-                                                </div>
-                                                <table class="table table-striped" id="kt_table">
-                                                    <thead>
-                                                        <tr>
-                                                        <th scope="col">No</th>
-                                                        <th scope="col">Start Date</th>
-                                                        <th scope="col">End Date</th>
-                                                        <th scope="col">Capacity</th>
-                                                        <th scope="col">Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                </table>													
-                                            </div>
-                                        </div>
                                         <div class="form-group mt-5">
-                                            <button type="submit" class="btn btn-add-new mr-2">SAVE DATA</button>
+                                            <button type="submit" class="btn btn-add-new mr-2">SAVE</button>
                                             <a href="{{route('package.index')}}" class="btn btn-secondary">Back</a>
                                         </div>											
                                     </div>
@@ -123,48 +104,6 @@
                         </div>
                     </div>
                     <!--end::Container-->
-
-                    <!-- Modal -->
-                    <div class="modal fade" id="modalAddPackage"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header ">
-                                    <h4 class="title-text " id="title_modal" data-state="add">
-                                        ADD SESSION
-                                    </h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <i aria-hidden="true" class="ki ki-close"></i>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    
-                                    <form id="formslot">
-                                        <div class="form-group row">
-                                            <div class="col-6">
-                                                <label>Start Date</label>
-                                                <input type="hidden" class="form-control" name="id" id="id">
-                                                <input type="date" class="form-control" name="date_start" id="date_start">
-                                            </div>
-                                            <div class="col-6">
-                                                <label>End Date</label>
-                                                <input type="date" class="form-control" name="date_end" id="date_end">
-                                            </div>	
-                                        </div>	
-                                        <div class="form-group row">											
-                                            <div class="col-6">
-                                                <label>Capacity</label>
-                                                <input type="number" class="form-control" name="capacity" id="capacity" placeholder="Capacitiy">
-                                            </div>																								
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">											
-                                        <button data-dismiss="modal" class="btn btn-secondary">Cancel</button>
-                                        <button type="submit" class="btn btn-add-new font-weight-bold">SAVE</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 <!--end::Entry-->
             </div>
         </div>
@@ -177,182 +116,29 @@
 <!--end::Main-->
 @endsection
 @push('add-script')
-{!! JsValidator::formRequest('App\Http\Requests\Package', '#formpackage') !!}
-{!! JsValidator::formRequest('App\Http\Requests\Slot', '#formslot') !!}
+{!! JsValidator::formRequest('App\Http\Requests\PackageStore', '#formpackage') !!}
+{!! JsValidator::formRequest('App\Http\Requests\SlotStore', '#formslot') !!}
 <script>
-    function refreshTable() {
-		var table = $('#kt_table').DataTable();
-		table.clear();
-		table.ajax.url("{{ route('package.slot.detail.index.json', ['package_id' => 'null']) }}").load(function() {
-			// Callback loads updated row count into a DOM element
-			// (a Bootstrap badge on a menu item in this case):
-			var rowCount = table.rows().count();
-			$('#id').val(rowCount + 1);
-            console.log(1);
-		});
-	}
     $(document).ready( function () {
-        var t = $('#kt_table').DataTable({
-            scrollX   : true,
-            processing: true,
-            searching: false,
-            lengthChange: false,
-            pageLength: 200,
-            ajax: "{{ route('package.slot.detail.index.json', ['package_id' => 'null']) }}",
-            columns: [
-                {data: 'profile', name: 'profile', orderable: false, searchable: false, class:'radio-button'},
-                {data: 'start_date', name: 'start_date'},
-                {data: 'end_date', name: 'end_date'},
-                {data: 'capacity', name: 'capacity'},
-                {data: 'action', name: 'action'},
-            ]        
+        $("#add-more").click(function(){ 
+          var html = $("#copy").html();
+          $("#after-add-more").after(html);
         });
 
-        $('#openDetail').click(function(e) {
-			e.preventDefault();
-			refreshTable();
-			$('#modalAddPackage').modal('show');
-			$('#title_modal').data('state', 'add');
-		});
-
-        $("#formslot").on('submit', function(){
-            if($(this).valid()) {
-                // do your ajax stuff here
-                var id               = $('#id').val();
-                var date_start       = $('#date_start').val();
-                var date_end         = $('#date_end').val();
-                var capacity         = $('#capacity').val();
-                var state            = $('#title_modal').data('state');
-                var url, session, swal_title;
-
-                if(state == 'add'){
-
-                    url = "{{ route('package.slot.detail.store') }}";
-                    session = true;
-                    swal_title = "Create Data Slot";
-                } else {
-                    url = "{{ route('package.slot.detail.update', [
-                        'id'          => ':id',
-                        'package_id'  => 'null',
-                        'date_start'  => ':date_start',
-                        'date_end'    => ':date_end',
-                        'capacity'    => ':capacity'
-                    ]) }}";
-
-                    url = url;
-
-                    session = true;
-                    swal_title = "Update Data Slot";
-                }
-
-                $.ajax({
-                    url: url,
-                    type: "POST",
-                    data: {
-                        id: id,
-                        date_start: date_start,
-                        date_end: date_end,
-                        capacity: capacity,
-                        session: session,
-                        _token:"{{ csrf_token() }}"		
-                    },
-                    success: function(dataResult){
-                        Swal.fire({
-                            type : 'success',
-                            title: swal_title,
-                            text : 'Success',
-                            icon : 'success',
-                            timer: 2000
-                        });
-                        // close modal
-                        $('#modalAddPackage').modal('toggle');
-                        // clear form
-                        $('#modalAddPackage').on('hidden.bs.modal', function () {
-                            $(this).find('form').trigger('reset');
-                        });
-                        // append to datatable
-                        t.ajax.reload();
-                    },
-                    error: function () {
-                        alert("Terjadi kesalahan, coba lagi nanti");
-                    }
-                });
-            }
-            return false;
+        // saat tombol remove dklik control group akan dihapus 
+        $("body").on("click","#remove",function(){ 
+            $(this).parents(".form-group").remove();
+        });
+        $('#time').datepicker({
+            todayHighlight: true,
+            orientation: "bottom left",
+            autoclose: true,
+            // language : 'id',
+            format   : 'H:i'
         });
 
-        $('#kt_table tbody').on( 'click', '.delete-slot', function (e) {
-			e.preventDefault();
-            var id = $(this).attr('data-id');            
-            Swal.fire({
-				title: "Are you sure?",
-				text: "You won't be able to revert this!" ,
-				icon: "warning",
-				confirmButtonText: "Delete",
-				confirmButtonColor: '#141D31',
-				showCancelButton: true,
-				reverseButtons: true
-			})
-            .then((result) => {
-                if (result.value) {
-                    $.ajax({
-                        url: "{{ route('package.slot.detail.delete') }}",
-                        type: 'DELETE',
-                        dataType: 'json',
-                        data: {
-                            "id": id,
-                            "session": true,
-                            "_token": "{{ csrf_token() }}",
-                        },
-                        success: function () {
-                            Swal.fire({
-                                type  : 'success',
-                                title : 'Delete data slot',
-                                text  : 'Success',
-                                icon  : 'success',
-                                timer : 2000
-                            }).then(function() {
-                                t.ajax.reload();
-                            });
-                        },
-                        error: function () {
-                            alert("Terjadi kesalahan, coba lagi nanti");
-                        }
-                    });
-                }
-            });
-        } );
-
-        $('#kt_table tbody').on( 'click', '.edit-slot', function (e) {
-			e.preventDefault();
-            // get value from row					
-            var id = $(this).attr('data-id');
-            $.ajax({
-                url: "{{ route('package.slot.detail.show') }}",
-                type: 'GET',
-                data: {
-                    "id": id,
-                    "session": true,
-                    "_token": "{{ csrf_token() }}",
-                },
-                success: function (response) {
-                    // update stuff
-                    // append value
-                    $('#id').val(response.id);
-                    $('#date_start').val(response.date_start);
-                    $('#date_end').val(response.date_end);
-                    $('#capacity').val(response.capacity);
-                    // title
-                    $('#title_modal').text('Edit data slot');
-                    $('#title_modal').data('state', 'update');
-                    // open modal
-                    $('#modalAddPackage').modal('toggle');
-                },
-                error: function () {
-                    alert("Terjadi kesalahan, coba lagi nanti");
-                }
-            });
-		});
+        
+        
     } );
 
     var uppy = Uppy.Core()

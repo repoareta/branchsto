@@ -27,15 +27,15 @@
 								<img src="{{url('assets/media/branchsto/stable-profile.png')}}" alt="" class="rounded-circle stable-img">
 								<div class="text">
 									<div class="stable-name">
-										{{$data['data']['name']}}
+										{{$data->name}}
 									</div>
 									<div class="stable-desc">
-										{{$data['data']['address']}}
+										{{$data->address}}
 									</div>
 									<div class="email-number">
 										<div class="number">
 											<img src="{{url('assets/media/branchsto/cell.svg')}}" alt="">
-											{{$data['data']['contact_person']}}
+											{{$data->contact_number}}
 										</div>
 									</div>
 								</div>

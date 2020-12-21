@@ -28,7 +28,7 @@
                             </a>
                             <div class="d-flex justify-content-start align-items-center">
                                 <h5 class="title-text mb-0">
-                                    EDIT HORSE
+                                    UPDATE HORSE
                                 </h5>
                                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 font-size-lg mb-0">
                                     <li class="breadcrumb-item">
@@ -38,7 +38,7 @@
                                         <a href="">MANAGE STABLE</a>
                                     </li>
                                     <li class="breadcrumb-item">
-                                        <a href="" class="text-muted">EDIT HORSE</a>
+                                        <a href="" class="text-muted">UPDATE HORSE</a>
                                     </li>
                                 </ul>
                             </div>
@@ -49,46 +49,46 @@
                                         <div class="form-group row">
                                             <div class="col-4">
                                                 <label>Horse Name</label>
-                                                <input type="text" class="form-control" name="name" value="{{$data['data']['name']}}" placeholder="Horse name" autocomplete='off'>
-                                                <input type="hidden" value="{{$data['data']['id']}}" class="form-control" name="horse_id">
-                                                <input type="hidden" class="form-control" name="stable_id" value="{{$data['data']['stable_id']}}">
+                                                <input type="text" class="form-control" name="name" value="{{$data->name}}" placeholder="Horse name" autocomplete='off'>
+                                                <input type="hidden" value="{{$data->id}}" class="form-control" name="horse_id">
+                                                <input type="hidden" class="form-control" name="stable_id" value="{{$data->stable_id}}">
                                             </div>
                                             <div class="col-4">
                                                 <label>Horse Owner</label>
-                                                <input type="text" class="form-control" name="owner" value="{{$data['data']['owner']}}" placeholder="Horse Owner" autocomplete='off'>
+                                                <input type="text" class="form-control" name="owner" value="{{$data->owner}}" placeholder="Horse Owner" autocomplete='off'>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-4">
                                                 <label>Sex</label>
                                                 <select class="form-control" name="sex">
-                                                    <option value="">Sex</option>
-                                                    <option value="Male" @php if('Male'  == $data['data']['sex'] ) echo 'selected' ; @endphp>Male</option>
-                                                    <option value="Female" @php if('Female'  == $data['data']['sex'] ) echo 'selected' ; @endphp>Female</option>
+                                                    <option value="Stallion" @php if('Stallion' == $data->sex) echo 'selected'; @endphp>Stallion</option>
+                                                    <option value="Mare" @php if('Mare' == $data->sex) echo 'selected'; @endphp>Mare</option>
+                                                    <option value="Gelding" @php if('Gelding' == $data->sex) echo 'selected'; @endphp>Gelding</option>
                                                 </select>
                                             </div>
                                             <div class="col-4">
                                                 <label>Birth Date</label>
-                                                <input type="date" class="form-control" name="birth_date" value="{{$data['data']['birth_date']}}" placeholder="Birth Date" autocomplete='off'>
+                                                <input type="date" class="form-control" name="birth_date" value="{{$data->birth_date}}" placeholder="Birth Date" autocomplete='off'>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-4">
                                                 <label>Passport Number</label>
-                                                <input type="number" class="form-control" name="passport_number" value="{{$data['data']['passport_number']}}" placeholder="Passport Number" autocomplete='off'>
+                                                <input type="number" class="form-control" name="passport_number" value="{{$data->passport_number}}" placeholder="Passport Number" autocomplete='off'>
                                             </div>
                                             <div class="col-4">
                                                 <label>Horse Breed</label>
                                                 <select class="form-control" name="breeds">
-                                                    <option value="Indonesian" @php if('Indonesian'  == $data['data']['breeds'] ) echo 'selected' ; @endphp>Indonesian</option>
-                                                    <option value="European" @php if('European'  == $data['data']['breeds'] ) echo 'selected' ; @endphp>European</option>
+                                                    <option value="Indonesian" @php if('Indonesian'  == $data->breeds ) echo 'selected' ; @endphp>Indonesian</option>
+                                                    <option value="European" @php if('European'  == $data->breeds ) echo 'selected' ; @endphp>European</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-4">
                                                 <label>Pedigree</label>
-                                                <input type="text" class="form-control" name="pedigree" value="{{$data['data']['pedigree']}}" placeholder="Pedigree" autocomplete='off'>
+                                                <input type="text" class="form-control" name="pedigree" value="{{$data->pedigree}}" placeholder="Pedigree" autocomplete='off'>
                                             </div>
                                         </div>
                                         <div class="form-group">

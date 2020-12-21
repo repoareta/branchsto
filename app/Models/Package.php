@@ -16,4 +16,9 @@ class Package extends Model
     {
         return $this->hasMany(Slot::class);
     }
+
+    public function stable()
+    {
+        return $this->belongsTo(Stable::class);
+    }
 }

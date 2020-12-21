@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class Coach extends FormRequest
+class HorseStore extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,13 @@ class Coach extends FormRequest
     public function rules()
     {
         return [
-            'name'           => 'required',
-            'birth_date'     => 'required|date_format:Y-m-d|before:today',
-            'sex'            => 'required',
-            'contact_number' => 'required|numeric|digits_between:6,15',
-            'experience'     => 'required|numeric|min:1|max:30',
-            'certified'      => 'required',
-            'stable_id'      => 'required',
+            'name'            => 'required',
+            'owner'           => 'required',
+            'birth_date'      => 'required|date_format:Y-m-d|before:today',
+            'sex'             => 'required',
+            'passport_number' => 'required',
+            'breeds'          => 'required',
+            'pedigree'        => 'required',
         ];
     }
 }

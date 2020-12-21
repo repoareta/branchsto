@@ -21,7 +21,7 @@
 						</li>
 						<li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click"
 							aria-haspopup="true">
-							<a href="{{route('riding_class.search_class')}}" class="menu-link ">
+							<a href="{{route('riding_class.search_class', ['name' => null])}}" class="menu-link ">
 							{{-- <a data-toggle="modal" data-target="#modalSelectTimePackage" class="menu-link menu-toggle"> --}}
 								<span class="menu-text">RIDING CLASS</span>
 								<span class="menu-desc"></span>

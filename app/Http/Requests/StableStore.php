@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class Horse extends FormRequest
+class StableStore extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,10 @@ class Horse extends FormRequest
     public function rules()
     {
         return [
-            'name'            => 'required',
-            'owner'           => 'required',
-            'birth_date'      => 'required|date_format:Y-m-d|before:today',
-            'sex'             => 'required',
-            'passport_number' => 'required',
-            'breeds'          => 'required',
-            'pedigree'        => 'required',
+            'name'               => 'required|string|max:255',
+            'contact_person'     => 'required|string|max:255',
+            'contact_number'     => 'required|numeric|digits_between:6,15',
+            'address'            => 'required|string|max:255',
         ];
     }
 }

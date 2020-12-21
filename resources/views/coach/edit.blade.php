@@ -41,35 +41,35 @@
                                         @csrf @method('put')	
                                         <div class="form-group row">
                                             <div class="col-4">
-                                                <input type="hidden" class="form-control" name="coach_id" value="{{$data['data']['id']}}">
-                                                <input type="hidden" class="form-control" name="stable_id" value="{{$data['data']['stable_id']}}">
-                                                <input type="text" class="form-control" name="name" value="{{$data['data']['name']}}" placeholder="Horse name">
+                                                <input type="hidden" class="form-control" name="coach_id" value="{{$data->id}}">
+                                                <input type="hidden" class="form-control" name="stable_id" value="{{$data->stable_id}}">
+                                                <input type="text" class="form-control" name="name" value="{{$data->name}}" placeholder="Horse name">
                                             </div>
                                             <div class="col-4">
-                                                <input type="date" class="form-control" name="birth_date" value="{{$data['data']['birth_date']}}" placeholder="Birth Date">
+                                                <input type="date" class="form-control" name="birth_date" value="{{$data->birth_date}}" placeholder="Birth Date">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-4">
                                                 <select class="form-control" name="sex">
                                                     <option value="">Sex</option>
-                                                    <option value="Male" @php if('Male'  == $data['data']['sex'] ) echo 'selected' ; @endphp>Male</option>
-                                                    <option value="Female" @php if('Female'  == $data['data']['sex'] ) echo 'selected' ; @endphp>Female</option>
+                                                    <option value="Male" @php if('Male'  == $data->sex ) echo 'selected' ; @endphp>Male</option>
+                                                    <option value="Female" @php if('Female'  == $data->sex ) echo 'selected' ; @endphp>Female</option>
                                                 </select>
                                             </div>
                                             <div class="col-4">
-                                                <input type="text" class="form-control" name="contact_number" value="{{$data['data']['contact_number']}}" placeholder="Contact Number">
+                                                <input type="text" class="form-control" name="contact_number" value="{{$data->contact_number}}" placeholder="Contact Number">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-4">
-                                                <input type="text" class="form-control" name="experience" value="{{$data['data']['experience']}}" placeholder="Experience">
+                                                <input type="text" class="form-control" name="experience" value="{{$data->experience}}" placeholder="Experience">
                                             </div>
                                             <div class="col-4">
                                                 <select class="form-control" name="certified">
                                                     <option value="">Certified</option>
-                                                    <option value="Yes" @php if('Yes'  == $data['data']['certified'] ) echo 'selected' ; @endphp>Yes</option>
-                                                    <option value="No" @php if('No'  == $data['data']['certified'] ) echo 'selected' ; @endphp>No</option>
+                                                    <option value="Yes" @php if('Yes'  == $data->certified ) echo 'selected' ; @endphp>Yes</option>
+                                                    <option value="No" @php if('No'  == $data->certified ) echo 'selected' ; @endphp>No</option>
                                                 </select>
                                             </div>
                                         </div>
