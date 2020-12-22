@@ -16,7 +16,7 @@
 		<ul class="nav flex-column">
 			<!--begin::Item-->
 			<li class="nav-item mb-10" data-toggle="tooltip" data-placement="right" data-container="body"
-				data-boundary="window" title="">
+				data-boundary="window" title="Home">
 				<a href="#" class="nav-link btn btn-icon btn-hover-text-primary btn-lg active">
 					<span class="svg-icon svg-icon-xxl">
 						<!--begin::Svg Icon | path:assets/media/svg/icons/Layout/Layout-4-blocks.svg-->
@@ -34,7 +34,7 @@
 			<!--end::Item-->
 			<!--begin::Item-->
 			<li class="nav-item mb-10" data-toggle="tooltip" data-placement="right" data-container="body"
-				data-boundary="window" title="Metronic Features">
+				data-boundary="window" title="My Profile">
 				<a href="{{ route('profile.index')}}" class="nav-link btn btn-icon btn-hover-text-primary btn-lg">
 					<span class="svg-icon svg-icon-xxl">									
 						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -48,7 +48,7 @@
 			<!--end::Item-->
 			<!--begin::Item-->
 			<li class="nav-item mb-10" data-toggle="tooltip" data-placement="right" data-container="body"
-				data-boundary="window" title="">
+				data-boundary="window" title="History Order">
 				<a href="{{route('riding_class.history.order')}}" class="nav-link btn btn-icon btn-hover-text-primary btn-lg" >
 					<span class="svg-icon svg-icon-xxl">
 						<!--begin::Svg Icon | path:assets/media/svg/icons/Media/Equalizer.svg-->

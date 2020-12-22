@@ -35,7 +35,7 @@
                                             </svg>
                                     </a>
                                     <div class="d-flex justify-content-start align-items-center">
-                                        <h1 class="title-text mb-0">
+                                        <h5 class="title-text mb-0">
                                             Horse Sex Management
                                         </h1>
                                     </div>

@@ -19,7 +19,7 @@
                     <!--begin::Container-->
                     <div class="container-fluid stable">
                         <div class="stable-body">
-                            <a href="#" class="btn btn-back-page">
+                            <a href="{{route('stable.index')}}" class="btn btn-back-page">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="63" height="34" viewBox="0 0 63 34" fill="none">
                                     <rect opacity="0.25" width="63" height="34" rx="17" fill="#C4C4C4"/>
                                     <path d="M29 17H15" stroke="#C4C4C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -34,11 +34,11 @@
 								<!--end::Page Title-->
 								<!--begin::Breadcrumb-->
 								<ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
-									<li class="breadcrumb-item active">
-										<a href="" class="text-muted">HOME</a>
+									<li class="breadcrumb-item">
+										<a href="{{route('competitions.index')}}">HOME</a>
 									</li>
 									<li class="breadcrumb-item">
-										<a href="" class="text-muted">MANAGE STABLE</a>
+										<a href="{{route('stable.index')}}">MANAGE STABLE</a>
 									</li>
 									<li class="breadcrumb-item">
 										<a href="" class="text-muted">ADD PACKAGE</a>
@@ -55,10 +55,6 @@
                                                 <label>Name Package</label>
                                                 <input type="text" class="form-control" name="name" placeholder="Name class or rides">
                                                 <input type="hidden" class="form-control" name="stable_id" value="{{$data_stable->id}}">
-                                            </div>
-                                            <div class="col-12 col-sm-6 col-md-5 col-lg-4 mb-3">
-                                                <label>Package Number</label>
-                                                <input type="text" name="package_number" class="form-control" placeholder="Package Number">
                                             </div>
                                         </div>
                                         <div class="form-group row">

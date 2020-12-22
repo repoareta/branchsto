@@ -31,7 +31,7 @@ use App\Http\Controllers\AppOwner\StableApprovalController;
 use App\Http\Controllers\AppOwner\UserPaymentApprovalController;
 
 route::get('/', function () {
-    return view('auth.login');
+    return redirect()->route('competitions.index');
 });
 route::get('home', function () {
     return redirect()->route('competitions.index');

@@ -39,7 +39,7 @@
                                             <p class="subtitle">
                                                 Choose a class that you can take according to your current abilities
                                             </p>
-                                            <a href="" class="btn btn-join-class">
+                                            <a href="{{route('riding_class.search_class', ['name' => null])}}" class="btn btn-join-class">
                                                 JOIN THE CLASS
                                             </a>
                                         </div>
@@ -54,7 +54,7 @@
                                             <p class="subtitle">
                                                 Choose a class that you can take according to your current abilities
                                             </p>
-                                            <a href="" class="btn btn-join-class">
+                                            <a href="{{route('riding_class.search_class', ['name' => null])}}" class="btn btn-join-class">
                                                 JOIN THE CLASS
                                             </a>
                                         </div>
@@ -69,7 +69,7 @@
                                             <p class="subtitle">
                                                 Choose a class that you can take according to your current abilities
                                             </p>
-                                            <a href="" class="btn btn-join-class">
+                                            <a href="{{route('riding_class.search_class', ['name' => null])}}" class="btn btn-join-class">
                                                 JOIN THE CLASS
                                             </a>
                                         </div>

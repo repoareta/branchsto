@@ -25,11 +25,11 @@
                                 </h5>
                                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 font-size-lg mb-0">
                                     <li class="breadcrumb-item">
-                                        <a href="">HOME</a>
-                                    </li>
-                                    <li class="breadcrumb-item">
-                                        <a href="">MANAGE STABLE</a>
-                                    </li>
+										<a href="{{route('competitions.index')}}">HOME</a>
+									</li>
+									<li class="breadcrumb-item">
+										<a href="{{route('stable.index')}}">MANAGE STABLE</a>
+									</li>
                                     <li class="breadcrumb-item">
                                         <a href="" class="text-muted">ADD COACH</a>
                                     </li>
