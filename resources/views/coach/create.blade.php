@@ -113,7 +113,7 @@
 
             Swal.fire({
                 title: "Full Coach Capacity.",
-                text: "Cencel",
+                text: "Cancel",
                 icon: "info",
                 buttonsStyling: false,
                 confirmButtonText: "Ok",

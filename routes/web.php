@@ -36,6 +36,9 @@ route::get('/', function () {
 route::get('home', function () {
     return redirect()->route('competitions.index');
 });
+route::get('test', function () {
+    return view('riding_class.history-pay');
+});
 
 // App Owner Route
 

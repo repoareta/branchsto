@@ -127,7 +127,7 @@
 
             Swal.fire({
                 title: "Full Horse Capacity.",
-                text: "Cencel",
+                text: "Cancel",
                 icon: "info",
                 buttonsStyling: false,
                 confirmButtonText: "Ok",

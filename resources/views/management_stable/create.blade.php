@@ -19,6 +19,10 @@
                         <input type="text" name="name" id="" class="form-control">
                     </div>
                     <div class="form-group">
+                      <label></label>
+                      <input type="text" name="" id="" class="form-control" placeholder="" aria-describedby="helpId">
+                    </div>
+                    <div class="form-group">
                         <label>Address</label>
                         <textarea name="address" id="" rows="5" class="form-control"></textarea>
                     </div>
@@ -31,7 +35,7 @@
                         <input type="text" name="contact_number" id="" class="form-control">
                     </div>
                     <h3>Statement</h3>
-                    <p>"Dengan ini kami mengajukan kerjasama penjualan tiket secara online dengan ketentuan dan syarat yang diperjanjikan"</p>
+                    <p>"We hereby submit an online ticket sales collaboration with the agreed terms and conditions"</p>
                 </div>
                 <div class="modal-footer">											
                     <button class="btn btn-secondary" data-dismiss="modal">Back</button>
