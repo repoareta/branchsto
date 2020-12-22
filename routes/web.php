@@ -23,7 +23,6 @@ use App\Http\Controllers\CoachController;
 use App\Http\Controllers\RidingClassController;
 
 // App Owner Controller
-
 use App\Http\Controllers\AppOwner\DashboardController;
 use App\Http\Controllers\AppOwner\BankAccountController;
 use App\Http\Controllers\AppOwner\HorseSexController;
@@ -33,6 +32,9 @@ use App\Http\Controllers\AppOwner\UserPaymentApprovalController;
 
 route::get('/', function () {
     return view('auth.login');
+});
+route::get('home', function () {
+    return redirect()->route('competitions.index');
 });
 
 // App Owner Route
@@ -48,9 +50,6 @@ Route::group(['prefix' => 'owner'], function(){
     // Horse Sex
     Route::get('/horse-sex', [HorseSexController::class, 'index'])->name('owner.horse-sex');
 
-    // Package Approval
-    Route::get('/package-approval', [PackageApprovalController::class, 'index'])->name('owner.package-approval');
-    
     // Stable Approval
     Route::get('/stable-approval', [StableApprovalController::class, 'index'])->name('owner.stable-approval');
     
@@ -156,4 +155,25 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
     });
 
     
+});
+
+
+//app owner
+
+Route::name('stable_approval.')->prefix('stable_approval')->group(function () {
+    route::get('/', [StableApprovalController::class, 'index'])->name('index');
+    route::get('list/approve/stable', [StableApprovalController::class, 'listJsonApprov'])->name('listJson.approv');
+    route::get('list/unapprov/stable', [StableApprovalController::class, 'listJsonUnapprov'])->name('listJson.unapprov');
+    route::get('detail/stable', [StableApprovalController::class, 'detailStable'])->name('detail.stable');
+    route::post('approv/stable', [StableApprovalController::class, 'approvStable'])->name('approv.stable');
+    route::post('unapprov/stable', [StableApprovalController::class, 'unapprovStable'])->name('unapprov.stable');
+});
+
+Route::name('package_approval.')->prefix('package_approval')->group(function () {
+    route::get('/', [PackageApprovalController::class, 'index'])->name('index');
+    route::get('list/approve/package', [PackageApprovalController::class, 'listJsonApprov'])->name('listJson.approv');
+    route::get('list/unapprov/package', [PackageApprovalController::class, 'listJsonUnapprov'])->name('listJson.unapprov');
+    route::get('detail/package', [PackageApprovalController::class, 'detailPackage'])->name('detail.package');
+    route::post('approv/package', [PackageApprovalController::class, 'approvPackage'])->name('approv.package');
+    route::post('unapprov/package', [PackageApprovalController::class, 'unapprovPackage'])->name('unapprov.package');
 });

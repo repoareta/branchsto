@@ -81,9 +81,6 @@
 @push('add-script')
 <script type="text/javascript">
     $(document).ready( function () {
-		var name = $(this).attr('data');
-
-		console.log(name);
         var t = $('#dataTable').DataTable({
 			scrollX   : true,
 			processing: true,

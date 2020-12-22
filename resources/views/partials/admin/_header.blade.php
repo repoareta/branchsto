@@ -28,12 +28,12 @@
 							<div class="menu-submenu menu-submenu-classic menu-submenu-left">
 								<ul class="menu-subnav">
 									<li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
-										<a href="{{route('owner.package-approval')}}" class="menu-link menu-toggle">
+										<a href="{{route('package_approval.index')}}" class="menu-link">
 											<span class="menu-text">Riding Package Approval</span>
 										</a>
 									</li>
 									<li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
-										<a href="{{route('owner.stable-approval')}}" class="menu-link menu-toggle">
+										<a href="{{route('stable_approval.index')}}" class="menu-link">
 											<span class="menu-text">List Stable Approval</span>
 										</a>
 									</li>

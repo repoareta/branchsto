@@ -33,7 +33,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo =RouteServiceProvider::HOME;
+    protected $redirectTo ='competitions/data-competitions';
     public function login(Request $request)
     {
         if (Auth::attempt($request->only('email','password'))) {

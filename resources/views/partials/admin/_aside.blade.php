@@ -49,14 +49,14 @@
 					<ul class="navi navi-hover py-4">
 						<!--begin::Item-->
 						<li class="navi-item">
-							<a href="{{route('owner.package-approval')}}" class="navi-link">											
+							<a href="{{route('package_approval.index')}}" class="navi-link">											
 								<span class="navi-text">Riding Package Approval</span>
 							</a>
 						</li>
 						<!--end::Item-->
 						<!--begin::Item-->
 						<li class="navi-item active">
-							<a href="{{route('owner.stable-approval')}}" class="navi-link">											
+							<a href="{{route('stable_approval.index')}}" class="navi-link">											
 								<span class="navi-text">List Stable Approval</span>
 							</a>
 						</li>
