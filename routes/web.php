@@ -114,7 +114,7 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
         route::get('edit/{id}', [PackageController::class, 'edit'])->name('edit');
         route::post('update', [PackageController::class, 'update'])->name('update');
         route::delete('delete', [PackageController::class, 'delete'])->name('delete');
-
+       
         Route::name('slot.')->group(function () {
             route::get('slot/json', [SlotController::class, 'detail_index_json'])->name('detail.index.json');
             route::post('slot/store', [SlotController::class, 'detail_store'])->name('detail.store');
@@ -122,6 +122,16 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
             route::post('slot/update', [SlotController::class, 'detail_update'])->name('detail.update');
             route::delete('slot/delete', [SlotController::class, 'detail_delete'])->name('detail.delete');
         });
+    });
+
+    Route::name('schedule.')->prefix('schedule')->group(function () {
+        route::get('/', [SlotController::class, 'index'])->name('index');
+        route::get('schedule/json', [SlotController::class, 'listJson'])->name('index.json');
+        route::get('create', [SlotController::class, 'create'])->name('create');
+        route::post('store', [SlotController::class, 'store'])->name('store');
+        route::get('detail/schedule', [SlotController::class, 'detailSchedule'])->name('detail.schedule');
+        route::get('detail/show', [SlotController::class, 'detailShow'])->name('detail.show');
+        route::delete('delete', [SlotController::class, 'delete'])->name('delete');
     });
 
 

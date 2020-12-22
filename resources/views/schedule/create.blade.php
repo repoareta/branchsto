@@ -29,7 +29,7 @@
 							<div class="d-flex align-items-baseline flex-wrap mr-5">
 								<!--begin::Page Title-->
 								<h4 class="title-text mb-0">
-                                    ADD PACKAGE
+                                    ADD SCHEDULE
                                 </h4>
 								<!--end::Page Title-->
 								<!--begin::Breadcrumb-->
@@ -38,10 +38,10 @@
 										<a href="" class="text-muted">HOME</a>
 									</li>
 									<li class="breadcrumb-item">
-										<a href="" class="text-muted">MANAGE STABLE</a>
+										<a href="" class="text-muted">MANAGE SCHEDULE</a>
 									</li>
 									<li class="breadcrumb-item">
-										<a href="" class="text-muted">ADD PACKAGE</a>
+										<a href="" class="text-muted">ADD SCHEDULE</a>
 									</li>
 								</ul>
 								<!--end::Breadcrumb-->
@@ -52,53 +52,14 @@
                                     <div class="card-body">
                                         <div class="form-group row">
                                             <div class="col-12 col-sm-6 col-md-5 col-lg-4 mb-3">
-                                                <label>Name Package</label>
-                                                <input type="text" class="form-control" name="name" placeholder="Name class or rides">
-                                                <input type="hidden" class="form-control" name="stable_id" value="{{$data_stable->id}}">
+                                                <label>Session</label>
+                                                <input type="text" class="form-control" name="time[]" value="08:00">
                                             </div>
                                             <div class="col-12 col-sm-6 col-md-5 col-lg-4 mb-3">
-                                                <label>Package Number</label>
-                                                <input type="text" name="package_number" class="form-control" placeholder="Package Number">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-12 col-sm-6 col-md-5 col-lg-4 mb-3">
-                                                <label>Description</label>
-                                                <textarea type="text" class="form-control" name="description" placeholder="Description"></textarea>
-                                            </div>
-                                            <div class="col-12 col-sm-6 col-md-5 col-lg-4 mb-3">
-                                                <label>Price</label>
-                                                <input type="text" class="form-control" name="price" placeholder="Price">
-                                            </div>												
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-12 col-sm-6 col-md-5 col-lg-4 mb-3">
-                                                <label>Attendance</label>
-                                                <input type="text" class="form-control" name="attendance" placeholder="Attendance">
-                                            </div>											
-                                        </div>
-                                        {{-- <div class="form-group row">
-                                            <div class="col-12 col-sm-6 col-md-5 col-lg-4 mb-3">
-                                                <label>Upload Logo</label>
-                                                <div class="custom-file">
-                                                    <input type="file" name="files[]" multiple class="custom-file-input form-control" id="customFileLogo">
-                                                    <label class="custom-file-label" for="customFileLogo">Upload Logo</label>
-                                                    </div>
-                                            </div>
-                                            <div class="col-12 col-sm-6 col-md-5 col-lg-4 mb-3">
-                                                <label>Upload Banner</label>
-                                                <div class="custom-file">
-                                                    <input type="file" name="files[]" multiple class="custom-file-input form-control" id="customFileBanner">
-                                                    <label class="custom-file-label" for="customFileBanner">Upload Banner Cover</label>
-                                                    </div>
+                                                <label>Capacity</label>
+                                                <input type="text" class="form-control" name="capacity[]" value="0">
                                             </div>
                                         </div>
-                                        <div class="form-group row">
-                                            <div class="col-12 col-sm-6 col-md-4 mb-3">
-                                                <label>Gallery</label>
-                                                <div id="drag-drop-area"></div>
-                                            </div>
-                                        </div>											 --}}
                                         </form>
                                         <div class="form-group mt-5">
                                             <button type="submit" class="btn btn-add-new mr-2">SAVE</button>

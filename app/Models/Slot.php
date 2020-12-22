@@ -9,6 +9,7 @@ class Slot extends Model
 {
     use HasFactory;
 
+    protected $fillable=['user_id','date','time_start', 'time_end','capacity','capacity_booked'];
     /**
     * Get the owner of stable
     */

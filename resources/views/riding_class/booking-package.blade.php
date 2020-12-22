@@ -112,7 +112,7 @@
                                         </div>
                                         <div class="subtitle-detail">
                                         </div>
-                                        {{-- <div class="title-detail">
+                                        <div class="title-detail">
                                             Name
                                         </div>
                                         <table class="table package-detail">
@@ -138,7 +138,7 @@
                                                     </a>
                                                 </td>
                                             </tr>
-                                        </table> --}}
+                                        </table>
                                     </div>
                                 </div>
                             </div>

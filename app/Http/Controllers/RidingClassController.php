@@ -56,7 +56,6 @@ class RidingClassController extends Controller
     public function addToCart(Request $request)
     {
         // session()->forget("data_list");
-
         $list_detail = session('data_list');
         return view('riding_class.booking-package',compact('list_detail'));
     }

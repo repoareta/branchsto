@@ -52,6 +52,8 @@
                                             <th scope="col">Package Number</th>
                                             <th scope="col">Description</th>
                                             <th scope="col">Price</th>
+                                            <th scope="col">Attendance</th>
+                                            <th scope="col">Status</th>
                                             <th scope="col">Action</th>
                                             </tr>
                                         </thead>
@@ -87,10 +89,12 @@ $(document).ready( function () {
         ajax      : "{{ route('package.list.json') }}",
         columns: [
             {data: 'profile', name: 'profile'},
-            {data: 'name_package', name: 'name_package'},
+            {data: 'name', name: 'name'},
             {data: 'package_number', name: 'package_number'},
             {data: 'description', name: 'description'},
             {data: 'price', name: 'price'},
+            {data: 'attendance', name: 'attendance'},
+            {data: 'approval_status', name: 'approval_status'},
             {data: 'action', name: 'action'},
         ]
     });
