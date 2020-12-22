@@ -33,9 +33,9 @@
                                 <div class="col-lg-3">
                                     <div class="card h-100">
                                         <div class="card-body">
-                                            <h2 class="title-text">
+                                            <h6 class="title-text">
                                                 FILTER
-                                            </h2>
+                                            </h6>
                                             <form action="{{route('riding_class.search_class')}}" method="GET">
                                                 {{-- @csrf --}}
                                                 <div class="form-group">

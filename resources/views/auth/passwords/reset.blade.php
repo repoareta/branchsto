@@ -6,7 +6,7 @@
 		<base href="{{ url('/') }}">
 		<meta charset="utf-8" />
 		<title>
-			{{ config('app.name', 'BRANCHSTO') }} | 
+			EQUINRIDE | 
 			@if(Request::segment(1)) {{ strtoupper(str_replace('_', ' ', Request::segment(1))) }} @endif
 		</title>
 		<meta name="description" content="Login page example">
@@ -40,7 +40,7 @@
 							<div class="kt-login__block">
 								<div class="kt-login__logo">
 								<a href="{{url('/login')}}">
-										<img src="{{ asset('assets/media/logos/profile.png') }}" style="margin-left:10rem;width: 40%;height: 40%;">
+										<img src="{{ asset('assets/media/branchsto/logo-branchsto.svg') }}" style="margin-left:10rem;width: 40%;height: 40%;">
 									</a>
 								</div>
 							</div>

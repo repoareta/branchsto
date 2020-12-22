@@ -43,7 +43,7 @@
                                                 <th scope="col">Owner</th>													
                                                 <th scope="col">Contact Person</th>													
                                                 <th scope="col">Contact Number</th>													
-                                                <th scope="col">Date Created</th>													
+                                                <th scope="col">Date Created</th>											
                                                 <th scope="col">Action</th>
                                                 </tr>
                                             </thead>
@@ -121,7 +121,7 @@
                             <label>Contact Number</label>
                             <input type="text" class="form-control" id="contact_number">
                         </div>	
-                    </div>	
+                    </div>
                     <div class="form-group row">
                         <div class="col-6">
                             <label>Manager</label>

@@ -886,7 +886,7 @@ div#kt_content, .flex-row.page {
   font-size: 20px;
   padding-left: 15px;
   padding-right: 15px;
-  margin-top: -5px;
+  margin-top: -2.5px;
 }
 .breadcrumb .breadcrumb-item a {
   display: -webkit-box;
@@ -1206,46 +1206,47 @@ div#kt_content, .flex-row.page {
   color: #2A4158;
   margin-left: 5px;
 }
-.checkout-body .bank-number .card-bank{
+.bank-number .card-bank{
   background: #FFFFFF;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   padding: 15px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
 }
-.checkout-body .bank-number .bank{
+.bank-number .bank{
   display: flex;
   justify-content: start;
   align-items: center;
 }
-.checkout-body .bank-number img{
+.bank-number img{
   height: 30px;
 }
-.checkout-body .bank-number .text{
+.bank-number .text{
   text-align: left;
   margin-left: 20px;
 }
-.checkout-body .bank-number .text .name{
+.bank-number .text .name{
   font-weight: normal;
   font-size: 12px;
   color: #BDBDBD;
 }
-.checkout-body .bank-number .text .number{
+.bank-number .text .number{
   font-weight: normal;
   font-size: 16px;
   color: #2A4158;
 }
-.checkout-body .bank-number .copy-icon{
+.bank-number .copy-icon{
   background: none;
   border: none;
   margin-left: 60px;
 }
-.checkout-body .bank-number{
+.bank-number{
   margin-top: 25px;
 }
-.checkout-body .btn-payment{
+.btn-payment{
   background: #141D31;
   border: 1px solid #2A4158;
   box-sizing: border-box;
@@ -1276,4 +1277,3 @@ div#kt_content, .flex-row.page {
 .element.style {
   padding-bottom: 50px;
 }
-

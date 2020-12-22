@@ -257,7 +257,7 @@
 						</div>
 					</div>	
 					<div class="modal-footer">
-						<button type="button" class="btn btn-light-dark font-weight-bold" data-dismiss="modal">CENCEL</button>
+						<button type="button" class="btn btn-light-dark font-weight-bold" data-dismiss="modal">Cancel</button>
 						<button type="submit" class="btn btn-dark font-weight-bold">SAVE</button>
 					</div>
 				</form>

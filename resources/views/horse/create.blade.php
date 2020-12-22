@@ -19,7 +19,7 @@
                     <!--begin::Container-->
                     <div class="container-fluid stable">
                         <div class="stable-body">
-                            <a href="#" class="btn btn-back-page">
+                            <a href="{{route('stable.index')}}" class="btn btn-back-page">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="63" height="34" viewBox="0 0 63 34" fill="none">
                                     <rect opacity="0.25" width="63" height="34" rx="17" fill="#C4C4C4"/>
                                     <path d="M29 17H15" stroke="#C4C4C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -32,11 +32,11 @@
                                 </h5>
                                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 font-size-lg mb-0">
                                     <li class="breadcrumb-item">
-                                        <a href="">HOME</a>
-                                    </li>
-                                    <li class="breadcrumb-item">
-                                        <a href="">MANAGE STABLE</a>
-                                    </li>
+										<a href="{{route('competitions.index')}}">HOME</a>
+									</li>
+									<li class="breadcrumb-item">
+										<a href="{{route('stable.index')}}">MANAGE STABLE</a>
+									</li>
                                     <li class="breadcrumb-item">
                                         <a href="" class="text-muted">ADD HORSE</a>
                                     </li>
@@ -127,7 +127,7 @@
 
             Swal.fire({
                 title: "Full Horse Capacity.",
-                text: "Cencel",
+                text: "Cancel",
                 icon: "info",
                 buttonsStyling: false,
                 confirmButtonText: "Ok",

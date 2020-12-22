@@ -31,10 +31,13 @@ use App\Http\Controllers\AppOwner\StableApprovalController;
 use App\Http\Controllers\AppOwner\UserPaymentApprovalController;
 
 route::get('/', function () {
-    return view('auth.login');
+    return redirect()->route('competitions.index');
 });
 route::get('home', function () {
     return redirect()->route('competitions.index');
+});
+route::get('test', function () {
+    return view('riding_class.history-pay');
 });
 
 // App Owner Route
@@ -61,12 +64,12 @@ Route::group(['prefix' => 'owner'], function(){
 
 // User Route
 
-// Auth::routes(['verify' => true]);
+// Auth::routes(['verify' => true, 'logout' => false, 'password']);
 Route::name('login.')->group(function () {
     Route::post('login', [LoginController::class, 'login'])->name('login');
     Route::get('login', [LoginController::class, 'showLoginForm'])->name('loginForm');
     Route::get('error', [LoginController::class, 'error'])->name('error');
-    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+    Route::get('logout', [LoginController::class, 'logout'])->name('logout');
     Route::post('register', [RegisterController::class, 'register'])->name('register');
     Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('registerForm');
     Route::get('send-reset-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('reset.reqpassword');
