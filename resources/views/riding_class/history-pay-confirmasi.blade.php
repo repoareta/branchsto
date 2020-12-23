@@ -50,9 +50,22 @@
                                             @endforeach
                                             
                                             <h5>Reminder :</h5>
-                                            <p class="table-success">
-                                                Pending.
-                                            </p>
+                                            @foreach ($status_booking as $item)
+                                                @if ($item->approval_status == null)
+                                                    <p class="table-info">
+                                                        Pending.
+                                                    </p> 
+                                                @else
+                                                    <p class="table-success">
+                                                        {{$item->approval_status}}.
+                                                    </p> 
+                                                    <div class="image">  
+                                                        @foreach ($booking_detail as $row)
+                                                            <img src="{{ asset('storage'.$row->qr_code) }}" />                                                       
+                                                        @endforeach                                    
+                                                    </div>
+                                                @endif
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>

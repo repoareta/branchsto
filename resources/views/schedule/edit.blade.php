@@ -382,7 +382,7 @@
             });
         } );
 
-        $('#kt_table tbody').on( 'click', '.edit-slot', function (e) {
+        $('#kt_table tbody').on( 'click', '.view-time', function (e) {
 			e.preventDefault();
             // get value from row					
             var id = $(this).attr('data-id');

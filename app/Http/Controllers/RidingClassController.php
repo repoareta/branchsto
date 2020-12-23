@@ -15,6 +15,7 @@ use App\Models\Stable;
 use App\Models\Slot;
 use App\Models\Package;
 use App\Models\Booking;
+use App\Models\Province;
 use App\Models\BookingDetail;
 
 // load plugin
@@ -137,7 +138,7 @@ class RidingClassController extends Controller
         $booking = Booking::find($request->booking_id);
         $booking->updated_at = date('Y-m-d H:i:s');
         $booking->bank_payment_id = $request->bank_payment_id;
-        $booking->approval_status = 'accept';
+        $booking->approval_status = '';
 
         if ($request->hasFile('photo')) {
             $booking->photo = $request->file('photo')->getClientOriginalName();
@@ -152,9 +153,40 @@ class RidingClassController extends Controller
         ->leftJoin('packages as d', 'c.package_id', '=', 'd.id')
         ->leftJoin('stables as e', 'd.stable_id', '=', 'e.id')
         ->select('b.date','b.time_start','b.time_end','d.name','e.name as stable_name')->get();
-        $status_booking = Booking::where('id',$data_booking_id)->first();
+        $status_booking = Booking::select('*')->where('id',$data_booking_id)->get();
         
-        return view('riding_class.history-pay-confirmasi',compact('data_list','data_booking_id'));
+        return view('riding_class.history-pay-confirmasi',compact('data_list','data_booking_id','status_booking'));
+    }
+
+    public function historyorderDetail()
+    {
+        $province = Province::all();
+        $data = Stable::with(['user'])->where('user_id', Auth::user()->id)->first();
+        $data_list = DB::table('slot_user as a')
+        ->where('f.user_id', Auth::user()->id)
+        ->leftJoin('slots as b', 'a.slot_id', '=', 'b.id')
+        ->leftJoin('booking_details as c', 'a.booking_detail_id', '=', 'c.id')
+        ->leftJoin('packages as d', 'c.package_id', '=', 'd.id')
+        ->leftJoin('stables as e', 'd.stable_id', '=', 'e.id')
+        ->leftJoin('bookings as f', 'c.booking_id', '=', 'f.id')
+        ->select('f.id','d.name','e.name as stable_name')->groupBy('f.id','e.name','d.name')->get();
+
+        return view('riding_class.history_order',compact('data','data_list','province'));
+    }
+
+    public function booking_list_qrcode(Request $request)
+    {
+        $data_booking_id = $request->booking_id;
+        $data_list = DB::table('slot_user as a')
+        ->where('c.booking_id', $data_booking_id)
+        ->leftJoin('slots as b', 'a.slot_id', '=', 'b.id')
+        ->leftJoin('booking_details as c', 'a.booking_detail_id', '=', 'c.id')
+        ->leftJoin('packages as d', 'c.package_id', '=', 'd.id')
+        ->leftJoin('stables as e', 'd.stable_id', '=', 'e.id')
+        ->select('b.date','b.time_start','b.time_end','d.name','e.name as stable_name')->get();
+        $status_booking = Booking::select('*')->where('id',$data_booking_id)->get();
+        $booking_detail = BookingDetail::select('*')->where('booking_id',$data_booking_id)->limit(1)->get();
+        return view('riding_class.history-pay-confirmasi',compact('data_list','data_booking_id','status_booking','booking_detail'));
     }
 
 }
