@@ -60,10 +60,7 @@
                                                         {{$item->approval_status}}.
                                                     </p> 
                                                     <div class="image">                                      
-                                                        {{-- <img src='' width='40px' height='40px' alt=''> --}}
-                                                        {!! QrCode::size(130)->generate('QRco'); !!}
-                                                        <h6 class="title-text">QRco</h6>
-                                                        
+                                                        <img src="{{ URL::asset('storage/app/'.$item->phot) }}" />                                                        {!! QrCode::size(130)->generate('QRco'); !!}
                                                     </div>
                                                 @endif
                                             @endforeach
