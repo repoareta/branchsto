@@ -57,13 +57,8 @@ class RegisterController extends Controller
 
         $user->sendEmailVerificationNotification();  
                 
-        if ($user->getStatusCode() == 200) {           
-            Alert::success('Register Success.', 'Segera lakukan verifikasi email.')->persistent(true)->autoClose(3600);
-            return redirect()->route('verifikasi.index');
-        }else{
-            Alert::info('Register Failed.', 'Try Again.')->persistent(true)->autoClose(3600);
-            return redirect()->route('login.loginForm');
-        }    
+        Alert::success('Register Success.', 'Segera lakukan verifikasi email.')->persistent(true)->autoClose(3600);
+        return redirect()->route('verifikasi.index');
     }
     /**
      * Get a validator for an incoming registration request.
