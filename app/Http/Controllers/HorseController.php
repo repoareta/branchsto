@@ -11,6 +11,8 @@ use Carbon\Carbon;
 
 // load model
 use App\Models\Horse;
+use App\Models\HorseSex;
+use App\Models\HorseBreed;
 use App\Models\Stable;
 
 //load form request (for validation)
@@ -36,10 +38,10 @@ class HorseController extends Controller
             })
             ->addColumn('age', function ($data) {
                 $dateOfBirth = $data->birth_date;
-                return Carbon::parse($dateOfBirth)->age;;
+                return Carbon::parse($dateOfBirth)->age;
             })
             ->addColumn('sex', function ($data) {
-                return $data->sex;
+                return $data->sex->name;
             })
             ->addColumn('passport_number', function ($data) {
                 return $data->passport_number;
@@ -48,7 +50,7 @@ class HorseController extends Controller
                 return $data->owner;
             })
             ->addColumn('horse_breeds', function ($data) {
-                return $data->breeds;
+                return $data->breed->name;
             })
             ->addColumn('action', function ($data) {
                 return 
@@ -63,6 +65,8 @@ class HorseController extends Controller
     }
     public function create()
     {
+        $horseSex = HorseSex::all();
+        $horseBreed = HorseBreed::all();
         $data_stable = Stable::with(['user','horse'])->where('user_id', Auth::user()->id)->first();
         if($data_stable->capacity_of_stable > 0 and  $data_stable->number_of_coach > 0 and $data_stable->capacity_of_arena > 0){
             if($data_stable->horse->where('stable_id', $data_stable->id)->where('user_id', $data_stable->user_id)->count() < $data_stable->capacity_of_stable){
@@ -73,7 +77,7 @@ class HorseController extends Controller
         }else{
             $data = 0;
         }
-        return view('horse.create',compact('data','data_stable'));
+        return view('horse.create',compact('data','data_stable', 'horseSex', 'horseBreed'));
     }
 
     public function store(HorseStore $request, Horse $horse)
@@ -81,10 +85,11 @@ class HorseController extends Controller
         $horse->name            = $request->name;
         $horse->owner           = $request->owner;
         $horse->birth_date      = $request->birth_date;
-        $horse->sex             = $request->sex;
+        $horse->horse_sex_id      = $request->horse_sex_id;
+        $horse->horse_breed_id      = $request->horse_breed_id;
         $horse->passport_number = $request->passport_number;
-        $horse->breeds          = $request->breeds;
-        $horse->pedigree        = $request->pedigree;
+        $horse->pedigree_male        = $request->pedigree_male;
+        $horse->pedigree_female        = $request->pedigree_female;
         $horse->stable_id       = $request->stable_id;
         $horse->user_id         = Auth::user()->id;
         $horse->save();
@@ -95,8 +100,10 @@ class HorseController extends Controller
 
     public function edit($id)
     {
+        $horseSex = HorseSex::all();
+        $horseBreed = HorseBreed::all();
         $data= Horse::find($id)->first();
-        return view('horse.edit',compact('data'));
+        return view('horse.edit',compact('data','horseSex', 'horseBreed'));
     }
     public function update(HorseStore $request, Horse $horse)
     {
@@ -104,10 +111,11 @@ class HorseController extends Controller
         $horse->name            = $request->name;
         $horse->owner           = $request->owner;
         $horse->birth_date      = $request->birth_date;
-        $horse->sex             = $request->sex;
+        $horse->horse_sex_id      = $request->horse_sex_id;
+        $horse->horse_breed_id      = $request->horse_breed_id;
         $horse->passport_number = $request->passport_number;
-        $horse->breeds          = $request->breeds;
-        $horse->pedigree        = $request->pedigree;
+        $horse->pedigree_male        = $request->pedigree_male;
+        $horse->pedigree_female        = $request->pedigree_female;
         $horse->stable_id       = $request->stable_id;
         $horse->user_id         = Auth::user()->id;
         $horse->save(); 

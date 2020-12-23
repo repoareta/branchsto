@@ -60,10 +60,10 @@
                                         <div class="form-group row">
                                             <div class="col-4">
                                                 <label>Sex</label>
-                                                <select class="form-control" name="sex">
-                                                    <option value="Stallion">Stallion</option>
-                                                    <option value="Mare">Mare</option>
-                                                    <option value="Gelding">Gelding</option>
+                                                <select class="form-control" name="horse_sex_id">
+                                                    @foreach ($horseSex as $item)
+                                                        <option value="{{$item->id}}">{{$item->name}}</option>                                                      
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-4">
@@ -78,16 +78,21 @@
                                             </div>
                                             <div class="col-4">
                                                 <label>Horse Breed</label>
-                                                <select class="form-control" name="breeds">
-                                                    <option value="Indonesian">Indonesian</option>
-                                                    <option value="European">European</option>
+                                                <select class="form-control" name="horse_breed_id">
+                                                    @foreach ($horseBreed as $item)
+                                                        <option value="{{$item->id}}">{{$item->name}}</option>                                                      
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-4">
-                                                <label>Pedigree</label>
-                                                <input type="text" class="form-control" name="pedigree" placeholder="Pedigree" autocomplete='off'>
+                                                <label>Pedigree Male</label>
+                                                <input type="text" class="form-control" name="pedigree_male" placeholder="Pedigree Male" autocomplete='off'>
+                                            </div>
+                                            <div class="col-4">
+                                                <label>Pedigree Female</label>
+                                                <input type="text" class="form-control" name="pedigree_female" placeholder="Pedigree Female" autocomplete='off'>
                                             </div>
                                         </div>
                                         <div class="form-group">
