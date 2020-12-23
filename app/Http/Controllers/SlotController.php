@@ -101,8 +101,8 @@ class SlotController extends Controller
         })
         ->addColumn('action', function ($data) {
             return 
-                "<a href='".route('schedule.detail.schedule',['date' => $data->date])."' class='btn btn-info'>
-                    <i class='fas fa-eye text-center mr-2 view-time' data-time='".$data->date."'></i>
+                "<a href='#' class='btn btn-info'>
+                    <i class='fas fa-eye text-center mr-2 view-time' data-time='".$data->id."'></i>
                 </a>
                 <a class='btn btn-danger'>
                     <i class='fas fa-trash delete-slot pointer-link' data-id='".$data->id."'></i>
@@ -155,7 +155,7 @@ class SlotController extends Controller
 
     public function detailShow(Request $request)
     {
-        $data= Slot::where('id',$request->id)->get();
+        $data= Slot::where('id',$request->id)->first();
         return response()->json($data,200);
     }
     public function update(Request $request)

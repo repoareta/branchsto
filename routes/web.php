@@ -202,7 +202,7 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
         route::get('booking/detail', [RidingClassController::class, 'booking_detail'])->name('booking.detail');
         route::post('confirmation/payment', [RidingClassController::class, 'history_order'])->name('confirmasion.payment');
         route::get('booking/list', [RidingClassController::class, 'booking_list_qrcode'])->name('booking.list.qrcode');
-        route::get('history/order', [RidingClassController::class, 'history_order'])->name('history.order');
+        route::get('history/order', [RidingClassController::class, 'historyorderDetail'])->name('history.order');
     });
 
     
