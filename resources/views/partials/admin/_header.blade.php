@@ -49,7 +49,7 @@
 							<div class="menu-submenu menu-submenu-classic menu-submenu-left">
 								<ul class="menu-subnav">
 									<li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
-										<a href="{{route('owner.payment-approval')}}" class="menu-link menu-toggle">
+										<a href="{{route('owner.userpayment.index')}}" class="menu-link menu-toggle">
 											<span class="menu-text">Riding Package</span>
 										</a>
 									</li>

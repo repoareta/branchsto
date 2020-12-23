@@ -20,26 +20,25 @@
                     </div>
                     <div class="form-group">
                         <label>Province</label>
-                        <select name="province" id="" class="form-control">
-                            <option value="1">1</option>
+                        <select name="province_id" id="province" class="form-control">
+                            @foreach ($province as $item)                            
+                                <option value="{{$item->id}}">{{$item->name}}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Cities</label>
-                        <select name="cities" id="" class="form-control">
-                            <option value="1">1</option>
+                        <label>City</label>
+                        <select name="city_id" id="city" class="form-control">                                                                       
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Districts</label>
-                        <select name="districts" id="" class="form-control">
-                            <option value="1">1</option>
+                        <label>District</label>
+                        <select name="district_id" id="district" class="form-control">              
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Villages</label>
-                        <select name="villages" id="" class="form-control">
-                            <option value="1">1</option>
+                        <label>Village</label>
+                        <select name="village_id" id="village" class="form-control">    
                         </select>
                     </div>
                     <div class="form-group">
@@ -65,3 +64,33 @@
         </div>
     </div>
 </div>
+
+@push('add-script')
+<script>
+        $('#province').change(function(){
+            var provinceID = $(this).val();  
+            if(provinceID){
+                $.ajax({
+                type:"GET",
+                url:"{{url('profile/city')}}?province_id="+provinceID,
+                success:function(res){        
+                    if(res){
+                        $("#city").empty();
+                        $("#city").append('<option>Select</option>');
+                        $.each(res,function(key,value){
+                            $("#city").append('<option value="'+key+'">'+value+'</option>');
+                        });
+                    
+                        }else{
+                            $("#city").empty();
+                            }
+                        }
+                    });
+            }else{
+                $("#city").empty();
+                $("#district").empty();
+                $("#village").empty();
+            }   
+        });
+</script>
+@endpush

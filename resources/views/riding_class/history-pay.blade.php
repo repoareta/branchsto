@@ -27,76 +27,29 @@
                                     <form action="{{route('riding_class.confirmasion.payment')}}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <div class="card-body">
+                                            @foreach ($data_list as $item)
                                             <h4>
-                                                Nama Package
+                                                Nama Package {{$item->name}}
                                             </h4>
                                             <p>
-                                                Nama Stable
+                                                Nama Stable {{$item->stable_name}}
                                             </p>
                                             <hr>
                                                 <h4>
                                                     Session
                                                 </h4>
                                                 <p>
-                                                    26 Desember 2020
+                                                    {{$item->date}}
                                                 </p>
                                                 <h4>
                                                     Slot
                                                 </h4>
                                                 <p class="mb-0">
-                                                    09:00 - 10:00
+                                                    {{$item->time_start}} - {{$item->time_end}}
                                                 </p>
-                                                <p class="mb-0">
-                                                    10:00 - 11:00
-                                                </p>
-                                                <p class="mb-0">
-                                                    13:00 - 14:00
-                                                </p>
-                                                <h5 class="mt-2">Sub Total : Rp. 400.000</h5>
                                             <hr>
-                                            <hr>
-                                                <h4>
-                                                    Session
-                                                </h4>
-                                                <p>
-                                                    26 Desember 2020
-                                                </p>
-                                                <h4>
-                                                    Slot
-                                                </h4>
-                                                <p class="mb-0">
-                                                    09:00 - 10:00
-                                                </p>
-                                                <p class="mb-0">
-                                                    10:00 - 11:00
-                                                </p>
-                                                <p class="mb-0">
-                                                    13:00 - 14:00
-                                                </p>
-                                                <h5 class="mt-2">Sub Total : Rp. 400.000</h5>
-                                            <hr>
-                                            <hr>
-                                                <h4>
-                                                    Session
-                                                </h4>
-                                                <p>
-                                                    26 Desember 2020
-                                                </p>
-                                                <h4>
-                                                    Slot
-                                                </h4>
-                                                <p class="mb-0">
-                                                    09:00 - 10:00
-                                                </p>
-                                                <p class="mb-0">
-                                                    10:00 - 11:00
-                                                </p>
-                                                <p class="mb-0">
-                                                    13:00 - 14:00
-                                                </p>
-                                                <h5 class="mt-2">Sub Total : Rp. 400.000</h5>
-                                            <hr>
-                                            <h4 class="text-right">Total : Rp. 1.200.000</h4>
+                                            @endforeach
+                                            
                                             <h5>Reminder :</h5>
                                             <p class="table-danger">
                                                 If you don't pay for 1 hour then your payment will expired
@@ -132,11 +85,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            @foreach ($data_list as $item)
                                                 
-                                            <input type="text" name="booking_id" value="{{$item->id}}">
-                                            <input type="text" name="bank_payment_id" value="">
-                                            @endforeach
+                                            <input type="hidden" name="booking_id" value="{{$data_booking_id}}">
+                                            <input type="hidden" name="bank_payment_id" value="3">
                                             <button type="submit" class="btn btn-payment w-100" id="add-payment">
                                                 PAYMENT
                                             </button>

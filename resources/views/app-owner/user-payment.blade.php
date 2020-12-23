@@ -4,792 +4,222 @@
 @endpush
 @section('content')
 <!--begin::Main-->
-
-		<!--[html-partial:include:{"file":"partials/_header-mobile.html"}]/-->
-		@include('partials.admin._header-mobile')
-		<div class="d-flex flex-column flex-root">
-
-			<!--begin::Page-->
-			<div class="d-flex flex-row flex-column-fluid page">
-
-				<!--[html-partial:include:{"file":"partials/_aside.html"}]/-->
-				@include('partials.admin._aside')
-				<!--begin::Wrapper-->
-				<div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
-
-					<!--[html-partial:include:{"file":"partials/_header.html"}]/-->
-					@include('partials.admin._header')
-
-					<!--begin::Content-->
-					<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-                        <!--begin::Entry-->
-                        <div class="d-flex flex-column-fluid">
-                            <!--begin::Container-->
-                            <div class="container-fluid stable">
-                                <div class="stable-body data">
-                                    <a href="" class="btn btn-back-page">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="63" height="34" viewBox="0 0 63 34" fill="none">
-                                            <rect opacity="0.25" width="63" height="34" rx="17" fill="#C4C4C4"/>
-                                            <path d="M29 17H15" stroke="#C4C4C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                            <path d="M22 24L15 17L22 10" stroke="#C4C4C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                            </svg>
-                                    </a>
-                                    <div class="d-flex justify-content-start align-items-center">
-                                        <h5 class="title-text mb-0">
-                                            USER PAYMENT APPROVAL
-                                        </h5>
-                                    </div>
-                                    <div class="card mt-10">
-                                        <div class="card-body">
-                                            <div class="table-responsive">
-                                                <table class="table table-data table-striped" id="dataTable">
-                                                    <thead>
-                                                      <tr>
-                                                        <th scope="col">#</th>
-                                                        <th scope="col">Package Name</th>
-                                                        <th scope="col">User Name</th>
-                                                        <th scope="col">Price</th>
-                                                        <th scope="col">Transfer Image</th>
-                                                        <th scope="col">Action</th>
-                                                      </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                      <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Package A</td>
-                                                        <td>
-                                                            Lukas Mambo
-                                                        </td>
-                                                        <td>Rp. 100.000</td>												
-                                                        <td>
-                                                            <img src="../assets/media/branchsto/payment-logo.svg" alt="" class="img-thumbnail">
-                                                        </td>												
-                                                        <td>
-                                                            <a href="#" class="btn btn-success text-center mr-2">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger text-center mr-2">
-                                                                <i class="fas fa-ban"></i>
-                                                            </a>
-                                                        </td>
-                                                      </tr>																																																																																																																																																																																																																																																																																																																																																																																		
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
+@include('partials.admin._header-mobile')
+<div class="d-flex flex-column flex-root">
+    <!--begin::Page-->
+    <div class="d-flex flex-row flex-column-fluid page">
+        <!--[html-partial:include:{"file":"partials/_aside.html"}]/-->
+        @include('partials.admin._aside')
+        <!--begin::Wrapper-->
+        <div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
+            @include('partials.admin._header')
+            <!--begin::Content-->
+            <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                <!--begin::Entry-->
+                <div class="d-flex flex-column-fluid">
+                    <!--begin::Container-->
+                    <div class="container-fluid stable">
+                        <div class="stable-body data">
+                            <a href="" class="btn btn-back-page">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="63" height="34" viewBox="0 0 63 34" fill="none">
+                                    <rect opacity="0.25" width="63" height="34" rx="17" fill="#C4C4C4"/>
+                                    <path d="M29 17H15" stroke="#C4C4C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M22 24L15 17L22 10" stroke="#C4C4C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                            </a>
+                            <div class="d-flex justify-content-start align-items-center">
+                                <h6 class="title-text mb-0 table-danger">
+                                    LIST USER PAYMENT APPROVAL
+                                </h6>
+                            </div>
+                            <div class="card mt-10">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-data table-danger" id="dataTableunapprov">
+                                            <thead>
+                                                <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">User</th>													                                                												
+                                                <th scope="col">Image</th>													
+                                                <th scope="col">Status</th>									
+                                                <th scope="col">Bank</th>									
+                                                <th scope="col">Action</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
-                            <!--end::Container-->
+                            <div class="d-flex justify-content-start align-items-center mt-20">
+                                <h6 class="title-text mb-0 table-success">
+                                    LIST USER PAYMENT APPROVED
+                                </h6>
+                            </div>
+                            <div class="card mt-10">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-data table-success" id="dataTable">
+                                            <thead>
+                                                <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">User</th>													                                                												
+                                                <th scope="col">Image</th>													
+                                                <th scope="col">Status</th>	
+                                                <th scope="col">Bank</th>										
+                                                <th scope="col">Action</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <!--end::Entry-->
                     </div>
-					<!--end::Content-->
-
-					<!--[html-partial:include:{"file":"partials/_footer.html"}]/-->
-					@include('partials._footer')
-				</div>
-
-				<!--end::Wrapper-->
-
-			</div>
-
-			<!--end::Page-->
-		</div>
-
+                    <!--end::Container-->
+                </div>
+                <!--end::Entry-->
+            </div>
+            <!--end::Content-->
+            @include('partials._footer')
+        </div>
+        <!--end::Wrapper-->
+    </div>
+    <!--end::Page-->
+</div>
 <!--end::Main-->
+
+<!-- Modal -->
+<div class="modal fade" id="modalDetail"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header ">
+                <h4 class="title-text " id="title_modal" data-state="add">
+                    DETAIL STABLE
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                        <div class="col-sm-6">
+                            <p class="mb-0">User</p>
+                            <h4 class="mb-4" id="user"></h4>                            
+                            <p class="mb-0">Image</p>
+                            <h4 class="mb-4" id="image"></h4>
+                            <p class="mb-0">Status</p>
+                            <h4 class="mb-4" id="status"></h4>
+                            <p class="mb-0">Bank</p>
+                            <h4 class="mb-4" id="bank"></h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">											
+                    <button data-dismiss="modal" class="btn btn-add-new font-weight-bold">Close</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+
+
 @endsection
 @push('add-script')
-	<script>
+	<script type="text/javascript">
 		$(document).ready( function () {
-			$('#dataTable').DataTable();
-			
+			$('#dataTable').DataTable({
+                scrollX   : true,
+                processing: true,
+                // serverSide: true,
+                language: {
+                    processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> <br> Loading...'
+                },
+                ajax      : "{{ route('owner.userpayment.listJson.approv') }}",
+                columns: [
+                    {data: 'no', render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }},
+                    {data: 'name', name: 'name'},                    
+                    {data: 'photo', name: 'photo'},
+                    {data: 'approval_status', name: 'approval_status'},
+                    {data: 'bank', name: 'bank'},
+                    {data: 'action', name: 'action'},
+                ]
+            }); 
+			$('#dataTableunapprov').DataTable({
+                scrollX   : true,
+                processing: true,
+                // serverSide: true,
+                language: {
+                    processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> <br> Loading...'
+                },
+                ajax      : "{{ route('owner.userpayment.listJson.unapprov') }}",
+                columns: [
+                    {data: 'no', render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }},
+                    {data: 'name', name: 'name'},                    
+                    {data: 'photo', name: 'photo'},
+                    {data: 'approval_status', name: 'approval_status'},
+                    {data: 'bank', name: 'bank'},
+                    {data: 'action', name: 'action'},
+                ]
+            }); 
+
+            $('body').on( 'click', '#openBtn', function () {
+                var id = $(this).data('id');
+                $.get('{{route('owner.userpayment.index')}}'+'/detail/booking/' + id , function (data) {
+                    $('#user').html(data.name);
+                    $('#price_total').html(data.price_total);
+                    $('#image').html(data.image);                    
+                    $('#approval_status').html(data.approval_status);                    
+                    if(data.approval_status == null){
+                        $('#approval_status').html('Need Approval');    
+                    }
+                    $('#bank').html(data.bank);
+                    $('#modalDetail').modal('show');
+                })
+            });  
+
+            $('tbody').on('click','#accept', function(e) {
+    
+                e.preventDefault();
+                    
+                Swal.fire({
+                    title: "Are you sure?",
+                    icon: "warning",
+                    text: "This is will be accepted the stable",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Accept",
+                    cancelButtonText: "Cancel",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                }).then(function(getAction) {
+                    if (getAction.value === true) {
+                        $('#formAccept').submit();
+                    }
+                });
+            });
+
+            $('tbody').on('click','#decline', function(e) {
+    
+                e.preventDefault();
+                    
+                Swal.fire({
+                    title: "Are you sure?",
+                    icon: "warning",
+                    text: "This is will be declined the stable",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Accept",
+                    cancelButtonText: "Cancel",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                }).then(function(getAction) {
+                    if (getAction.value === true) {
+                        $('#formDecline').submit();
+                    }
+                });
+            });
 		} );
-	</script>
-<!--end::Page Scripts-->
 </script>
 @endpush

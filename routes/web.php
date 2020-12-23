@@ -84,8 +84,14 @@ Route::group(['prefix' => 'owner'], function(){
     });
     
     // User Payment Approval
-    
-    Route::get('/payment-approval', [UserPaymentApprovalController::class, 'index'])->name('owner.payment-approval');
+    Route::group(['prefix' => 'userpayment'], function () {
+        route::get('/', [UserPaymentApprovalController::class, 'index'])->name('owner.userpayment.index');
+        route::get('list/approve/booking', [UserPaymentApprovalController::class, 'listJsonApprov'])->name('owner.userpayment.listJson.approv');
+        route::get('list/unapprov/booking', [UserPaymentApprovalController::class, 'listJsonUnapprov'])->name('owner.userpayment.listJson.unapprov');
+        route::get('detail/booking/{id}', [UserPaymentApprovalController::class, 'detailBooking'])->name('owner.userpayment.detail.booking');
+        route::patch('approv/booking/{id}', [UserPaymentApprovalController::class, 'approvBooking'])->name('owner.userpayment.approv.booking');
+        route::patch('unapprov/booking/{id}', [UserPaymentApprovalController::class, 'unapprovBooking'])->name('owner.userpayment.unapprov.booking'); 
+    });
 });
 
 
@@ -118,10 +124,13 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
 
     Route::name('profile.')->prefix('profile')->group(function () {
         route::get('/', [ProfileController::class, 'index'])->name('index');
+        route::get('city', [ProfileController::class, 'getCity'])->name('city');
+        route::get('district', [ProfileController::class, 'getDistrict'])->name('district');
+        route::get('village', [ProfileController::class, 'getVillage'])->name('village');
     });
 
     Route::name('stable.')->prefix('stable')->group(function () {
-        route::get('/', [StableController::class, 'index'])->name('index');
+        route::get('/', [StableController::class, 'index'])->name('index');        
         route::get('menu', [StableController::class, 'menu'])->name('menu');
         route::post('store', [StableController::class, 'store'])->name('store');
         route::put('update', [StableController::class, 'update'])->name('update');
