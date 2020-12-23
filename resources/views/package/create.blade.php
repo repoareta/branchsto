@@ -56,6 +56,10 @@
                                                 <input type="text" class="form-control" name="name" placeholder="Name class or rides">
                                                 <input type="hidden" class="form-control" name="stable_id" value="{{$data_stable->id}}">
                                             </div>
+                                            <div class="col-12 col-sm-6 col-md-5 col-lg-4 mb-3">
+                                                <label>Package Number</label>
+                                                <input type="text" class="form-control" name="package_number" placeholder="Package Number">
+                                            </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-12 col-sm-6 col-md-5 col-lg-4 mb-3">

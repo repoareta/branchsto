@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 // load model
 use App\Models\Stable;
@@ -72,5 +73,38 @@ class StableController extends Controller
 
         Alert::success('Update Stable Success.', 'Success')->persistent(true)->autoClose(3600);
         return redirect()->back();
+    }
+
+
+    public function stable_close()
+    {
+        return view('stable_close.index');
+    }
+    public function listJsonStableClose()
+    {
+        $data = DB::table('slot_user as a')
+        ->where('a.user_id', Auth::user()->id)
+        ->where('a.booking_detail_id',146)
+        ->leftJoin('slots as b', 'b.id', '=', 'a.slot_id')
+        ->select('b.date','b.time_start','b.time_end','a.qr_code_status','a.id')->get();
+        return datatables()->of($data)
+        ->addColumn('action', function ($data) {
+            return 
+            "
+            <a href='#' data-id='".$data->id."' class='btn btn-info text-center mr-2' id='close'>
+                <i class='fas fa-check-circle pointer-link'></i>                    
+            </a>
+            ";
+        })
+        ->rawColumns(['profile','action'])
+        ->make(true);
+    }
+
+    public function close(Request $request){
+        DB::table('slot_user')->where('id', $request->id)
+        ->update([
+            'qr_code_status' => 'Close',
+        ]);
+        return response()->json();
     }
 }

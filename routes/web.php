@@ -205,6 +205,12 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
         route::get('history/order', [RidingClassController::class, 'historyorderDetail'])->name('history.order');
     });
 
+    Route::name('stable_close.')->prefix('stable_close')->group(function () {
+        route::get('/', [StableController::class, 'stable_close'])->name('index');
+        route::get('list/json', [StableController::class, 'listJsonStableClose'])->name('list.json');
+        route::post('close/json', [StableController::class, 'close'])->name('close');
+    });
+
     
 });
 
