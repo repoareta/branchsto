@@ -59,8 +59,10 @@
                                                     <p class="table-success">
                                                         {{$item->approval_status}}.
                                                     </p> 
-                                                    <div class="image">                                      
-                                                        <img src="{{ URL::asset('storage/app/'.$item->phot) }}" />                                                       
+                                                    <div class="image">  
+                                                        @foreach ($booking_detail as $row)
+                                                            <img src="{{ asset('storage/'.$row->qr_code) }}" />                                                       
+                                                        @endforeach                                    
                                                     </div>
                                                 @endif
                                             @endforeach
