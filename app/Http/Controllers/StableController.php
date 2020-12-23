@@ -18,6 +18,7 @@ class StableController extends Controller
 {
     public function index(){
         $data = Stable::with(['user'])->where('user_id', Auth::user()->id)->first();
+        
         return view('management_stable.index',compact('data'));
     }
 
