@@ -6,11 +6,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
 
+// load model
+use App\Models\Package;
+use App\Models\Stable;
 
 //load form request (for validation)
-use App\Http\Requests\Package;
+use App\Http\Requests\PackageStore;
 class PackageController extends Controller
 {
     public function index()
@@ -19,35 +23,27 @@ class PackageController extends Controller
     }
     public function listJson()
     {
-        $data_stable = Http::get('http://185.201.9.73/branchsto/public/api/stable-by-user/'.Auth::user()->id)->json();
-        $dataa= Http::get('http://185.201.9.73/branchsto/public/api/package-by-stable/'.$data_stable['data']['id']);
-        $data=[];
-        foreach($dataa['data'] as $row)
-        {
-            $data[] = $row;
-        }
+        $data = Package::where('user_id', Auth::user()->id);
         return datatables()->of($data)
             ->addColumn('profile', function ($data) {
                 return "<img src='assets/media/branchsto/horse.png' width='40px' height='40px' alt=''>";
             })
-            ->addColumn('name_package', function ($data) {
-                return $data['name'];
-            })
-            ->addColumn('package_number', function ($data) {
-                return $data['package_number'];
-            })
-            ->addColumn('description', function ($data) {
-                return $data['description'];
-            })
             ->addColumn('price', function ($data) {
-                return $data['price'];
+                return number_format($data->price);
+            })
+            ->addColumn('approval_status', function ($data) {
+            
+                if($data->approval_status == null){
+                    return 'Pending';
+                }
+                return $data->approval_status;
             })
             ->addColumn('action', function ($data) {
                 return 
                 "
-                    <i class='fas fa-pen edit-package pointer-link' data-id='".$data['id']."'></i>
+                    <i class='fas fa-pen edit-package pointer-link' data-id='".Crypt::encryptString($data->id)."'></i>
                     <i class='fas fa-eye '></i>
-                    <i class='fas fa-trash delete-package pointer-link' data-id='".$data['id']."'></i>
+                    <i class='fas fa-trash delete-package pointer-link' data-id='".$data->id."'></i>
                 ";
             })
             ->rawColumns(['profile','action'])
@@ -55,72 +51,55 @@ class PackageController extends Controller
     }
     public function create()
     {
-        $data= Http::get('http://185.201.9.73/branchsto/public/api/stable-by-user/'.Auth::user()->id);
-        return view('package.create',compact('data'));
-    }
-    public function store(Package $request)
-    {
-        $status = Http::post('http://185.201.9.73/branchsto/public/api/package',[
-            'package_number' => $request->package_number,
-            'name'           => $request->name,
-            'description'    => $request->description,
-            'price'          => $request->price,
-            'user_id'        => Auth::user()->id,
-            'stable_id'      =>  $request->stable_id,
-        ]); 
-        $package_id = $status['data']['id'];
-        if (session('data_list')) {
-            $list_details = session('data_list');
-            foreach($list_details as $row)
-            {
-                $status = Http::post('http://185.201.9.73/branchsto/public/api/slot',[
-                    'user_id'       => $row['user_id'],
-                    'package_id'    => $package_id,
-                    'date_start'    => $row['date_start'],
-                    'date_end'      => $row['date_end'],
-                    'capacity'      => $row['capacity'],
-                ]);
-            }
-            session()->forget('data_list');
-        }
-        if ($status->getStatusCode() == 200) {
-            Alert::success('Create Data Success.', 'Success.')->persistent(true)->autoClose(3600);
-            return redirect()->route('package.index');
+        $data_stable = Stable::with(['user','package'])->where('user_id', Auth::user()->id)->first();
+        if($data_stable->capacity_of_stable > 0 and  $data_stable->number_of_coach > 0 and $data_stable->capacity_of_arena > 0){
+            if($data_stable->package->where('stable_id', $data_stable->id)->where('user_id', $data_stable->user_id)->count() < $data_stable->capacity_of_stable){
+                $data = 1;
+            }else{
+                $data = 0;
+            };
         }else{
-            Alert::info('Create Data Failed.', 'Try Again.')->persistent(true)->autoClose(3600);
-            return redirect()->route('package.index');
-        }   
+            $data = 0;
+        }
+        return view('package.create',compact('data','data_stable'));
+    }
+    public function store(Request $request, Package $package)
+    {
+        $package->package_number = $request->package_number;
+        $package->attendance     = $request->attendance;
+        $package->name           = $request->name;
+        $package->description    = $request->description;
+        $package->price          = $request->price;
+        $package->user_id        = Auth::user()->id;
+        $package->stable_id      = $request->stable_id;
+        $package->save();
+
+        Alert::success('Create Success.', 'Success.')->persistent(true)->autoClose(3600);
+        return redirect()->route('package.index');   
     }
     public function edit($id)
     {
-        $data= Http::get('http://185.201.9.73/branchsto/public/api/package/'.$id);
+        $data= Package::find(Crypt::decryptString($id));
         return view('package.edit',compact('data'));
     }
-    public function update(Package $request)
+    public function update(Request $request)
     {
-        $status = Http::put('http://185.201.9.73/branchsto/public/api/package/'.$request->package_id,[
-            'name'            => $request->name,
-            'owner'           => $request->owner,
-            'birth_date'      => $request->birth_date,
-            'sex'             => $request->sex,
-            'passport_number' => $request->passport_number,
-            'breeds'          => $request->breeds,
-            'pedigree'        => $request->pedigree,
-            'stable_id'       => $request->stable_id,
-            'user_id'         => Auth::user()->id,
-        ]); 
-        if ($status->getStatusCode() == 200) {
-            Alert::success('Update Success.', 'Success.')->persistent(true)->autoClose(3600);
-            return redirect()->route('package.index');
-        }else{
-            Alert::info('Update Failed.', 'Try Again.')->persistent(true)->autoClose(3600);
-            return redirect()->route('package.index');
-        }   
+        $package = Package::find($request->package_id);
+        $package->package_number = $request->package_number;
+        $package->attendance     = $request->attendance;
+        $package->name           = $request->name;
+        $package->description    = $request->description;
+        $package->price          = $request->price;
+        $package->user_id        = Auth::user()->id;
+        $package->stable_id      = $request->stable_id;
+        $package->save();
+        Alert::success('Update Success.', 'Success.')->persistent(true)->autoClose(3600);
+        return redirect()->route('package.index');   
     }
 
     public function delete(Request $request)
     {
-        $data = Http::delete('http://185.201.9.73/branchsto/public/api/package/'.$request->id);
+       Package::find($request->id)->delete();
         return response()->json();
     }
 }

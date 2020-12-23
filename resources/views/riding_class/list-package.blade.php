@@ -33,46 +33,27 @@
                                 <div class="col-lg-3">
                                     <div class="card h-100">
                                         <div class="card-body">
-                                            <h2 class="title-text">
+                                            <h6 class="title-text">
                                                 FILTER
-                                            </h2>
-                                            <form>
+                                            </h6>
+                                            <form action="{{route('riding_class.search_class')}}" method="GET">
+                                                {{-- @csrf --}}
                                                 <div class="form-group">
-                                                    <input type="number" name="" class="form-control" placeholder="Price">
-                                                </div>
-                                                <div class="form-group">
-                                                    <select name="" id="" class="form-control">
-                                                        <option value="">Slot</option>
-                                                        <option value="">1</option>
-                                                        <option value="">2</option>
-                                                        <option value="">4</option>
-                                                        <option value="">5</option>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <select name="" id="" class="form-control">
-                                                        <option value="">Session</option>
-                                                        <option value="">1</option>
-                                                        <option value="">2</option>
-                                                        <option value="">4</option>
-                                                        <option value="">5</option>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="custom-control custom-radio">
-                                                        <label class="custom-control-label" for="frequentlyVisited">Frequesntly Visited</label>
-                                                        <input type="radio" id="frequentlyVisited" name="customRadio" class="custom-control-input">
-                                                        </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="custom-control custom-radio">
-                                                        <label class="custom-control-label" for="nearestLocation">Nearest Location</label>
-                                                        <input type="radio" id="nearestLocation" name="customRadio" class="custom-control-input">
-                                                        </div>
+                                                    <input type="text" name="name" class="form-control" placeholder="Stable Name">
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="input-group date">
-                                                        <input type="text" class="form-control" readonly="readonly" placeholder="Select date">
+                                                        <input type="text" class="form-control" readonly="readonly" placeholder="Date">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">
+                                                                <i class="la la-calendar-check-o"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="input-group date">
+                                                        <input type="text" class="form-control" readonly="readonly" placeholder="Time">
                                                         <div class="input-group-append">
                                                             <span class="input-group-text">
                                                                 <i class="la la-calendar-check-o"></i>
@@ -82,7 +63,7 @@
                                                 </div>
                                                 <div class="d-flex justify-content-between align-self-end">
                                                     <button class="btn btn-secondary">RESET</button>
-                                                    <button class="btn btn-add-new">FILTER</button>
+                                                    <button class="btn btn-add-new">SEARCH</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -95,7 +76,7 @@
                                             <div class="competition-card package">
                                                 <div class="image">					
                                                     <div class="register">
-                                                        <a href="{{route('riding_class.booking_class', ['id' => Crypt::encryptString($row['id'])])}}">
+                                                        <a href="{{route('riding_class.booking_class', ['id' => Crypt::encryptString($row->id)])}}">
                                                             REGISTER NOW
                                                             <img src="{{url('assets/media/branchsto/double-arrow.svg')}}" alt="">
                                                         </a>
@@ -105,15 +86,15 @@
                                                     <div class="overlay"></div>
                                                 </div>
                                                 <div class="title">
-                                                    {{strtoupper($row['name'])}}
+                                                    {{strtoupper($row->stable->name)}}
                                                 </div>
                                                 <div class="subtitle">
-                                                    
+                                                    {{strtoupper($row->name)}}
                                                 </div>
                                                 <table class="table package">
                                                     <tr>
                                                         <td>
-                                                            Rp. {{number_format($row['price'],0,'.','.')}}
+                                                            Rp. {{number_format($row->price,0,'.','.')}}
                                                         </td>
                                                         <td class="text-right">
                                                             <a href="">

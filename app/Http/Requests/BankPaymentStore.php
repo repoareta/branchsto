@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class Package extends FormRequest
+class BankPaymentStore extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,9 @@ class Package extends FormRequest
     public function rules()
     {
         return [
-            'package_number' => 'required',
-            'name'           => 'required',
-            'description'    => 'required',
-            'price'          => 'required',
-            'stable_id'      => 'required',
+            'account_number'           => 'required|numeric',
+            'account_name'           => 'required',
+            'branch'           => 'required'
         ];
     }
 }

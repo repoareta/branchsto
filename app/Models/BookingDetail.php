@@ -9,6 +9,7 @@ class BookingDetail extends Model
 {
     use HasFactory;
 
+    protected $fillable=['package_id','price_subtotal','booking_id'];
     /**
     * Get the owner of coach
     */

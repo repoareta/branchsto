@@ -35,9 +35,9 @@
                                             </svg>
                                     </a>
                                     <div class="d-flex justify-content-start align-items-center">
-                                        <h1 class="title-text mb-0">
+                                        <h5 class="title-text mb-0">
                                             USER PAYMENT APPROVAL
-                                        </h1>
+                                        </h5>
                                     </div>
                                     <div class="card mt-10">
                                         <div class="card-body">

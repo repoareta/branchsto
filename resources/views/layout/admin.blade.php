@@ -7,7 +7,7 @@
 		<base href="">
 		<meta charset="utf-8" />
 		<title>
-			{{ config('app.name', 'BRANCHSTO') }} | 
+			EQUINRIDE | 
 			@if(Request::segment(1)) {{ strtoupper(str_replace('_', ' ', Request::segment(1))) }} @endif
 		</title>
 		<meta name="description" content="Updates and statistics" />

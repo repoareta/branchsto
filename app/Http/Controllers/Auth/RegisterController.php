@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 
 use App\Http\Requests\Register;
 use App\Http\Requests\ResetPassword;
-
+use App\Models\User;
 class RegisterController extends Controller
 {
     /*gis
@@ -48,14 +48,16 @@ class RegisterController extends Controller
     }
     public function register(Register $request)
     {
-        $regisuser = Http::post('http://185.201.9.73/branchsto/public/api/register',[
-            'email'         => $request->email,
-            'password'      => $request->password,
-            'name'          => $request->name,
-        ]);  
+        $user = new User;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        
+        $user->save();
+
+        $user->sendEmailVerificationNotification();  
                 
-        if ($regisuser->getStatusCode() == 200) {
-            Auth::attempt($request->only('email', 'password'));
+        if ($user->getStatusCode() == 200) {           
             Alert::success('Register Success.', 'Segera lakukan verifikasi email.')->persistent(true)->autoClose(3600);
             return redirect()->route('verifikasi.index');
         }else{

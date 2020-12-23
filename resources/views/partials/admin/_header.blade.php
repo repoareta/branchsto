@@ -28,12 +28,12 @@
 							<div class="menu-submenu menu-submenu-classic menu-submenu-left">
 								<ul class="menu-subnav">
 									<li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
-										<a href="{{route('owner.package-approval')}}" class="menu-link menu-toggle">
+										<a href="{{route('package_approval.index')}}" class="menu-link">
 											<span class="menu-text">Riding Package Approval</span>
 										</a>
 									</li>
 									<li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
-										<a href="{{route('owner.stable-approval')}}" class="menu-link menu-toggle">
+										<a href="{{route('stable_approval.index')}}" class="menu-link">
 											<span class="menu-text">List Stable Approval</span>
 										</a>
 									</li>
@@ -70,7 +70,7 @@
 										</a>
 									</li>
 									<li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
-										<a href="{{route('owner.bank-account')}}" class="menu-link menu-toggle">
+										<a href="{{route('owner.bank')}}" class="menu-link menu-toggle">
 											<span class="menu-text">Bank Account Number</span>
 										</a>
 									</li>
@@ -176,7 +176,7 @@
 		<!--begin::Dropdown-->
 		<div class="dropdown dropdown-inline" data-toggle="tooltip" title="Quick actions" data-placement="left">
 			<a href="#" class="btn btn-icon btn-user ml-3 h-50px w-50px flex-shrink-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<img src="../assets/media/branchsto/person-1.png" alt="">
+				<img src="{{url('assets/media/branchsto/person-1.png')}}" alt="">
 			</a>
 			<div class="dropdown-menu dropdown-menu-md dropdown-menu-right p-0">
 				<!--begin::Navigation-->

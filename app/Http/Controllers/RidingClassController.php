@@ -8,90 +8,136 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
+// load model
+use App\Models\Stable;
+use App\Models\Slot;
+use App\Models\Package;
+use App\Models\Booking;
+use App\Models\BookingDetail;
+
+// load plugin
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\Storage;
 class RidingClassController extends Controller
 {
     public function search_list_class(Request $request)
     {
-        $datas= Http::get('http://185.201.9.73/branchsto/public/api/package');
-        $data=[];
-        foreach($datas['data'] as $row)
-        {
-            $data[] = $row;
+        $Query = Package::select('*');                        
+        if ($request->has('name') && $request->name != null) {
+            $Query->where(function ($query) use ($request) {
+                $query->orWhereRaw("lower(name) like '%" . strtolower($request->name) . "%'");
+            });
         }
-        return view('riding_class.list-package',compact('data'));
+        if ($request->has('date') && $request->date != null){
+            $Query->where('date', $request->date);
+        }            
+        if ($request->has('time') && $request->time != null){
+            $Query->where('time', $request->time);
+        }            
+
+        $data = $Query->get();
+        return view('riding_class.list-package',compact('data'));               
     }
     public function booking_class(Request $request)
     {
-        $id = Crypt::decryptString($request->id);
-        $data= Http::get('http://185.201.9.73/branchsto/public/api/package/'.$id)->json();
-        $data_list = [
-            'id'            => $data['data']['id'],      
-            'name'          => $data['data']['name'],
-            'description'   => $data['data']['description'],
-            'price'         => $data['data']['price']
-        ];
-        if (session('data_list')) {
-            session()->push('data_list', $data_list);
-        } else {
-            session()->put('data_list', []);
-            session()->push('data_list', $data_list);
-        }
-       
-        return redirect()->route('riding_class.booking.addCart');
+        $list_detail = Package::with(['stable'])->where('id', Crypt::decryptString($request->id))->get();
+        $data_slot = Slot::select('date')->whereYear('date',date('Y'))->whereMonth('date',date('m'))->groupBy('date')->get();
+        return view('riding_class.booking-package',compact('list_detail','data_slot'));
     }
+    
     public function addToCart(Request $request)
     {
+        session()->forget("data_list_slot");
+        session()->forget("data_list_package");
+
+        $data = $request->all();
+        foreach ($data['chackbox'] as $item => $value) {
+            if (!$data['chackbox'][$item] == null) {
+                $data2 = array(
+                    'slot_id'               => $data['chackbox'][$item],     
+                );
+                session()->push('data_list_slot', $data2);
+
+            }
+        } 
+
+        $data1 = array(
+            'package_id'            => $request->package_id,      
+            'package_name'          => $request->package_name,      
+            'stable_name'           => $request->stable_name,      
+            'description'           => $request->description,      
+            'price_total'           => $request->price_total,
+            'price_subtotal'        => $request->price_subtotal,
+        );
+        session()->push('data_list_package', $data1);
+        return redirect()->route('riding_class.pesan.addCart');       
+    }
+
+    public function pesanToCart(Request $request)
+    {
         // session()->forget("data_list");
-
-        $list_detail = session('data_list');
-        return view('riding_class.booking-package',compact('list_detail'));
+        $data_list_slot = session("data_list_slot");
+        $data_list_package = session("data_list_package");
+       
+        return view('riding_class.after-booking-package',compact('data_list_slot','data_list_package'));       
     }
 
-    public function booking_payment(Request $request)
+    public function booking_payment(Request $request, Booking $booking, BookingDetail $booking_detail)
     {
-        if(session('data_list')){
-            $status = Http::post('http://185.201.9.73/branchsto/public/api/booking',[
-                'user_id'     => Auth::user()->id,
-                'price_total' => $request->price_total,
-            ]); 
-            $booking_id = $status['data']['id'];        
-            $list_details = session('data_list');
-            foreach ($list_details as $row) {
-                $status = Http::post('http://185.201.9.73/branchsto/public/api/booking-detail', [
-                    'package_id'     => $row['id'],
-                    'booking_id'     => $booking_id,
-                    'price_subtotal' => $row['price'],
-                ]);
+        // session()->forget("data_list_slot");
+        // session()->forget("data_list_package");       
+        $data = $request->all();
+        $booking->user_id     = Auth::user()->id;
+        $booking->price_total = $request->price_total;
+        $booking->save(); // save booking
+
+        // insert booking detail
+        foreach (session("data_list_package") as $key => $row) {
+            # code...
+
+            $booking_detail->package_id = $row['package_id'];  
+            $booking_detail->price_subtotal = $row['price_subtotal'];
+            $booking_detail->booking_id = $booking->id;
+
+            $booking_detail->save();
+
+            foreach ($data['slot_id'] as $item => $value) {
+                if (!$data['slot_id'][$item] == null) {
+                    DB::table('slot_user')->insert([
+                        'booking_detail_id' => $booking_detail->id,
+                        'slot_id'           => $data['slot_id'][$item],
+                        'user_id'           => Auth::user()->id,
+                        'qr_code'           => 'a',
+                        'qr_code_status'    => 'A',
+                    ]);
+                }
             }
-            if ($status->getStatusCode() == 200) {
-                session()->forget("data_list");
-                Alert::success('Chackout Data Success.', 'Success.')->persistent(true)->autoClose(3600);
-                return redirect()->route('riding_class.booking.detail',['id' => Crypt::encryptString($booking_id)]);
-            }else{
-                Alert::info('Chackout Data Failed.', 'Try Again.')->persistent(true)->autoClose(3600);
-                return redirect()->back();
-            }
-        }else{
-            return redirect()->back();
-        }  
-    }
-    public function booking_detail(Request $request)
-    {
-        // $d = Crypt::decryptString($request->id);
-        // dd($d);
-        $data= Http::get('http://185.201.9.73/branchsto/public/api/booking/'.Crypt::decryptString($request->id));
-        return view('riding_class.payment',compact('data'));
+        }
 
+        session()->forget("data_list_slot");
+        session()->forget("data_list_package"); 
+        $booking_id = $booking->id;
+        $data_list = Booking::with(['booking_detail'])->where('id', $booking_id)->get();
+        return view('riding_class.history-pay',compact('data_list'));       
     }
-    public function booking_list_qrcode()
+
+    public function history_order(Request $request)
     {
-        $data= Http::get('http://185.201.9.73/branchsto/public/api/package/'.$id)->json();
-        return view('riding_class.booking-detail',compact('data'));
+        $booking = Booking::find($request->booking_id);
+        $booking->updated_at = date('Y-m-d H:i:s');
+        $booking->bank_payment_id = $request->bank_payment_id;
+        $booking->approval_status = 'accept';
+
+        if ($request->hasFile('photo')) {
+            $booking->photo = $request->file('photo')->getClientOriginalName();
+            $image_path = $request->file('photo')->storeAs('booking/photo', $booking->photo, 'public');
+        }
+        $booking->save();
+        $booking_id = $request->booking_id;
+        $data_list = Booking::with(['booking_detail'])->where('id', $booking_id)->get();
+        return view('riding_class.history-pay',compact('data_list'));
     }
-    public function history_order()
-    {
-        $data= Http::get('http://185.201.9.73/branchsto/public/api/stable-by-user/'.Auth::user()->id)->json();
-        return view('riding_class.history_order',compact('data'));
-    }
+
 }

@@ -33,25 +33,25 @@
 									<div class="card-body-premium">
 										<img src="{{url('assets/media/branchsto/gem-silver-icon.svg')}}" alt="">
 										<div class="title">Premium</div>
-										<div class="subtitle">Unesgitered</div>										
+										<div class="subtitle">Unregistered</div>										
 									</div>
-									@if ($data['data'] == null)
+									@if ($data == null)
 										<div class="card-body-premium pointer-link" data-toggle="modal" data-target="#modalStableRegist">
 											<img src="{{url('assets/media/branchsto/chess-silver-icon.svg')}}" alt="">
 											<div class="title">Stable</div>
-											<div class="subtitle">Resgitered</div>												
+											<div class="subtitle">Unregistered</div>												
 										</div>
 									@else
 										<div class="card-body-premium pointer-link" data-toggle="modal" id="form-stable">
 											<img src="{{url('assets/media/branchsto/chess-gold-icon.svg')}}" alt="">
 											<div class="title">Stable</div>
-											<div class="subtitle">Resgitered</div>												
+											<div class="subtitle">Registered</div>												
 										</div>
 									@endif
 									<div class="card-body-premium">
 										<img src="{{url('assets/media/branchsto/event-silver-icon.svg')}}" alt="">
 										<div class="title">EO</div>
-										<div class="subtitle">Unresgitered</div>												
+										<div class="subtitle">Unregistered</div>												
 									</div>
 								</div>
 							</div>
@@ -100,7 +100,7 @@
 												<div class="row">
 													<div class="col-10">
 														<div class="text pointer-link">
-															@if ($data['data'] == null)
+															@if ($data == null)
 																<div class="title-card">Management Stable</div>
 																<div class="subtitle-card">Add or manage your stable</div>
 															@else
@@ -161,7 +161,7 @@
 
 @endsection
 @section('scripts')
-{!! JsValidator::formRequest('App\Http\Requests\Stable', '#formstable') !!}
+{!! JsValidator::formRequest('App\Http\Requests\StableStore', '#formstable') !!}
 <script type="text/javascript">
     $(document).ready( function () {
 		$('#form-stable').click(function(e) {

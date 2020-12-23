@@ -32,13 +32,13 @@
                                 </h4>
                                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 font-size-lg mb-0">
                                     <li class="breadcrumb-item">
-                                        <a href="">HOME</a>
-                                    </li>
+										<a href="{{route('competitions.index')}}">HOME</a>
+									</li>
+									<li class="breadcrumb-item">
+										<a href="{{route('stable.index')}}">MANAGE STABLE</a>
+									</li>
                                     <li class="breadcrumb-item">
-                                        <a href="">MANAGE STABLE</a>
-                                    </li>
-                                    <li class="breadcrumb-item">
-                                        <a href="" class="text-muted">LIST</a>
+                                        <a href="" class="text-muted">LIST PACKAGE</a>
                                     </li>
                                 </ul>
                             </div>
@@ -52,6 +52,8 @@
                                             <th scope="col">Package Number</th>
                                             <th scope="col">Description</th>
                                             <th scope="col">Price</th>
+                                            <th scope="col">Attendance</th>
+                                            <th scope="col">Status</th>
                                             <th scope="col">Action</th>
                                             </tr>
                                         </thead>
@@ -87,10 +89,12 @@ $(document).ready( function () {
         ajax      : "{{ route('package.list.json') }}",
         columns: [
             {data: 'profile', name: 'profile'},
-            {data: 'name_package', name: 'name_package'},
+            {data: 'name', name: 'name'},
             {data: 'package_number', name: 'package_number'},
             {data: 'description', name: 'description'},
             {data: 'price', name: 'price'},
+            {data: 'attendance', name: 'attendance'},
+            {data: 'approval_status', name: 'approval_status'},
             {data: 'action', name: 'action'},
         ]
     });

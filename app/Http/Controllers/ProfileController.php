@@ -7,10 +7,12 @@ use Illuminate\Support\Facades\Http;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
 
+// load model
+use App\Models\Stable;
 class ProfileController extends Controller
 {
     public function index(){
-        $data= Http::get('http://185.201.9.73/branchsto/public/api/stable-by-user/'.Auth::user()->id)->json();
+        $data = Stable::with(['user'])->where('user_id', Auth::user()->id)->first();
         return view('profile.index',compact('data'));
     }
 }

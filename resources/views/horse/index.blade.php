@@ -32,13 +32,13 @@
 								</h5>
 								<ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 font-size-lg mb-0">
 									<li class="breadcrumb-item">
-										<a href="">HOME</a>
+										<a href="{{route('competitions.index')}}">HOME</a>
 									</li>
 									<li class="breadcrumb-item">
-										<a href="">MANAGE STABLE</a>
+										<a href="{{route('stable.index')}}">MANAGE STABLE</a>
 									</li>
 									<li class="breadcrumb-item">
-										<a href=""  class="text-muted">List</a>
+										<a href=""  class="text-muted">LIST HORSE</a>
 									</li>
 								</ul>
 							</div>
@@ -81,9 +81,6 @@
 @push('add-script')
 <script type="text/javascript">
     $(document).ready( function () {
-		var name = $(this).attr('data');
-
-		console.log(name);
         var t = $('#dataTable').DataTable({
 			scrollX   : true,
 			processing: true,

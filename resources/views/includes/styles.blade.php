@@ -6,6 +6,9 @@
 
 <!--begin::Page Vendors Styles(used by this page)-->
 <link rel="stylesheet" href="{{url('assets/datatables/datatables.min.css')}}" type="text/css">
+{{-- <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css" /> --}}
+<link href="https://cdn.datatables.net/rowgroup/1.0.2/css/rowGroup.dataTables.min.css" rel="stylesheet" type="text/css" />
+
 <link href="{{url('assets/plugins/custom/fullcalendar/fullcalendar.bundle.css')}}" rel="stylesheet" type="text/css" />
 
 <!--end::Page Vendors Styles-->

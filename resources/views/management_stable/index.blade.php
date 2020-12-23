@@ -27,15 +27,19 @@
 								<img src="{{url('assets/media/branchsto/stable-profile.png')}}" alt="" class="rounded-circle stable-img">
 								<div class="text">
 									<div class="stable-name">
-										{{$data['data']['name']}}
+										{{$data->name}}
 									</div>
 									<div class="stable-desc">
-										{{$data['data']['address']}}
+										{{$data->address}}
 									</div>
 									<div class="email-number">
+										<div class="email">
+											<img src="{{url('assets/media/branchsto/contact_person.svg')}}" alt="">
+											{{$data->contact_person}}
+										</div>
 										<div class="number">
 											<img src="{{url('assets/media/branchsto/cell.svg')}}" alt="">
-											{{$data['data']['contact_person']}}
+											{{$data->contact_number}}
 										</div>
 									</div>
 								</div>
@@ -48,7 +52,7 @@
 					</div>
 					<div class="stable-body">
 						<div class="row">
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<a href="{{route('horse.index')}}">
 									<div class="card-action">
 										<div class="image">
@@ -61,7 +65,7 @@
 									</div>
 								</a>
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<a href="{{route('package.index')}}">
 									<div class="card-action">
 										<div class="image">
@@ -74,15 +78,28 @@
 									</div>
 								</a>
 							</div>
-							<div class="col-md-4">
-								<a href="{{route('coach.index')}}">
+							<div class="col-md-3">
+								<a href="{{route('schedule.index')}}">
 									<div class="card-action">
 										<div class="image">
 											<img src="{{url('assets/media/branchsto/horse_deal_icon.svg')}}" alt="">
 										</div>
 										<div class="text">
+											<div class="title-card">Schedule</div>
+											<div class="subtitle-card">Manage all your schedule here</div>
+										</div>
+									</div>
+								</a>
+							</div>
+							<div class="col-md-3">
+								<a href="{{route('coach.index')}}">
+									<div class="card-action">
+										<div class="image">
+											<img src="{{url('assets/media/branchsto/coach_icon.svg')}}" alt="">
+										</div>
+										<div class="text">
 											<div class="title-card">Coach</div>
-											<div class="subtitle-card">Manage all your class here</div>
+											<div class="subtitle-card">Manage all your coach here</div>
 										</div>
 									</div>
 								</a>

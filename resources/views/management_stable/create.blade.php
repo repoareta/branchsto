@@ -17,12 +17,30 @@
                     <div class="form-group">
                         <label>Stable Name</label>
                         <input type="text" name="name" id="" class="form-control">
-                        <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
-                        <input type="hidden" name="owner" value="{{Auth::user()->name}}">
-                        <input type="hidden" name="manager" value="-">
-                        <input type="hidden" name="capacity_of_stable" value="0">
-                        <input type="hidden" name="capacity_of_arena" value="0">
-                        <input type="hidden" name="number_of_coach" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Province</label>
+                        <select name="province" id="" class="form-control">
+                            <option value="1">1</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Cities</label>
+                        <select name="cities" id="" class="form-control">
+                            <option value="1">1</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Districts</label>
+                        <select name="districts" id="" class="form-control">
+                            <option value="1">1</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Villages</label>
+                        <select name="villages" id="" class="form-control">
+                            <option value="1">1</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Address</label>
@@ -30,14 +48,14 @@
                     </div>
                     <div class="form-group">
                         <label>Contact Person</label>
-                        <input type="text" name="contact_person" id="" class="form-control">
+                        <input type="stable" name="contact_person" id="" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Contact Number</label>
                         <input type="text" name="contact_number" id="" class="form-control">
                     </div>
                     <h3>Statement</h3>
-                    <p>"Dengan ini kami mengajukan kerjasama penjualan tiket secara online dengan ketentuan dan syarat yang diperjanjikan"</p>
+                    <p>"We hereby submit an online ticket sales collaboration with the agreed terms and conditions"</p>
                 </div>
                 <div class="modal-footer">											
                     <button class="btn btn-secondary" data-dismiss="modal">Back</button>

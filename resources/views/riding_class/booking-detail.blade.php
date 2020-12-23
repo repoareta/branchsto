@@ -37,31 +37,28 @@
                                     <div class="card card-booking">
                                         <div class="card-body">
                                             <h6 class="title-text">You can reset the schedule here</h6>
-                                            <table class="table table-striped">
-                                                <tbody>
-                                                    <tr>
-                                                        <th width="15%" scope="row">Name</th>
-                                                        <td  width="5%">:</td>
-                                                        <td>Muiz</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">Age</th>
-                                                        <td>:</td>
-                                                        <td>15</td>
-                                                    </tr>
-                        
-                                                    <tr>
-                                                        <th scope="row">Class</th>
-                                                        <td>:</td>
-                                                        <td>A</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">Date Time</th>
-                                                        <td>:</td>
-                                                        <td>12-12-2020 13::00</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                            @foreach ($data['data'] as $row)
+                                                <table class="table table-borderless table-dark mb-10">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th width="15%" scope="row">Name Package</th>
+                                                            <td  width="5%">:</td>
+                                                            <td >{{strtoupper($row['name'])}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">Description</th>
+                                                            <td>:</td>
+                                                            <td>{{($row['description'])}}</td>
+                                                        </tr>
+                            
+                                                        <tr>
+                                                            <th scope="row">Price</th>
+                                                            <td>:</td>
+                                                            <td >{{number_format($row['price'],0,'.','.')}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                @endforeach
                                             <div class="image">                                      
                                                 {!! QrCode::size(130)->generate('QRco'); !!}
                                                 <h6 class="title-text">QRco</h6>
@@ -92,36 +89,6 @@
                                             <img src="{{url('assets/media/branchsto/Rectangle 140.png')}}" alt="">
                                             <div class="overlay"></div>
                                         </div>
-                                        <div class="subtitle-detail">
-                                            DETAIL
-                                        </div>
-                                        <div class="title-detail">
-                                            REGULAR CLASS
-                                        </div>
-                                        <table class="table package-detail">
-                                            <tr>
-                                                <td>
-                                                    BRANCHSTO
-                                                </td>
-                                                <td class="text-right">
-                                                    Rp. 150.0000
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2" class="text-right">
-                                                    <a href="">
-                                                        <i class="fas fa-share-alt"></i>
-                                                    </a>
-                                                    <a href="">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
-                                                            <path d="M14 10L11 14V28C11 28.5304 11.2107 29.0391 11.5858 29.4142C11.9609 29.7893 12.4696 30 13 30H27C27.5304 30 28.0391 29.7893 28.4142 29.4142C28.7893 29.0391 29 28.5304 29 28V14L26 10H14Z" stroke="#2A4158" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                                            <path d="M11 14H29" stroke="#2A4158" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                                            <path d="M24 18C24 19.0609 23.5786 20.0783 22.8284 20.8284C22.0783 21.5786 21.0609 22 20 22C18.9391 22 17.9217 21.5786 17.1716 20.8284C16.4214 20.0783 16 19.0609 16 18" stroke="#2A4158" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                                            </svg>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        </table>
                                     </div>
                                 </div>
                             </div>
