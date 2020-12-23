@@ -77,10 +77,14 @@
                                                                                     <li style="margin-left:-30px">
                                                                                         <span class="file pointer-link kt-subheader__breadcrumbs-link pointer-link" data-toggle="kt-tooltip" data-placement="top" title="Click Time">
                                                                                             {{$item->time_start}} - {{$item->time_end}}
+                                                                                            @if ($item->capacity >= $item->capacity_booked)
+                                                                                                <input type="checkbox" name="chackbox[]" data-exval="1" value="{{$item->id}}" class="ponter-link">
+                                                                                            @else
+                                                                                                <input type="checkbox" disabled>
+                                                                                            @endif
                                                                                             <input type="hidden" name="time1[]" value="{{$item->time_start}}" class="ponter-link">
                                                                                             <input type="hidden" name="time2[]" value="{{$item->time_end}}" class="ponter-link">
                                                                                             <input type="hidden" name="date[]" value="{{$item->date}}" class="ponter-link">
-                                                                                            <input type="checkbox" name="chackbox[]" data-exval="1" value="{{$item->id}}" class="ponter-link">
                                                                                         </span>
                                                                                     </li>
                                                                                 @endforeach
