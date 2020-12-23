@@ -24,6 +24,8 @@
                             <div class="row justify-content-center mt-5">
                                 <div class="col-lg-6 order-md-2 order-2 order-lg-1">
                                     <div class="card card-booking">
+                                    <form action="{{route('riding_class.confirmasion.payment')}}" method="POST" enctype="multipart/form-data">
+                                        @csrf
                                         <div class="card-body">
                                             <h4>
                                                 Nama Package
@@ -96,8 +98,9 @@
                                             <hr>
                                             <h4 class="text-right">Total : Rp. 1.200.000</h4>
                                             <h5>Reminder :</h5>
-                                            <p>
-                                                If you don't pay for 1 hour then your payment will expired</p>
+                                            <p class="table-danger">
+                                                If you don't pay for 1 hour then your payment will expired
+                                            </p>
                                             <div class="bank-number">
                                                 <div class="card-bank">
                                                     <div class="bank">
@@ -111,10 +114,34 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button class="btn btn-payment w-100">
+                                            <div class="form-group mt-10">
+                                                <div class="col-12">
+                                                    <div class="col-lg-9 col-xl-6">
+                                                        <div class="image-input" id="kt_image_2">
+                                                            <div class="image-input-wrapper" style="background-image: url({{url('assets/media/users/user-1.png')}});"></div>
+                                                            <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Upload proof of payment">
+                                                                <i class="fa fa-pen icon-sm text-muted"></i>
+                                                                <input type="file" name="photo" accept=".png, .jpg, .jpeg">
+                                                                <input type="hidden" name="file_remove" value="0">
+                                                            </label>
+                                                            <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="" data-original-title="Cancel">
+                                                                <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                            </span>
+                                                        </div>
+                                                        <span class="form-text text-muted">Upload proof of paymen types: png, jpg, jpeg.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @foreach ($data_list as $item)
+                                                
+                                            <input type="text" name="booking_id" value="{{$item->id}}">
+                                            <input type="text" name="bank_payment_id" value="">
+                                            @endforeach
+                                            <button type="submit" class="btn btn-payment w-100" id="add-payment">
                                                 PAYMENT
                                             </button>
                                         </div>
+                                    </form>
                                     </div>
                                 </div>
                             </div>
@@ -131,10 +158,11 @@
 	<!--end::Page-->
 </div>
 <!--end::Main-->
-<!--begin::Modal Stable-->
-@include('management_stable.create')
-<!--end::Modal Stable-->
-
 @endsection
 @section('scripts')
+<script type="text/javascript">
+    $(document).ready(function () {
+    //tampil edit detail
+    });
+    </script>
 @endsection
