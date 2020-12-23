@@ -5,6 +5,10 @@ namespace App\Http\Controllers\AppOwner;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+
 // load model
 use App\Models\Package;
 class PackageApprovalController extends Controller
@@ -15,9 +19,9 @@ class PackageApprovalController extends Controller
     }
     public function listJsonApprov()
     {
-        $data = Package::with(['stable'])->get();
+        $data = Package::with(['stable'])->where('approval_status', 'Accepted')->get();
         return datatables()->of($data)
-        ->addColumn('profile', function ($data) {
+        ->addColumn('no', function ($data) {
             return "<img src='assets/media/branchsto/horse.png' width='40px' height='40px' alt=''>";
         })
         ->addColumn('stable_name', function ($data) {
@@ -29,28 +33,26 @@ class PackageApprovalController extends Controller
         ->addColumn('price', function ($data) {
             return $data->price;
         })
+        ->addColumn('approval_status', function ($data) {
+            return $data->approval_status;
+        })
         ->addColumn('action', function ($data) {
             return 
             "
-            <a href='#' class='btn btn-info text-center mr-2' data-id='".$data->id."' id='openDetail'>
+            <a href='javascript:void(0)' data-toggle='modal' data-id='".$data->id."' class='btn btn-info text-center mr-2' id='openBtn'>
                 <i class='fas fa-eye'></i>
-            </a>
-            <a href='#' class='btn btn-success text-center mr-2' data-id='".$data->id."' id='approv-stable'>
-                <i class='fas fa-check-circle'></i>
-            </a>
-            <a href='#' class='btn btn-danger text-center mr-2' data-id='".$data->id."' id='unapprov-stable'>
-                <i class='fas fa-ban'></i>
             </a>
             ";
         })
-        ->rawColumns(['profile','action'])
+        
+        ->rawColumns(['no','action'])
         ->make(true);
     }
     public function listJsonUnapprov()
     {
-        $data = Package::with(['stable'])->get();
+        $data = Package::with(['stable'])->where('approval_status', null)->get();
         return datatables()->of($data)
-        ->addColumn('profile', function ($data) {
+        ->addColumn('no', function () {
             return "<img src='assets/media/branchsto/horse.png' width='40px' height='40px' alt=''>";
         })
         ->addColumn('stable_name', function ($data) {
@@ -62,36 +64,61 @@ class PackageApprovalController extends Controller
         ->addColumn('price', function ($data) {
             return $data->price;
         })
+        ->addColumn('approval_status', function ($data) {
+            return 'Pending';
+        })
         ->addColumn('action', function ($data) {
             return 
             "
-            <a href='#' class='btn btn-info text-center mr-2' data-id='".$data->id."' id='openDetail'>
+            <a href='javascript:void(0)' data-toggle='modal' data-id='".$data->id."' class='btn btn-info text-center mr-2' id='openBtn' data-toggle='Detail' data-placement='top' title='Detail'>
                 <i class='fas fa-eye'></i>
             </a>
+            <form class='d-inline' id='formAccept' method='post' action='" . route('package_approval.approv.package',$data->id) . "'>
+            " . method_field('PATCH') . csrf_field() . "
+                <button class='btn btn-success text-center mr-2' id='accept' type='submit'  data-toggle='Accept' data-placement='top' title='Accept'>
+                    <i class='fas fa-check-circle'></i>
+                </button>
+            </form>
+            <form class='d-inline' id='formDecline' method='post' action='" . route('package_approval.unapprov.package',$data->id) . "'>
+            " . method_field('PATCH') . csrf_field() . "
+                <button class='btn btn-danger text-center mr-2' id='decline' type='submit'  data-toggle='Decline' data-placement='top' title='Decline'>
+                <i class='fas fa-ban'></i>
+                </button>
+            </form>
             ";
         })
-        ->rawColumns(['profile','action'])
+        ->rawColumns(['no','action'])
         ->make(true);
     }
 
-    public function detailPackage(Request $request)
+    public function detailPackage($id)
     {
-        $data = Package::with(['stable'])->find($request->id);
-        return response()->json($data, 200);
+        $package = Package::with(['stable'])->find($id);
+        return response()->json($package);
     }
 
-    public function approvPackage(Request $request)
+    public function approvPackage(Request $request, $id)
     {
-        // $package = Package::find($request->id);
-        // $package->status = date('Y-m-d H:i:s');
-        // $package->save();
-        return response()->json(200);
+        $data = Package::find($id);
+        Package::where('id', $data->id)->update([
+            'approval_status' => 'Accepted', 
+            'approval_by' => Auth::user()->id,
+            'approval_at' => Carbon::now()
+        ]);
+
+        Alert::success($data->name.' Accepted', 'Success.')->persistent(true)->autoClose(3600);
+        return redirect()->back();
     }
-    public function unapprovPackage(Request $request)
+    public function unapprovPackage(Request $request, $id)
     {
-        // $package = Package::find($request->id);
-        // $package->status = date('Y-m-d H:i:s');
-        // $package->save();
-        return response()->json(200);
+        $data = Package::find($id);
+        Package::where('id', $data->id)->update([
+            'approval_status' => 'Decline', 
+            'approval_by' => Auth::user()->id,
+            'approval_at' => Carbon::now()
+        ]);
+
+        Alert::success($data->name.' Decline', 'Success.')->persistent(true)->autoClose(3600);
+        return redirect()->back();
     }
 }
