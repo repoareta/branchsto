@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 // load model
 use App\Models\Stable;
+use App\Models\Province;
 
 //load form request (for validation)
 use App\Http\Requests\StableStore;
@@ -18,8 +19,8 @@ class StableController extends Controller
 {
     public function index(){
         $data = Stable::with(['user'])->where('user_id', Auth::user()->id)->first();
-        
-        return view('management_stable.index',compact('data'));
+        $province = Province::all();
+        return view('management_stable.index',compact('data', 'province'));
     }
 
     public function menu()
@@ -42,6 +43,10 @@ class StableController extends Controller
         $stable->capacity_of_arena  = 0;
         $stable->number_of_coach    = 0;
         $stable->address            = $request->address;
+        $stable->province_id        = $request->province_id;
+        $stable->city_id            = $request->city_id;
+        $stable->district_id        = $request->district_id;
+        $stable->village_id         = $request->village_id;
         $stable->user_id            = Auth::user()->id;
         if ($request->file('logo')) {
             $stable->logo = $request->file('logo')->getClientOriginalName();
@@ -63,6 +68,10 @@ class StableController extends Controller
         $stable->capacity_of_arena  = $request->capacity_of_arena;
         $stable->number_of_coach    = $request->number_of_coach;
         $stable->address            = $request->address;
+        $stable->province_id        = $request->province_id;
+        $stable->city_id            = $request->city_id;
+        $stable->district_id        = $request->district_id;
+        $stable->village_id         = $request->village_id;
         $stable->user_id            = Auth::user()->id;
         if ($request->file('logo')) {
             $stable->logo = $request->file('logo')->getClientOriginalName();
