@@ -19,8 +19,28 @@
                         <input type="text" name="name" id="" class="form-control">
                     </div>
                     <div class="form-group">
-                      <label></label>
-                      <input type="text" name="" id="" class="form-control" placeholder="" aria-describedby="helpId">
+                        <label>Province</label>
+                        <select name="province" id="" class="form-control">
+                            <option value="1">1</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Cities</label>
+                        <select name="cities" id="" class="form-control">
+                            <option value="1">1</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Districts</label>
+                        <select name="districts" id="" class="form-control">
+                            <option value="1">1</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Villages</label>
+                        <select name="villages" id="" class="form-control">
+                            <option value="1">1</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Address</label>
@@ -28,7 +48,7 @@
                     </div>
                     <div class="form-group">
                         <label>Contact Person</label>
-                        <input type="text" name="contact_person" id="" class="form-control">
+                        <input type="stable" name="contact_person" id="" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Contact Number</label>

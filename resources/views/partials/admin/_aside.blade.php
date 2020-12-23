@@ -117,7 +117,14 @@
 						<!--end::Item-->
 						<!--begin::Item-->
 						<li class="navi-item">
-							<a href="{{route('owner.bank-account')}}" class="navi-link">											
+							<a href="{{route('owner.horse-breed')}}" class="navi-link">											
+								<span class="navi-text">Horse Breed</span>											
+							</a>
+						</li>
+						<!--end::Item-->
+						<!--begin::Item-->
+						<li class="navi-item">
+							<a href="{{route('owner.bank')}}" class="navi-link">											
 								<span class="navi-text">Bank Account Number</span>
 							</a>
 						</li>

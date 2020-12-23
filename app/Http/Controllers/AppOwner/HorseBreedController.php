@@ -3,24 +3,24 @@
 namespace App\Http\Controllers\AppOwner;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\HorseSexStore;
+use App\Http\Requests\HorseBreedStore;
 use Illuminate\Http\Request;
 
 // Call Models
-use App\Models\HorseSex;
+use App\Models\HorseBreed;
 
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
-class HorseSexController extends Controller
+class HorseBreedController extends Controller
 {
     public function index()
     {        
-        return view('app-owner.horse-sex.index');
+        return view('app-owner.horse-breed.index');
     }
 
     public function listJson()
     {
-        $data = HorseSex::all();
+        $data = HorseBreed::all();
         return datatables()->of($data)
         ->addColumn('horse_name', function ($data) {
             return $data->name;
@@ -39,36 +39,36 @@ class HorseSexController extends Controller
 
     public function edit($id)
     {
-        $horsesex = HorseSex::find($id);
-        return response()->json($horsesex);
+        $horseBreed = HorseBreed::find($id);
+        return response()->json($horseBreed);
     }
 
-    public function store(HorseSexStore $request, HorseSex $horsesex)
+    public function store(HorseBreedStore $request, HorseBreed $horseBreed)
     {        
-        $horsesex->name            = $request->name;
-        $horsesex->user_id         = Auth::user()->id;
+        $horseBreed->name            = $request->name;
+        $horseBreed->user_id         = Auth::user()->id;
         
-        $horsesex->save();
+        $horseBreed->save();
         
         Alert::success('Create Data Success.', 'Success.')->persistent(true)->autoClose(3600);
-        return redirect()->route('owner.horse-sex');
+        return redirect()->route('owner.horse-breed');
     }
 
-    public function update(HorseSexStore $request, HorseSex $horsesex)
+    public function update(HorseBreedStore $request, HorseBreed $horseBreed)
     {
-        $horsesex = HorseSex::find($request->id);
-        $horsesex->name            = $request->name;
-        $horsesex->user_id         = Auth::user()->id;
+        $horseBreed = HorseBreed::find($request->id);
+        $horseBreed->name            = $request->name;
+        $horseBreed->user_id         = Auth::user()->id;
         
-        $horsesex->update();
+        $horseBreed->update();
         
         Alert::success('Update Data Success.', 'Success.')->persistent(true)->autoClose(3600);
-        return redirect()->route('owner.horse-sex');
+        return redirect()->route('owner.horse-breed');
     }
 
     public function delete(Request $request)
     {
-        HorseSex::find($request->id)->delete();
+        HorseBreed::find($request->id)->delete();
         return response()->json();
     }
 }

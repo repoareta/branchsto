@@ -35,7 +35,7 @@
                             <div class="card mt-10">
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table table-data table-danger" id="dataTable">
+                                        <table class="table table-data table-danger" id="dataTableunapprov">
                                             <thead>
                                                 <tr>
                                                 <th scope="col">#</th>
@@ -44,6 +44,7 @@
                                                 <th scope="col">Contact Person</th>													
                                                 <th scope="col">Contact Number</th>													
                                                 <th scope="col">Date Created</th>											
+                                                <th scope="col">Status</th>											
                                                 <th scope="col">Action</th>
                                                 </tr>
                                             </thead>
@@ -59,7 +60,7 @@
                             <div class="card mt-10">
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table table-data table-success" id="dataTable2">
+                                        <table class="table table-data table-success" id="dataTable">
                                             <thead>
                                                 <tr>
                                                 <th scope="col">#</th>
@@ -68,6 +69,7 @@
                                                 <th scope="col">Contact Person</th>													
                                                 <th scope="col">Contact Number</th>													
                                                 <th scope="col">Date Created</th>													
+                                                <th scope="col">Status</th>
                                                 <th scope="col">Action</th>
                                                 </tr>
                                             </thead>
@@ -92,7 +94,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="modalDetail"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header ">
                 <h4 class="title-text " id="title_modal" data-state="add">
@@ -100,54 +102,47 @@
                 </h4>
             </div>
             <div class="modal-body">
-                <form action="{{route('package.slot.detail.store')}}" method="POST">
-                    @csrf
-                    <div class="form-group row">
-                        <div class="col-6">
-                            <label>Stable Name</label>
-                            <input type="text" class="form-control" id="name">
-                        </div>	
-                        <div class="col-6">
-                            <label>Owner</label>
-                            <input type="text" class="form-control" id="owner">
-                        </div>	
-                    </div>	
-                    <div class="form-group row">
-                        <div class="col-6">
-                            <label>Contact Person</label>
-                            <input type="text" class="form-control" id="contact_person">
-                        </div>	
-                        <div class="col-6">
-                            <label>Contact Number</label>
-                            <input type="text" class="form-control" id="contact_number">
-                        </div>	
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p class="mb-0">Stable Name</p>
+                        <h4 class="mb-4" id="name"></h4>
+                        <p class="mb-0">Owner</p>
+                        <h4 class="mb-4" id="owner"></h4>
+                        <p class="mb-0">Manager</p>
+                        <h4 class="mb-4" id="manager"></h4>
+                        <p class="mb-0">Contact Person</p>
+                        <h4 class="mb-4" id="contact_person"></h4>
+                        <p class="mb-0">Contact Number</p>
+                        <h4 class="mb-4" id="contact_number"></h4>
+                        <p class="mb-0">Capacity of Stable</p>
+                        <h4 class="mb-4" id="capacity_of_stable"></h4>
+                        <p class="mb-0">Capacity of Arena</p>
+                        <h4 class="mb-4" id="capacity_of_arena"></h4>
+                        <p class="mb-0">Number of Coach</p>
+                        <h4 class="mb-4" id="number_of_coach"></h4>
+                        <p class="mb-0">Address</p>
+                        <h4 class="mb-4" id="address"></h4>
                     </div>
-                    <div class="form-group row">
-                        <div class="col-6">
-                            <label>Manager</label>
-                            <input type="text" class="form-control" id="manager">
-                        </div>	
-                        <div class="col-6">
-                            <label>Capacity Of Stable</label>
-                            <input type="text" class="form-control" id="capacity_of_stable">
-                        </div>	
-                    </div>	
-                    <div class="form-group row">
-                        <div class="col-6">
-                            <label>Capacity Of Arena</label>
-                            <input type="text" class="form-control" id="capacity_of_arena">
-                        </div>	
-                        <div class="col-6">
-                            <label>Capacity Of Coach</label>
-                            <input type="text" class="form-control" id="number_of_coach">
-                        </div>	
-                    </div>	
-                    <div class="form-group row">
-                        <div class="col-6">
-                            <label>Address</label>
-                            <textarea type="text" class="form-control" id="address"></textarea>
-                        </div>	
-                    </div>	
+                    <div class="col-sm-6">
+                        <p class="mb-0">Province</p>
+                        <h4 class="mb-4" id="province"></h4>
+                        <p class="mb-0">City</p>
+                        <h4 class="mb-4" id="city"></h4>
+                        <p class="mb-0">District</p>
+                        <h4 class="mb-4" id="district"></h4>
+                        <p class="mb-0">Village</p>
+                        <h4 class="mb-4" id="village"></h4>
+                        <p class="mb-0">Facilities</p>
+                        <h4 class="mb-4" id="facilities"></h4>
+                        <p class="mb-0">Logo</p>
+                        <img src="" alt="">
+                        <p class="mb-0">Approval At</p>
+                        <h4 class="mb-4" id="approval_at"></h4>
+                        <p class="mb-0">Approval By</p>
+                        <h4 class="mb-4" id="approval_by"></h4>
+                        <p class="mb-0">Approval Status</p>
+                        <h4 class="mb-4" id="approval_status"></h4>
+                    </div>
                 </div>
                 <div class="modal-footer">											
                     <button data-dismiss="modal" class="btn btn-add-new font-weight-bold">Close</button>
@@ -172,16 +167,19 @@
                 },
                 ajax      : "{{ route('stable_approval.listJson.approv') }}",
                 columns: [
-                    {data: 'profile', name: 'profile'},
+                    {data: 'no', render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }},
                     {data: 'stable_name', name: 'stable_name'},
                     {data: 'owner', name: 'owner'},
                     {data: 'contact_person', name: 'contact_person'},
                     {data: 'contact_number', name: 'contact_number'},
                     {data: 'date_created', name: 'date_created'},
+                    {data: 'approval_status', name: 'approval_status'},
                     {data: 'action', name: 'action'},
                 ]
             }); 
-			$('#dataTable2').DataTable({
+			$('#dataTableunapprov').DataTable({
                 scrollX   : true,
                 processing: true,
                 // serverSide: true,
@@ -190,104 +188,92 @@
                 },
                 ajax      : "{{ route('stable_approval.listJson.unapprov') }}",
                 columns: [
-                    {data: 'profile', name: 'profile'},
+                    {data: 'no', render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }},
                     {data: 'stable_name', name: 'stable_name'},
                     {data: 'owner', name: 'owner'},
                     {data: 'contact_person', name: 'contact_person'},
                     {data: 'contact_number', name: 'contact_number'},
                     {data: 'date_created', name: 'date_created'},
+                    {data: 'approval_status', name: 'approval_status'},
                     {data: 'action', name: 'action'},
                 ]
             }); 
 
-            $('#dataTable tbody').on( 'click', '#openDetail', function (e) {
-                e.preventDefault();
-                // get value from row					
-                var id = $(this).attr('data-id');
-                $.ajax({
-                    url: "{{ route('stable_approval.detail.stable') }}",
-                    type: 'GET',
-                    data: {
-                        "id": id,
-                        "_token": "{{ csrf_token() }}",
-                    },
-                    success: function (response) {
-                        // update stuff
-                        // append value
-                        $('#name').val(response.name);
-                        $('#owner').val(response.owner);
-                        $('#contact_person').val(response.contact_person);
-                        $('#contact_number').val(response.contact_number);
-                        $('#manager').val(response.manager);
-                        $('#capacity_of_stable').val(response.capacity_of_stable);
-                        $('#capacity_of_arena').val(response.capacity_of_arena);
-                        $('#number_of_coach').val(response.number_of_coach);
-                        $('#address').val(response.address);
-                        // title
-                        $('#title_modal').text('Detail Stable');
-                        // open modal
-                        $('#modalDetail').modal('show');
-                    },
-                    error: function () {
-                        alert("An error occurred, please try again later.");
+            $('body').on( 'click', '#openBtn', function () {
+                var id = $(this).data('id');
+                $.get('{{route('stable_approval.index')}}'+'/detail/stable/' + id , function (data) {
+                    $('#name').html(data.name);
+                    $('#owner').html(data.owner);
+                    $('#manager').html(data.manager);
+                    $('#contact_person').html(data.contact_person);
+                    $('#contact_number').html(data.contact_number);
+                    $('#capacity_of_stable').html(data.capacity_of_stable);
+                    $('#capacity_of_arena').html(data.capacity_of_arena);
+                    $('#number_of_coach').html(data.number_of_coach);
+                    $('#address').html(data.address);
+                    $('#province').html(data.province);
+                    $('#city').html(data.city);
+                    $('#district').html(data.district);
+                    $('#village').html(data.village);
+                    $('#facilities').html(data.facilities);
+                    $('#logo').html(data.logo);
+                    $('#approval_status').html(data.approval_status);
+                    if(data.approval_at == null){
+                        $('#approval_at').html('Need Approval');    
                     }
-                });
+                    if(data.approval_by == null){
+                        $('#approval_by').html('Need Approval');    
+                    }
+                    if(data.approval_status == null){
+                        $('#approval_status').html('Need Approval');    
+                    }
+                    $('#modalDetail').modal('show');
+                })
             });  
 
-            $('#dataTable tbody').on( 'click', '#approv-stable', function (e) {
+            $('tbody').on('click','#accept', function(e) {
+    
                 e.preventDefault();
-                var id = $(this).attr('data-id');
-                $.ajax({
-                    url: "{{ route('stable_approval.approv.stable') }}",
-                    type: "POST",
-                    data: {
-                        id: id,
-                        _token:"{{ csrf_token() }}"		
-                    },
-                    success: function(dataResult){
-                        Swal.fire({
-                            type : 'success',
-                            title: 'Approve success.',
-                            text : 'Success',
-                            icon : 'success',
-                            timer: 2000
-                        });
-                        // append to datatable
-                        t.ajax.reload();
-                    },
-                    error: function () {
-                        alert("An error occurred, please try again later.");
+                    
+                Swal.fire({
+                    title: "Are you sure?",
+                    icon: "warning",
+                    text: "This is will be accepted the stable",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Accept",
+                    cancelButtonText: "Cancel",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                }).then(function(getAction) {
+                    if (getAction.value === true) {
+                        $('#formAccept').submit();
                     }
                 });
             });
 
-            $('#dataTable tbody').on( 'click', '#unapprov-stable', function (e) {
+            $('tbody').on('click','#decline', function(e) {
+    
                 e.preventDefault();
-                var id = $(this).attr('data-id');
-                $.ajax({
-                    url: "{{ route('stable_approval.unapprov.stable') }}",
-                    type: "POST",
-                    data: {
-                        id: id,
-                        _token:"{{ csrf_token() }}"		
-                    },
-                    success: function(dataResult){
-                        Swal.fire({
-                            type : 'success',
-                            title: 'Decline success.',
-                            text : 'Success',
-                            icon : 'success',
-                            timer: 2000
-                        });
-                        // append to datatable
-                        t.ajax.reload();
-                    },
-                    error: function () {
-                        alert("An error occurred, please try again later.");
+                    
+                Swal.fire({
+                    title: "Are you sure?",
+                    icon: "warning",
+                    text: "This is will be declined the stable",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Accept",
+                    cancelButtonText: "Cancel",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                }).then(function(getAction) {
+                    if (getAction.value === true) {
+                        $('#formDecline').submit();
                     }
                 });
             });
-			
 		} );
 </script>
 @endpush
