@@ -61,7 +61,7 @@
                                                     </p> 
                                                     <div class="image">  
                                                         @foreach ($booking_detail as $row)
-                                                            <img src="{{ asset('storage/'.$row->qr_code) }}" />                                                       
+                                                            <img src="{{ asset('storage'.$row->qr_code) }}" />                                                       
                                                         @endforeach                                    
                                                     </div>
                                                 @endif
