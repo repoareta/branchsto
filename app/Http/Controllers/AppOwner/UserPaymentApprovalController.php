@@ -5,12 +5,17 @@ namespace App\Http\Controllers\AppOwner;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 // load model
 use App\Models\Booking;
+
+// load plugin
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\Storage;
+use RealRashid\SweetAlert\Facades\Alert;
+
 class UserPaymentApprovalController extends Controller
 {
     public function index()
@@ -26,7 +31,7 @@ class UserPaymentApprovalController extends Controller
         })
         ->addColumn('name', function ($data) {
             return $data->user_id;
-        })        
+        })
         ->addColumn('photo', function ($data) {
             return $data->photo;
         })
@@ -37,7 +42,7 @@ class UserPaymentApprovalController extends Controller
             return $data->bank_payment_id;
         })
         ->addColumn('action', function ($data) {
-            return 
+            return
             "
             <a href='javascript:void(0)' data-toggle='modal' data-id='".$data->id."' class='btn btn-info text-center mr-2' id='openBtn'>
                 <i class='fas fa-eye'></i>
@@ -57,7 +62,7 @@ class UserPaymentApprovalController extends Controller
         })
         ->addColumn('name', function ($data) {
             return $data->user_id;
-        })        
+        })
         ->addColumn('photo', function ($data) {
             return $data->photo;
         })
@@ -68,18 +73,18 @@ class UserPaymentApprovalController extends Controller
             return $data->bank_payment_id;
         })
         ->addColumn('action', function ($data) {
-            return 
+            return
             "
             <a href='javascript:void(0)' data-toggle='modal' data-id='".$data->id."' class='btn btn-info text-center mr-2' id='openBtn' data-toggle='Detail' data-placement='top' title='Detail'>
                 <i class='fas fa-eye'></i>
             </a>
-            <form class='d-inline' id='formAccept' method='post' action='" . route('owner.userpayment.approv.booking',$data->id) . "'>
+            <form class='d-inline' id='formAccept' method='post' action='" . route('owner.userpayment.approv.booking', $data->id) . "'>
             " . method_field('PATCH') . csrf_field() . "
                 <button class='btn btn-success text-center mr-2' id='accept' type='submit'  data-toggle='Accept' data-placement='top' title='Accept'>
                     <i class='fas fa-check-circle'></i>
                 </button>
             </form>
-            <form class='d-inline' id='formDecline' method='post' action='" . route('owner.userpayment.unapprov.booking',$data->id) . "'>
+            <form class='d-inline' id='formDecline' method='post' action='" . route('owner.userpayment.unapprov.booking', $data->id) . "'>
             " . method_field('PATCH') . csrf_field() . "
                 <button class='btn btn-danger text-center mr-2' id='decline' type='submit'  data-toggle='Decline' data-placement='top' title='Decline'>
                 <i class='fas fa-ban'></i>
@@ -101,10 +106,27 @@ class UserPaymentApprovalController extends Controller
     {
         $data = Booking::find($id);
         Booking::where('id', $data->id)->update([
-            'approval_status' => 'Accepted', 
+            'approval_status' => 'Accepted',
             'approval_by' => Auth::user()->id,
             'approval_at' => Carbon::now()
         ]);
+
+        foreach ($data->booking_detail as $key => $row) {
+            $image = QrCode::format('png')
+                ->size(200)
+                ->generate(url("/booking-detail/$row->id/confirmation"));
+
+            $output_file = '/img/qr-code/img-' . time() . '.png';
+
+            Storage::disk('local')->put($output_file, $image);
+
+            $row->qr_code = $output_file;
+            $row->save();
+
+            sleep(1); // add delay 1 seconds
+        }
+
+        
 
         Alert::success($data->name.' Accepted', 'Success.')->persistent(true)->autoClose(3600);
         return redirect()->back();
@@ -113,7 +135,7 @@ class UserPaymentApprovalController extends Controller
     {
         $data = Booking::find($id);
         Booking::where('id', $data->id)->update([
-            'approval_status' => 'Decline', 
+            'approval_status' => 'Decline',
             'approval_by' => Auth::user()->id,
             'approval_at' => Carbon::now()
         ]);
