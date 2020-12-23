@@ -39,7 +39,6 @@
                                             <form action="{{route('riding_class.booking.addCart')}}" method="POST">
                                                 @csrf
                                                 @php
-                                                $sum_tot_Price =0;
                                                 $count=0;
                                                 @endphp
                                                 @foreach ($list_detail as $row)
@@ -97,7 +96,7 @@
                                                 <span class="form-text text-muted" id="result"></span>
 
                                                 @php
-                                                    $sum_tot_Price += $row['price'];
+                                                    $sum_tot_Price = $row['price'];
                                                 @endphp
                                                 <input type="hidden" name="package_id" value="{{$row['id']}}">
                                                 <input type="hidden" name="price_subtotal" value="{{$row['price']}}">
