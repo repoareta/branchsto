@@ -44,7 +44,7 @@
                             </div>
                             <div class="card mt-10">
                                 <div class="card-body">
-                                    <table class="table table-striped" id="dataTable">
+                                    <table class="table" id="dataTable">
                                         <thead>
                                             <tr>
                                             <th scope="col">Date</th>
@@ -55,6 +55,7 @@
                                             <th scope="col">Action</th>
                                             </tr>
                                         </thead>
+                                        <tbody></tbody>
                                     </table>
                                 </div>
                             </div>
@@ -201,10 +202,17 @@ $(document).ready( function () {
                 {data: 'capacity_booked', name: 'capacity_booked'},
                 {data: 'action', name: 'action'},
         ],
+        columnDefs:[
+            {
+                // hide columns by index number
+                targets: [0],
+                visible: false,
+            },
+        ],
         order: [[0, 'asc']],
         rowGroup: {
             // Uses the 'row group' plugin
-            dataSrc: 0,
+            dataSrc: "date",
             startRender: function (rows, group) {
                 var collapsed = !!collapsedGroups[group];
 
@@ -220,11 +228,13 @@ $(document).ready( function () {
             }
         }
     });
-    $('#dataTable tbody').on('click', 'tr.group-start', function () {
+
+    $('#dataTable tbody').on('click', 'tr.dtrg-start', function () {
         var name = $(this).data('name');
         collapsedGroups[name] = !collapsedGroups[name];
         t.draw(false);
     });  
+
     $("#dataTable_filter").append("<button class='btn btn-add-new ml-5' id='openDetail'>Add New +</button>");
 
     $('#openDetail').click(function(e) {
