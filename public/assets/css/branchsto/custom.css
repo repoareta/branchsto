@@ -1281,3 +1281,6 @@ div#kt_content, .flex-row.page {
 .checkbox > input:checked ~ span {
   background-color:#181C32;
 }
+.help-block.error-help-block{
+  color: red;
+}
