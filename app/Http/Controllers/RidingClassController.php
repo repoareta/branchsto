@@ -118,13 +118,22 @@ class RidingClassController extends Controller
 
         session()->forget("data_list_slot");
         session()->forget("data_list_package"); 
-        $booking_id = $booking->id;
-        $data_list = Booking::with(['booking_detail'])->where('id', $booking_id)->get();
-        return view('riding_class.history-pay',compact('data_list'));       
+        $data_booking_id = $booking->id;
+        $data_list = DB::table('slot_user as a')
+        ->where('c.booking_id', $data_booking_id)
+        ->leftJoin('slots as b', 'a.slot_id', '=', 'b.id')
+        ->leftJoin('booking_details as c', 'a.booking_detail_id', '=', 'c.id')
+        ->leftJoin('packages as d', 'c.package_id', '=', 'd.id')
+        ->leftJoin('stables as e', 'd.stable_id', '=', 'e.id')
+        ->select('b.date','b.time_start','b.time_end','d.name','e.name as stable_name')->get();
+
+        return view('riding_class.history-pay',compact('data_list','data_booking_id'));       
     }
 
     public function history_order(Request $request)
     {
+
+        // dd($request->booking_id);
         $booking = Booking::find($request->booking_id);
         $booking->updated_at = date('Y-m-d H:i:s');
         $booking->bank_payment_id = $request->bank_payment_id;
@@ -135,9 +144,17 @@ class RidingClassController extends Controller
             $image_path = $request->file('photo')->storeAs('booking/photo', $booking->photo, 'public');
         }
         $booking->save();
-        $booking_id = $request->booking_id;
-        $data_list = Booking::with(['booking_detail'])->where('id', $booking_id)->get();
-        return view('riding_class.history-pay',compact('data_list'));
+        $data_booking_id = $request->booking_id;
+        $data_list = DB::table('slot_user as a')
+        ->where('c.booking_id', $data_booking_id)
+        ->leftJoin('slots as b', 'a.slot_id', '=', 'b.id')
+        ->leftJoin('booking_details as c', 'a.booking_detail_id', '=', 'c.id')
+        ->leftJoin('packages as d', 'c.package_id', '=', 'd.id')
+        ->leftJoin('stables as e', 'd.stable_id', '=', 'e.id')
+        ->select('b.date','b.time_start','b.time_end','d.name','e.name as stable_name')->get();
+        $status_booking = Booking::where('id',$data_booking_id)->first();
+        
+        return view('riding_class.history-pay-confirmasi',compact('data_list','data_booking_id'));
     }
 
 }
