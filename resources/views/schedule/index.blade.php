@@ -178,6 +178,55 @@
         </div>
     </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="modalAddPackageedit"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header ">
+                <h4 class="title-text " id="title_modal" data-state="add">
+                    ADD SCHEDULE
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                @php
+                    date_default_timezone_set('Asia/Jakarta');
+                    $time = date('H:i');
+                @endphp
+                <form action="{{route('schedule.store')}}" method="POST">
+                    @csrf
+                    <div class="form-group row">
+                        <div class="col-11">
+                            <label>Date</label>
+                            <input type="hidden" class="form-control" name="id" id="id">
+                            <input type="date" class="form-control" name="tanggal" id="tanggal">
+                        </div>	
+                    </div>	
+                    <div class="form-group row">											
+                        <div class="col-4">
+                            <label>Time Start</label>
+                            <input type="text" class="form-control" name="time1[]" id="time1">
+                        </div>																								
+                        <div class="col-4">
+                            <label>Time End</label>
+                            <input type="text" class="form-control" name="time2[]" id="time2">
+                        </div>
+                        <div class="col-3">
+                            <label>Capacity</label>
+                            <input type="text" class="form-control" name="capacity[]" id="capacity">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">											
+                    <button data-dismiss="modal" class="btn btn-secondary">Cancel</button>
+                    <button type="submit" class="btn btn-add-new font-weight-bold">SAVE</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @push('add-script')
 <script>
@@ -260,6 +309,37 @@ $(document).ready( function () {
         $(this).parents(".form-group").remove();
         // $("#sess1").attr('disabled', true);
         // $("#sess2").attr('disabled', true);
+    });+
+
+    $('#dataTable tbody').on( 'click', '.view-time', function (e) {
+        e.preventDefault();
+        // get value from row					
+        var id = $(this).attr('data-time');
+        $.ajax({
+            url: "{{ route('schedule.detail.show') }}",
+            type: 'GET',
+            data: {
+                "id": id,
+                "_token": "{{ csrf_token() }}",
+            },
+            success: function (response) {
+                // update stuff
+                // append value
+                console.log(response.date);
+                $('#date').val(response.date);
+                $('#time1').val(response.time_start);
+                $('#time2').val(response.time_end);
+                $('#capacity').val(response.capacity);
+                // title
+                $('#title_modal').text('Edit data slot');
+                $('#title_modal').data('state', 'update');
+                // open modal
+                $('#modalAddPackageedit').modal('toggle');
+            },
+            error: function () {
+                alert("Terjadi kesalahan, coba lagi nanti");
+            }
+        });
     });
 
     $('#dataTable tbody').on( 'click', '.delete-slot', function (e) {
