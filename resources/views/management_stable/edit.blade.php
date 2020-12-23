@@ -37,21 +37,21 @@
                     <div class="form-group row">
                         <div class="col-6">
                             <label>Contact Number</label>
-                            <input type="text" name="contact_number" class="form-control" value="{{$data->contact_number}}" placeholder="Contact Number">
+                            <input type="number" name="contact_number" class="form-control" value="{{$data->contact_number}}" placeholder="Contact Number">
                         </div>
                         <div class="col-6">
                             <label>Capacity Of Stable</label>
-                            <input type="text" name="capacity_of_stable" class="form-control" value="{{$data->capacity_of_stable}}" placeholder="Capacity Of Stable">
+                            <input type="number" name="capacity_of_stable" class="form-control" value="{{$data->capacity_of_stable}}" placeholder="Capacity Of Stable">
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-6">
                             <label>Capacity Of Arena</label>
-                            <input type="text" name="capacity_of_arena" class="form-control" value="{{$data->capacity_of_arena}}" placeholder="Capacity Of Arena">
+                            <input type="number" name="capacity_of_arena" class="form-control" value="{{$data->capacity_of_arena}}" placeholder="Capacity Of Arena">
                         </div>
                         <div class="col-6">
                             <label>Number Of Coach</label>
-                            <input type="text" name="number_of_coach" class="form-control"  value="{{$data->number_of_coach}}" placeholder="Number Of Coach">
+                            <input type="number" name="number_of_coach" class="form-control"  value="{{$data->number_of_coach}}" placeholder="Number Of Coach">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -59,13 +59,54 @@
                             <label>Address</label>
                             <textarea type="text" name="address" class="form-control" placeholder="Address">{{$data->address}}</textarea>
                         </div>
+                        <div class="col-6">
+                            <label>Bank Account Name</label>
+                            <input type="text" name="account_name" class="form-control"  value="{{$data->account_name}}" placeholder="Bank Account Name">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-6">
+                            <label>Bank Account Number</label>
+                            <input type="number" name="account_number" class="form-control" value="{{$data->account_number}}" placeholder="Bank Account Number">
+                        </div>
+                        <div class="col-6">
+                            <label>Bank Branch</label>
+                            <input type="text" name="branch" class="form-control"  value="{{$data->branch}}" placeholder="Bank Branch">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-6">
+                            <label>Province</label>                            
+                            <select name="province_id" id="province" class="form-control">
+                                @foreach ($province as $item)                            
+                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label>City</label>
+                            <select name="city_id" id="city" class="form-control">                                                                       
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-6">
+                            <label>District</label>
+                            <select name="district_id" id="district" class="form-control">              
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label>Village</label>
+                            <select name="village_id" id="village" class="form-control">    
+                            </select>
+                        </div>
                     </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light-dark font-weight-bold" data-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-dark font-weight-bold">SAVE</button>
                     </div>
-                    <div class="form-group row">
+                    {{-- <div class="form-group row">
                         <div class="col-4">
                             <div class="help">
                                 <a href="#">
@@ -73,10 +114,86 @@
                                 </a>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </form>
             </div>
         </div>
     </div>
 </div>
 <!--Modal-->
+@push('add-script')
+<script>
+        $('#province').change(function(){
+            var provinceID = $(this).val();  
+            if(provinceID){
+                $.ajax({
+                type:"GET",
+                url:"{{url('profile/city')}}?province_id="+provinceID,
+                success:function(res){        
+                    if(res){
+                        $("#city").empty();
+                        $("#city").append('<option>Select</option>');
+                        $.each(res,function(key,value){
+                            $("#city").append('<option value="'+key+'">'+value+'</option>');
+                        });
+                    
+                        }else{
+                            $("#city").empty();
+                            }
+                        }
+                    });
+            }else{
+                $("#city").empty();
+                $("#district").empty();
+                $("#village").empty();
+            }   
+        });
+        $('#city').change(function(){
+            var cityID = $(this).val();  
+            if(cityID){
+                $.ajax({
+                type:"GET",
+                url:"{{url('profile/district')}}?city_id="+cityID,
+                success:function(res){        
+                    if(res){
+                        $("#district").empty();
+                        $("#district").append('<option>Select</option>');
+                        $.each(res,function(key,value){
+                            $("#district").append('<option value="'+key+'">'+value+'</option>');
+                        });
+                    
+                        }else{
+                            $("#district").empty();
+                            }
+                        }
+                    });
+            }else{
+                $("#district").empty();
+                $("#village").empty();
+            }   
+        });
+        $('#district').change(function(){
+            var districtID = $(this).val();  
+            if(districtID){
+                $.ajax({
+                type:"GET",
+                url:"{{url('profile/village')}}?district_id="+districtID,
+                success:function(res){        
+                    if(res){
+                        $("#village").empty();
+                        $("#village").append('<option>Select</option>');
+                        $.each(res,function(key,value){
+                            $("#village").append('<option value="'+key+'">'+value+'</option>');
+                        });
+                    
+                        }else{
+                            $("#village").empty();
+                            }
+                        }
+                    });
+            }else{
+                $("#village").empty();
+            }   
+        });
+</script>
+@endpush

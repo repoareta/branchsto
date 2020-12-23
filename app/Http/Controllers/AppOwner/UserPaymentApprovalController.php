@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 // load model
 use App\Models\Booking;
@@ -31,9 +32,11 @@ class UserPaymentApprovalController extends Controller
         })
         ->addColumn('name', function ($data) {
             return $data->user_id;
-        })
-        ->addColumn('photo', function ($data) {
-            return $data->photo;
+        })        
+        ->editColumn('photo', function ($data) {
+            return $data->photo ? '
+                <a href="' . Storage::url($data->photo) . '" target="_blank"><img src="' . Storage::url($data->photo) . '" style="max-width: 200px"></a>
+            ' : '';
         })
         ->addColumn('approval_status', function ($data) {
             return $data->approval_status;
@@ -50,7 +53,7 @@ class UserPaymentApprovalController extends Controller
             ";
         })
         
-        ->rawColumns(['no','action'])
+        ->rawColumns(['no','photo','action'])
         ->make(true);
     }
     public function listJsonUnapprov()
@@ -62,12 +65,14 @@ class UserPaymentApprovalController extends Controller
         })
         ->addColumn('name', function ($data) {
             return $data->user_id;
-        })
-        ->addColumn('photo', function ($data) {
-            return $data->photo;
+        })        
+        ->editColumn('photo', function ($data) {
+            return $data->photo ? '
+                <a href="' . Storage::url($data->photo) . '" target="_blank"><img src="' . Storage::url($data->photo) . '" style="max-width: 200px"></a>
+            ' : '';
         })
         ->addColumn('approval_status', function ($data) {
-            return $data->approval_status;
+            return 'Pending';
         })
         ->addColumn('bank', function ($data) {
             return $data->bank_payment_id;
@@ -92,7 +97,7 @@ class UserPaymentApprovalController extends Controller
             </form>
             ";
         })
-        ->rawColumns(['no','action'])
+        ->rawColumns(['no','photo','action'])
         ->make(true);
     }
 

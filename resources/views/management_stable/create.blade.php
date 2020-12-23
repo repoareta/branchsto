@@ -92,5 +92,52 @@
                 $("#village").empty();
             }   
         });
+        $('#city').change(function(){
+            var cityID = $(this).val();  
+            if(cityID){
+                $.ajax({
+                type:"GET",
+                url:"{{url('profile/district')}}?city_id="+cityID,
+                success:function(res){        
+                    if(res){
+                        $("#district").empty();
+                        $("#district").append('<option>Select</option>');
+                        $.each(res,function(key,value){
+                            $("#district").append('<option value="'+key+'">'+value+'</option>');
+                        });
+                    
+                        }else{
+                            $("#district").empty();
+                            }
+                        }
+                    });
+            }else{
+                $("#district").empty();
+                $("#village").empty();
+            }   
+        });
+        $('#district').change(function(){
+            var districtID = $(this).val();  
+            if(districtID){
+                $.ajax({
+                type:"GET",
+                url:"{{url('profile/village')}}?district_id="+districtID,
+                success:function(res){        
+                    if(res){
+                        $("#village").empty();
+                        $("#village").append('<option>Select</option>');
+                        $.each(res,function(key,value){
+                            $("#village").append('<option value="'+key+'">'+value+'</option>');
+                        });
+                    
+                        }else{
+                            $("#village").empty();
+                            }
+                        }
+                    });
+            }else{
+                $("#village").empty();
+            }   
+        });
 </script>
 @endpush

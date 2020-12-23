@@ -28,7 +28,7 @@ class ProfileController extends Controller
         return response()->json($city);
     }
 
-    public function getDistrtict(Request $request)
+    public function getDistrict(Request $request)
     {
         $district = District::where('city_id',$request->city_id)
                 ->pluck('name','id');
