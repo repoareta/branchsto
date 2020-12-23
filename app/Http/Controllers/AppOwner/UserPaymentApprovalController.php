@@ -118,9 +118,7 @@ class UserPaymentApprovalController extends Controller
 
             $output_file = '/img/qr-code/img-' . time() . '.png';
 
-            $image->storeAs('booking_payment', $output_file, 'public');
-
-            Storage::disk('local')->put($output_file, $image);
+            Storage::put($output_file, $image, 'public');
 
             $row->qr_code = $output_file;
             $row->save();
