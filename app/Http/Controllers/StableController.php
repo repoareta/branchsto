@@ -85,11 +85,12 @@ class StableController extends Controller
     }
 
 
-    public function stable_close()
+    public function stable_close($id)
     {
-        return view('stable_close.index');
+        $booking_id  = $id;
+        return view('stable_close.index',compact('booking_id'));
     }
-    public function listJsonStableClose()
+    public function listJsonStableClose(Request $request)
     {
         $data = DB::table('slot_user as a')
         ->where('a.user_id', Auth::user()->id)
@@ -97,15 +98,27 @@ class StableController extends Controller
         ->leftJoin('slots as b', 'b.id', '=', 'a.slot_id')
         ->select('b.date','b.time_start','b.time_end','a.qr_code_status','a.id')->get();
         return datatables()->of($data)
-        ->addColumn('action', function ($data) {
-            return 
-            "
-            <a href='#' data-id='".$data->id."' class='btn btn-info text-center mr-2' id='close'>
-                <i class='fas fa-check-circle pointer-link'></i>                    
-            </a>
-            ";
+        ->addColumn('qr_code_status', function ($data) {
+            if($data->qr_code_status == 'Close'){
+                return "<span class='label label-lg label-light-danger label-inline'>Close</span>";
+            }else{
+                return "<span class='label label-lg label-light-success label-inline'>Active</span>";
+            }
         })
-        ->rawColumns(['profile','action'])
+        ->addColumn('action', function ($data) {
+            if($data->qr_code_status == 'Close'){
+                return 
+                        "<a href='#' class='btn btn-danger text-center mr-2 '>
+                            <i class='fas fa-ban pointer-link'></i>                    
+                        </a>";
+            }else{
+                return 
+                        "<a href='#' data-id='".$data->id."' class='btn btn-success text-center mr-2' id='close'>
+                            <i class='fas fa-check-circle pointer-link'></i>                  
+                        </a>";
+            }
+        })
+        ->rawColumns(['qr_code_status','action'])
         ->make(true);
     }
 
