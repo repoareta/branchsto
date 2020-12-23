@@ -59,6 +59,12 @@
                                                     <p class="table-success">
                                                         {{$item->approval_status}}.
                                                     </p> 
+                                                    <div class="image">                                      
+                                                        {{-- <img src='' width='40px' height='40px' alt=''> --}}
+                                                        {!! QrCode::size(130)->generate('QRco'); !!}
+                                                        <h6 class="title-text">QRco</h6>
+                                                        
+                                                    </div>
                                                 @endif
                                             @endforeach
                                         </div>
