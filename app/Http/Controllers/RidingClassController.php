@@ -186,6 +186,7 @@ class RidingClassController extends Controller
         ->select('b.date','b.time_start','b.time_end','d.name','e.name as stable_name')->get();
         $status_booking = Booking::select('*')->where('id',$data_booking_id)->get();
         $booking_detail = BookingDetail::select('*')->where('booking_id',$data_booking_id)->limit(1)->get();
+        
         return view('riding_class.history-pay-confirmasi',compact('data_list','data_booking_id','status_booking','booking_detail'));
     }
 

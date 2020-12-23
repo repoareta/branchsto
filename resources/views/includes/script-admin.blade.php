@@ -62,6 +62,7 @@
 <!--end::Global Config-->
 
 <!--begin::Global Theme Bundle(used by all pages)-->
+
 <script src="{{url('assets/plugins/global/plugins.bundle.js')}}"></script>
 <script src="{{url('assets/plugins/custom/prismjs/prismjs.bundle.js')}}"></script>
 <script src="{{url('assets/js/scripts.bundle.js')}}"></script>
@@ -75,7 +76,7 @@
 <script src="{{url('vendor/jsvalidation/js/jsvalidation.js')}}" type="text/javascript"></script>
 <script src="{{url('assets/js/pages/features/miscellaneous/sweetalert2.js') }}" type="text/javascript"></script>
 <script src="{{url('assets/js/pages/custom/login/login-general.js') }}" type="text/javascript"></script>
-<script src="{{url('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
+
 <!-- treeview JS -->
 <script type="text/javascript" src="{{ asset('tree/jquery.treeview.js')}}"></script>
 <!-- end treeview JS -->

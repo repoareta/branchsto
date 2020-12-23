@@ -72,7 +72,6 @@
 
 <!--begin::Page Vendors(used by this page)-->
 <script src="{{url('assets/plugins/custom/fullcalendar/fullcalendar.bundle.js')}}"></script>
-<script src="{{url('vendor/jsvalidation/js/jsvalidation.js')}}" type="text/javascript"></script>
 <script src="{{url('assets/js/pages/features/miscellaneous/sweetalert2.js') }}" type="text/javascript"></script>
 <script src="{{url('assets/js/pages/custom/login/login-general.js') }}" type="text/javascript"></script>
 
@@ -80,6 +79,10 @@
 <script src="{{url('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
 <script src="{{url('assets/js/pages/crud/datatables/advanced/row-grouping.js')}}"></script>
 {{-- DataTable END --}}
+
+<script src="{{url('assets/js/pages/crud/file-upload/image-input.js')}}"></script>
+<script src="{{url('assets/uppy/uppy.min.js')}}"></script>
+<script src="{{url('vendor/jsvalidation/js/jsvalidation.js')}}" type="text/javascript"></script>
 
 
 <!-- treeview JS -->
@@ -102,6 +105,7 @@
     });
 </script>
 <!--end::Page Vendors-->
+
 
 
 @yield("scripts")

@@ -29,7 +29,7 @@
 						</li>
 						<li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click"
 							aria-haspopup="true">
-							<a href="javascript:;" class="menu-link menu-toggle">
+							<a href="#" >
 								<span class="menu-text">VIRTUAL STABLING</span>
 								<span class="menu-desc"></span>
 							</a>
