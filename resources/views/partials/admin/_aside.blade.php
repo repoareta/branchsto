@@ -82,7 +82,7 @@
 					<ul class="navi navi-hover py-4">
 						<!--begin::Item-->
 						<li class="navi-item">
-							<a href="{{route('owner.payment-approval')}}" class="navi-link">											
+							<a href="{{route('owner.userpayment.index')}}" class="navi-link">											
 								<span class="navi-text">Riding Package</span>
 							</a>
 						</li>
