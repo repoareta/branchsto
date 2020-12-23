@@ -14,7 +14,7 @@
 					<ul class="menu-nav">
 						<li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click"
 							aria-haspopup="true">
-							<a href="{{route('owner.dashboard')}}" class="menu-link menu-toggle">
+							<a href="{{route('owner.dashboard')}}" class="menu-link">
 								<span class="menu-text">DASHBOARD</span>
 								<span class="menu-desc"></span>
 							</a>
@@ -49,7 +49,7 @@
 							<div class="menu-submenu menu-submenu-classic menu-submenu-left">
 								<ul class="menu-subnav">
 									<li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
-										<a href="{{route('owner.userpayment.index')}}" class="menu-link menu-toggle">
+										<a href="{{route('owner.userpayment.index')}}" class="menu-link">
 											<span class="menu-text">Riding Package</span>
 										</a>
 									</li>
@@ -65,12 +65,17 @@
 							<div class="menu-submenu menu-submenu-classic menu-submenu-left">
 								<ul class="menu-subnav">
 									<li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
-										<a href="{{route('owner.horse-sex')}}" class="menu-link menu-toggle">
+										<a href="{{route('owner.horse-sex')}}" class="menu-link">
 											<span class="menu-text">Horse Sex</span>
 										</a>
 									</li>
 									<li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
-										<a href="{{route('owner.bank')}}" class="menu-link menu-toggle">
+										<a href="{{route('owner.horse-breed')}}" class="menu-link">
+											<span class="menu-text">Horse Breed</span>
+										</a>
+									</li>
+									<li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
+										<a href="{{route('owner.bank')}}" class="menu-link">
 											<span class="menu-text">Bank Account Number</span>
 										</a>
 									</li>

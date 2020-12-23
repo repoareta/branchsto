@@ -81,8 +81,6 @@
 <script src="{{url('assets/js/pages/crud/datatables/advanced/row-grouping.js')}}"></script>
 {{-- DataTable END --}}
 
-<script src="{{url('assets/js/pages/crud/file-upload/image-input.js')}}"></script>
-<script src="{{url('assets/uppy/uppy.min.js')}}"></script>
 
 <!-- treeview JS -->
 <script type="text/javascript" src="{{ asset('tree/jquery.treeview.js')}}"></script>
