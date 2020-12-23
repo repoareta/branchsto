@@ -78,6 +78,11 @@
 <script src="{{url('assets/datatables/datatables.min.js')}}"></script>
 <script src="{{url('assets/js/pages/crud/file-upload/image-input.js')}}"></script>
 <script src="{{url('assets/uppy/uppy.min.js')}}"></script>
+
+<!-- treeview JS -->
+<script type="text/javascript" src="{{ asset('tree/jquery.treeview.js')}}"></script>
+<!-- end treeview JS -->
+
 {{-- <script src="https://nightly.datatables.net/js/jquery.dataTables.js"></script>
 <script src="https://cdn.datatables.net/rowgroup/1.0.2/js/dataTables.rowGroup.min.js"></script> --}}
 {{-- <script src="{{url('assets/js/pages/crud/datatables/advanced/row-grouping.js')}}"></script> --}}

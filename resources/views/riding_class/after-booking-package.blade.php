@@ -25,76 +25,47 @@
                                 <div class="col-lg-6 order-md-2 order-2 order-lg-1">
                                     <div class="card card-booking">
                                         <div class="card-body">
+                                        <form action="{{route('riding_class.booking.payment')}}" method="POST">
+                                            @csrf
+                                            @php
+                                                $sum_tot_Price = 0;
+                                            @endphp
+                                            @foreach ($data_list_package as $item)
                                             <h4>
-                                                Nama Package
+                                                Nama Package : {{$item['package_name']}}
+                                                <input type="hidden" name="package_id" value="{{$item['package_id']}}">
                                             </h4>
                                             <p>
-                                                Nama Stable
+                                                Nama Stable  : {{$item['stable_name']}}
                                             </p>
+                                            @endforeach
+
+                                            @foreach ($data_list_slot as $row)   
+                                            <input type="hidden" name="slot_id[]" value="{{$row['slot_id']}}">                                             
                                             <hr>
                                                 <h4>
                                                     Session
                                                 </h4>
-                                                <p>
-                                                    26 Desember 2020
-                                                </p>
-                                                <h4>
-                                                    Slot
-                                                </h4>
-                                                <p class="mb-0">
-                                                    09:00 - 10:00
-                                                </p>
-                                                <p class="mb-0">
-                                                    10:00 - 11:00
-                                                </p>
-                                                <p class="mb-0">
-                                                    13:00 - 14:00
-                                                </p>
-                                                <h5 class="mt-2">Sub Total : Rp. 400.000</h5>
+                                                @foreach (DB::table('slots')->where('id',$row['slot_id'])->get() as $item1)
+                                                    <p>
+                                                        {{$item1->date}}
+                                                    </p>
+                                                    <h4>
+                                                        Slot
+                                                    </h4>
+                                                    <p class="mb-0">
+                                                        {{$item1->time_start}} - {{$item1->time_end}}
+                                                    </p>
+                                                    <h5 class="mt-2">Sub Total : Rp. {{number_format($item['price_subtotal'],0,'.','.')}}</h5>
+                                                    <input type="hidden" name="price_subtotal[]" value="{{$item['price_subtotal']}}">
+                                                    @php
+                                                        $sum_tot_Price += $item['price_subtotal'];
+                                                    @endphp
+                                                @endforeach
                                             <hr>
-                                            <hr>
-                                                <h4>
-                                                    Session
-                                                </h4>
-                                                <p>
-                                                    26 Desember 2020
-                                                </p>
-                                                <h4>
-                                                    Slot
-                                                </h4>
-                                                <p class="mb-0">
-                                                    09:00 - 10:00
-                                                </p>
-                                                <p class="mb-0">
-                                                    10:00 - 11:00
-                                                </p>
-                                                <p class="mb-0">
-                                                    13:00 - 14:00
-                                                </p>
-                                                <h5 class="mt-2">Sub Total : Rp. 400.000</h5>
-                                            <hr>
-                                            <hr>
-                                                <h4>
-                                                    Session
-                                                </h4>
-                                                <p>
-                                                    26 Desember 2020
-                                                </p>
-                                                <h4>
-                                                    Slot
-                                                </h4>
-                                                <p class="mb-0">
-                                                    09:00 - 10:00
-                                                </p>
-                                                <p class="mb-0">
-                                                    10:00 - 11:00
-                                                </p>
-                                                <p class="mb-0">
-                                                    13:00 - 14:00
-                                                </p>
-                                                <h5 class="mt-2">Sub Total : Rp. 400.000</h5>
-                                            <hr>
-                                            <h4 class="text-right">Total : Rp. 1.200.000</h4>
+                                            @endforeach
+                                            <h4 class="text-right">Total : Rp. {{number_format($sum_tot_Price,0,'.','.')}}</h4>
+                                            <input type="hidden" name="price_total" value="{{$sum_tot_Price}}">
                                             <div class="bank-number">
                                                 <div class="card-bank">
                                                     <div class="bank">
@@ -105,7 +76,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-check align-items-center d-flex">
-                                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
+                                                        <input class="form-check-input pointer-link" type="radio" name="payment" checked value="1">
                                                     </div>
                                                 </div>
                                                 <div class="card-bank">
@@ -117,13 +88,14 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-check align-items-center d-flex">
-                                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                                                        <input class="form-check-input pointer-link" type="radio" name="payment" value="2">
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button class="btn btn-payment w-100">
+                                            <button type="submit" class="btn btn-payment w-100">
                                                 BOOKING
                                             </button>
+                                        </form>
                                         </div>
                                     </div>
                                 </div>

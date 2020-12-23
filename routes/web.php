@@ -159,7 +159,8 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
     Route::name('riding_class.')->prefix('riding_class')->group(function () {
         route::get('search/list/class', [RidingClassController::class, 'search_list_class'])->name('search_class');
         route::get('search/booking/class', [RidingClassController::class, 'booking_class'])->name('booking_class');
-        route::get('add/package', [RidingClassController::class, 'addToCart'])->name('booking.addCart');
+        route::post('add/package', [RidingClassController::class, 'addToCart'])->name('booking.addCart');
+        route::get('pesan/package', [RidingClassController::class, 'pesanToCart'])->name('pesan.addCart');
         route::post('booking/payment', [RidingClassController::class, 'booking_payment'])->name('booking.payment');
         route::get('booking/detail', [RidingClassController::class, 'booking_detail'])->name('booking.detail');
         route::post('confirmation/payment', [RidingClassController::class, 'history_order'])->name('confirmasion.payment');

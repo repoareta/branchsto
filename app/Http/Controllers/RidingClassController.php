@@ -8,17 +8,20 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 // load model
 use App\Models\Stable;
+use App\Models\Slot;
 use App\Models\Package;
+use App\Models\Booking;
+use App\Models\BookingDetail;
 
 class RidingClassController extends Controller
 {
     public function search_list_class(Request $request)
     {
         $Query = Package::select('*');                        
-
         if ($request->has('name') && $request->name != null) {
             $Query->where(function ($query) use ($request) {
                 $query->orWhereRaw("lower(name) like '%" . strtolower($request->name) . "%'");
@@ -36,63 +39,74 @@ class RidingClassController extends Controller
     }
     public function booking_class(Request $request)
     {
-        $id = Crypt::decryptString($request->id);
-        $data= Http::get('http://185.201.9.73/branchsto/public/api/package/'.$id)->json();
-        $data_list = [
-            'id'            => $data['data']['id'],      
-            'name'          => $data['data']['name'],
-            'description'   => $data['data']['description'],
-            'price'         => $data['data']['price']
-        ];
-        if (session('data_list')) {
-            session()->push('data_list', $data_list);
-        } else {
-            session()->put('data_list', []);
-            session()->push('data_list', $data_list);
-        }
-       
-        return redirect()->route('riding_class.booking.addCart');
+        $list_detail = Package::with(['stable'])->where('id', Crypt::decryptString($request->id))->get();
+        $data_slot = Slot::select('date')->whereYear('date',date('Y'))->whereMonth('date',date('m'))->groupBy('date')->get();
+        return view('riding_class.booking-package',compact('list_detail','data_slot'));
     }
+    
     public function addToCart(Request $request)
     {
-        // session()->forget("data_list");
-        $list_detail = session('data_list');
-        return view('riding_class.booking-package',compact('list_detail'));
+        session()->forget("data_list_slot");
+        session()->forget("data_list_package");
+
+        $data = $request->all();
+        foreach ($data['chackbox'] as $item => $value) {
+            if (!$data['chackbox'][$item] == null) {
+                $data2 = array(
+                    'slot_id'               => $data['chackbox'][$item],     
+                );
+                session()->push('data_list_slot', $data2);
+
+            }
+        } 
+
+        $data1 = array(
+            'package_id'            => $request->package_id,      
+            'package_name'          => $request->package_name,      
+            'stable_name'           => $request->stable_name,      
+            'description'           => $request->description,      
+            'price_total'           => $request->price_total,
+            'price_subtotal'        => $request->price_subtotal,
+        );
+        session()->push('data_list_package', $data1);
+        return redirect()->route('riding_class.pesan.addCart');       
     }
 
-    public function booking_payment(Request $request)
+    public function pesanToCart(Request $request)
     {
-        if(session('data_list')){
-            $status = Http::post('http://185.201.9.73/branchsto/public/api/booking',[
-                'user_id'     => Auth::user()->id,
-                'price_total' => $request->price_total,
-            ]); 
-            $booking_id = $status['data']['id'];        
-            $list_details = session('data_list');
-            foreach ($list_details as $row) {
-                $status = Http::post('http://185.201.9.73/branchsto/public/api/booking-detail', [
-                    'package_id'     => $row['id'],
-                    'booking_id'     => $booking_id,
-                    'price_subtotal' => $row['price'],
-                ]);
+        // session()->forget("data_list");
+        $data_list_slot = session("data_list_slot");
+        $data_list_package = session("data_list_package");
+       
+        return view('riding_class.after-booking-package',compact('data_list_slot','data_list_package'));       
+    }
+
+    public function booking_payment(Request $request, Booking $booking, BookingDetail $bookingdetail)
+    {
+        session()->forget("data_list_slot");
+        session()->forget("data_list_package");       
+         
+        $booking->user_id     = Auth::user()->id;
+        $booking->price_total = $request->price_total;
+        $booking->save();
+
+        $data = $request->all();
+        foreach ($data['slot_id'] as $item => $value) {
+            if (!$data['slot_id'][$item] == null) {
+                $data2 = array(
+                    'package_id'        => $request->package_id,
+                    'price_subtotal'    => $data['price_subtotal'][$item],
+                    'booking_id'        => $booking->id,
+                );
+                BookingDetail::create($data2);
             }
-            if ($status->getStatusCode() == 200) {
-                session()->forget("data_list");
-                Alert::success('Chackout Data Success.', 'Success.')->persistent(true)->autoClose(3600);
-                return redirect()->route('riding_class.booking.detail',['id' => Crypt::encryptString($booking_id)]);
-            }else{
-                Alert::info('Chackout Data Failed.', 'Try Again.')->persistent(true)->autoClose(3600);
-                return redirect()->back();
-            }
-        }else{
-            return redirect()->back();
-        }  
+        }
+
+        Alert::success('Booking Package Success.', 'Success.')->persistent(true)->autoClose(3600);
+        return view('riding_class.history-pay');       
     }
     public function booking_detail(Request $request)
     {
-        // $d = Crypt::decryptString($request->id);
-        // dd($d);
-        $data= Http::get('http://185.201.9.73/branchsto/public/api/booking/'.Crypt::decryptString($request->id));
         return view('riding_class.payment',compact('data'));
 
     }
