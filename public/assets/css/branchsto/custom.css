@@ -1277,3 +1277,7 @@ div#kt_content, .flex-row.page {
 .element.style {
   padding-bottom: 50px;
 }
+
+.checkbox > input:checked ~ span {
+  background-color:#181C32;
+}

@@ -23,22 +23,20 @@ class PackageController extends Controller
     }
     public function listJson()
     {
-        $data = Package::with(['slot'])->where('user_id', Auth::user()->id);
+        $data = Package::where('user_id', Auth::user()->id);
         return datatables()->of($data)
             ->addColumn('profile', function ($data) {
                 return "<img src='assets/media/branchsto/horse.png' width='40px' height='40px' alt=''>";
             })
-            ->addColumn('name_package', function ($data) {
-                return $data->name;
-            })
-            ->addColumn('package_number', function ($data) {
-                return $data->package_number;
-            })
-            ->addColumn('description', function ($data) {
-                return $data->description;
-            })
             ->addColumn('price', function ($data) {
-                return $data->price;
+                return number_format($data->price);
+            })
+            ->addColumn('approval_status', function ($data) {
+            
+                if($data->approval_status == null){
+                    return 'Pending';
+                }
+                return $data->approval_status;
             })
             ->addColumn('action', function ($data) {
                 return 
@@ -68,6 +66,7 @@ class PackageController extends Controller
     public function store(Request $request, Package $package)
     {
         $package->package_number = $request->package_number;
+        $package->attendance     = $request->attendance;
         $package->name           = $request->name;
         $package->description    = $request->description;
         $package->price          = $request->price;
@@ -75,7 +74,8 @@ class PackageController extends Controller
         $package->stable_id      = $request->stable_id;
         $package->save();
 
-        return redirect()->route('package.edit', ['id' => Crypt::encryptString($package->id)]);
+        Alert::success('Create Success.', 'Success.')->persistent(true)->autoClose(3600);
+        return redirect()->route('package.index');   
     }
     public function edit($id)
     {
@@ -86,6 +86,7 @@ class PackageController extends Controller
     {
         $package = Package::find($request->package_id);
         $package->package_number = $request->package_number;
+        $package->attendance     = $request->attendance;
         $package->name           = $request->name;
         $package->description    = $request->description;
         $package->price          = $request->price;

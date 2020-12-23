@@ -52,7 +52,7 @@
 					</div>
 					<div class="stable-body">
 						<div class="row">
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<a href="{{route('horse.index')}}">
 									<div class="card-action">
 										<div class="image">
@@ -65,7 +65,7 @@
 									</div>
 								</a>
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<a href="{{route('package.index')}}">
 									<div class="card-action">
 										<div class="image">
@@ -78,7 +78,20 @@
 									</div>
 								</a>
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-3">
+								<a href="{{route('schedule.index')}}">
+									<div class="card-action">
+										<div class="image">
+											<img src="{{url('assets/media/branchsto/horse_deal_icon.svg')}}" alt="">
+										</div>
+										<div class="text">
+											<div class="title-card">Schedule</div>
+											<div class="subtitle-card">Manage all your schedule here</div>
+										</div>
+									</div>
+								</a>
+							</div>
+							<div class="col-md-3">
 								<a href="{{route('coach.index')}}">
 									<div class="card-action">
 										<div class="image">
@@ -86,7 +99,7 @@
 										</div>
 										<div class="text">
 											<div class="title-card">Coach</div>
-											<div class="subtitle-card">Manage all your class here</div>
+											<div class="subtitle-card">Manage all your coach here</div>
 										</div>
 									</div>
 								</a>

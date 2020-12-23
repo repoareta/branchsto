@@ -36,32 +36,28 @@
                                 <div class="col-lg-8">
                                     <div class="card card-booking">
                                         <div class="card-body">
-                                            @if ($list_detail == null)
-                                            <div class="modal-footer">											
-                                                <div class="modal-body">
-                                                    <h2 class="title-text">Your package cart is empty</h2>
-                                                </div>
-                                                <a href="{{route('riding_class.search_class')}}" class="btn btn-add-new font-weight-bold">Shopping Now</a>
-                                            </div>
-                                            @else
-                                            <form action="{{route('riding_class.booking.payment')}}" method="POST">
+                                            <form action="{{route('riding_class.booking.addCart')}}" method="POST">
                                                 @csrf
                                                 @php
                                                 $sum_tot_Price =0;
                                                 $count=0;
                                                 @endphp
                                                 @foreach ($list_detail as $row)
+                                                <input type="hidden" value="{{$row->attendance}}" id="attendance">
                                                 <table class="table table-borderless table-dark mb-10">
                                                     <tbody>
                                                         <tr>
                                                             <th width="15%" scope="row">Name Package</th>
                                                             <td  width="5%">:</td>
                                                             <td >{{strtoupper($row['name'])}}</td>
+                                                            <input type="hidden" name="package_name" value="{{$row['name']}}">
+                                                            <input type="hidden" name="stable_name" value="{{$row->stable['name']}}">
                                                         </tr>
                                                         <tr>
                                                             <th scope="row">Description</th>
                                                             <td>:</td>
                                                             <td>{{($row['description'])}}</td>
+                                                            <input type="hidden" name="description" value="{{$row['description']}}">
                                                         </tr>
                             
                                                         <tr>
@@ -69,14 +65,42 @@
                                                             <td>:</td>
                                                             <td >{{number_format($row['price'],0,'.','.')}}</td>
                                                         </tr>
+                                                        <tr>
+                                                            <td >Choose Date</td>
+                                                            <td>:</td>
+                                                            <td >
+                                                                <div class="card-body">
+                                                                    <ul id="browser" class="filetree">
+                                                                        @foreach ($data_slot as $item)
+                                                                        <li  class="closed"><span class="folder pointer-link kt-subheader__breadcrumbs-link" >{{$item->date}}</span>
+                                                                            <ul class="jstree-container-ul jstree-children">
+                                                                                @foreach (DB::table('slots')->where('date',$item->date)->get() as $item)
+                                                                                    <li style="margin-left:-30px">
+                                                                                        <span class="file pointer-link kt-subheader__breadcrumbs-link pointer-link" data-toggle="kt-tooltip" data-placement="top" title="Click Time">
+                                                                                            {{$item->time_start}} - {{$item->time_end}}
+                                                                                            <input type="hidden" name="time1[]" value="{{$item->time_start}}" class="ponter-link">
+                                                                                            <input type="hidden" name="time2[]" value="{{$item->time_end}}" class="ponter-link">
+                                                                                            <input type="hidden" name="date[]" value="{{$item->date}}" class="ponter-link">
+                                                                                            <input type="checkbox" name="chackbox[]" data-exval="1" value="{{$item->id}}" class="ponter-link">
+                                                                                        </span>
+                                                                                    </li>
+                                                                                @endforeach
+                                                                            </ul>
+                                                                        </li>
+                                                                        @endforeach
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
                                                     </tbody>
                                                 </table>
+                                                <span class="form-text text-muted" id="result"></span>
+
                                                 @php
-                                                    $count++;
                                                     $sum_tot_Price += $row['price'];
                                                 @endphp
-                                                <input type="hidden" name="package_id[{{$count}}]" value="{{$row['id']}}">
-                                                <input type="hidden" name="price_subtotal[{{$count}}]" value="{{$row['price']}}">
+                                                <input type="hidden" name="package_id" value="{{$row['id']}}">
+                                                <input type="hidden" name="price_subtotal" value="{{$row['price']}}">
                                                 @php
                                                     $count++;
                                                 @endphp
@@ -88,14 +112,14 @@
                                                         <h2 class="title-text">Rp. {{number_format($sum_tot_Price,0,'.','.')}}-</h2>
                                                     </div>
                                                     <a href="{{route('riding_class.search_class')}}" class="btn btn-secondary">LIST PACKAGE</a>
-                                                    <button type="submit" class="btn btn-add-new font-weight-bold">CHECKOUT</button>
+                                                    <button type="submit" disabled class="btn btn-add-new font-weight-bold" id="submitbutton">CHECKOUT</button>
                                                 </div>
                                             </form>
-                                            @endif
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">										
+                                <div class="col-lg-4">	
+                                    @foreach ($list_detail as $item)
                                     <div class="competition-card package h-100">
                                         <div class="image">					
                                             <div class="register">
@@ -110,10 +134,11 @@
                                             <img src="{{url('assets/media/branchsto/Rectangle 140.png')}}" alt="">
                                             <div class="overlay"></div>
                                         </div>
-                                        <div class="subtitle-detail">
+                                        <div class="title">
+                                            {{strtoupper($row->stable->name)}}
                                         </div>
-                                        {{-- <div class="title-detail">
-                                            Name
+                                        <div class="subtitle">
+                                            {{strtoupper($row->name)}}
                                         </div>
                                         <table class="table package-detail">
                                             <tr>
@@ -121,7 +146,7 @@
                                                     
                                                 </td>
                                                 <td class="text-right">
-                                                    Rp. 
+                                                    Rp. {{number_format($row->price,0,'.','.')}}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -129,7 +154,7 @@
                                                     <a href="">
                                                         <i class="fas fa-share-alt"></i>
                                                     </a>
-                                                    <a href="">
+                                                    <a href="#">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
                                                             <path d="M14 10L11 14V28C11 28.5304 11.2107 29.0391 11.5858 29.4142C11.9609 29.7893 12.4696 30 13 30H27C27.5304 30 28.0391 29.7893 28.4142 29.4142C28.7893 29.0391 29 28.5304 29 28V14L26 10H14Z" stroke="#2A4158" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                                             <path d="M11 14H29" stroke="#2A4158" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -138,8 +163,9 @@
                                                     </a>
                                                 </td>
                                             </tr>
-                                        </table> --}}
+                                        </table>
                                     </div>
+                                    @endforeach									
                                 </div>
                             </div>
                         </div>
@@ -161,6 +187,8 @@
 <script type="text/javascript">
 $(document).ready(function () {
 //tampil edit detail
+    $("#browser").treeview();  
+
     $('#add-booking').on('click', function(e) {
         e.preventDefault();
         var dataid = $(this).attr('data-id');
@@ -171,8 +199,27 @@ $(document).ready(function () {
         // $('#select-bagian').val(data.bagian).trigger('change');
         // $('#select-acc').val(data.account).trigger('change');
         // $('#select-jb').val(data.jb).trigger('change');
-        // $('#select-cj').val(data.cj).trigger('change');       
+        // $('#select-cj').val(data.cj).trigger('change');  
     });
+    
+    $('li').on('click','input[type="checkbox"]', function(){
+        var total=0;
+        //lOOP THROUGH CHECKED
+        $('li').on('click','input[type="checkbox"]', function(){
+            var attendance = $('#attendance').val();
+            //Update total
+            var total = $("input:checked").length;
+            if(total <= attendance){
+                $("#result").html("");
+                document.getElementById('submitbutton').disabled = false;
+            }else{
+                $("#result").html("<p style='color:red'>Attandance out of limit.</p>");
+                document.getElementById('submitbutton').disabled = 'disabled';
+
+            }
+        });
+    });  
 });
+
 </script>
 @endpush
