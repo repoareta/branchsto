@@ -25,7 +25,7 @@ class ProfileController extends Controller
     {
         $city = City::where('province_id',$request->province_id)
                 ->pluck('name','id');
-        return response()->json($city);
+        return response()->jsoownern($city);
     }
 
     public function getDistrtict(Request $request)

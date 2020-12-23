@@ -54,7 +54,7 @@
 		</script>
 
 		<!--begin::Global Config(global config for global JS scripts)-->
-		@include('includes.scripts')
+		@include('includes.script-admin')
 		@stack('add-script')
 		<!--end::Page Scripts-->
 	</body>
