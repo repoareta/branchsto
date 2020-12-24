@@ -66,7 +66,7 @@
 											<form class="kt-form" id="formresetpassword" action="{{ route('login.store.reset.password')}}" method="post">
 												@csrf
 												<div class="form-group">
-													<input class="form-control" type="text" placeholder="New Password" value="" name="password" autocomplete="off">
+													<input class="form-control" type="password" placeholder="New Password" value="" name="password" autocomplete="off">
 												</div>
 												<div class="form-group">
 													<input class="form-control form-control-last" type="password" value="" placeholder="New Password Confirmation" name="password_confirmation">
