@@ -82,7 +82,7 @@
 								<a href="{{route('schedule.index')}}">
 									<div class="card-action">
 										<div class="image">
-											<img src="{{url('assets/media/branchsto/horse_deal_icon.svg')}}" alt="">
+											<img src="{{url('assets/media/branchsto/date_icon.svg')}}" alt="">
 										</div>
 										<div class="text">
 											<div class="title-card">Schedule</div>

@@ -38,7 +38,7 @@
 										<a href="{{route('stable.index')}}">MANAGE STABLE</a>
 									</li>
                                     <li class="breadcrumb-item">
-                                        <a href="" class="text-muted">ADD HORSE</a>
+                                        <a href="#" class="text-muted">ADD HORSE</a>
                                     </li>
                                 </ul>
                             </div>

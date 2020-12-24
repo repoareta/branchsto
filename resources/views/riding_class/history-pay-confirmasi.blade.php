@@ -52,13 +52,9 @@
                                             <h5>Reminder :</h5>
                                             @foreach ($status_booking as $item)
                                                 @if ($item->approval_status == null)
-                                                    <p class="table-info">
-                                                        Pending.
-                                                    </p> 
+                                                    <span class="label label-lg label-light-danger label-inline">Pending.</span> 
                                                 @else
-                                                    <p class="table-success">
-                                                        {{$item->approval_status}}.
-                                                    </p> 
+                                                    <span class="label label-lg label-light-success label-inline">{{$item->approval_status}}.</span> 
                                                     <div class="image">  
                                                         @foreach ($booking_detail as $row)
                                                             <img src="{{ asset('storage'.$row->qr_code) }}" />                                                       

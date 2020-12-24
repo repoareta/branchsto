@@ -84,7 +84,7 @@
 			language: {
             	processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> <br> Loading...'
 			},
-			ajax      : "{{ route('stable_close.list.json') }}",
+			ajax      : "{{ route('close.list.json',['booking_id' => $booking_id]) }}",
 			columns: [
 				{data: 'date', name: 'date'},
 				{data: 'time_start', name: 'time_start'},
@@ -109,7 +109,7 @@
 			}).then(function(result) {
 				if (result.value) {
 					$.ajax({
-						url: "{{ route('stable_close.close') }}",
+						url: "{{ route('close') }}",
 						type: 'POST',
 						dataType: 'json',
 						data: {

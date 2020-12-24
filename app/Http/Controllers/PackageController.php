@@ -34,19 +34,22 @@ class PackageController extends Controller
             ->addColumn('approval_status', function ($data) {
             
                 if($data->approval_status == null){
-                    return 'Pending';
+                    return "<span class='label label-lg label-light-warning label-inline'>Pending.</span>";
+                }else{
+                    return "<span class='label label-lg label-light-success label-inline'>".$data->approval_status.".</span>";
                 }
-                return $data->approval_status;
             })
             ->addColumn('action', function ($data) {
                 return 
-                "
+                "<a href='javascript:void(0)' class='btn btn-info text-center mr-2' >
                     <i class='fas fa-pen edit-package pointer-link' data-id='".Crypt::encryptString($data->id)."'></i>
-                    <i class='fas fa-eye '></i>
+                </a>
+                <a href='javascript:void(0)' class='btn btn-danger text-center mr-2' >
                     <i class='fas fa-trash delete-package pointer-link' data-id='".$data->id."'></i>
+                </a>
                 ";
             })
-            ->rawColumns(['profile','action'])
+            ->rawColumns(['profile','action','approval_status'])
             ->make(true);
     }
     public function create()

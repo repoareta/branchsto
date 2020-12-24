@@ -41,7 +41,7 @@
 										<a href="{{route('stable.index')}}" class="text-muted">MANAGE STABLE</a>
 									</li>
 									<li class="breadcrumb-item">
-										<a href="" class="text-muted">ADD SCHEDULE</a>
+										<a href="#" class="text-muted">ADD SCHEDULE</a>
 									</li>
 								</ul>
 								<!--end::Breadcrumb-->
