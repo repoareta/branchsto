@@ -44,7 +44,7 @@ class RidingClassController extends Controller
     public function booking_class(Request $request)
     {
         $list_detail = Package::with(['stable'])->where('id', Crypt::decryptString($request->id))->first();
-        $data_slot = Slot::select('date','user_id')->where('user_id', $list_detail->user_id)->groupBy('date','user_id')->get();
+        $data_slot = Slot::select('date','user_id')->where('user_id', $list_detail->user_id)->groupBy('date','user_id')->orderBy('date','asc')->get();
         return view('riding_class.booking-package',compact('list_detail','data_slot'));
     }
     

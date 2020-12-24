@@ -75,7 +75,7 @@
                                                                                 @foreach (DB::table('slots')->where('user_id',$item->user_id)->where('date', $item->date)->orderBy('time_start','asc')->get() as $item)
                                                                                     <li style="margin-left:-30px">
                                                                                         <span class="file pointer-link kt-subheader__breadcrumbs-link pointer-link" data-toggle="kt-tooltip" data-placement="top" title="Click Time">
-                                                                                            {{$item->id}} - {{$item->time_start}} - {{$item->time_end}}
+                                                                                            {{$item->time_start}} - {{$item->time_end}}
                                                                                             @if ($item->capacity >= $item->capacity_booked)
                                                                                                 <input type="checkbox" name="chackbox[]" data-exval="1" value="{{$item->id}}" class="ponter-link">
                                                                                             @else
