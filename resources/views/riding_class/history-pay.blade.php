@@ -57,7 +57,7 @@
                                             <div class="bank-number">
                                                 <div class="card-bank">
                                                     <div class="bank">
-                                                        <img src="{{ asset('storage'.$data_payment->photo) }}" alt="">
+                                                        <img src="{{ asset('storage/'.$data_payment->photo) }}" alt="">
                                                         <div class="text">
                                                             <div class="name">{{$data_payment->account_name}}</div>
                                                             <div class="number">{{$data_payment->account_number}}</div>
