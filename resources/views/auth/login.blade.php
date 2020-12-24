@@ -63,7 +63,7 @@
 											<form class="kt-form" id="formcomm" action="{{ route('login.login')}}" method="post">
 												@csrf
 												<div class="form-group">
-													<input class="form-control" type="text" placeholder="Username" value="" name="email" autocomplete="off">
+													<input class="form-control" type="text" placeholder="Email" value="" name="email" autocomplete="off">
 												</div>
 												<div class="form-group">
 													<input class="form-control form-control-last" type="password" value="" placeholder="Password" name="password">
