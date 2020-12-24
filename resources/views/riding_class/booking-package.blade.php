@@ -41,28 +41,27 @@
                                                 @php
                                                 $count=0;
                                                 @endphp
-                                                @foreach ($list_detail as $row)
-                                                <input type="hidden" value="{{$row->attendance}}" id="attendance">
+                                                <input type="hidden" value="{{$list_detail->attendance}}" id="attendance">
                                                 <table class="table table-borderless table-dark mb-10">
                                                     <tbody>
                                                         <tr>
                                                             <th width="15%" scope="row">Name Package</th>
                                                             <td  width="5%">:</td>
-                                                            <td >{{strtoupper($row['name'])}}</td>
-                                                            <input type="hidden" name="package_name" value="{{$row['name']}}">
-                                                            <input type="hidden" name="stable_name" value="{{$row->stable['name']}}">
+                                                            <td >{{strtoupper($list_detail->name)}}</td>
+                                                            <input type="hidden" name="package_name" value="{{$list_detail->name}}">
+                                                            <input type="hidden" name="stable_name" value="{{$list_detail->stable->name}}">
                                                         </tr>
                                                         <tr>
                                                             <th scope="row">Description</th>
                                                             <td>:</td>
-                                                            <td>{{($row['description'])}}</td>
-                                                            <input type="hidden" name="description" value="{{$row['description']}}">
+                                                            <td>{{($list_detail->description)}}</td>
+                                                            <input type="hidden" name="description" value="{{$list_detail->description}}">
                                                         </tr>
                             
                                                         <tr>
                                                             <th scope="row">Price</th>
                                                             <td>:</td>
-                                                            <td >{{number_format($row['price'],0,'.','.')}}</td>
+                                                            <td >{{number_format($list_detail->price,0,'.','.')}}</td>
                                                         </tr>
                                                         <tr>
                                                             <td >Choose Date</td>
@@ -73,10 +72,10 @@
                                                                         @foreach ($data_slot as $item)
                                                                         <li  class="closed"><span class="folder pointer-link kt-subheader__breadcrumbs-link" >{{$item->date}}</span>
                                                                             <ul class="jstree-container-ul jstree-children">
-                                                                                @foreach (DB::table('slots')->where('date',$item->date)->get() as $item)
+                                                                                @foreach (DB::table('slots')->where('user_id',$item->user_id)->where('date', $item->date)->orderBy('time_start','asc')->get() as $item)
                                                                                     <li style="margin-left:-30px">
                                                                                         <span class="file pointer-link kt-subheader__breadcrumbs-link pointer-link" data-toggle="kt-tooltip" data-placement="top" title="Click Time">
-                                                                                            {{$item->time_start}} - {{$item->time_end}}
+                                                                                            {{$item->id}} - {{$item->time_start}} - {{$item->time_end}}
                                                                                             @if ($item->capacity >= $item->capacity_booked)
                                                                                                 <input type="checkbox" name="chackbox[]" data-exval="1" value="{{$item->id}}" class="ponter-link">
                                                                                             @else
@@ -100,14 +99,13 @@
                                                 <span class="form-text text-muted" id="result"></span>
 
                                                 @php
-                                                    $sum_tot_Price = $row['price'];
+                                                    $sum_tot_Price = $list_detail->price;
                                                 @endphp
-                                                <input type="hidden" name="package_id" value="{{$row['id']}}">
-                                                <input type="hidden" name="price_subtotal" value="{{$row['price']}}">
+                                                <input type="hidden" name="package_id" value="{{$list_detail->id}}">
+                                                <input type="hidden" name="price_subtotal" value="{{$list_detail->price}}">
                                                 @php
                                                     $count++;
                                                 @endphp
-                                                @endforeach
                                                 <input type="hidden" name="price_total" value="{{$sum_tot_Price}}">
                                                 <div class="modal-footer">											
                                                     <div class="modal-body">
@@ -122,7 +120,6 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4">	
-                                    @foreach ($list_detail as $item)
                                     <div class="competition-card package h-100">
                                         <div class="image">					
                                             <div class="register">
@@ -138,10 +135,10 @@
                                             <div class="overlay"></div>
                                         </div>
                                         <div class="title">
-                                            {{strtoupper($row->stable->name)}}
+                                            {{strtoupper($list_detail->stable->name)}}
                                         </div>
                                         <div class="subtitle">
-                                            {{strtoupper($row->name)}}
+                                            {{strtoupper($list_detail->name)}}
                                         </div>
                                         <table class="table package-detail">
                                             <tr>
@@ -149,7 +146,7 @@
                                                     
                                                 </td>
                                                 <td class="text-right">
-                                                    Rp. {{number_format($row->price,0,'.','.')}}
+                                                    Rp. {{number_format($list_detail->price,0,'.','.')}}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -168,7 +165,6 @@
                                             </tr>
                                         </table>
                                     </div>
-                                    @endforeach									
                                 </div>
                             </div>
                         </div>
