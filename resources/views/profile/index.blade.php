@@ -92,7 +92,7 @@
 												<div class="row">
 													<div class="col-10">
 														<div class="text">
-															<a href="{{route('club.menu')}}">
+															<a href="#">
 																<div class="title-card">Management Club</div>
 																<div class="subtitle-card">Add or manage your club</div>
 															</a>
