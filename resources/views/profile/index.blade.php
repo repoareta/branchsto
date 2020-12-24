@@ -42,11 +42,22 @@
 											<div class="subtitle">Unregistered</div>												
 										</div>
 									@else
-										<div class="card-body-premium pointer-link" data-toggle="modal" id="form-stable">
-											<img src="{{url('assets/media/branchsto/chess-gold-icon.svg')}}" alt="">
-											<div class="title">Stable</div>
-											<div class="subtitle">Registered</div>												
-										</div>
+										@if ($data->approval_status == null)
+											<div class="card-body-premium pointer-link" data-toggle="modal" id="form-stable-pending">
+												<img src="{{url('assets/media/branchsto/chess-gold-icon.svg')}}" alt="">
+												<div class="title">Stable</div>
+												<div class="subtitle">Registered</div>	
+													<span class="label label-lg label-light-warning label-inline">Pending.</span>											
+											</div>
+										@else
+											<div class="card-body-premium pointer-link" data-toggle="modal" id="form-stable-ready">
+												<img src="{{url('assets/media/branchsto/chess-gold-icon.svg')}}" alt="">
+												<div class="title">Stable</div>
+												<div class="subtitle">Registered</div>	
+													<span class="label label-lg label-light-success label-inline">Ready to Sell.</span>											
+											</div>
+										@endif
+
 									@endif
 									<div class="card-body-premium">
 										<img src="{{url('assets/media/branchsto/event-silver-icon.svg')}}" alt="">
@@ -104,10 +115,17 @@
 																<div class="title-card">Management Stable</div>
 																<div class="subtitle-card">Add or manage your stable</div>
 															@else
-																<a href="{{route('stable.index')}}" >
-																	<div class="title-card">Management Stable</div>
-																	<div class="subtitle-card">Add or manage your stable</div>
-																</a>
+																@if ($data->approval_status == null)
+																	<a href="#" id="form-stable-pending1">
+																		<div class="title-card">Management Stable</div>
+																		<div class="subtitle-card">Add or manage your stable</div>
+																	</a>
+																@else
+																	<a href="{{route('stable.index')}}" >
+																		<div class="title-card">Management Stable</div>
+																		<div class="subtitle-card">Add or manage your stable</div>
+																	</a>
+																@endif
 															@endif
 														</div>
 													</div>
@@ -164,13 +182,25 @@
 {!! JsValidator::formRequest('App\Http\Requests\StableStore', '#formstable') !!}
 <script type="text/javascript">
     $(document).ready( function () {
-		$('#form-stable').click(function(e) {
+		$('#form-stable-pending').click(function(e) {
 			e.preventDefault();
-			console.log(1);
 			Swal.fire({
-				title: "You already have a stable",
+				title: "Thank you for completing the riding class attribute registration form. We'll send you a notification in a few moments.",
 				icon: "info",
-				timer : 2000
+			});
+		});
+		$('#form-stable-pending1').click(function(e) {
+			e.preventDefault();
+			Swal.fire({
+				title: "Thank you for completing the riding class attribute registration form. We'll send you a notification in a few moments.",
+				icon: "info",
+			});
+		});
+		$('#form-stable-ready').click(function(e) {
+			e.preventDefault();
+			Swal.fire({
+				title: "Your stable is ready to use. Good luck.",
+				icon: "info",
 			});
 		});
 	});
