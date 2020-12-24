@@ -82,7 +82,7 @@ class SlotController extends Controller
     }
     public function listJson()
     {
-        $data = Slot::where('user_id',Auth::user()->id)->get();
+        $data = Slot::where('user_id',Auth::user()->id)->orderBy('time_start', 'asc')->get();
         return datatables()->of($data)
         ->addColumn('start_date', function ($data) {
             return $data->date;
