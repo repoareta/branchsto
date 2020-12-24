@@ -44,7 +44,7 @@ route::get('test', function () {
 // App Owner Route
 
 
-
+Auth::routes(['verify, true']);
 // User Route
 
 // Auth::routes(['verify' => true, 'logout' => false, 'password']);
