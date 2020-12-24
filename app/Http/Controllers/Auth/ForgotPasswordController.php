@@ -59,6 +59,7 @@ class ForgotPasswordController extends Controller
         } else {
             Alert::error('Something went wrong', 'Error.')->persistent(true)->autoClose(3600);
         }
+    }
 
     /**
      * Validate the email for the given request.
