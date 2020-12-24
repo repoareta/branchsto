@@ -41,7 +41,7 @@ class UserPaymentApprovalController extends Controller
             return $data->approval_status;
         })
         ->addColumn('bank', function ($data) {
-            return $data->bank_payment_id;
+            return $data->bank->account_name;
         })
         ->addColumn('action', function ($data) {
             return
@@ -74,7 +74,7 @@ class UserPaymentApprovalController extends Controller
             return 'Pending';
         })
         ->addColumn('bank', function ($data) {
-            return $data->bank_payment_id;
+            return $data->bank->account_name;
         })
         ->addColumn('action', function ($data) {
             return
@@ -82,18 +82,62 @@ class UserPaymentApprovalController extends Controller
             <a href='javascript:void(0)' data-toggle='modal' data-id='".$data->id."' class='btn btn-info text-center mr-2' id='openBtn' data-toggle='Detail' data-placement='top' title='Detail'>
                 <i class='fas fa-eye'></i>
             </a>
-            <form class='d-inline' id='formAccept' method='post' action='" . route('owner.userpayment.approv.booking', $data->id) . "'>
+            <form class='d-inline' id='formAccept".$data->id."' method='post' action='" . route('owner.userpayment.approv.booking', $data->id) . "'>
             " . method_field('PATCH') . csrf_field() . "
-                <button class='btn btn-success text-center mr-2' id='accept' type='submit'  data-toggle='Accept' data-placement='top' title='Accept'>
+                <button class='btn btn-success text-center mr-2' id='accept".$data->id."' type='submit'  data-toggle='Accept' data-placement='top' title='Accept'>
                     <i class='fas fa-check-circle'></i>
                 </button>
             </form>
-            <form class='d-inline' id='formDecline' method='post' action='" . route('owner.userpayment.unapprov.booking', $data->id) . "'>
+            <form class='d-inline' id='formDecline".$data->id."' method='post' action='" . route('owner.userpayment.unapprov.booking', $data->id) . "'>
             " . method_field('PATCH') . csrf_field() . "
-                <button class='btn btn-danger text-center mr-2' id='decline' type='submit'  data-toggle='Decline' data-placement='top' title='Decline'>
+                <button class='btn btn-danger text-center mr-2' id='decline".$data->id."' type='submit'  data-toggle='Decline' data-placement='top' title='Decline'>
                 <i class='fas fa-ban'></i>
                 </button>
             </form>
+
+            <script>
+            $('tbody').on('click','#accept".$data->id."', function(e) {
+    
+                e.preventDefault();
+                    
+                Swal.fire({
+                    title: 'Are you sure?',
+                    icon: 'warning',
+                    text: 'This is will be accepted the stable',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Accept',
+                    cancelButtonText: 'Cancel',
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                }).then(function(getAction) {
+                    if (getAction.value === true) {
+                        $('#formAccept".$data->id."').submit();
+                    }
+                });
+            });
+
+            $('tbody').on('click','#decline".$data->id."', function(e) {
+    
+                e.preventDefault();
+                    
+                Swal.fire({
+                    title: 'Are you sure?',
+                    icon: 'warning',
+                    text: 'This is will be declined the stable',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Accept',
+                    cancelButtonText: 'Cancel',
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                }).then(function(getAction) {
+                    if (getAction.value === true) {
+                        $('#formDecline".$data->id."').submit();
+                    }
+                });
+            });
+            </script>   
             ";
         })
         ->rawColumns(['no','photo','action'])
@@ -102,7 +146,7 @@ class UserPaymentApprovalController extends Controller
 
     public function detailBooking($id)
     {
-        $booking = Booking::find($id);
+        $booking = Booking::with(['bank','user'])->find($id);
         return response()->json($booking);
     }
 

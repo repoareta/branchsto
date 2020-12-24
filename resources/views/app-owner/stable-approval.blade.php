@@ -226,49 +226,7 @@
                     }
                     $('#modalDetail').modal('show');
                 })
-            });  
-
-            $('tbody').on('click','#accept', function(e) {
-    
-                e.preventDefault();
-                    
-                Swal.fire({
-                    title: "Are you sure?",
-                    icon: "warning",
-                    text: "This is will be accepted the stable",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonText: "Accept",
-                    cancelButtonText: "Cancel",
-                    closeOnConfirm: false,
-                    closeOnCancel: false
-                }).then(function(getAction) {
-                    if (getAction.value === true) {
-                        $('#formAccept').submit();
-                    }
-                });
-            });
-
-            $('tbody').on('click','#decline', function(e) {
-    
-                e.preventDefault();
-                    
-                Swal.fire({
-                    title: "Are you sure?",
-                    icon: "warning",
-                    text: "This is will be declined the stable",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonText: "Accept",
-                    cancelButtonText: "Cancel",
-                    closeOnConfirm: false,
-                    closeOnCancel: false
-                }).then(function(getAction) {
-                    if (getAction.value === true) {
-                        $('#formDecline').submit();
-                    }
-                });
-            });
+            });              
 		} );
 </script>
 @endpush
