@@ -175,7 +175,7 @@
                     {data: 'approval_status', name: 'approval_status'},
                     {data: 'action', name: 'action'},
                 ]
-            }); 
+            });
             
             $('body').on('click', '#openBtn', function () {
                 var id = $(this).data('id');

@@ -43,57 +43,6 @@ route::get('test', function () {
 
 // App Owner Route
 
-Route::group(['prefix' => 'owner'], function(){
-
-    // Dashboard
-    Route::get('/', [DashboardController::class, 'index'])->name('owner.dashboard');
-
-    // Bank Account
-    Route::group(['prefix' => 'bank'], function(){
-
-        Route::get('/', [BankPaymentController::class, 'index'])->name('owner.bank');
-        route::get('list/json', [BankPaymentController::class, 'listJson'])->name('owner.bank.list.json');
-        Route::post('store', [BankPaymentController::class, 'store'])->name('owner.bank.store');
-        Route::get('edit/{id}', [BankPaymentController::class, 'edit'])->name('owner.bank.edit');
-        Route::patch('update', [BankPaymentController::class, 'update'])->name('owner.bank.update');
-        Route::delete('delete', [BankPaymentController::class, 'delete'])->name('owner.bank.delete');
-
-    });
-    // Horse Sex
-    Route::group(['prefix' => 'horse-sex'], function(){
-
-        Route::get('/', [HorseSexController::class, 'index'])->name('owner.horse-sex');
-        route::get('list/json', [HorseSexController::class, 'listJson'])->name('owner.horse-sex.list.json');
-        Route::post('store', [HorseSexController::class, 'store'])->name('owner.horse-sex.store');
-        Route::get('edit/{id}', [HorseSexController::class, 'edit'])->name('owner.horse-sex.edit');
-        Route::patch('update', [HorseSexController::class, 'update'])->name('owner.horse-sex.update');
-        Route::delete('delete', [HorseSexController::class, 'delete'])->name('owner.horse-sex.delete');
-
-    });
-
-    // Horse Breed
-    Route::group(['prefix' => 'horse-breed'], function(){
-
-        Route::get('/', [HorseBreedController::class, 'index'])->name('owner.horse-breed');
-        route::get('list/json', [HorseBreedController::class, 'listJson'])->name('owner.horse-breed.list.json');
-        Route::post('store', [HorseBreedController::class, 'store'])->name('owner.horse-breed.store');
-        Route::get('edit/{id}', [HorseBreedController::class, 'edit'])->name('owner.horse-breed.edit');
-        Route::patch('update', [HorseBreedController::class, 'update'])->name('owner.horse-breed.update');
-        Route::delete('delete', [HorseBreedController::class, 'delete'])->name('owner.horse-breed.delete');
-
-    });
-    
-    // User Payment Approval
-    Route::group(['prefix' => 'userpayment'], function () {
-        route::get('/', [UserPaymentApprovalController::class, 'index'])->name('owner.userpayment.index');
-        route::get('list/approve/booking', [UserPaymentApprovalController::class, 'listJsonApprov'])->name('owner.userpayment.listJson.approv');
-        route::get('list/unapprov/booking', [UserPaymentApprovalController::class, 'listJsonUnapprov'])->name('owner.userpayment.listJson.unapprov');
-        route::get('detail/booking/{id}', [UserPaymentApprovalController::class, 'detailBooking'])->name('owner.userpayment.detail.booking');
-        route::patch('approv/booking/{id}', [UserPaymentApprovalController::class, 'approvBooking'])->name('owner.userpayment.approv.booking');
-        route::patch('unapprov/booking/{id}', [UserPaymentApprovalController::class, 'unapprovBooking'])->name('owner.userpayment.unapprov.booking'); 
-    });
-});
-
 
 
 // User Route
@@ -118,6 +67,79 @@ Route::group(['middleware' => ['auth', 'cekstatus:0']], function () {
     });
 });
 Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
+
+    // App Owner
+    Route::group(['prefix' => 'owner'], function(){
+
+        // Dashboard
+        Route::get('/', [DashboardController::class, 'index'])->name('owner.dashboard');
+    
+        // Bank Account
+        Route::group(['prefix' => 'bank'], function(){
+    
+            Route::get('/', [BankPaymentController::class, 'index'])->name('owner.bank');
+            route::get('list/json', [BankPaymentController::class, 'listJson'])->name('owner.bank.list.json');
+            Route::post('store', [BankPaymentController::class, 'store'])->name('owner.bank.store');
+            Route::get('edit/{id}', [BankPaymentController::class, 'edit'])->name('owner.bank.edit');
+            Route::patch('update', [BankPaymentController::class, 'update'])->name('owner.bank.update');
+            Route::delete('delete', [BankPaymentController::class, 'delete'])->name('owner.bank.delete');
+    
+        });
+        // Horse Sex
+        Route::group(['prefix' => 'horse-sex'], function(){
+    
+            Route::get('/', [HorseSexController::class, 'index'])->name('owner.horse-sex');
+            route::get('list/json', [HorseSexController::class, 'listJson'])->name('owner.horse-sex.list.json');
+            Route::post('store', [HorseSexController::class, 'store'])->name('owner.horse-sex.store');
+            Route::get('edit/{id}', [HorseSexController::class, 'edit'])->name('owner.horse-sex.edit');
+            Route::patch('update', [HorseSexController::class, 'update'])->name('owner.horse-sex.update');
+            Route::delete('delete', [HorseSexController::class, 'delete'])->name('owner.horse-sex.delete');
+    
+        });
+    
+        // Horse Breed
+        Route::group(['prefix' => 'horse-breed'], function(){
+    
+            Route::get('/', [HorseBreedController::class, 'index'])->name('owner.horse-breed');
+            route::get('list/json', [HorseBreedController::class, 'listJson'])->name('owner.horse-breed.list.json');
+            Route::post('store', [HorseBreedController::class, 'store'])->name('owner.horse-breed.store');
+            Route::get('edit/{id}', [HorseBreedController::class, 'edit'])->name('owner.horse-breed.edit');
+            Route::patch('update', [HorseBreedController::class, 'update'])->name('owner.horse-breed.update');
+            Route::delete('delete', [HorseBreedController::class, 'delete'])->name('owner.horse-breed.delete');
+    
+        });
+        
+        // User Payment Approval
+        Route::group(['prefix' => 'userpayment'], function () {
+            route::get('/', [UserPaymentApprovalController::class, 'index'])->name('owner.userpayment.index');
+            route::get('list/approve/booking', [UserPaymentApprovalController::class, 'listJsonApprov'])->name('owner.userpayment.listJson.approv');
+            route::get('list/unapprov/booking', [UserPaymentApprovalController::class, 'listJsonUnapprov'])->name('owner.userpayment.listJson.unapprov');
+            route::get('detail/booking/{id}', [UserPaymentApprovalController::class, 'detailBooking'])->name('owner.userpayment.detail.booking');
+            route::patch('approv/booking/{id}', [UserPaymentApprovalController::class, 'approvBooking'])->name('owner.userpayment.approv.booking');
+            route::patch('unapprov/booking/{id}', [UserPaymentApprovalController::class, 'unapprovBooking'])->name('owner.userpayment.unapprov.booking'); 
+        });
+
+        Route::name('stable_approval.')->prefix('stable_approval')->group(function () {
+            route::get('/', [StableApprovalController::class, 'index'])->name('index');
+            route::get('list/approve/stable', [StableApprovalController::class, 'listJsonApprov'])->name('listJson.approv');
+            route::get('list/unapprov/stable', [StableApprovalController::class, 'listJsonUnapprov'])->name('listJson.unapprov');
+            route::get('detail/stable/{id}', [StableApprovalController::class, 'detailStable'])->name('detail.stable');
+            route::patch('approv/stable/{id}', [StableApprovalController::class, 'approvStable'])->name('approv.stable');
+            route::patch('unapprov/stable/{id}', [StableApprovalController::class, 'unapprovStable'])->name('unapprov.stable');
+        });
+        
+        Route::name('package_approval.')->prefix('package_approval')->group(function () {
+            route::get('/', [PackageApprovalController::class, 'index'])->name('index');
+            route::get('list/approve/package', [PackageApprovalController::class, 'listJsonApprov'])->name('listJson.approv');
+            route::get('list/unapprov/package', [PackageApprovalController::class, 'listJsonUnapprov'])->name('listJson.unapprov');
+            route::get('detail/package/{id}', [PackageApprovalController::class, 'detailPackage'])->name('detail.package');
+            route::patch('approv/package/{id}', [PackageApprovalController::class, 'approvPackage'])->name('approv.package');
+            route::patch('unapprov/package/{id}', [PackageApprovalController::class, 'unapprovPackage'])->name('unapprov.package');
+        });
+    });
+
+
+    // User
     Route::name('competitions.')->prefix('competitions')->group(function () {
         Route::get('data-competitions', [CompetitionsController::class, 'index'])->name('index');
     });
@@ -213,21 +235,3 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
 
 
 //app owner
-
-Route::name('stable_approval.')->prefix('stable_approval')->group(function () {
-    route::get('/', [StableApprovalController::class, 'index'])->name('index');
-    route::get('list/approve/stable', [StableApprovalController::class, 'listJsonApprov'])->name('listJson.approv');
-    route::get('list/unapprov/stable', [StableApprovalController::class, 'listJsonUnapprov'])->name('listJson.unapprov');
-    route::get('detail/stable/{id}', [StableApprovalController::class, 'detailStable'])->name('detail.stable');
-    route::patch('approv/stable/{id}', [StableApprovalController::class, 'approvStable'])->name('approv.stable');
-    route::patch('unapprov/stable/{id}', [StableApprovalController::class, 'unapprovStable'])->name('unapprov.stable');
-});
-
-Route::name('package_approval.')->prefix('package_approval')->group(function () {
-    route::get('/', [PackageApprovalController::class, 'index'])->name('index');
-    route::get('list/approve/package', [PackageApprovalController::class, 'listJsonApprov'])->name('listJson.approv');
-    route::get('list/unapprov/package', [PackageApprovalController::class, 'listJsonUnapprov'])->name('listJson.unapprov');
-    route::get('detail/package/{id}', [PackageApprovalController::class, 'detailPackage'])->name('detail.package');
-    route::patch('approv/package/{id}', [PackageApprovalController::class, 'approvPackage'])->name('approv.package');
-    route::patch('unapprov/package/{id}', [PackageApprovalController::class, 'unapprovPackage'])->name('unapprov.package');
-});

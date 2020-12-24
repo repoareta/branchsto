@@ -18,7 +18,7 @@ class Booking extends Model
     }
     public function bank()
     {
-        return $this->belongsTo(BankPayment::class);
+        return $this->belongsTo(BankPayment::class, 'bank_payment_id');
     }
     public function user()
     {

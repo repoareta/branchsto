@@ -98,7 +98,7 @@
                             <p class="mb-0">Image</p>
                             <h4 class="mb-4" id="image"></h4>
                             <p class="mb-0">Status</p>
-                            <h4 class="mb-4" id="status"></h4>
+                            <h4 class="mb-4" id="approval_status"></h4>
                             <p class="mb-0">Bank</p>
                             <h4 class="mb-4" id="bank"></h4>
                         </div>
@@ -160,59 +160,17 @@
             $('body').on( 'click', '#openBtn', function () {
                 var id = $(this).data('id');
                 $.get('{{route('owner.userpayment.index')}}'+'/detail/booking/' + id , function (data) {
-                    $('#user').html(data.name);
+                    $('#user').html(data.user.name);
                     $('#price_total').html(data.price_total);
                     $('#image').html(data.image);                    
                     $('#approval_status').html(data.approval_status);                    
                     if(data.approval_status == null){
                         $('#approval_status').html('Need Approval');    
                     }
-                    $('#bank').html(data.bank);
+                    $('#bank').html(data.bank.account_name);
                     $('#modalDetail').modal('show');
                 })
-            });  
-
-            $('tbody').on('click','#accept', function(e) {
-    
-                e.preventDefault();
-                    
-                Swal.fire({
-                    title: "Are you sure?",
-                    icon: "warning",
-                    text: "This is will be accepted the stable",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonText: "Accept",
-                    cancelButtonText: "Cancel",
-                    closeOnConfirm: false,
-                    closeOnCancel: false
-                }).then(function(getAction) {
-                    if (getAction.value === true) {
-                        $('#formAccept').submit();
-                    }
-                });
-            });
-
-            $('tbody').on('click','#decline', function(e) {
-    
-                e.preventDefault();
-                    
-                Swal.fire({
-                    title: "Are you sure?",
-                    icon: "warning",
-                    text: "This is will be declined the stable",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonText: "Accept",
-                    cancelButtonText: "Cancel",
-                    closeOnConfirm: false,
-                    closeOnCancel: false
-                }).then(function(getAction) {
-                    if (getAction.value === true) {
-                        $('#formDecline').submit();
-                    }
-                });
-            });
+            });              
 		} );
 </script>
 @endpush
