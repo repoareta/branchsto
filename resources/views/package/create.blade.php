@@ -101,7 +101,11 @@
                                         </div>											 --}}
                                         </form>
                                         <div class="form-group mt-5">
-                                            <button type="submit" class="btn btn-add-new mr-2">SAVE</button>
+                                            @if ($data == 1)
+                                                <button type="submit" class="btn btn-add-new mr-2">SAVE DATA</button>
+                                            @else
+                                                <span id="add-package" class="btn btn-add-new mr-2">SAVE DATA</span>
+                                            @endif
                                             <a href="{{route('package.index')}}" class="btn btn-secondary">Back</a>
                                         </div>											
                                     </div>
@@ -142,6 +146,20 @@
             // language : 'id',
             format   : 'H:i'
         });
+        $('#add-package').on('click', function(e){
+			e.preventDefault();
+
+            Swal.fire({
+                title: "Full Package Capacity.",
+                text: "Cancel",
+                icon: "info",
+                buttonsStyling: false,
+                confirmButtonText: "Ok",
+                customClass: {
+                    confirmButton: "btn btn-dark"
+                }
+            })
+        })
 
         
         

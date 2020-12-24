@@ -53,7 +53,7 @@
 												<th scope="col">Birth Date</th>
 												<th scope="col">Age</th>
 												<th scope="col">Sex</th>
-												<th scope="col">Password Number</th>
+												<th scope="col">Passport Number</th>
 												<th scope="col">Horse Owner</th>
 												<th scope="col">Horse Breeds</th>
 												<th scope="col">Action</th>
