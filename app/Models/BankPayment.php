@@ -9,5 +9,8 @@ class BankPayment extends Model
 {
     use HasFactory;
 
-    
+    public function booking()
+    {
+        return $this->hasOne(Booking::class);
+    }    
 }

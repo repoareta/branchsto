@@ -27,7 +27,7 @@
 				</a>
 			</li>
 			<!--end::Item-->
-			<!--begin::Item-->
+			{{-- <!--begin::Item-->
 			<div class="dropdown nav-item mb-10" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="Stables">
 				<a href="#" class="nav-link btn btn-icon btn-hover-text-primary btn-lg active" data-toggle="dropdown" data-offset="0px,0px">
 					<span class="svg-icon svg-icon-xxl">									
@@ -128,7 +128,7 @@
 				</div>
 				<!--end::Dropdown-->
 			</div>
-			<!--end::Item-->
+			<!--end::Item--> --}}
 		</ul>
 		<!--end::Nav-->
 	</div>

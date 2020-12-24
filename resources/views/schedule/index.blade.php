@@ -35,10 +35,10 @@
                                         <a href="{{route('competitions.index')}}">HOME</a>
                                     </li>
                                     <li class="breadcrumb-item">
-                                        <a href="{{route('stable.index')}}">MANAGE SCHEDULE</a>
+                                        <a href="{{route('stable.index')}}">MANAGE STABLE</a>
                                     </li>
                                     <li class="breadcrumb-item">
-                                        <a href="" class="text-muted">LIST</a>
+                                        <a href="" class="text-muted">LIST SCHEDULE</a>
                                     </li>
                                 </ul>
                             </div>

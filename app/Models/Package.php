@@ -21,4 +21,14 @@ class Package extends Model
     {
         return $this->belongsTo(Stable::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function approvalby_package()
+    {
+        return $this->belongsTo(User::class, 'approval_by', 'id');
+    }
 }

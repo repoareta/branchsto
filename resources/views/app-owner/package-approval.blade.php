@@ -95,6 +95,8 @@
                     <div class="col-sm-6">
                         <p class="mb-0">Package Number</p>
                         <h4 class="mb-4" id="package_number"></h4>
+                        <p class="mb-0">Owner</p>
+                        <h4 class="mb-4" id="owner"></h4>
                         <p class="mb-0">Name</p>
                         <h4 class="mb-4" id="name"></h4>
                         <p class="mb-0">Description</p>
@@ -180,16 +182,22 @@
                 $.get('{{route('package_approval.index')}}'+'/detail/package/' + id , function (data) {
                     $('#package_number').html(data.package_number);
                     $('#name').html(data.name);
+                    if(data.user_id == null){
+                        $('#owner').html('Something when wrong');
+                    }else{
+                        $('#owner').html(data.user.name);
+                    }
                     $('#description').html(data.description);
                     $('#price').html(data.price);
                     $('#approval_at').html(data.approval_at);
-                    $('#approval_by').html(data.approval_by);
+                    if(data.approval_by == null){
+                        $('#approval_by').html('Need Approval');    
+                    }else{
+                        $('#approval_by').html(data.approvalby_package.name);
+                    }
                     $('#approval_status').html(data.approval_status);
                     if(data.approval_at == null){
                         $('#approval_at').html('Need Approval');    
-                    }
-                    if(data.approval_by == null){
-                        $('#approval_by').html('Need Approval');    
                     }
                     if(data.approval_status == null){
                         $('#approval_status').html('Need Approval');    

@@ -51,6 +51,21 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Get the package associated with the user.
+     */
+    public function package()
+    {
+        return $this->hasOne(Package::class);
+    }
+
+    /**
+     * Get the approval by package associated with the user.
+     */
+    public function approvalby_package()
+    {
+        return $this->hasOne(Package::class, 'approval_by', 'id');
+    }
+    /**
      * The products that belong to the shop.
      */
     public function slots()

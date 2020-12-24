@@ -22,7 +22,7 @@
                         <label>Province</label>
                         <select name="province_id" id="province" class="form-control">
                             @foreach ($province as $item)                            
-                                <option value="{{$item->id}}">{{$item->name}}</option>
+                                <option value={{$item->id}}>{{$item->name}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -78,7 +78,7 @@
                         $("#city").empty();
                         $("#city").append('<option>Select</option>');
                         $.each(res,function(key,value){
-                            $("#city").append('<option value="'+key+'">'+value+'</option>');
+                            $("#city").append('<option value='+key+'>'+value+'</option>');
                         });
                     
                         }else{
@@ -103,7 +103,7 @@
                         $("#district").empty();
                         $("#district").append('<option>Select</option>');
                         $.each(res,function(key,value){
-                            $("#district").append('<option value="'+key+'">'+value+'</option>');
+                            $("#district").append('<option value='+key+'>'+value+'</option>');
                         });
                     
                         }else{
@@ -127,7 +127,7 @@
                         $("#village").empty();
                         $("#village").append('<option>Select</option>');
                         $.each(res,function(key,value){
-                            $("#village").append('<option value="'+key+'">'+value+'</option>');
+                            $("#village").append('<option value='+key+'>'+value+'</option>');
                         });
                     
                         }else{
