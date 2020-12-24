@@ -63,8 +63,9 @@
 											<h2 class="kt-login__title">Reset Password</h2>
 										</div>
 										<div class="kt-login__form">
-											<form class="kt-form" id="formresetpassword" action="{{ route('login.store.reset.password')}}" method="post">
+											<form class="kt-form" id="formresetpassword" action="{{ route('password.update')}}" method="post">
 												@csrf
+												<input type="hidden" name="token" value="{{ $token }}">
 												<div class="form-group">
 													<input class="form-control" type="password" placeholder="New Password" value="" name="password" autocomplete="off">
 												</div>
