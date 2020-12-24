@@ -84,8 +84,8 @@ class RidingClassController extends Controller
         }else{
             $data_list_slot = session("data_list_slot");
             $data_list_package = session("data_list_package");
-       
-            return view('riding_class.after-booking-package', compact('data_list_slot', 'data_list_package'));
+            $data_payment = DB::table('bank_payments')->get();
+            return view('riding_class.after-booking-package', compact('data_list_slot', 'data_list_package','data_payment'));
         }   
     }
 
@@ -98,8 +98,9 @@ class RidingClassController extends Controller
         }else{
 
             $data = $request->all();
-            $booking->user_id     = Auth::user()->id;
-            $booking->price_total = $request->price_total;
+            $booking->user_id           = Auth::user()->id;
+            $booking->price_total       = $request->price_total;
+            $booking->bank_payment_id   = $request->payment;
             $booking->save(); // save booking
     
             // insert booking detail
@@ -117,8 +118,8 @@ class RidingClassController extends Controller
                             'booking_detail_id' => $booking_detail->id,
                             'slot_id'           => $data['slot_id'][$item],
                             'user_id'           => Auth::user()->id,
-                            'qr_code'           => 'a',
-                            'qr_code_status'    => 'A',
+                            'qr_code'           => '-',
+                            'qr_code_status'    => '-',
                         ]);
                     }
                     //update slot capacity_booked
@@ -141,8 +142,9 @@ class RidingClassController extends Controller
             ->leftJoin('packages as d', 'c.package_id', '=', 'd.id')
             ->leftJoin('stables as e', 'd.stable_id', '=', 'e.id')
             ->select('b.date','b.time_start','b.time_end','d.name','e.name as stable_name')->get();
-    
-            return view('riding_class.history-pay',compact('data_list','data_booking_id'));       
+            $data_payment = DB::table('bank_payments')->where('id', $request->payment)->first();
+            
+            return view('riding_class.history-pay',compact('data_list','data_booking_id','data_payment'));       
         }
     }
 
@@ -152,7 +154,6 @@ class RidingClassController extends Controller
         // dd($request->booking_id);
         $booking = Booking::find($request->booking_id);
         $booking->updated_at = date('Y-m-d H:i:s');
-        $booking->bank_payment_id = $request->bank_payment_id;
         $booking->approval_status = null;
 
         if ($request->hasFile('photo')) {
@@ -191,10 +192,11 @@ class RidingClassController extends Controller
         ->leftJoin('packages as d', 'c.package_id', '=', 'd.id')
         ->leftJoin('stables as e', 'd.stable_id', '=', 'e.id')
         ->select('b.date','b.time_start','b.time_end','d.name','e.name as stable_name')->get();
-        $status_booking = Booking::select('*')->where('id',$data_booking_id)->get();
+        $status_booking = Booking::select('*')->where('id',$data_booking_id)->first();
         $booking_detail = BookingDetail::select('*')->where('booking_id',$data_booking_id)->limit(1)->get();
+        $data_payment = DB::table('bank_payments')->where('id', $status_booking->bank_payment_id)->first();
         
-        return view('riding_class.history-pay-confirmasi',compact('data_list','data_booking_id','status_booking','booking_detail'));
+        return view('riding_class.history-pay-confirmasi',compact('data_list','data_booking_id','status_booking','booking_detail','data_payment'));
     }
 
 }

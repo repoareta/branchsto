@@ -55,6 +55,33 @@
 												<th scope="col">Action</th>
 												</tr>
 											</thead>
+											<tbody>
+												@foreach ($data_list as $item)
+													<tr>
+														<td>{{$item->date}}</td>
+														<td>{{$item->time_start}}</td>
+														<td>{{$item->time_end}}</td>
+														<td>
+															@if($item->qr_code_status == 'Close')
+																<span class='label label-lg label-light-danger label-inline'>Close</span>;
+															@else
+																<span class='label label-lg label-light-success label-inline'>Active</span>;
+															@endif
+														</td>
+														<td>
+															@if($item->qr_code_status == 'Close')
+																<a href='#' class='btn btn-danger text-center mr-2 '>
+																	<i class='fas fa-ban pointer-link'></i>                    
+																</a>;
+															@else
+																<a href='#' data-id="{{$item->id}}" class="btn btn-success text-center mr-2" id="close">
+																	<i class='fas fa-check-circle pointer-link'></i>                  
+																</a>;
+															@endif
+														</td>
+													</tr>
+												@endforeach
+											</tbody>
 										</table>
 									</div>
 								</div>
@@ -84,14 +111,7 @@
 			language: {
             	processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> <br> Loading...'
 			},
-			ajax      : "{{ route('close.list.json',['booking_id' => $booking_id]) }}",
-			columns: [
-				{data: 'date', name: 'date'},
-				{data: 'time_start', name: 'time_start'},
-				{data: 'time_end', name: 'time_end'},
-				{data: 'qr_code_status', name: 'qr_code_status'},
-				{data: 'action', name: 'action'},
-			]
+			
 		});
 
 		$('#dataTable tbody').on( 'click', '#close', function (e) {
@@ -136,12 +156,6 @@
 					});
 				}
 			});
-		});
-
-		$('#dataTable tbody').on( 'click', '.edit-horse', function (e) {
-			e.preventDefault();
-			var id = $(this).attr('data-id');
-			location.replace("{{url('horse/edit')}}"+ '/' +id);
 		});
     } );
 </script>

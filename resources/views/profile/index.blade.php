@@ -23,8 +23,8 @@
 										{{Auth::user()->name}}
 									</div>
 									<div class="location">
-										<img src="{{url('assets/media/branchsto/location-icon.svg')}}" alt="">
-										{{Auth::user()->alamat}}
+										<img src="{{url('assets/media/branchsto/lemail.svg')}}" alt="">
+										{{Auth::user()->email}}
 									</div>
 								</div>
 							</section>
