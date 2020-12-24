@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\DB;
 // load model
 use App\Models\Stable;
 use App\Models\Province;
+use App\Models\City;
+use App\Models\District;
+use App\Models\Village;
 
 //load form request (for validation)
 use App\Http\Requests\StableStore;
@@ -21,7 +24,10 @@ class StableController extends Controller
     public function index(){
         $data = Stable::with(['user'])->where('user_id', Auth::user()->id)->first();
         $province = Province::all();
-        return view('management_stable.index',compact('data', 'province'));
+        $city = City::find($data->city_id);
+        $district = District::find($data->district_id);
+        $village = Village::find($data->village_id);
+        return view('management_stable.index',compact('data', 'province','city','district','village'));
     }
 
     public function menu()
@@ -70,6 +76,9 @@ class StableController extends Controller
         $stable->capacity_of_arena  = $request->capacity_of_arena;
         $stable->number_of_coach    = $request->number_of_coach;
         $stable->address            = $request->address;
+        $stable->account_name       = $request->account_name;
+        $stable->account_number     = $request->account_number;
+        $stable->branch             = $request->branch;
         $stable->province_id        = $request->province_id;
         $stable->city_id            = $request->city_id;
         $stable->district_id        = $request->district_id;

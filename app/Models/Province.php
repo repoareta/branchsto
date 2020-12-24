@@ -12,12 +12,12 @@ class Province extends Model
     /**
      * Get the cities for Province.
      */
-    public function cities()
+    public function city()
     {
-        return $this->hasMany(City::class);
+        return $this->belongsTo(City::class, 'city_id');
     }    
     protected $casts = [
-        'id' => 'string',
+        'id' => 'integer',
     ];
     public function stable()
     {

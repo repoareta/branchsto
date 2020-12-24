@@ -197,31 +197,47 @@
             $('body').on( 'click', '#openBtn', function () {
                 var id = $(this).data('id');
                 $.get('{{route('stable_approval.index')}}'+'/detail/stable/' + id , function (data) {
-                    $('#name').html(data.name);
-                    $('#owner').html(data.owner);
-                    $('#manager').html(data.manager);
-                    $('#contact_person').html(data.contact_person);
-                    $('#contact_number').html(data.contact_number);
-                    $('#capacity_of_stable').html(data.capacity_of_stable);
-                    $('#capacity_of_arena').html(data.capacity_of_arena);
-                    $('#number_of_coach').html(data.number_of_coach);
-                    $('#address').html(data.address);
-                    $('#province').html(data.province_id);
-                    $('#city').html(data.city_id);
-                    $('#district').html(data.district_id);
-                    $('#village').html(data.village_id);
-                    $('#facilities').html(data.facilities);
-                    $('#logo').html(data.logo);
-                    $('#approval_status').html(data.approval_status);
-                    $('#approval_at').html(data.approval_at);
-                    $('#approval_by').html(data.approval_by);
-                    if(data.approval_at == null){
+                    $('#name').html(data[0].name);
+                    $('#owner').html(data[0].owner);
+                    $('#manager').html(data[0].manager);
+                    $('#contact_person').html(data[0].contact_person);
+                    $('#contact_number').html(data[0].contact_number);
+                    $('#capacity_of_stable').html(data[0].capacity_of_stable);
+                    $('#capacity_of_arena').html(data[0].capacity_of_arena);
+                    $('#number_of_coach').html(data[0].number_of_coach);
+                    $('#address').html(data[0].address);
+                    if(data[1][0].name == null){
+                        $('#province').html('Empty');
+                    }else{
+                        $('#province').html(data[1][0].name);
+                    }
+                    if(data[1][1].name == null){
+                        $('#city').html('Empty');
+                    }else{                        
+                        $('#city').html(data[1][1].name);
+                    }
+                    if(data[1][2].name == null){
+                        $('#district').html('Empty');
+                    }else{                        
+                        $('#district').html(data[1][2].name);
+                    }                    
+                    if(data[1][3].name == null){
+                        $('#village').html('Empty');
+                    }else{                        
+                        $('#village').html(data[1][3].name);
+                    }
+                    $('#facilities').html(data[0].facilities);
+                    $('#logo').html(data[0].logo);
+                    $('#approval_status').html(data[0].approval_status);
+                    $('#approval_at').html(data[0].approval_at);
+                    $('#approval_by').html(data[0].approval_by);
+                    if(data[0].approval_at == null){
                         $('#approval_at').html('Need Approval');    
                     }
-                    if(data.approval_by == null){
+                    if(data[0].approval_by == null){
                         $('#approval_by').html('Need Approval');    
                     }
-                    if(data.approval_status == null){
+                    if(data[0].approval_status == null){
                         $('#approval_status').html('Need Approval');    
                     }
                     $('#modalDetail').modal('show');

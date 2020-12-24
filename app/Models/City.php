@@ -12,9 +12,9 @@ class City extends Model
     /**
      * Get the districts for city.
      */
-    public function districts()
+    public function district()
     {
-        return $this->hasMany(District::class);
+        return $this->belongsTo(District::class, 'district_id');
     }
 
     /**
@@ -22,6 +22,6 @@ class City extends Model
      */
     public function province()
     {
-        return $this->belongsTo(Province::class);
+        return $this->hasMany(Province::class);
     }
 }
