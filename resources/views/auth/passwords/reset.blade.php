@@ -72,7 +72,7 @@
 													<input class="form-control form-control-last" type="password" value="" placeholder="New Password Confirmation" name="password_confirmation">
 												</div>
 												<div class="kt-login__actions">
-													<button id="kt_login_signin_submitn" style="color:#fff; background-color:#2A4158" class="form-control">SAVE</button>
+													<button type="submit" id="kt_login_signin_submitn" style="color:#fff; background-color:#2A4158" class="form-control">SAVE</button>
 												</div>
 											</form>
 												<div class="kt-login__actions">
