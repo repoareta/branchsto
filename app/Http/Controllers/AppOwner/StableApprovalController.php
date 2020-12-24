@@ -11,6 +11,10 @@ use Carbon\Carbon;
 
 // load model
 use App\Models\Stable;
+use App\Models\Province;
+use App\Models\City;
+use App\Models\District;
+use App\Models\Village;
 class StableApprovalController extends Controller
 {
     public function index()
@@ -149,7 +153,11 @@ class StableApprovalController extends Controller
     public function detailStable($id)
     {
         $stable = Stable::find($id);
-        return response()->json($stable);
+        $province = Province::find($stable->province_id);
+        $city = City::find($stable->city_id);
+        $district = District::find($stable->district_id);
+        $village = Village::find($stable->village_id);
+        return response()->json([$stable,[$province,$city,$district,$village]]);
     }
 
     public function approvStable($id)

@@ -64,8 +64,5 @@ class Stable extends Model
         return $this->belongsTo(Village::class);
     }
 
-    protected $casts = [
-        'province_id' => 'string',
-    ];
 
 }
