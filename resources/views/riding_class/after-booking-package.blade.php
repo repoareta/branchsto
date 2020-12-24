@@ -27,9 +27,6 @@
                                         <div class="card-body">
                                         <form action="{{route('riding_class.booking.payment')}}" method="POST">
                                             @csrf
-                                            @php
-                                                $sum_tot_Price = 0;
-                                            @endphp
                                             @foreach ($data_list_package as $item)
                                             <h4>
                                                 Nama Package : {{$item['package_name']}}
@@ -56,10 +53,9 @@
                                                     <p class="mb-0">
                                                         {{$item1->time_start}} - {{$item1->time_end}}
                                                     </p>
-                                                    <h5 class="mt-2">Sub Total : Rp. {{number_format($item['price_subtotal'],0,'.','.')}}</h5>
                                                     <input type="hidden" name="price_subtotal[]" value="{{$item['price_subtotal']}}">
                                                     @php
-                                                        $sum_tot_Price += $item['price_subtotal'];
+                                                        $sum_tot_Price = $item['price_subtotal'];
                                                     @endphp
                                                 @endforeach
                                             <hr>

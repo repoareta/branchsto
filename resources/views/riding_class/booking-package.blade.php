@@ -39,7 +39,6 @@
                                             <form action="{{route('riding_class.booking.addCart')}}" method="POST">
                                                 @csrf
                                                 @php
-                                                $sum_tot_Price =0;
                                                 $count=0;
                                                 @endphp
                                                 @foreach ($list_detail as $row)
@@ -78,10 +77,14 @@
                                                                                     <li style="margin-left:-30px">
                                                                                         <span class="file pointer-link kt-subheader__breadcrumbs-link pointer-link" data-toggle="kt-tooltip" data-placement="top" title="Click Time">
                                                                                             {{$item->time_start}} - {{$item->time_end}}
+                                                                                            @if ($item->capacity >= $item->capacity_booked)
+                                                                                                <input type="checkbox" name="chackbox[]" data-exval="1" value="{{$item->id}}" class="ponter-link">
+                                                                                            @else
+                                                                                                <input type="checkbox" disabled>
+                                                                                            @endif
                                                                                             <input type="hidden" name="time1[]" value="{{$item->time_start}}" class="ponter-link">
                                                                                             <input type="hidden" name="time2[]" value="{{$item->time_end}}" class="ponter-link">
                                                                                             <input type="hidden" name="date[]" value="{{$item->date}}" class="ponter-link">
-                                                                                            <input type="checkbox" name="chackbox[]" data-exval="1" value="{{$item->id}}" class="ponter-link">
                                                                                         </span>
                                                                                     </li>
                                                                                 @endforeach
@@ -97,7 +100,7 @@
                                                 <span class="form-text text-muted" id="result"></span>
 
                                                 @php
-                                                    $sum_tot_Price += $row['price'];
+                                                    $sum_tot_Price = $row['price'];
                                                 @endphp
                                                 <input type="hidden" name="package_id" value="{{$row['id']}}">
                                                 <input type="hidden" name="price_subtotal" value="{{$row['price']}}">
