@@ -34,10 +34,38 @@ class Stable extends Model
     }
 
     /**
-    * Get the coaches of stable
+    * Get the package of stable
     */
     public function package()
     {
         return $this->hasMany(Package::class);
     }
+
+    /**
+    * Get the package of stable
+    */
+    public function province()
+    {
+        return $this->belongsTo(Province::class);
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
+    public function district()
+    {
+        return $this->belongsTo(Deistrict::class);
+    }
+
+    public function village()
+    {
+        return $this->belongsTo(Village::class);
+    }
+
+    protected $casts = [
+        'province_id' => 'string',
+    ];
+
 }

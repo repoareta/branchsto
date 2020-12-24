@@ -32,13 +32,13 @@
                                 </h4>
                                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 font-size-lg mb-0">
                                     <li class="breadcrumb-item">
-                                        <a href="">HOME</a>
+                                        <a href="{{route('competitions.index')}}">HOME</a>
                                     </li>
                                     <li class="breadcrumb-item">
-                                        <a href="">MANAGE SCHEDULE</a>
+                                        <a href="{{route('stable.index')}}">MANAGE STABLE</a>
                                     </li>
                                     <li class="breadcrumb-item">
-                                        <a href="" class="text-muted">LIST</a>
+                                        <a href="" class="text-muted">LIST DETAIL SCHEDULE</a>
                                     </li>
                                 </ul>
                             </div>

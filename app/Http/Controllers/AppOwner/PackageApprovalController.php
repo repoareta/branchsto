@@ -93,7 +93,8 @@ class PackageApprovalController extends Controller
 
     public function detailPackage($id)
     {
-        $package = Package::with(['stable'])->find($id);
+        $package = Package::with(['stable','approvalby_package','user'])->find($id);
+        dd($package);die;
         return response()->json($package);
     }
 

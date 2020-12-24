@@ -33,6 +33,7 @@ class StableController extends Controller
     {
         return view('management_stable.create');
     }
+
     public function store(StableStore $request, Stable $stable)
     {
         $stable->name               = $request->name;

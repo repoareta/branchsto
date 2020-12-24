@@ -19,7 +19,7 @@
                     <!--begin::Container-->
                     <div class="container-fluid stable">
                         <div class="stable-body">
-                            <a href="#" class="btn btn-back-page">
+                            <a href="{{route('stable.index')}}" class="btn btn-back-page">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="63" height="34" viewBox="0 0 63 34" fill="none">
                                     <rect opacity="0.25" width="63" height="34" rx="17" fill="#C4C4C4"/>
                                     <path d="M29 17H15" stroke="#C4C4C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -35,10 +35,10 @@
 								<!--begin::Breadcrumb-->
 								<ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
 									<li class="breadcrumb-item active">
-										<a href="" class="text-muted">HOME</a>
+										<a href="{{route('competitions.index')}}" class="text-muted">HOME</a>
 									</li>
 									<li class="breadcrumb-item">
-										<a href="" class="text-muted">MANAGE SCHEDULE</a>
+										<a href="{{route('stable.index')}}" class="text-muted">MANAGE STABLE</a>
 									</li>
 									<li class="breadcrumb-item">
 										<a href="" class="text-muted">ADD SCHEDULE</a>

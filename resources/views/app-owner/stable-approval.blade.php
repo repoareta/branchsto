@@ -206,13 +206,15 @@
                     $('#capacity_of_arena').html(data.capacity_of_arena);
                     $('#number_of_coach').html(data.number_of_coach);
                     $('#address').html(data.address);
-                    $('#province').html(data.province);
-                    $('#city').html(data.city);
-                    $('#district').html(data.district);
-                    $('#village').html(data.village);
+                    $('#province').html(data.province_id);
+                    $('#city').html(data.city_id);
+                    $('#district').html(data.district_id);
+                    $('#village').html(data.village_id);
                     $('#facilities').html(data.facilities);
                     $('#logo').html(data.logo);
                     $('#approval_status').html(data.approval_status);
+                    $('#approval_at').html(data.approval_at);
+                    $('#approval_by').html(data.approval_by);
                     if(data.approval_at == null){
                         $('#approval_at').html('Need Approval');    
                     }

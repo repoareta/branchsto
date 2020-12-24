@@ -78,14 +78,14 @@
                         <div class="col-6">
                             <label>Province</label>                            
                             <select name="province_id" id="province" class="form-control">
-                                @foreach ($province as $item)                            
-                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                @foreach ($province as $item)                                                                       
+                                    <option value="{{$item->id}}" {{$data->province_id == $item->id  ? 'selected' : ''}}>{{$item->name}}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="col-6">
                             <label>City</label>
-                            <select name="city_id" id="city" class="form-control">                                                                       
+                            <select name="city_id" id="city" class="form-control">                                                                             
                             </select>
                         </div>
                     </div>

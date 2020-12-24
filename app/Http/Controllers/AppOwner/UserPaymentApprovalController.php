@@ -30,11 +30,11 @@ class UserPaymentApprovalController extends Controller
             return "";
         })
         ->addColumn('name', function ($data) {
-            return $data->user_id;
+            return $data->user->name;
         })        
         ->editColumn('photo', function ($data) {
             return $data->photo ? '
-                <a href="' . Storage::url($data->photo) . '" target="_blank"><img src="' . Storage::url($data->photo) . '" style="max-width: 200px"></a>
+                <a href="' . Storage::url('booking/photo/'.$data->photo) . '" target="_blank"><img src="' . Storage::url('booking/photo/'.$data->photo) . '" style="max-width: 200px"></a>
             ' : '';
         })
         ->addColumn('approval_status', function ($data) {
@@ -63,11 +63,11 @@ class UserPaymentApprovalController extends Controller
             return "";
         })
         ->addColumn('name', function ($data) {
-            return $data->user_id;
+            return $data->user->name;
         })        
         ->editColumn('photo', function ($data) {
             return $data->photo ? '
-                <a href="' . Storage::url($data->photo) . '" target="_blank"><img src="' . Storage::url($data->photo) . '" style="max-width: 200px"></a>
+                <a href="' . Storage::url('booking/photo/'.$data->photo) . '" target="_blank"><img src="' . Storage::url('booking/photo/'.$data->photo) . '" style="max-width: 200px"></a>
             ' : '';
         })
         ->addColumn('approval_status', function ($data) {

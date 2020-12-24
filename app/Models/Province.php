@@ -15,5 +15,12 @@ class Province extends Model
     public function cities()
     {
         return $this->hasMany(City::class);
+    }    
+    protected $casts = [
+        'id' => 'string',
+    ];
+    public function stable()
+    {
+        return $this->hasOne(Stable::class);
     }
 }

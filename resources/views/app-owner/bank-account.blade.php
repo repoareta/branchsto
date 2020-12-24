@@ -27,7 +27,6 @@
                             <!--begin::Container-->
                             <div class="container-fluid stable">
                                 <div class="stable-body data">
-                                    
                                     <div class="d-flex justify-content-start align-items-center">
                                         <h5 class="title-text mb-0">
                                             Bank Account Management

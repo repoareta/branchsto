@@ -23,7 +23,7 @@ class PackageController extends Controller
     }
     public function listJson()
     {
-        $data = Package::where('user_id', Auth::user()->id);
+        $data = Package::where('user_id', Auth::user()->id)->with(['user']);
         return datatables()->of($data)
             ->addColumn('profile', function ($data) {
                 return "<img src='assets/media/branchsto/horse.png' width='40px' height='40px' alt=''>";
