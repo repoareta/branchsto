@@ -142,7 +142,7 @@ class RidingClassController extends Controller
             ->leftJoin('packages as d', 'c.package_id', '=', 'd.id')
             ->leftJoin('stables as e', 'd.stable_id', '=', 'e.id')
             ->select('b.date','b.time_start','b.time_end','d.name','e.name as stable_name')->get();
-            $data_payment = DB::table('bank_payments')->get();
+            $data_payment = DB::table('bank_payments')->where('id', $request->payment)->first();
             
             return view('riding_class.history-pay',compact('data_list','data_booking_id','data_payment'));       
         }
