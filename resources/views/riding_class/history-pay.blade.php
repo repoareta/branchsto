@@ -57,10 +57,10 @@
                                             <div class="bank-number">
                                                 <div class="card-bank">
                                                     <div class="bank">
-                                                        <img src="assets/media/branchsto/bni-logo.png" alt="">
+                                                        <img src="{{ asset('storage'.$data_payment->photo) }}" alt="">
                                                         <div class="text">
-                                                            <div class="name">A.N Brachsto Indonesia</div>
-                                                            <div class="number">0611 8293 8812</div>
+                                                            <div class="name">{{$data_payment->account_name}}</div>
+                                                            <div class="number">{{$data_payment->account_number}}</div>
                                                         </div>
                                                     </div>
                                                     <div>															
@@ -87,7 +87,7 @@
                                             </div>
                                                 
                                             <input type="hidden" name="booking_id" value="{{$data_booking_id}}">
-                                            <input type="hidden" name="bank_payment_id" value="3">
+                                            <input type="hidden" name="bank_payment_id" value="{{$data_payment->id}}">
                                             <button type="submit" class="btn btn-payment w-100" id="add-payment">
                                                 PAYMENT
                                             </button>

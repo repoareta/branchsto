@@ -64,28 +64,18 @@
                                             <input type="hidden" name="price_total" value="{{$sum_tot_Price}}">
                                             <div class="bank-number">
                                                 <div class="card-bank">
+                                                    @foreach ($data_payment as $item)
                                                     <div class="bank">
-                                                        <img src="assets/media/branchsto/bni-logo.png" alt="">
+                                                        <img src="{{ asset('storage'.$item->photo) }}" alt="">
                                                         <div class="text">
-                                                            <div class="name">A.N Brachsto Indonesia</div>
-                                                            <div class="number">0611 8293 8812</div>
+                                                            <div class="name">{{$item->account_name}}</div>
+                                                            <div class="number">{{$item->account_number}}</div>
                                                         </div>
                                                     </div>
                                                     <div class="form-check align-items-center d-flex">
-                                                        <input class="form-check-input pointer-link" type="radio" name="payment" checked value="1">
+                                                        <input class="form-check-input pointer-link" type="radio" name="payment" checked value="{{$item->id}}">
                                                     </div>
-                                                </div>
-                                                <div class="card-bank">
-                                                    <div class="bank">
-                                                        <img src="assets/media/branchsto/bca-logo.png" alt="">
-                                                        <div class="text">
-                                                            <div class="name">A.N Brachsto Indonesia</div>
-                                                            <div class="number">0221 283 124</div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-check align-items-center d-flex">
-                                                        <input class="form-check-input pointer-link" type="radio" name="payment" value="2">
-                                                    </div>
+                                                    @endforeach
                                                 </div>
                                             </div>
                                             <button type="submit" class="btn btn-payment w-100">
