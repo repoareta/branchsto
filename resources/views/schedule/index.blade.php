@@ -244,7 +244,7 @@ $(document).ready( function () {
         },
         ajax      : "{{ route('schedule.index.json') }}",
         columns: [
-                {data: 'date', name: 'date'},
+                {data: 'date', name: 'date', orderable: false, searchable: false},
                 {data: 'time_start', name: 'time_start'},
                 {data: 'time_end', name: 'time_end'},
                 {data: 'capacity', name: 'capacity'},
