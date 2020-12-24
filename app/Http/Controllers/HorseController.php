@@ -54,10 +54,12 @@ class HorseController extends Controller
             })
             ->addColumn('action', function ($data) {
                 return 
-                "
+                "<a href='javascript:void(0)' class='btn btn-info text-center mr-2' >
                     <i class='fas fa-pen edit-horse pointer-link' data-id='".$data->id."'></i>
-                    <i class='fas fa-eye '></i>
+                </a>
+                <a href='javascript:void(0)' class='btn btn-danger text-center mr-2' >
                     <i class='fas fa-trash delete-horse pointer-link' data-id='".$data->id."'></i>
+                </a>
                 ";
             })
             ->rawColumns(['profile','action'])
