@@ -63,20 +63,20 @@
 														<td>{{$item->time_end}}</td>
 														<td>
 															@if($item->qr_code_status == 'Close')
-																<span class='label label-lg label-light-danger label-inline'>Close</span>;
+																<span class='label label-lg label-light-danger label-inline'>Close</span>
 															@else
-																<span class='label label-lg label-light-success label-inline'>Active</span>;
+																<span class='label label-lg label-light-success label-inline'>Active</span>
 															@endif
 														</td>
 														<td>
 															@if($item->qr_code_status == 'Close')
 																<a href='#' class='btn btn-danger text-center mr-2 '>
 																	<i class='fas fa-ban pointer-link'></i>                    
-																</a>;
+																</a>
 															@else
 																<a href='#' data-id="{{$item->id}}" class="btn btn-success text-center mr-2" id="close">
 																	<i class='fas fa-check-circle pointer-link'></i>                  
-																</a>;
+																</a>
 															@endif
 														</td>
 													</tr>
