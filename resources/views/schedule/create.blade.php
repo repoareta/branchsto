@@ -35,13 +35,13 @@
 								<!--begin::Breadcrumb-->
 								<ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
 									<li class="breadcrumb-item active">
-										<a href="" class="text-muted">HOME</a>
+										<a href="{{route('competitions.index')}}" class="text-muted">HOME</a>
 									</li>
 									<li class="breadcrumb-item">
-										<a href="" class="text-muted">MANAGE SCHEDULE</a>
+										<a href="{{route('stable.index')}}" class="text-muted">MANAGE SCHEDULE</a>
 									</li>
 									<li class="breadcrumb-item">
-										<a href="" class="text-muted">ADD SCHEDULE</a>
+										<a href="#" class="text-muted">ADD SCHEDULE</a>
 									</li>
 								</ul>
 								<!--end::Breadcrumb-->

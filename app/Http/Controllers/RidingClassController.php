@@ -25,7 +25,7 @@ class RidingClassController extends Controller
 {
     public function search_list_class(Request $request)
     {
-        $Query = Package::select('*');                        
+        $Query = Package::select('*')->where('approval_status', 'Accepted');                        
         if ($request->has('name') && $request->name != null) {
             $Query->where(function ($query) use ($request) {
                 $query->orWhereRaw("lower(name) like '%" . strtolower($request->name) . "%'");
