@@ -142,8 +142,9 @@ class RidingClassController extends Controller
             ->leftJoin('packages as d', 'c.package_id', '=', 'd.id')
             ->leftJoin('stables as e', 'd.stable_id', '=', 'e.id')
             ->select('b.date','b.time_start','b.time_end','d.name','e.name as stable_name')->get();
+            $data_payment = DB::table('bank_payments')->get();
             
-            return view('riding_class.history-pay',compact('data_list','data_booking_id'));       
+            return view('riding_class.history-pay',compact('data_list','data_booking_id','data_payment'));       
         }
     }
 
@@ -191,10 +192,11 @@ class RidingClassController extends Controller
         ->leftJoin('packages as d', 'c.package_id', '=', 'd.id')
         ->leftJoin('stables as e', 'd.stable_id', '=', 'e.id')
         ->select('b.date','b.time_start','b.time_end','d.name','e.name as stable_name')->get();
-        $status_booking = Booking::select('*')->where('id',$data_booking_id)->get();
+        $status_booking = Booking::select('*')->where('id',$data_booking_id)->first();
         $booking_detail = BookingDetail::select('*')->where('booking_id',$data_booking_id)->limit(1)->get();
+        $data_payment = DB::table('bank_payments')->where('id', $status_booking->bank_payment_id)->first();
         
-        return view('riding_class.history-pay-confirmasi',compact('data_list','data_booking_id','status_booking','booking_detail'));
+        return view('riding_class.history-pay-confirmasi',compact('data_list','data_booking_id','status_booking','booking_detail','data_payment'));
     }
 
 }
