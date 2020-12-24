@@ -226,9 +226,8 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
         route::get('booking/list', [RidingClassController::class, 'booking_list_qrcode'])->name('booking.list.qrcode');
         route::get('history/order', [RidingClassController::class, 'historyorderDetail'])->name('history.order');
     });
-
+        // untuk close package
         route::get('booking-detail/{id}/confirmation', [StableController::class, 'stable_close'])->name('index');
-        route::get('list/json', [StableController::class, 'listJsonStableClose'])->name('close.list.json');
         route::post('close/json', [StableController::class, 'close'])->name('close');
 
     
