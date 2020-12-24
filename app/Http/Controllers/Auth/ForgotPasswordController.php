@@ -56,8 +56,10 @@ class ForgotPasswordController extends Controller
 
         if ($response == Password::RESET_LINK_SENT) {
             Alert::success('Please check your email to reset password', 'Success.')->persistent(true)->autoClose(3600);
+            return redirect()->back();
         } else {
             Alert::error('Something went wrong', 'Error.')->persistent(true)->autoClose(3600);
+            return redirect()->back();
         }
     }
 
