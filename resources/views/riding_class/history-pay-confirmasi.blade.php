@@ -51,6 +51,29 @@
                                             
                                             <h5>Reminder :</h5>
                                             @foreach ($status_booking as $item)
+                                            @if ($status_booking->photo == null )
+                                                <div class="form-group mt-10">
+                                                    <div class="col-12">
+                                                        <div class="col-lg-9 col-xl-6">
+                                                            <div class="image-input" id="kt_image_2">
+                                                                <div class="image-input-wrapper" style="background-image: url({{url('assets/media/users/user-1.png')}});"></div>
+                                                                <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Upload proof of payment">
+                                                                    <i class="fa fa-pen icon-sm text-muted"></i>
+                                                                    <input type="file" name="photo" accept=".png, .jpg, .jpeg">
+                                                                    <input type="hidden" name="file_remove" value="0">
+                                                                </label>
+                                                                <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="" data-original-title="Cancel">
+                                                                    <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                                </span>
+                                                            </div>
+                                                            <span class="form-text text-muted">Upload proof of paymen types: png, jpg, jpeg.</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                    
+                                                <input type="hidden" name="booking_id" value="{{$status_booking->id}}">
+                                                <button type="submit" class="btn btn-payment w-100" id="add-payment">
+                                            @else
                                                 @if ($item->approval_status == null)
                                                     <span class="label label-lg label-light-danger label-inline">Pending.</span> 
                                                 @else
@@ -61,6 +84,7 @@
                                                         @endforeach                                    
                                                     </div>
                                                 @endif
+                                            @endif
                                             @endforeach
                                         </div>
                                     </div>

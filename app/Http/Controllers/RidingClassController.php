@@ -98,8 +98,9 @@ class RidingClassController extends Controller
         }else{
 
             $data = $request->all();
-            $booking->user_id     = Auth::user()->id;
-            $booking->price_total = $request->price_total;
+            $booking->user_id           = Auth::user()->id;
+            $booking->price_total       = $request->price_total;
+            $booking->bank_payment_id   = $request->payment;
             $booking->save(); // save booking
     
             // insert booking detail
@@ -142,8 +143,7 @@ class RidingClassController extends Controller
             ->leftJoin('stables as e', 'd.stable_id', '=', 'e.id')
             ->select('b.date','b.time_start','b.time_end','d.name','e.name as stable_name')->get();
             
-            $data_payment = DB::table('bank_payments')->where('id',$request->payment)->first();
-            return view('riding_class.history-pay',compact('data_list','data_booking_id','data_payment'));       
+            return view('riding_class.history-pay',compact('data_list','data_booking_id'));       
         }
     }
 
@@ -153,7 +153,6 @@ class RidingClassController extends Controller
         // dd($request->booking_id);
         $booking = Booking::find($request->booking_id);
         $booking->updated_at = date('Y-m-d H:i:s');
-        $booking->bank_payment_id = $request->bank_payment_id;
         $booking->approval_status = null;
 
         if ($request->hasFile('photo')) {

@@ -87,7 +87,6 @@
                                             </div>
                                                 
                                             <input type="hidden" name="booking_id" value="{{$data_booking_id}}">
-                                            <input type="hidden" name="bank_payment_id" value="{{$data_payment->id}}">
                                             <button type="submit" class="btn btn-payment w-100" id="add-payment">
                                                 PAYMENT
                                             </button>
