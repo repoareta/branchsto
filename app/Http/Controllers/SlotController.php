@@ -102,7 +102,7 @@ class SlotController extends Controller
         ->addColumn('action', function ($data) {
             return 
                 "<a href='#' class='btn btn-info'>
-                    <i class='fas fa-eye text-center mr-2 view-time' data-time='".$data->id."'></i>
+                    <i class='fas fa-pen text-center mr-2 view-time' data-time='".$data->id."'></i>
                 </a>
                 <a class='btn btn-danger'>
                     <i class='fas fa-trash delete-slot pointer-link' data-id='".$data->id."'></i>
