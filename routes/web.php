@@ -31,6 +31,7 @@ use App\Http\Controllers\AppOwner\PackageApprovalController;
 use App\Http\Controllers\AppOwner\StableApprovalController;
 use App\Http\Controllers\AppOwner\UserPaymentApprovalController;
 
+
 route::get('/', function () {
     return redirect()->route('competitions.index');
 });
