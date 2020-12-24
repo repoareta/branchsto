@@ -8,6 +8,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
+
+use RealRashid\SweetAlert\Facades\Alert;
 // use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class ForgotPasswordController extends Controller
@@ -52,10 +54,11 @@ class ForgotPasswordController extends Controller
             $this->credentials($request)
         );
 
-        return $response == Password::RESET_LINK_SENT
-                    ? $this->sendResetLinkResponse($request, $response)
-                    : $this->sendResetLinkFailedResponse($request, $response);
-    }
+        if ($response == Password::RESET_LINK_SENT) {
+            Alert::success('Please check your email to reset password', 'Success.')->persistent(true)->autoClose(3600);
+        } else {
+            Alert::error('Something went wrong', 'Error.')->persistent(true)->autoClose(3600);
+        }
 
     /**
      * Validate the email for the given request.
