@@ -66,7 +66,7 @@
                                                 <div class="card-bank">
                                                     @foreach ($data_payment as $item)
                                                     <div class="bank">
-                                                        <img src="{{ asset('storage'.$item->photo) }}" alt="">
+                                                        <img src="{{ asset('storage/'.$item->photo) }}" alt="">
                                                         <div class="text">
                                                             <div class="name">{{$item->account_name}}</div>
                                                             <div class="number">{{$item->account_number}}</div>
