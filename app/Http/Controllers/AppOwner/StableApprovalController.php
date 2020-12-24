@@ -84,18 +84,62 @@ class StableApprovalController extends Controller
             <a href='javascript:void(0)' data-toggle='modal' data-id='".$data->id."' class='btn btn-info text-center mr-2' id='openBtn' data-toggle='Detail' data-placement='top' title='Detail'>
                 <i class='fas fa-eye'></i>
             </a>
-            <form class='d-inline' id='formAccept' method='post' action='" . route('stable_approval.approv.stable',$data->id) . "'>
+            <form class='d-inline' id='formAccept".$data->id."' method='post' action='" . route('stable_approval.approv.stable',$data->id) . "'>
             " . method_field('PATCH') . csrf_field() . "
-                <button class='btn btn-success text-center mr-2' type='submit' id='accept' data-toggle='Accept' data-placement='top' title='Accept'>
+                <button class='btn btn-success text-center mr-2' type='submit' id='accept".$data->id."' data-toggle='Accept' data-placement='top' title='Accept'>
                     <i class='fas fa-check-circle'></i>
                 </button>
             </form>
-            <form class='d-inline' id='formDecline' method='post' action='" . route('stable_approval.unapprov.stable',$data->id) . "'>
+            <form class='d-inline' id='formDecline".$data->id."' method='post' action='" . route('stable_approval.unapprov.stable',$data->id) . "'>
             " . method_field('PATCH') . csrf_field() . "
-                <button class='btn btn-danger text-center mr-2' type='submit' id='decline' data-toggle='Decline' data-placement='top' title='Decline'>
+                <button class='btn btn-danger text-center mr-2' type='submit' id='decline".$data->id."' data-toggle='Decline' data-placement='top' title='Decline'>
                 <i class='fas fa-ban'></i>
                 </button>
             </form>
+
+            <script>
+                $('tbody').on('click','#accept".$data->id."', function(e) {
+        
+                    e.preventDefault();
+                        
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        icon: 'warning',
+                        text: 'This is will be accepted the stable',
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Accept',
+                        cancelButtonText: 'Cancel',
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    }).then(function(getAction) {
+                        if (getAction.value === true) {
+                            $('#formAccept".$data->id."').submit();
+                        }
+                    });
+                });
+
+                $('tbody').on('click','#decline".$data->id."', function(e) {
+        
+                    e.preventDefault();
+                        
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        icon: 'warning',
+                        text: 'This is will be declined the stable',
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Accept',
+                        cancelButtonText: 'Cancel',
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    }).then(function(getAction) {
+                        if (getAction.value === true) {
+                            $('#formDecline".$data->id."').submit();
+                        }
+                    });
+                });
+            </script>
             ";
         })
         ->rawColumns(['no','action'])
@@ -122,9 +166,14 @@ class StableApprovalController extends Controller
     }
     public function unapprovStable($id)
     {
-        // $stable = Stable::find($request->id);
-        // $stable->status = date('Y-m-d H:i:s');
-        // $stable->save();
-        return response()->json(200);
+        $data = Stable::find($id);
+        Stable::where('id', $data->id)->update([
+            'approval_status' => 'Decline', 
+            'approval_by' => Auth::user()->id,
+            'approval_at' => Carbon::now()
+        ]);
+
+        Alert::success($data->name.' Decline', 'Success.')->persistent(true)->autoClose(3600);
+        return redirect()->back();
     }
 }
