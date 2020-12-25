@@ -87,7 +87,7 @@
         <div class="modal-content">
             <div class="modal-header ">
                 <h4 class="title-text " id="title_modal" data-state="add">
-                    DETAIL STABLE
+                    DETAIL USER PAYMENT
                 </h4>
             </div>
             <div class="modal-body">
