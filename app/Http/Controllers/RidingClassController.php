@@ -114,11 +114,6 @@ class RidingClassController extends Controller
 
             //membagi sisa detik setelah dikurangi $jam menjadi menit
             $menit    =$diff - $jam * (60 * 60);
-
-            if ($diff > 3600) {
-                Alert::success('Your Payment has been expired.', 'Success.')->persistent(true)->autoClose(3600);
-                return redirect()->back();
-            }
     
             // insert booking detail
             foreach (session("data_list_package") as $key => $row) {
@@ -145,6 +140,13 @@ class RidingClassController extends Controller
                     $slot->capacity_booked   = $count;
                     $slot->save();
                 }
+
+                if ($diff > 3600) {
+                    $booking->approval_status = "Expired";
+                    $booking->save(); // save booking
+                    Alert::success('Your Payment has been expired.', 'Success.')->persistent(true)->autoClose(3600);
+                    return redirect()->back();
+                }
             }
 
 
@@ -158,7 +160,7 @@ class RidingClassController extends Controller
             ->leftJoin('booking_details as c', 'a.booking_detail_id', '=', 'c.id')
             ->leftJoin('packages as d', 'c.package_id', '=', 'd.id')
             ->leftJoin('stables as e', 'd.stable_id', '=', 'e.id')
-            ->select('b.date','b.time_start','b.time_end','d.name','e.name as stable_name','c.price_subtotal')->get();
+            ->select('b.date', 'b.time_start', 'b.time_end', 'd.name', 'e.name as stable_name', 'c.price_subtotal')->get();
 
             $data_payment = DB::table('bank_payments')->where('id', $request->payment)->first();
             
