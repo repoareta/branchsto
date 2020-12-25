@@ -114,6 +114,7 @@ class RidingClassController extends Controller
 
             //membagi sisa detik setelah dikurangi $jam menjadi menit
             $menit    =$diff - $jam * (60 * 60);
+
     
             // insert booking detail
             foreach (session("data_list_package") as $key => $row) {
@@ -139,6 +140,7 @@ class RidingClassController extends Controller
                     $slot = Slot::find($data['slot_id'][$item]);
                     $slot->capacity_booked   = $count;
                     $slot->save();
+
                 }
 
                 if ($diff > 3600) {
@@ -147,6 +149,13 @@ class RidingClassController extends Controller
                     Alert::success('Your Payment has been expired.', 'Success.')->persistent(true)->autoClose(3600);
                     return redirect()->back();
                 }
+            }
+            
+            if ($diff > 3600) {
+                $booking->approval_status = "Expired";
+                $booking->save(); // save booking
+                Alert::success('Your Payment has been expired.', 'Success.')->persistent(true)->autoClose(3600);
+                return redirect()->back();
             }
 
 
@@ -197,7 +206,7 @@ class RidingClassController extends Controller
         ->leftJoin('packages as d', 'c.package_id', '=', 'd.id')
         ->leftJoin('stables as e', 'd.stable_id', '=', 'e.id')
         ->leftJoin('bookings as f', 'c.booking_id', '=', 'f.id')
-        ->select('f.id', 'd.name', 'e.name as stable_name')->groupBy('f.id', 'e.name', 'd.name')->get();
+        ->select('f.id', 'd.name', 'e.name as stable_name','f.approval_status')->groupBy('f.id', 'e.name', 'd.name')->get();
 
         return view('riding_class.history_order', compact('data', 'data_list', 'province'));
     }
