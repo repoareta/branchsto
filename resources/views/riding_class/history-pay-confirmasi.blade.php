@@ -28,10 +28,10 @@
                                         <div class="card-body">
                                             @foreach ($data_list as $item)
                                             <h4>
-                                                Nama Package {{$item->name}}
+                                                Name Package {{$item->name}}
                                             </h4>
                                             <p>
-                                                Nama Stable {{$item->stable_name}}
+                                                Name Stable {{$item->stable_name}}
                                             </p>
                                             <hr>
                                                 <h4>
