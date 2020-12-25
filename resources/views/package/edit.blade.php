@@ -46,7 +46,7 @@
 								</ul>
 								<!--end::Breadcrumb-->
 							</div>
-                            <form action="{{route('package.update')}}" method="POST" id="formpackage">
+                            <form action="{{route('package.update')}}" method="POST" id="formpackage" enctype="multipart/form-data">
                                 @csrf
                                 <div class="card mt-10">
                                     <div class="card-body">
@@ -76,7 +76,16 @@
                                             <div class="col-12 col-sm-6 col-md-5 col-lg-4 mb-3">
                                                 <label>Attendance</label>
                                                 <input type="text" class="form-control" name="attendance" value="{{$data->attendance}}">
-                                            </div>											
+                                            </div>	
+                                            <div class="col-12 col-sm-6 col-md-5 col-lg-4 mb-3">
+                                                <label>Photo</label>
+                                                <input type="file" name="photo" class="form-control">
+                                                @if ($data->photo)
+                                                    <img src="{{asset('storage/package/photo/'.$data->photo)}}" style="margin-top:20px; max-width: 200px;" alt="">                                                        
+                                                @else
+                                                    <p>Image not available.</p>
+                                                @endif
+                                            </div>																				
                                         </div>
                                         {{-- <div class="form-group row">
                                             <div class="col-12 col-sm-6 col-md-5 col-lg-4 mb-3">

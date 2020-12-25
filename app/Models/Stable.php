@@ -64,5 +64,9 @@ class Stable extends Model
         return $this->belongsTo(Village::class);
     }
 
+    public function approvalby_stable()
+    {
+        return $this->belongsTo(User::class, 'approval_by', 'id');
+    }
 
 }

@@ -152,7 +152,7 @@ class StableApprovalController extends Controller
 
     public function detailStable($id)
     {
-        $stable = Stable::find($id);
+        $stable = Stable::with(['approvalby_stable'])->find($id);
         $province = Province::find($stable->province_id);
         $city = City::find($stable->city_id);
         $district = District::find($stable->district_id);

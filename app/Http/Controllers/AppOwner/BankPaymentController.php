@@ -81,7 +81,7 @@ class BankPaymentController extends Controller
         $bankPayment->account_name      = $request->account_name;
         $bankPayment->branch            = $request->branch;
         if ($request->hasFile('photo')) {
-            File::delete(public_path('/storage/'.$bankPayment->photo));
+            File::delete(public_path('/storage/bank_payment/photo/'.$bankPayment->photo));
             $bankPayment->photo = $request->file('photo')->store('bank_payment/photo', 'public');
         } else {
             $bankPayment->photo = $request->file('photo')->store('bank_payment/photo', 'public');
@@ -98,7 +98,7 @@ class BankPaymentController extends Controller
     {
         $bankPayment = BankPayment::find($request->id);
         if ($bankPayment->photo) {
-            File::delete(public_path('/storage/'.$bankPayment->photo));
+            File::delete(public_path('/storage/bank_payment/photo/'.$bankPayment->photo));
             $bankPayment->delete();
         }
         $bankPayment->delete();
