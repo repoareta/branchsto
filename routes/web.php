@@ -31,7 +31,6 @@ use App\Http\Controllers\AppOwner\PackageApprovalController;
 use App\Http\Controllers\AppOwner\StableApprovalController;
 use App\Http\Controllers\AppOwner\UserPaymentApprovalController;
 
-
 route::get('/', function () {
     return redirect()->route('competitions.index');
 });
@@ -44,14 +43,12 @@ route::get('test', function () {
 
 // App Owner Route
 
-
-Auth::routes(['verify, true']);
 // User Route
 
 // Auth::routes(['verify' => true, 'logout' => false, 'password']);
 Route::name('login.')->group(function () {
     Route::post('login', [LoginController::class, 'login'])->name('login');
-    Route::get('login', [LoginController::class, 'showLoginForm'])->name('loginForm');
+    Route::get('login', [LoginController::class, 'showlogin'])->name('login');
     Route::get('error', [LoginController::class, 'error'])->name('error');
     Route::get('logout', [LoginController::class, 'logout'])->name('logout');
     Route::post('register', [RegisterController::class, 'register'])->name('register');
@@ -67,6 +64,8 @@ Route::group(['middleware' => ['auth', 'cekstatus:0']], function () {
         Route::get('verifikasi', [VerificationController::class, 'verifikasi'])->name('index');
     });
 });
+
+Auth::routes(['verify' => 'true']);
 Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
 
     // App Owner

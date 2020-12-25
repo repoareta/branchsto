@@ -67,7 +67,10 @@
 												@csrf
 												<input type="hidden" name="token" value="{{ $token }}">
 												<div class="form-group">
-													<input class="form-control" type="password" placeholder="New Password" value="" name="password" autocomplete="off">
+													<input class="form-control" type="email" placeholder="Email" value="" name="email" autocomplete="on">
+												</div>
+												<div class="form-group">
+													<input class="form-control" type="password" placeholder="New Password" value="" name="password">
 												</div>
 												<div class="form-group">
 													<input class="form-control form-control-last" type="password" value="" placeholder="New Password Confirmation" name="password_confirmation">
@@ -77,7 +80,7 @@
 												</div>
 											</form>
 												<div class="kt-login__actions">
-													<a href="{{ route('login.loginForm')}}" style="color:#2A4158" class="form-control">BACK</a>
+													<a href="{{ route('login')}}" style="color:#2A4158" class="form-control">BACK</a>
 												</div>
 										</div>
 									</div>

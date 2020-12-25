@@ -60,7 +60,7 @@
 											<h2 class="kt-login__title">Register</h2>
 										</div>
 										<div class="kt-login__form">
-											<form class="kt-form" id="formregister" action="{{ route('login.register')}}" method="POST">
+											<form class="kt-form" id="formregister" action="{{ route('register')}}" method="POST">
 												@csrf
 												<div class="input-group">
 													<input class="form-control" type="text" placeholder="Name" name="name">
@@ -91,7 +91,7 @@
 													<button style="color:#fff;background-color:#2A4158" type="submit" class="form-control">Sign Up</button>
 												</div>
 												<div class="kt-login__extra">
-													<a href="{{route('login.loginForm')}}">Have any account?</a>
+													<a href="{{route('login')}}">Have any account?</a>
 												</div>
 											</form>
 										</div>

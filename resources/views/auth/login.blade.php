@@ -60,7 +60,7 @@
 											<h2 class="kt-login__title">Login</h2>
 										</div>
 										<div class="kt-login__form">
-											<form class="kt-form" id="formcomm" action="{{ route('login.login')}}" method="post">
+											<form class="kt-form" id="formcomm" action="{{ route('login')}}" method="post">
 												@csrf
 												<div class="form-group">
 													<input class="form-control" type="text" placeholder="Email " value="" name="email" autocomplete="off">
@@ -74,11 +74,11 @@
 
 												
 													<div class="kt-login__extra">
-														<a href="{{ route('login.reset.reqpassword') }}">Forget Password ?</a>
+														<a href="{{ route('password.request') }}">Forget Password ?</a>
 													</div>
 											</form>
 												<div class="kt-login__actions">
-												<a href="{{route('login.registerForm')}}" style="color:#2A4158" class="form-control">REGISTER</a>
+												<a href="{{route('register')}}" style="color:#2A4158" class="form-control">REGISTER</a>
 												</div>
 										</div>
 									</div>
