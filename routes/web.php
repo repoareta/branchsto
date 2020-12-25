@@ -193,6 +193,7 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
         route::post('store', [SlotController::class, 'store'])->name('store');
         route::get('detail/schedule', [SlotController::class, 'detailSchedule'])->name('detail.schedule');
         route::get('detail/show', [SlotController::class, 'detailShow'])->name('detail.show');
+        route::post('update', [SlotController::class, 'update'])->name('update');
         route::delete('delete', [SlotController::class, 'delete'])->name('delete');
     });
 

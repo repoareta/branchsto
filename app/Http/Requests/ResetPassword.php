@@ -13,7 +13,7 @@ class ResetPassword extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,8 +24,8 @@ class ResetPassword extends FormRequest
     public function rules()
     {
         return [
-            
-            'password'  => 'required|required_with:password_confirmation|same:password_confirmation',
+            'email'                  => 'required|string|email|max:255',
+            'password'               => 'required|string|min:8|required_with:password_confirmation|same:password_confirmation',
             'password_confirmation'  => 'required',
         ];
     }

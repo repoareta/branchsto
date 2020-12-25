@@ -108,17 +108,7 @@
 		<!--begin::Global Theme Bundle(used by all pages) -->
 		@include('includes.scripts')
 		<!--end::Global Theme Bundle -->
-		{!! JsValidator::formRequest('App\Http\Requests\Compotitions', '#formcom') !!}
-		{!! JsValidator::formRequest('App\Http\Requests\Register', '#formregister') !!}
-		<script>
-			$('#tanggal').datepicker({
-				todayHighlight: true,
-				orientation: "bottom left",
-				autoclose: true,
-				// language : 'id',
-				format   : 'yyyy-mm-dd'
-			});
-		</script>
+		{!! JsValidator::formRequest('App\Http\Requests\RegisterStore', '#formregister') !!}
 	</body>
 	<!--end::Body-->
 </html>

@@ -71,7 +71,6 @@
 												<div class="kt-login__actions">
 													<button id="kt_login_signin_submitn" style="color:#fff; background-color:#2A4158" class="form-control">LOGIN</button>
 												</div>
-
 												
 													<div class="kt-login__extra">
 														<a href="{{ route('password.request') }}">Forget Password ?</a>
@@ -93,18 +92,6 @@
 		<!-- end:: Page -->
 		<!--begin::Global Theme Bundle(used by all pages) -->
 		@include('includes.scripts')
-		<!--end::Global Theme Bundle -->
-		{!! JsValidator::formRequest('App\Http\Requests\Compotitions', '#formcom') !!}
-		{!! JsValidator::formRequest('App\Http\Requests\Register', '#formregister') !!}
-		<script>
-			$('#tanggal').datepicker({
-				todayHighlight: true,
-				orientation: "bottom left",
-				autoclose: true,
-				// language : 'id',
-				format   : 'yyyy-mm-dd'
-			});
-		</script>
 	</body>
 	<!--end::Body-->
 </html>

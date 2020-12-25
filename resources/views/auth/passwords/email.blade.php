@@ -49,10 +49,10 @@
 								<div class="kt-login__body">
 									<div class="kt-login__signin">
 										<div class="">
-											@if(\Session::has('notif'))
-											<div class="alert alert-danger alert-block">
+											@if(session('status'))
+											<div class="alert alert-success alert-block">
 												<button type="button" class="close" data-dismiss="alert">×&nbsp;&nbsp;&nbsp;</button>
-												<strong>{{Session::get('notif')}}</strong>
+												<strong>{{ session('status')}}</strong>
 											</div>
 											@endif
 										</div>
@@ -63,7 +63,7 @@
 											<form class="kt-form" action="{{route('password.email')}}" method="POST">
 												@csrf
 												<div class="form-group">
-													<input class="form-control" type="text" placeholder="Email" name="email" id="kt_email" autocomplete="off">
+													<input class="form-control @error('password') is-invalid @enderror" type="text" placeholder="Email" name="email" id="kt_email"  value="{{ $email ?? old('email') }}" autocomplete="off">
 												</div>
 												<div class="kt-login__actions">
 													<button style="color:#fff;background-color:#2A4158" type="submit" class="form-control">SEND PASSWORD RESET LINK</button>&nbsp;&nbsp;
@@ -86,17 +86,6 @@
 		<!--begin::Global Theme Bundle(used by all pages) -->
 		@include('includes.scripts')
 		<!--end::Global Theme Bundle -->
-		{!! JsValidator::formRequest('App\Http\Requests\Compotitions', '#formcom') !!}
-		{!! JsValidator::formRequest('App\Http\Requests\Register', '#formregister') !!}
-		<script>
-			$('#tanggal').datepicker({
-				todayHighlight: true,
-				orientation: "bottom left",
-				autoclose: true,
-				// language : 'id',
-				format   : 'yyyy-mm-dd'
-			});
-		</script>
 	</body>
 	<!--end::Body-->
 </html>
