@@ -184,7 +184,7 @@
         <div class="modal-content">
             <div class="modal-header ">
                 <h4 class="title-text " id="title_modal" data-state="add">
-                    ADD SCHEDULE
+                    EDIT SCHEDULE
                 </h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
@@ -195,27 +195,27 @@
                     date_default_timezone_set('Asia/Jakarta');
                     $time = date('H:i');
                 @endphp
-                <form action="{{route('schedule.store')}}" method="POST">
+                <form action="{{route('schedule.update')}}" method="POST">
                     @csrf
                     <div class="form-group row">
                         <div class="col-11">
                             <label>Date</label>
-                            <input type="hidden" class="form-control" name="id" id="id">
-                            <input type="date" class="form-control" name="tanggal" id="tanggal">
+                            <input type="hidden" class="form-control" name="slot_id" id="slot_id">
+                            <input type="text" class="form-control" name="date" id="date" required>
                         </div>	
                     </div>	
                     <div class="form-group row">											
                         <div class="col-4">
                             <label>Time Start</label>
-                            <input type="text" class="form-control" name="time1[]" id="time1">
+                            <input type="text" class="form-control" name="time1" id="time1">
                         </div>																								
                         <div class="col-4">
                             <label>Time End</label>
-                            <input type="text" class="form-control" name="time2[]" id="time2">
+                            <input type="text" class="form-control" name="time2" id="time2">
                         </div>
                         <div class="col-3">
                             <label>Capacity</label>
-                            <input type="text" class="form-control" name="capacity[]" id="capacity">
+                            <input type="text" class="form-control" name="capacity" id="capacity">
                         </div>
                     </div>
                 </div>
@@ -326,6 +326,7 @@ $(document).ready( function () {
                 // update stuff
                 // append value
                 console.log(response.date);
+                $('#slot_id').val(response.id);
                 $('#date').val(response.date);
                 $('#time1').val(response.time_start);
                 $('#time2').val(response.time_end);
@@ -390,6 +391,14 @@ $(document).ready( function () {
         var id = $(this).attr('data-id');
         location.replace("{{url('package/edit')}}"+ '/' +id);
     });
+    $('#date').datepicker({
+		todayHighlight: true,
+		orientation: "bottom left",
+		autoclose: true,
+		// language : 'id',
+		format   : 'yyyy-mm-dd'
+	});
+
 } );
 </script>
 @endpush
