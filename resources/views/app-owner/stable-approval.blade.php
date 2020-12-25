@@ -229,13 +229,14 @@
                     $('#facilities').html(data[0].facilities);
                     $('#logo').attr('src','{{asset("storage/stable/logo/")}}/'+(data[0].logo));
                     $('#approval_status').html(data[0].approval_status);
-                    $('#approval_at').html(data[0].approval_at);
-                    $('#approval_by').html(data[0].approvalby_stable.name);
+                    $('#approval_at').html(data[0].approval_at);                    
                     if(data[0].approval_at == null){
                         $('#approval_at').html('Need Approval');    
                     }
                     if(data[0].approval_by == null){
                         $('#approval_by').html('Need Approval');    
+                    }else{
+                        $('#approval_by').html(data[0].approvalby_stable.name);
                     }
                     if(data[0].approval_status == null){
                         $('#approval_status').html('Need Approval');    
