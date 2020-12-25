@@ -209,3 +209,6 @@
       .kt-login.kt-login--v6 .kt-login__content .kt-login__section .kt-login__desc {
         font-size: 1rem;
         margin: 0; } }
+        .help-block.error-help-block{
+          color: red;
+        }
