@@ -98,7 +98,7 @@ class CoachController extends Controller
     }
     public function edit($id)
     {
-        $data = Coach::find($id)->first();
+        $data = Coach::find($id);
         return view('coach.edit',compact('data'));
     }
     public function update(CoachStore $request, Coach $coach)

@@ -104,7 +104,7 @@ class HorseController extends Controller
     {
         $horseSex = HorseSex::all();
         $horseBreed = HorseBreed::all();
-        $data= Horse::find($id)->first();
+        $data= Horse::find($id);
         return view('horse.edit',compact('data','horseSex', 'horseBreed'));
     }
     public function update(HorseStore $request, Horse $horse)

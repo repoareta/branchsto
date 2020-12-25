@@ -63,7 +63,7 @@
                                                 <label>Sex</label>
                                                 <select class="form-control" name="horse_sex_id">
                                                     @foreach ($horseSex as $item)
-                                                        <option value="{{$item->id}}">{{$item->name}}</option>                                                      
+                                                        <option value="{{$item->id}}" <?php if($item->id == $data->horse_breed_id) echo 'selected';?>>{{$item->name}}</option>                                                      
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -81,7 +81,7 @@
                                                 <label>Horse Breed</label>
                                                 <select class="form-control" name="horse_breed_id">
                                                     @foreach ($horseBreed as $item)
-                                                        <option value="{{$item->id}}">{{$item->name}}</option>                                                      
+                                                        <option value="{{$item->id}}"<?php if($item->id == $data->horse_breed_id) echo 'selected';?> >{{$item->name}}</option>                                                      
                                                     @endforeach
                                                 </select>
                                             </div>
