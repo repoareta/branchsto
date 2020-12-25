@@ -233,6 +233,3 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
 
     
 });
-
-
-//app owner
