@@ -60,7 +60,7 @@
 											<h2 class="kt-login__title">Reset Password ?</h2>
 										</div>
 										<div class="kt-login__form">
-											<form class="kt-form" action="{{route('login.reset.sendpassword')}}" method="POST">
+											<form class="kt-form" action="{{route('password.email')}}" method="POST">
 												@csrf
 												<div class="form-group">
 													<input class="form-control" type="text" placeholder="Email" name="email" id="kt_email" autocomplete="off">
@@ -69,7 +69,7 @@
 													<button style="color:#fff;background-color:#2A4158" type="submit" class="form-control">SEND PASSWORD RESET LINK</button>&nbsp;&nbsp;
 												</div>
 												<div class="kt-login__actions">
-													<a href="{{route('login.loginForm')}}" style="color:#2A4158;background-color:#fff" class="form-control">Back</a>
+													<a href="{{route('login')}}" style="color:#2A4158;background-color:#fff" class="form-control">Back</a>
 												</div>
 											</form>
 										</div>

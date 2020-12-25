@@ -32,9 +32,10 @@
                                 Please check your email and click the verification link we sent you. if you do not receive an email from us and make sure the email you registered is correct.
                             </div>
                             <div class="action">
-                                <a href="#" class="btn btn-send-email">
-                                    RESEND EMAIL
-                                </a>
+                                <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
+                                    @csrf
+                                    <button type="submit" class="btn btn-send-email">RESEND EMAIL</button>.
+                                </form>
                                 <a href="#" class="need-help">
                                     Needed help?
                                 </a>
