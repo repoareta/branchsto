@@ -29,11 +29,11 @@
                                             @csrf
                                             @foreach ($data_list_package as $item)
                                             <h4>
-                                                Nama Package : {{$item['package_name']}}
+                                                Name Package : {{$item['package_name']}}
                                                 <input type="hidden" name="package_id" value="{{$item['package_id']}}">
                                             </h4>
                                             <p>
-                                                Nama Stable  : {{$item['stable_name']}}
+                                                Name Stable  : {{$item['stable_name']}}
                                             </p>
                                             @endforeach
 
@@ -60,7 +60,9 @@
                                                 @endforeach
                                             <hr>
                                             @endforeach
-                                            <h4 class="text-right">Total : Rp. {{number_format($sum_tot_Price,0,'.','.')}}</h4>
+                                            <h4>
+                                                <b>Price : Rp. {{number_format($sum_tot_Price,0,'.','.')}}</b>
+                                            </h4>
                                             <input type="hidden" name="price_total" value="{{$sum_tot_Price}}">
                                             <div class="bank-number">
                                                 <div class="card-bank">

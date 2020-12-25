@@ -22,7 +22,6 @@
                                     {{Auth::user()->name}}
                                 </div>
                                 <div class="location">
-                                    <img src="{{url('assets/media/branchsto/email.svg')}}" alt="">
                                     {{Auth::user()->email}}
                                 </div>
                             </div>
@@ -41,11 +40,21 @@
                                         <div class="subtitle">Unregistered</div>												
                                     </div>
                                 @else
-                                    <div class="card-body-premium pointer-link" data-toggle="modal" id="form-stable">
-                                        <img src="{{url('assets/media/branchsto/chess-gold-icon.svg')}}" alt="">
-                                        <div class="title">Stable</div>
-                                        <div class="subtitle">Registered</div>												
-                                    </div>
+                                    @if ($data->approval_status == null)
+                                        <div class="card-body-premium pointer-link" data-toggle="modal" id="form-stable-pending">
+                                            <img src="{{url('assets/media/branchsto/chess-gold-icon.svg')}}" alt="">
+                                            <div class="title">Stable</div>
+                                            <div class="subtitle">Registered</div>	
+                                                <span class="label label-lg label-light-warning label-inline">Pending.</span>											
+                                        </div>
+                                    @else
+                                        <div class="card-body-premium pointer-link" data-toggle="modal" id="form-stable-ready">
+                                            <img src="{{url('assets/media/branchsto/chess-gold-icon.svg')}}" alt="">
+                                            <div class="title">Stable</div>
+                                            <div class="subtitle">Registered</div>	
+                                                <span class="label label-lg label-light-success label-inline">Ready to Sell.</span>											
+                                        </div>
+                                    @endif
                                 @endif
                                 <div class="card-body-premium">
                                     <img src="{{url('assets/media/branchsto/event-silver-icon.svg')}}" alt="">
@@ -62,7 +71,15 @@
                                         @foreach ($data_list as $item)
                                         <a href="{{route('riding_class.booking.list.qrcode', ['booking_id' => $item->id])}}" class="card-history">
                                             <div class="title">{{$item->name}} - {{$item->stable_name}}</div>
-                                            <div class="detail">See Detail</div>
+                                            @if($item->approval_status == null)
+                                                <span class='label label-lg label-light-warning label-inline'>Pending.</span>
+                                            @endif
+                                            @if($item->approval_status == 'Accepted')
+                                                <span class='label label-lg label-light-success label-inline'>Accepted.</span>
+                                            @endif
+                                            @if($item->approval_status == 'Expired')
+                                                <span class='label label-lg label-light-danger label-inline'>Expired.</span>
+                                            @endif
                                         </a>
                                         @endforeach
                                     </div>
@@ -90,13 +107,25 @@
 {!! JsValidator::formRequest('App\Http\Requests\StableStore', '#formstable') !!}
 <script type="text/javascript">
     $(document).ready( function () {
-		$('#form-stable').click(function(e) {
+		$('#form-stable-pending').click(function(e) {
 			e.preventDefault();
-			console.log(1);
 			Swal.fire({
-				title: "You already have a stable",
+				title: "Thank you for completing the riding class attribute registration form. We'll send you a notification in a few moments.",
 				icon: "info",
-				timer : 2000
+			});
+		});
+		$('#form-stable-pending1').click(function(e) {
+			e.preventDefault();
+			Swal.fire({
+				title: "Thank you for completing the riding class attribute registration form. We'll send you a notification in a few moments.",
+				icon: "info",
+			});
+		});
+		$('#form-stable-ready').click(function(e) {
+			e.preventDefault();
+			Swal.fire({
+				title: "Your stable is ready to use. Good luck.",
+				icon: "info",
 			});
 		});
 	});

@@ -27,6 +27,9 @@
                                     <form action="{{route('riding_class.confirmasion.payment')}}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <div class="card-body">
+                                            @php
+                                                $sum_tot_Price = 0;
+                                            @endphp
                                             @foreach ($data_list as $item)
                                             <h4>
                                                 Nama Package {{$item->name}}
@@ -48,7 +51,14 @@
                                                     {{$item->time_start}} - {{$item->time_end}}
                                                 </p>
                                             <hr>
+                                                @php
+                                                    $sum_tot_Price +=$item->price_subtotal;
+                                                @endphp
                                             @endforeach
+                                                <h4>
+                                                    <b>Price : Rp. {{number_format($sum_tot_Price,0,'.','.')}}</b>
+                                                </h4>
+                                            <hr>
                                             
                                             <h5>Reminder :</h5>
                                             <p class="table-danger">
