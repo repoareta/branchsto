@@ -72,7 +72,7 @@
                                                                         @foreach ($data_slot as $item)
                                                                         <li  class="closed"><span class="folder pointer-link kt-subheader__breadcrumbs-link" >{{$item->date}}</span>
                                                                             <ul class="jstree-container-ul jstree-children">
-                                                                                @foreach (DB::table('slots')->where('user_id',$item->user_id)->where('date', $item->date)->orderBy('time_start','asc')->get() as $item)
+                                                                                @foreach (DB::table('slots')->where('user_id',$item->user_id)->where('date', $item->date)->where('capacity','<>','0')->orderBy('time_start','asc')->get() as $item)
                                                                                     <li style="margin-left:-30px">
                                                                                         <span class="file pointer-link kt-subheader__breadcrumbs-link pointer-link" data-toggle="kt-tooltip" data-placement="top" title="Click Time">
                                                                                             {{$item->time_start}} - {{$item->time_end}}
