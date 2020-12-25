@@ -52,7 +52,7 @@
                                                 </p>
                                             <hr>
                                                 @php
-                                                    $sum_tot_Price +=$item->price_subtotal;
+                                                    $sum_tot_Price =$item->price_subtotal;
                                                 @endphp
                                             @endforeach
                                                 <h4>
