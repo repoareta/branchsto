@@ -230,7 +230,7 @@
                     $('#logo').attr('src','{{asset("storage/stable/logo/")}}/'+(data[0].logo));
                     $('#approval_status').html(data[0].approval_status);
                     $('#approval_at').html(data[0].approval_at);
-                    $('#approval_by').html(data[0].approval_by);
+                    $('#approval_by').html(data[0].approvalby_stable.name);
                     if(data[0].approval_at == null){
                         $('#approval_at').html('Need Approval');    
                     }

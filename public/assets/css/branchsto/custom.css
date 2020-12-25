@@ -326,6 +326,7 @@ div#kt_content, .flex-row.page {
 }
 .competition-card img {
   width: 100%;
+  height: 169px;
 }
 .competition-card .overlay {
   content: "";
@@ -408,8 +409,8 @@ div#kt_content, .flex-row.page {
 .competition-card .register{  
   z-index: 2;  
   position: absolute;
-  bottom: 35px;
-  left: 35px;  
+  bottom: -50px;
+  left: 20px;
   display: flex;
   align-items: center;;
 }
