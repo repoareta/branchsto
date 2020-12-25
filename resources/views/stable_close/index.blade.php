@@ -48,6 +48,7 @@
 										<table class="table table-data table-striped" id="dataTable">
 											<thead>
 												<tr>
+												<th scope="col">Name</th>
 												<th scope="col">Date</th>
 												<th scope="col">Time Start</th>
 												<th scope="col">Time End</th>
@@ -58,6 +59,7 @@
 											<tbody>
 												@foreach ($data_list as $item)
 													<tr>
+														<td>{{$item->name}}</td>
 														<td>{{$item->date}}</td>
 														<td>{{$item->time_start}}</td>
 														<td>{{$item->time_end}}</td>
