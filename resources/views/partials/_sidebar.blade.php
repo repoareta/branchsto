@@ -297,7 +297,7 @@
 		<!--end::Stats Tab Rank-->
 
 		<!--begin::Card Sponsor-->
-		<div class="card-sponsor">
+		{{-- <div class="card-sponsor">
 			<div class="card-sponsor-header">
 				<h5>SPONSOR</h5>
 				<div class="view-all">
@@ -329,7 +329,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> --}}
 		<!--end:Card Sponsor-->
 	</div>
 	<!--end::Aside Secondary Content-->

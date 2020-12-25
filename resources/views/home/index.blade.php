@@ -79,7 +79,7 @@
                                 </div>
                                 </div>
                                 
-                                <h5 class="title-text">
+                                {{-- <h5 class="title-text">
                                     LASTEST COMPETITIONS
                                 </h5>
     
@@ -254,7 +254,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             <!--end::Container-->
                         </div>

@@ -34,7 +34,7 @@
 			<!--end::Item-->
 			<!--begin::Item-->
 			<li class="nav-item mb-10" data-toggle="tooltip" data-placement="right" data-container="body"
-				data-boundary="window" title="My Profile">
+				data-boundary="window" title="Setup Stable">
 				<a href="{{ route('profile.index')}}" class="nav-link btn btn-icon btn-hover-text-primary btn-lg">
 					<span class="svg-icon svg-icon-xxl">									
 						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

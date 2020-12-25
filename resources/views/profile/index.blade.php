@@ -30,11 +30,11 @@
 							</section>
 							<div class="premium-or-not">
 								<div class="card-premium">
-									<div class="card-body-premium">
+									{{-- <div class="card-body-premium">
 										<img src="{{url('assets/media/branchsto/gem-silver-icon.svg')}}" alt="">
 										<div class="title">Premium</div>
 										<div class="subtitle">Unregistered</div>										
-									</div>
+									</div> --}}
 									@if ($data == null)
 										<div class="card-body-premium pointer-link" data-toggle="modal" data-target="#modalStableRegist">
 											<img src="{{url('assets/media/branchsto/chess-silver-icon.svg')}}" alt="">
@@ -59,18 +59,18 @@
 										@endif
 
 									@endif
-									<div class="card-body-premium">
+									{{-- <div class="card-body-premium">
 										<img src="{{url('assets/media/branchsto/event-silver-icon.svg')}}" alt="">
 										<div class="title">EO</div>
 										<div class="subtitle">Unregistered</div>												
-									</div>
+									</div> --}}
 								</div>
 							</div>
 							<section class="profile-body">
 								<div class="feature">
 									<h5>FEATURE</h5>
 									<div class="row">
-										<div class="col-md-4 mb-5">
+										{{-- <div class="col-md-4 mb-5">
 											<div class="card-feature">
 												<div class="row">
 													<div class="col-10">
@@ -105,7 +105,7 @@
 													</div>
 												</div>
 											</div>
-										</div>
+										</div> --}}
 										<div class="col-md-4 mb-5">
 											<div class="card-feature">
 												<div class="row">
