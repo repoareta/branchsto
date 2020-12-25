@@ -24,7 +24,11 @@
 						</a>
 						<div class="profile">
 							<div class="profile-item">
-								<img src="{{url('assets/media/branchsto/stable-profile.png')}}" alt="" class="rounded-circle stable-img">
+								@if ($data->logo)
+									<img src="{{asset('storage/stable/logo/'.$data->logo)}}" alt="" class="rounded-circle stable-img">
+								@else
+									<img src="{{url('assets/media/branchsto/stable-profile.png')}}" alt="" class="rounded-circle stable-img">									
+								@endif
 								<div class="text">
 									<div class="stable-name">
 										{{$data->name}}

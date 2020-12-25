@@ -52,7 +52,7 @@
                     </div>
                     <div class="form-group">
                         <label>Contact Number</label>
-                        <input type="text" name="contact_number" id="" class="form-control">
+                        <input type="number" name="contact_number" id="" class="form-control">
                     </div>
                     <h3>Statement</h3>
                     <p>"We hereby submit an online ticket sales collaboration with the agreed terms and conditions"</p>
