@@ -71,7 +71,6 @@
 												<div class="kt-login__actions">
 													<button id="kt_login_signin_submitn" style="color:#fff; background-color:#2A4158" class="form-control">LOGIN</button>
 												</div>
-
 												
 													<div class="kt-login__extra">
 														<a href="{{ route('password.request') }}">Forget Password ?</a>
