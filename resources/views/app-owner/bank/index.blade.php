@@ -30,7 +30,7 @@
                                     
                                     <div class="d-flex justify-content-start align-items-center">
                                         <h5 class="title-text mb-0">
-                                            Bank Sex Management
+                                            Bank Account Management
                                         </h1>
                                     </div>
                                     <div class="card mt-10">
