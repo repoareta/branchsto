@@ -112,7 +112,7 @@
                         <p class="mb-0">Approval Status</p>
                         <h4 class="mb-4" id="approval_status"></h4>
                         <p class="mb-0">Image</p>
-                        <img src="" alt="">
+                        <img src="" alt="" style="max-width: 100px;" id="photo">
                         <p class="mb-0">Stable</p>
                         <h4 class="mb-4" id="stable"></h4>
                         <p class="mb-0">Attendance</p>
@@ -189,6 +189,7 @@
                     }
                     $('#description').html(data.description);
                     $('#price').html(data.price);
+                    $('#photo').attr('src','{{asset("storage/package/photo/")}}/'+(data.photo));
                     $('#approval_at').html(data.approval_at);
                     if(data.approval_by == null){
                         $('#approval_by').html('Need Approval');    

@@ -17,6 +17,7 @@ use App\Models\Village;
 
 //load form request (for validation)
 use App\Http\Requests\StableStore;
+use Illuminate\Support\Facades\File;
 use GrahamCampbell\ResultType\Success;
 
 class StableController extends Controller
@@ -85,6 +86,7 @@ class StableController extends Controller
         $stable->village_id         = $request->village_id;
         $stable->user_id            = Auth::user()->id;
         if ($request->file('logo')) {
+            File::delete(public_path('/storage/stable/logo/'.$stable->photo));
             $stable->logo = $request->file('logo')->getClientOriginalName();
             $logo_new_path = $request->file('logo')->storeAs('stable/logo', $stable->logo, 'public');
         }

@@ -131,7 +131,11 @@
                                                 </a>
                                             </div>
                                             <div class="live">Priority</div>
-                                            <img src="{{url('assets/media/branchsto/Rectangle 140.png')}}" alt="">
+                                            @if ($list_detail->photo)
+                                                        <img src="{{asset('storage/package/photo/'.$list_detail->photo)}}" alt="">                                                        
+                                            @else
+                                                <img src="{{url('assets/media/branchsto/Rectangle 140.png')}}" alt="">                                                        
+                                            @endif
                                             <div class="overlay"></div>
                                         </div>
                                         <div class="title">

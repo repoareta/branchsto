@@ -13,7 +13,8 @@ use Carbon\Carbon;
 use App\Models\Package;
 use App\Models\Stable;
 
-//load form request (for validation)
+//load form request (for validation
+use Illuminate\Support\Facades\File;
 use App\Http\Requests\PackageStore;
 class PackageController extends Controller
 {
@@ -75,6 +76,10 @@ class PackageController extends Controller
         $package->price          = $request->price;
         $package->user_id        = Auth::user()->id;
         $package->stable_id      = $request->stable_id;
+        if ($request->file('photo')) {
+            $package->photo = $request->file('photo')->getClientOriginalName();
+            $photo_new_path = $request->file('photo')->storeAs('package/photo', $package->photo, 'public');
+        }
         $package->save();
 
         Alert::success('Create Success.', 'Success.')->persistent(true)->autoClose(3600);
@@ -95,6 +100,11 @@ class PackageController extends Controller
         $package->price          = $request->price;
         $package->user_id        = Auth::user()->id;
         $package->stable_id      = $request->stable_id;
+        if ($request->file('photo')) {
+            File::delete(public_path('/storage/package/photo/'.$package->photo));
+            $package->photo = $request->file('photo')->getClientOriginalName();
+            $photo_new_path = $request->file('photo')->storeAs('package/photo', $package->photo, 'public');
+        }
         $package->save();
         Alert::success('Update Success.', 'Success.')->persistent(true)->autoClose(3600);
         return redirect()->route('package.index');   

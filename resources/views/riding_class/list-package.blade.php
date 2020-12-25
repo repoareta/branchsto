@@ -82,7 +82,11 @@
                                                         </a>
                                                     </div>
                                                     <div class="live">Priority</div>
-                                                    <img src="{{url('assets/media/branchsto/Rectangle 140.png')}}" alt="">
+                                                    @if ($row->photo)
+                                                        <img src="{{asset('storage/package/photo/'.$row->photo)}}" alt="">                                                        
+                                                    @else
+                                                        <img src="{{url('assets/media/branchsto/Rectangle 140.png')}}" alt="">                                                        
+                                                    @endif
                                                     <div class="overlay"></div>
                                                 </div>
                                                 <div class="title">
