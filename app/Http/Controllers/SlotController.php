@@ -20,62 +20,6 @@ use App\Http\Requests\SlotStore;
 
 class SlotController extends Controller
 {
-    // public function detail_store(Request $request)
-    // {
-    //     // DB::beginTransaction();
-    //     $data = $request->all();
-
-    //     date_default_timezone_set('Asia/Jakarta');// Set timezone
-    //     $dari = $request->tanggal1;// tanggal mulai
-    //     $sampai = $request->tanggal2;// tanggal akhir
-        
-    //     while (strtotime($dari) <= strtotime($sampai)) {
-    //         $date[] = array(
-    //             'tanggal' => $dari,
-    //         );
-    //         $dari = date("Y-m-d", strtotime("+1 day", strtotime($dari)));//looping tambah 1 date
-            
-    //     }
-    //     // foreach($date as $dii)
-    //     // {
-    //     //     $data2 = array(
-    //     //         'user_id' => Auth::user()->id,
-    //     //         'package_id' => 3,
-    //     //         'date_start' => $dii['tanggal'],
-    //     //         'date_end' => $dii['tanggal'],
-    //     //         'capacity' => 2,
-    //     //     );
-    //     //     Slot::create($data2);
-    //     // }
-
-    //     $datas = Slot::where('package_id', 3)->get();
-    //     foreach ($datas as $dat) {
-    //         if (count($data['time']) > 0) {
-    //             foreach ($data['time'] as $item => $value) {
-    //                 ;
-    //                 $data2 = array(
-    //                     'user_id' => Auth::user()->id,
-    //                     'package_id' => 2,
-    //                     'date_start' => date_format(date_create($dat->date_start), 'Y-m-d') .' '. $data['time'][$item],
-    //                     'date_end' => date_format(date_create($dat->date_start), 'Y-m-d') .' '. $data['time'][$item],
-    //                     'capacity' => $data['capacity'][$item],
-    //                 );
-    //                 Slot::create($data2);
-    //             }
-    //         }
-    //     }
-           
-    //     // if (!$data) {
-    //     //     DB::rollBack();
-    //     //     return errorResp("Data failed to update", 422);
-    //     // }
-    //     // DB::commit();
-    //     // return successResp("Successfully update data");
-        
-    // }
-
-   
-
     public function index()
     {
         return view('schedule.index');
@@ -160,14 +104,13 @@ class SlotController extends Controller
     }
     public function update(Request $request)
     {
-        $package = Slot::find($request->package_id);
-        $package->package_number = $request->package_number;
-        $package->name           = $request->name;
-        $package->description    = $request->description;
-        $package->price          = $request->price;
-        $package->user_id        = Auth::user()->id;
-        $package->stable_id      = $request->stable_id;
-        $package->save();
+        $slot = Slot::find($request->slot_id);
+        $slot->date        = $request->date;
+        $slot->time_start  = $request->time1;
+        $slot->time_end    = $request->time2;
+        $slot->capacity    = $request->capacity;
+        
+        $slot->save();
         Alert::success('Update Success.', 'Success.')->persistent(true)->autoClose(3600);
         return redirect()->route('schedule.index');   
     }
