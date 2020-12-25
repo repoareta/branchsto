@@ -24,4 +24,8 @@ class Booking extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function approvalby_booking()
+    {
+        return $this->belongsTo(User::class, 'approval_by', 'id');
+    }
 }

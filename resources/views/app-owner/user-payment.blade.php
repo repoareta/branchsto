@@ -96,9 +96,13 @@
                             <p class="mb-0">User</p>
                             <h4 class="mb-4" id="user"></h4>                            
                             <p class="mb-0">Image</p>
-                            <h4 class="mb-4" id="image"></h4>
+                            <img src="" alt="" id="photo">
                             <p class="mb-0">Status</p>
                             <h4 class="mb-4" id="approval_status"></h4>
+                            <p class="mb-0">Approval By</p>
+                            <h4 class="mb-4" id="approval_by"></h4>
+                            <p class="mb-0">Approval At</p>
+                            <h4 class="mb-4" id="approval_at"></h4>
                             <p class="mb-0">Bank</p>
                             <h4 class="mb-4" id="bank"></h4>
                         </div>
@@ -162,10 +166,19 @@
                 $.get('{{route('owner.userpayment.index')}}'+'/detail/booking/' + id , function (data) {
                     $('#user').html(data.user.name);
                     $('#price_total').html(data.price_total);
-                    $('#image').html(data.image);                    
-                    $('#approval_status').html(data.approval_status);                    
+                    $('#approval_status').html(data.approval_status);    
+                    $('#approval_at').html(data.approval_at);    
+                    $('#photo').attr('src','{{asset("storage/booking/photo/")}}/'+(data.photo));                
                     if(data.approval_status == null){
                         $('#approval_status').html('Need Approval');    
+                    }
+                    if(data.approval_by == null){
+                        $('#approval_by').html('Need Approval');    
+                    }else{
+                        $('#approval_by').html(data.approvalby_booking.name);
+                    }
+                    if(data.approval_at == null){
+                        $('#approval_at').html('Need Approval');    
                     }
                     $('#bank').html(data.bank.account_name);
                     $('#modalDetail').modal('show');
