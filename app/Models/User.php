@@ -68,6 +68,10 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * The products that belong to the shop.
      */
+    public function booking()
+    {
+        return $this->hasOne(Booking::class);
+    }
     public function slots()
     {
         return $this->belongsToMany(Slot::class)->withTimestamps();
