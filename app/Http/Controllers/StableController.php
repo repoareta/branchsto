@@ -102,7 +102,8 @@ class StableController extends Controller
         $data_list  = DB::table('slot_user as a')
         ->where('a.booking_detail_id',$request->id)
         ->leftJoin('slots as b', 'b.id', '=', 'a.slot_id')
-        ->select('b.date','b.time_start','b.time_end','a.qr_code_status','a.id')->get();
+        ->leftJoin('users as c', 'c.id', '=', 'a.user_id')
+        ->select('b.date','b.time_start','b.time_end','a.qr_code_status','a.id','name')->get();
         return view('stable_close.index',compact('data_list'));
     }
 
