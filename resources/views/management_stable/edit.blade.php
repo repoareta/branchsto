@@ -9,7 +9,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form class="kt-form" id="formstable" action="{{route('stable.update')}}" method="POST">
+                <form class="kt-form" id="formstable" action="{{route('stable.update')}}" method="POST" enctype="multipart/form-data">
                     @csrf @method('put')
                     <div class="form-group row">
                         <div class="col-sm-6">
