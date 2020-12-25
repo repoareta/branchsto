@@ -34,7 +34,7 @@ class BankPaymentController extends Controller
             return $data->branch;
         })
         ->editColumn('photo', function ($data) {
-            return $data->photo ? '<img src="' . Storage::url($data->photo) . '" style="max-width: 200px">' : '';
+            return $data->photo ? '<img src="' . asset('storage/'.$data->photo) . '" style="max-width: 200px">' : '';
         })
         ->addColumn('horse_name', function ($data) {
             return $data->name;

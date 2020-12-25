@@ -128,7 +128,7 @@
                         <p class="mb-0">Facilities</p>
                         <h4 class="mb-4" id="facilities"></h4>
                         <p class="mb-0">Logo</p>
-                        <img src="" alt="">
+                        <img src="" alt="" id="logo" style="max-width: 100px">
                         <p class="mb-0">Approval At</p>
                         <h4 class="mb-4" id="approval_at"></h4>
                         <p class="mb-0">Approval By</p>
@@ -227,7 +227,7 @@
                         $('#village').html(data[1][3].name);
                     }
                     $('#facilities').html(data[0].facilities);
-                    $('#logo').html(data[0].logo);
+                    $('#logo').attr('src','{{asset("storage/stable/logo/")}}/'+(data[0].logo));
                     $('#approval_status').html(data[0].approval_status);
                     $('#approval_at').html(data[0].approval_at);
                     $('#approval_by').html(data[0].approval_by);
