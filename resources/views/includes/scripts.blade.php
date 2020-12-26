@@ -121,6 +121,19 @@ foreach(DB::table('bookings')->where('photo', null)->where('approval_status', nu
         ]);
         foreach(DB::table('booking_details')->where('booking_id',$item->id)->get() as $row)
         {
+            $data_slot = DB::table('slot_user')->select('slot_id')->where('booking_detail_id',  $row->id)->groupBy('slot_id')->get();
+            foreach($data_slot as $item)
+            {  
+                $data_slots = DB::table('slots')->select('capacity_booked')->where('id', $item->slot_id)->get();
+                foreach ($data_slots as $row1) {
+                    # code...
+                    $count = DB::table('slot_user')->where('slot_id',  $item->slot_id)->where('booking_detail_id',  $row->id)->count();
+                    $slot = DB::table('slots')->where('id',$item->slot_id)
+                    ->update([
+                        'capacity_booked' => $row1->capacity_booked - $count,
+                    ]);
+                }
+            }     
             DB::table('slot_user')->where('booking_detail_id',$row->id)->delete();
         }
     }
