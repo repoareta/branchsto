@@ -98,17 +98,17 @@
                         <div class="col-11">
                             <label>Date</label>
                             <input type="hidden" class="form-control" name="id" id="id">
-                            <input type="date" class="form-control" name="tanggal">
+                            <input type="date" class="form-control" name="tanggal" required>
                         </div>	
                     </div>	
                     <div class="form-group row">											
                         <div class="col-4">
                             <label>Time Start</label>
-                            <input type="text" class="form-control" name="time1[]" value="08:00">
+                            <input type="text" class="form-control" name="time1[]" maxlength="5" value="08:00">
                         </div>																								
                         <div class="col-4">
                             <label>Time End</label>
-                            <input type="text" class="form-control" name="time2[]" value="09:00">
+                            <input type="text" class="form-control" name="time2[]" maxlength="5" value="09:00">
                         </div>
                         <div class="col-3">
                             <label>Capacity</label>
@@ -118,11 +118,11 @@
                     <div class="form-group row">											
                         <div class="col-4">
                             <label>Time Start</label>
-                            <input type="text" class="form-control" name="time1[]" value="09:00">
+                            <input type="text" class="form-control" name="time1[]" maxlength="5" value="09:00">
                         </div>																								
                         <div class="col-4">
                             <label>Time End</label>
-                            <input type="text" class="form-control" name="time2[]" value="10:00">
+                            <input type="text" class="form-control" name="time2[]" maxlength="5" value="10:00">
                         </div>
                         <div class="col-3">
                             <label>Capacity</label>
@@ -132,11 +132,11 @@
                     <div class="form-group row" id="after-add-more">											
                         <div class="col-4">
                             <label>Time Start</label>
-                            <input type="text" class="form-control" name="time1[]" value="10:00">
+                            <input type="text" class="form-control" name="time1[]" maxlength="5" value="10:00">
                         </div>																								
                         <div class="col-4">
                             <label>Time End</label>
-                            <input type="text" class="form-control" name="time2[]" value="11:00">
+                            <input type="text" class="form-control" name="time2[]" maxlength="5" value="11:00">
                         </div>
                         <div class="col-3">
                             <label>Capacity</label>
@@ -151,11 +151,11 @@
                         <div  class="form-group row">											
                             <div class="col-4">
                                 <label>Time Start</label>
-                                <input type="text" class="form-control" name="time1[]" value="">
+                                <input type="text" class="form-control" name="time1[]" maxlength="5" value="">
                             </div>																								
                             <div class="col-4">
                                 <label>Time End</label>
-                                <input type="text" class="form-control" name="time2[]" value="">
+                                <input type="text" class="form-control" name="time2[]" maxlength="5" value="">
                             </div>
                             <div class="col-3">
                                 <label>Capacity</label>
@@ -207,11 +207,11 @@
                     <div class="form-group row">											
                         <div class="col-4">
                             <label>Time Start</label>
-                            <input type="text" class="form-control" name="time1" id="time1">
+                            <input type="text" class="form-control" name="time1" maxlength="5" id="time1">
                         </div>																								
                         <div class="col-4">
                             <label>Time End</label>
-                            <input type="text" class="form-control" name="time2" id="time2">
+                            <input type="text" class="form-control" name="time2" maxlength="5" id="time2">
                         </div>
                         <div class="col-3">
                             <label>Capacity</label>
@@ -325,11 +325,13 @@ $(document).ready( function () {
             success: function (response) {
                 // update stuff
                 // append value
+                var time1 = response.time_start;
+                var time2 = response.time_end;
                 console.log(response.date);
                 $('#slot_id').val(response.id);
                 $('#date').val(response.date);
-                $('#time1').val(response.time_start);
-                $('#time2').val(response.time_end);
+                $('#time1').val(time1.substr(0,5));
+                $('#time2').val(time1.substr(0,5));
                 $('#capacity').val(response.capacity);
                 // title
                 $('#title_modal').text('Edit data slot');

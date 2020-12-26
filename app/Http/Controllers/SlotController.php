@@ -32,10 +32,10 @@ class SlotController extends Controller
             return $data->date;
         })
         ->addColumn('time_start', function ($data) {
-            return $data->time_start;
+            return date('H:i', strtotime($data->time_start));
         })
         ->addColumn('time_end', function ($data) {
-            return $data->time_end;
+            return date('H:i', strtotime($data->time_end));
         })
         ->addColumn('capacity', function ($data) {
             return $data->capacity;
