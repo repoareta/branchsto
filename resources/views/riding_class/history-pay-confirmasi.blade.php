@@ -55,9 +55,13 @@
                                             @endforeach
                                             
                                             <p class="mb-0">
-                                                <h4>
-                                                    <b>Price : {{number_format($status_booking->price_total)}}</b>
-                                                </h4>
+                                                @if ($status_booking->approval_status == 'Expired')
+                                                    
+                                                @else
+                                                    <h4>
+                                                        <b>Price : {{number_format($status_booking->price_total)}}</b>
+                                                    </h4>
+                                                @endif
                                             </p>
                                             <hr>
                                             <h5>Reminder :</h5>
