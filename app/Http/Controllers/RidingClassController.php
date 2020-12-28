@@ -136,7 +136,7 @@ class RidingClassController extends Controller
                         ]);
                     }
                     //update slot capacity_booked
-                    $count = DB::table('slot_user')->where('slot_id', '<=', $data['slot_id'][$item])->count();
+                    $count = DB::table('slot_user')->where('slot_id', $data['slot_id'][$item])->count();
                     $slot = Slot::find($data['slot_id'][$item]);
                     $slot->capacity_booked   = $count;
                     $slot->save();
@@ -199,10 +199,8 @@ class RidingClassController extends Controller
     {
         $province = Province::all();
         $data = Stable::with(['user'])->where('user_id', Auth::user()->id)->first();
-        $data_list = DB::table('slot_user as a')
+        $data_list = DB::table('booking_details as c')
         ->where('f.user_id', Auth::user()->id)
-        ->leftJoin('slots as b', 'a.slot_id', '=', 'b.id')
-        ->leftJoin('booking_details as c', 'a.booking_detail_id', '=', 'c.id')
         ->leftJoin('packages as d', 'c.package_id', '=', 'd.id')
         ->leftJoin('stables as e', 'd.stable_id', '=', 'e.id')
         ->leftJoin('bookings as f', 'c.booking_id', '=', 'f.id')

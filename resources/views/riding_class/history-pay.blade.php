@@ -31,28 +31,33 @@
                                                 $sum_tot_Price = 0;
                                             @endphp
                                             @foreach ($data_list as $item)
-                                            <h4>
-                                                Nama Package {{$item->name}}
-                                            </h4>
-                                            <p>
-                                                Nama Stable {{$item->stable_name}}
-                                            </p>
-                                            <hr>
                                                 <h4>
-                                                    Session
+                                                    Package {{$item->name}}
                                                 </h4>
                                                 <p>
-                                                    {{$item->date}}
+                                                    Stable {{$item->stable_name}}
                                                 </p>
-                                                <h4>
-                                                    Slot
-                                                </h4>
-                                                <p class="mb-0">
-                                                    {{$item->time_start}} - {{$item->time_end}}
-                                                </p>
-                                            <hr>
+                                                <table class="table table-borderless table-dark mb-10">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td width="15%" scope="row">Day</td>
+                                                            <td width="5%" scope="row">:</td>
+                                                            <td  scope="row">{{date('l',strtotime($item->date))}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="15%" scope="row">Date</td>
+                                                            <td width="5%" scope="row">:</td>
+                                                            <td  scope="row">{{$item->date}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="15%" scope="row">Session</td>
+                                                            <td width="5%" scope="row">:</td>
+                                                            <td  scope="row">{{date('H:i', strtotime($item->time_start))}} - {{date('H:i', strtotime($item->time_end))}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                                 @php
-                                                    $sum_tot_Price +=$item->price_subtotal;
+                                                    $sum_tot_Price =$item->price_subtotal;
                                                 @endphp
                                             @endforeach
                                                 <h4>
@@ -62,7 +67,7 @@
                                             
                                             <h5>Reminder :</h5>
                                             <p class="table-danger">
-                                                If you don't pay for 1 hour then your payment will expired
+                                                If you don't pay for 1 hour then your booking will expired
                                             </p>
                                             <div class="bank-number">
                                                 <div class="card-bank">

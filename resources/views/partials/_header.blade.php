@@ -12,13 +12,13 @@
 					class="header-menu header-menu-mobile header-menu-layout-default">
 					<!--begin::Nav-->
 					<ul class="menu-nav">
-						<li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click"
+						{{-- <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click"
 							aria-haspopup="true">
 							<a href="javascript:;" class="menu-link menu-toggle">
 								<span class="menu-text">COMPETITIONS</span>
 								<span class="menu-desc"></span>
 							</a>
-						</li>
+						</li> --}}
 						<li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click"
 							aria-haspopup="true">
 							<a href="{{route('riding_class.search_class', ['name' => null])}}" class="menu-link ">
@@ -27,7 +27,7 @@
 								<span class="menu-desc"></span>
 							</a>
 						</li>
-						<li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click"
+						{{-- <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click"
 							aria-haspopup="true">
 							<a href="javascript:;" class="menu-link menu-toggle">
 								<span class="menu-text">VIRTUAL STABLING</span>
@@ -47,7 +47,7 @@
 								<span class="menu-text">MARKET PLACE</span>
 								<span class="menu-desc"></span>
 							</a>
-						</li>
+						</li> --}}
 					</ul>									
 					<!--end::Nav-->
 				</div>

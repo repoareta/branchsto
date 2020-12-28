@@ -29,30 +29,35 @@
                                             @csrf
                                             @foreach ($data_list_package as $item)
                                             <h4>
-                                                Name Package : {{$item['package_name']}}
+                                                <b>Package {{$item['package_name']}}</b>
                                                 <input type="hidden" name="package_id" value="{{$item['package_id']}}">
                                             </h4>
                                             <p>
-                                                Name Stable  : {{$item['stable_name']}}
+                                                <b>Stable  {{$item['stable_name']}}</b>
                                             </p>
                                             @endforeach
-
                                             @foreach ($data_list_slot as $row)   
-                                            <input type="hidden" name="slot_id[]" value="{{$row['slot_id']}}">                                             
-                                            <hr>
-                                                <h4>
-                                                    Session
-                                                </h4>
+                                                <input type="hidden" name="slot_id[]" value="{{$row['slot_id']}}">                                             
                                                 @foreach (DB::table('slots')->where('id',$row['slot_id'])->get() as $item1)
-                                                    <p>
-                                                        {{$item1->date}}
-                                                    </p>
-                                                    <h4>
-                                                        Slot
-                                                    </h4>
-                                                    <p class="mb-0">
-                                                        {{$item1->time_start}} - {{$item1->time_end}}
-                                                    </p>
+                                                    <table class="table table-borderless table-dark mb-10">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td width="15%" scope="row">Day</td>
+                                                                <td width="5%" scope="row">:</td>
+                                                                <td  scope="row">{{date('l',strtotime($item1->date))}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td width="15%" scope="row">Date</td>
+                                                                <td width="5%" scope="row">:</td>
+                                                                <td  scope="row">{{$item1->date}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td width="15%" scope="row">Session</td>
+                                                                <td width="5%" scope="row">:</td>
+                                                                <td  scope="row">{{date('H:i', strtotime($item1->time_start))}} - {{date('H:i', strtotime($item1->time_end))}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
                                                     <input type="hidden" name="price_subtotal[]" value="{{$item['price_subtotal']}}">
                                                     @php
                                                         $sum_tot_Price = $item['price_subtotal'];
