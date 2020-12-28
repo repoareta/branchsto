@@ -13,6 +13,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\CompetitionsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MyProfileController;
 use App\Http\Controllers\StableController;
 use App\Http\Controllers\HorseController;
 use App\Http\Controllers\PackageController;
@@ -38,7 +39,7 @@ route::get('home', function () {
     return redirect()->route('competitions.index');
 });
 route::get('test', function () {
-    return view('riding_class.history-pay');
+    return view('profile.myprofile');
 });
 
 // App Owner Route
@@ -85,6 +86,7 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
             Route::delete('delete', [BankPaymentController::class, 'delete'])->name('owner.bank.delete');
     
         });
+
         // Horse Sex
         Route::group(['prefix' => 'horse-sex'], function(){
     
@@ -119,6 +121,7 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
             route::patch('unapprov/booking/{id}', [UserPaymentApprovalController::class, 'unapprovBooking'])->name('owner.userpayment.unapprov.booking'); 
         });
 
+        // Stable Approval
         Route::name('stable_approval.')->prefix('stable_approval')->group(function () {
             route::get('/', [StableApprovalController::class, 'index'])->name('index');
             route::get('list/approve/stable', [StableApprovalController::class, 'listJsonApprov'])->name('listJson.approv');
@@ -128,6 +131,7 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
             route::patch('unapprov/stable/{id}', [StableApprovalController::class, 'unapprovStable'])->name('unapprov.stable');
         });
         
+        // Package Approval
         Route::name('package_approval.')->prefix('package_approval')->group(function () {
             route::get('/', [PackageApprovalController::class, 'index'])->name('index');
             route::get('list/approve/package', [PackageApprovalController::class, 'listJsonApprov'])->name('listJson.approv');
@@ -136,6 +140,7 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
             route::patch('approv/package/{id}', [PackageApprovalController::class, 'approvPackage'])->name('approv.package');
             route::patch('unapprov/package/{id}', [PackageApprovalController::class, 'unapprovPackage'])->name('unapprov.package');
         });
+
     });
 
 
@@ -149,6 +154,14 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
         route::get('city', [ProfileController::class, 'getCity'])->name('city');
         route::get('district', [ProfileController::class, 'getDistrict'])->name('district');
         route::get('village', [ProfileController::class, 'getVillage'])->name('village');
+    });
+
+    Route::name('myprofile.')->prefix('my-profile')->group(function (){
+        route::get('/', [MyProfileController::class, 'index'])->name('index');
+        route::patch('/', [MyProfileController::class, 'update'])->name('update');
+        route::get('city', [MyProfileController::class, 'getCity'])->name('city');
+        route::get('district', [MyProfileController::class, 'getDistrict'])->name('district');
+        route::get('village', [MyProfileController::class, 'getVillage'])->name('village');
     });
 
     Route::name('stable.')->prefix('stable')->group(function () {
@@ -175,8 +188,7 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
         route::post('store', [PackageController::class, 'store'])->name('store');
         route::get('edit/{id}', [PackageController::class, 'edit'])->name('edit');
         route::post('update', [PackageController::class, 'update'])->name('update');
-        route::delete('delete', [PackageController::class, 'delete'])->name('delete');
-       
+        route::delete('delete', [PackageController::class, 'delete'])->name('delete');    
         Route::name('slot.')->group(function () {
             route::get('slot/json', [SlotController::class, 'detail_index_json'])->name('detail.index.json');
             route::post('slot/store', [SlotController::class, 'detail_store'])->name('detail.store');
