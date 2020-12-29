@@ -77,7 +77,7 @@
                                                 <div class="image">					
                                                     <div class="register">
                                                         <a href="{{route('riding_class.booking_class', ['id' => Crypt::encryptString($row->id)])}}">
-                                                            REGISTER NOW
+                                                            BOOKING NOW
                                                             <img src="{{url('assets/media/branchsto/double-arrow.svg')}}" alt="">
                                                         </a>
                                                     </div>

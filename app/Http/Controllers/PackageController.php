@@ -40,6 +40,14 @@ class PackageController extends Controller
                     return "<span class='label label-lg label-light-success label-inline'>".$data->approval_status.".</span>";
                 }
             })
+            ->addColumn('package_status', function ($data) {
+            
+                if($data->package_status == null){
+                    return "<span class='label label-lg label-light-danger label-inline'>No Publish.</span>";
+                }else{
+                    return "<span class='label label-lg label-light-success label-inline'>".$data->approval_status." Publish.</span>";
+                }
+            })
             ->addColumn('action', function ($data) {
                 return 
                 "<a href='javascript:void(0)' class='btn btn-info text-center mr-2' >
@@ -50,7 +58,7 @@ class PackageController extends Controller
                 </a>
                 ";
             })
-            ->rawColumns(['profile','action','approval_status'])
+            ->rawColumns(['profile','action','approval_status','package_status'])
             ->make(true);
     }
     public function create()
@@ -76,6 +84,8 @@ class PackageController extends Controller
         $package->price          = $request->price;
         $package->user_id        = Auth::user()->id;
         $package->stable_id      = $request->stable_id;
+        $package->session_usage  = $request->session;      
+        $package->package_status = $request->status;      
         if ($request->file('photo')) {
             $package->photo = $request->file('photo')->getClientOriginalName();
             $photo_new_path = $request->file('photo')->storeAs('package/photo', $package->photo, 'public');
@@ -100,6 +110,8 @@ class PackageController extends Controller
         $package->price          = $request->price;
         $package->user_id        = Auth::user()->id;
         $package->stable_id      = $request->stable_id;
+        $package->session_usage  = $request->session;      
+        $package->package_status = $request->status; 
         if ($request->file('photo')) {
             File::delete(public_path('/storage/package/photo/'.$package->photo));
             $package->photo = $request->file('photo')->getClientOriginalName();

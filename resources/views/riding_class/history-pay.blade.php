@@ -66,9 +66,10 @@
                                             <hr>
                                             
                                             <h5>Reminder :</h5>
-                                            <p class="table-danger">
+                                            {{-- <p class="table-danger">
                                                 If you don't pay for 1 hour then your booking will expired
-                                            </p>
+                                            </p> --}}
+                                            <div class="table-danger">Payment expires in <span id="time">60:00</span> minutes.</div>
                                             <div class="bank-number">
                                                 <div class="card-bank">
                                                     <div class="bank">
@@ -128,6 +129,29 @@
 <script type="text/javascript">
     $(document).ready(function () {
     //tampil edit detail
+    });
+
+    function startTimer(duration, display) {
+        var timer = duration, minutes, seconds;
+        setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.text(minutes + ":" + seconds);
+
+            if (--timer < 0) {
+                timer = duration;
+            }
+        }, 1000);
+    }
+
+    jQuery(function ($) {
+        var sejam = 60 * 60,
+            display = $('#time');
+        startTimer(sejam, display);
     });
     </script>
 @endsection
