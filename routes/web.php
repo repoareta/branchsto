@@ -10,15 +10,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\{LoginController, RegisterController,ResetPasswordController,VerificationController};
 use App\Http\Controllers\{ProfileController,StableController,HorseController,PackageController,SlotController,CoachController,RidingClassController};
 use App\Http\Controllers\CompetitionsController;
-<<<<<<< HEAD
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\MyProfileController;
-use App\Http\Controllers\StableController;
-use App\Http\Controllers\HorseController;
-use App\Http\Controllers\PackageController;
-use App\Http\Controllers\SlotController;
-=======
->>>>>>> 10d831247c0dc4f1a9dece9836d73ba89b7805b2
 use App\Http\Controllers\ClubController;
 use App\Http\Controllers\AuthController;
 
