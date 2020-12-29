@@ -120,6 +120,16 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
             route::patch('approv/stable/{id}', [StableApprovalController::class, 'approvStable'])->name('approv.stable');
             route::patch('unapprov/stable/{id}', [StableApprovalController::class, 'unapprovStable'])->name('unapprov.stable');
         });
+
+        // Stable Approval
+        Route::name('stable_approval2.')->prefix('stable_approval2')->group(function () {
+            route::get('/', [StableApprovalController::class, 'index2'])->name('index');
+            route::get('list/approve/stable', [StableApprovalController::class, 'listJsonApprov2'])->name('listJson.approv');
+            route::get('list/unapprov/stable', [StableApprovalController::class, 'listJsonUnapprov2'])->name('listJson.unapprov');
+            route::get('detail/stable/{id}', [StableApprovalController::class, 'detailStable2'])->name('detail.stable');
+            route::patch('approv/stable/{id}', [StableApprovalController::class, 'approvStable2'])->name('approv.stable');
+            route::patch('unapprov/stable/{id}', [StableApprovalController::class, 'unapprovStable2'])->name('unapprov.stable');
+        });
         
         // Package Approval
         Route::name('package_approval.')->prefix('package_approval')->group(function () {

@@ -34,7 +34,12 @@
 									</li>
 									<li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
 										<a href="{{route('stable_approval.index')}}" class="menu-link">
-											<span class="menu-text">List Stable Approval</span>
+											<span class="menu-text">List Stable Approval Step 1</span>
+										</a>
+									</li>
+									<li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
+										<a href="{{route('stable_approval2.index')}}" class="menu-link">
+											<span class="menu-text">List Stable Approval Step 2</span>
 										</a>
 									</li>
 								</ul>
