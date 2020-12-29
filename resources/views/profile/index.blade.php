@@ -105,7 +105,7 @@
 													</div>
 												</div>
 											</div>
-										</div> --}}
+										</div> --}} 
 										<div class="col-md-4 mb-5">
 											<div class="card-feature">
 												<div class="row">
@@ -116,12 +116,12 @@
 																<div class="subtitle-card">Add or manage your stable</div>
 															@else
 																@if ($data->approval_status == null)
-																	<a href="#" id="form-stable-pending1">
+																	<a href="#" data-toggle="modal" data-target="#key-stable">
 																		<div class="title-card">Management Stable</div>
 																		<div class="subtitle-card">Add or manage your stable</div>
 																	</a>
 																@else
-																	<a href="{{route('stable.index')}}" >
+																	<a href="#" data-toggle="modal" data-target="#key-stable">
 																		<div class="title-card">Management Stable</div>
 																		<div class="subtitle-card">Add or manage your stable</div>
 																	</a>
@@ -175,6 +175,43 @@
 
 <!--begin::Modal Stable-->
 @include('management_stable.create')
+
+<div class="modal fade" id="key-stable" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="title-text" id="exampleModalLabel">INPUT KEY STABLE</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="kt-form" id="formstable" action="{{route('stable.key.stable')}}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <label>Key Stable</label>
+                            <input type="text" name="key" class="form-control" placeholder="Key Stable" autocomplete="off">
+                        </div>
+                    </div>               
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-dark font-weight-bold" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-dark font-weight-bold">Submit</button>
+                    </div>
+                    {{-- <div class="form-group row">
+                        <div class="col-4">
+                            <div class="help">
+                                <a href="#">
+                                    Needed help?
+                                </a>
+                            </div>
+                        </div>
+                    </div> --}}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <!--end::Modal Stable-->
 
 @endsection
@@ -203,6 +240,6 @@
 				icon: "info",
 			});
 		});
-	});
+	}); 
 </script>
 @endsection
