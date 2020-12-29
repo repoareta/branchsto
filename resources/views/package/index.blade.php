@@ -53,7 +53,8 @@
                                             <th scope="col">Description</th>
                                             <th scope="col">Price</th>
                                             <th scope="col">Attendance</th>
-                                            <th scope="col">Status</th>
+                                            <th scope="col">Package Status</th>
+                                            <th scope="col">Approval Status</th>
                                             <th scope="col">Action</th>
                                             </tr>
                                         </thead>
@@ -94,6 +95,7 @@ $(document).ready( function () {
             {data: 'description', name: 'description'},
             {data: 'price', name: 'price'},
             {data: 'attendance', name: 'attendance'},
+            {data: 'package_status', name: 'package_status'},
             {data: 'approval_status', name: 'approval_status'},
             {data: 'action', name: 'action'},
         ]

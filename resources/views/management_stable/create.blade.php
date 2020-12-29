@@ -41,7 +41,7 @@
                         <select name="village_id" id="village" class="form-control">    
                         </select>
                     </div>
-                    <p>* Please fill from the Province</p>
+                    <p>* Please fill from the Address</p>
                     <div class="form-group">
                         <label>Address</label>
                         <textarea name="address" id="" rows="5" class="form-control"></textarea>
