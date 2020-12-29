@@ -5,6 +5,9 @@ body {
   background: #fff;
   overflow-x: hidden;  
 }
+textarea{
+  resize: none;
+}
 .wrapper {
   margin: 0px;
   margin-left: 110px;
