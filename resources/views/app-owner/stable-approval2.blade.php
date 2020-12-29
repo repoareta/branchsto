@@ -22,7 +22,7 @@
                         <div class="stable-body data">
                             <div class="d-flex justify-content-start align-items-center">
                                 <h6 class="title-text mb-0 table-danger">
-                                    LIST STABLE APPROVAL STEP 1
+                                    LIST STABLE APPROVAL
                                 </h6>
                             </div>
                             <div class="card mt-10">
@@ -47,7 +47,7 @@
                             </div>
                             <div class="d-flex justify-content-start align-items-center mt-20">
                                 <h6 class="title-text mb-0 table-success">
-                                    LIST STABLE APPROVED STEP 1
+                                    LIST STABLE APPROVED
                                 </h6>
                             </div>
                             <div class="card mt-10">
@@ -158,7 +158,7 @@
                 language: {
                     processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> <br> Loading...'
                 },
-                ajax      : "{{ route('stable_approval.listJson.approv') }}",
+                ajax      : "{{ route('stable_approval2.listJson.approv') }}",
                 columns: [
                     {data: 'no', render: function (data, type, row, meta) {
                         return meta.row + meta.settings._iDisplayStart + 1;
@@ -179,7 +179,7 @@
                 language: {
                     processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> <br> Loading...'
                 },
-                ajax      : "{{ route('stable_approval.listJson.unapprov') }}",
+                ajax      : "{{ route('stable_approval2.listJson.unapprov') }}",
                 columns: [
                     {data: 'no', render: function (data, type, row, meta) {
                         return meta.row + meta.settings._iDisplayStart + 1;
@@ -196,7 +196,7 @@
 
             $('body').on( 'click', '#openBtn', function () {
                 var id = $(this).data('id');
-                $.get('{{route('stable_approval.index')}}'+'/detail/stable/' + id , function (data) {
+                $.get('{{route('stable_approval2.index')}}'+'/detail/stable/' + id , function (data) {
                     $('#name').html(data[0].name);
                     $('#owner').html(data[0].owner);
                     $('#manager').html(data[0].manager);
