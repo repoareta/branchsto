@@ -67,31 +67,34 @@
                                                             <td >Choose Date</td>
                                                             <td>:</td>
                                                             <td >
-                                                                <div class="card-body">
-                                                                    <ul id="browser" class="filetree">
-                                                                        @foreach ($data_slot as $item)
-                                                                        <li  class="closed"><span class="folder pointer-link kt-subheader__breadcrumbs-link" >{{$item->date}}</span>
-                                                                            <ul class="jstree-container-ul jstree-children">
-                                                                                @foreach (DB::table('slots')->where('user_id',$item->user_id)->where('date', $item->date)->where('capacity','<>','0')->orderBy('time_start','asc')->get() as $item)
-                                                                                    <li style="margin-left:-30px">
-                                                                                        <span class="file pointer-link kt-subheader__breadcrumbs-link pointer-link" data-toggle="kt-tooltip" data-placement="top" title="Click Time">
-                                                                                            {{$item->time_start}} - {{$item->time_end}}
-                                                                                            @if ($item->capacity > $item->capacity_booked)
-                                                                                                <input type="checkbox" name="chackbox[]" data-exval="1" value="{{$item->id}}" class="ponter-link">
-                                                                                            @else
-                                                                                                <input type="checkbox" disabled>
-                                                                                            @endif
-                                                                                            <input type="hidden" name="time1[]" value="{{$item->time_start}}" class="ponter-link">
-                                                                                            <input type="hidden" name="time2[]" value="{{$item->time_end}}" class="ponter-link">
-                                                                                            <input type="hidden" name="date[]" value="{{$item->date}}" class="ponter-link">
-                                                                                        </span>
-                                                                                    </li>
-                                                                                @endforeach
-                                                                            </ul>
-                                                                        </li>
-                                                                        @endforeach
-                                                                    </ul>
-                                                                </div>
+                                                                @if ($list_detail->session_usage == null)
+                                                                @else
+                                                                    <div class="card-body">
+                                                                        <ul id="browser" class="filetree">
+                                                                            @foreach ($data_slot as $item)
+                                                                            <li  class="closed"><span class="folder pointer-link kt-subheader__breadcrumbs-link" >{{$item->date}}</span>
+                                                                                <ul class="jstree-container-ul jstree-children">
+                                                                                    @foreach (DB::table('slots')->where('user_id',$item->user_id)->where('date', $item->date)->where('capacity','<>','0')->orderBy('time_start','asc')->get() as $item)
+                                                                                        <li style="margin-left:-30px">
+                                                                                            <span class="file pointer-link kt-subheader__breadcrumbs-link pointer-link" data-toggle="kt-tooltip" data-placement="top" title="Click Time">
+                                                                                                {{$item->time_start}} - {{$item->time_end}}
+                                                                                                @if ($item->capacity > $item->capacity_booked)
+                                                                                                    <input type="checkbox" name="chackbox[]" data-exval="1" value="{{$item->id}}" class="ponter-link">
+                                                                                                @else
+                                                                                                    <input type="checkbox" disabled>
+                                                                                                @endif
+                                                                                                <input type="hidden" name="time1[]" value="{{$item->time_start}}" class="ponter-link">
+                                                                                                <input type="hidden" name="time2[]" value="{{$item->time_end}}" class="ponter-link">
+                                                                                                <input type="hidden" name="date[]" value="{{$item->date}}" class="ponter-link">
+                                                                                            </span>
+                                                                                        </li>
+                                                                                    @endforeach
+                                                                                </ul>
+                                                                            </li>
+                                                                            @endforeach
+                                                                        </ul>
+                                                                    </div>
+                                                                @endif
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -113,7 +116,11 @@
                                                         <h2 class="title-text">Rp. {{number_format($sum_tot_Price,0,'.','.')}}-</h2>
                                                     </div>
                                                     <a href="{{route('riding_class.search_class')}}" class="btn btn-secondary">LIST PACKAGE</a>
-                                                    <button type="submit" disabled class="btn btn-add-new font-weight-bold" id="submitbutton">CHECKOUT</button>
+                                                    @if ($list_detail->session_usage == null)
+                                                        <button type="submit" class="btn btn-add-new font-weight-bold">CHECKOUT</button>
+                                                    @else
+                                                        <button type="submit" disabled class="btn btn-add-new font-weight-bold" id="submitbutton">CHECKOUT</button>
+                                                    @endif
                                                 </div>
                                             </form>
                                         </div>
