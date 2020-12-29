@@ -28,6 +28,12 @@ class StableController extends Controller
         $coach_count = Coach::where('stable_id',$data->id)->where('user_id',Auth::user()->id)->count();
         $package_count = Package::where('stable_id',$data->id)->where('user_id',Auth::user()->id)->count();
         $slot_count = Slot::where('user_id',Auth::user()->id)->count();
+        $data_stable = Stable::with(['user','horse'])->where('user_id', Auth::user()->id)->first();
+        if($data_stable->capacity_of_stable > 0 and  $data_stable->number_of_coach > 0 and $data_stable->capacity_of_arena > 0){
+            $data_setup = 1;
+        }else{
+            $data_setup = 0;
+        }
         return view('management_stable.index',
         compact(
             'data', 
@@ -38,7 +44,8 @@ class StableController extends Controller
             'horse_count',
             'coach_count',
             'package_count',
-            'slot_count'
+            'slot_count',
+            'data_setup'
         ));
     }
 
@@ -137,6 +144,12 @@ class StableController extends Controller
             Alert::info('Input Key Failed.', 'Failed')->persistent(true)->autoClose(3600);
             return redirect()->back();
         }
+    }
+
+    public function setupStable(Request $request)
+    {
+        Alert::success('Submit Success.', 'Success')->persistent(true)->autoClose(3600);
+        return redirect()->back();
     }
     
 }

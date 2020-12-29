@@ -148,6 +148,7 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
         route::post('store', [StableController::class, 'store'])->name('store');
         route::put('update', [StableController::class, 'update'])->name('update');
         route::post('key/stable', [StableController::class, 'keyStable'])->name('key.stable');
+        route::post('setup/stable', [StableController::class, 'setupStable'])->name('setup.stable');
     });
  
     Route::name('horse.')->prefix('horse')->group(function () {

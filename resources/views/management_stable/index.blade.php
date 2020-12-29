@@ -47,12 +47,15 @@
 											{{$data->contact_number}}
 										</div>
 									</div>
+									@if ($data_setup == 1)
+										<span class="label label-lg label-light-success label-inline font-weight-bold py-4">Done</span>
+									@endif
 								</div>
 							</div>
-							<a href="#" class="btn btn-edit" data-toggle="modal" data-target="#form-edit-stable">
-								<i class="fas fa-pen"></i>
-								Setup stable
-							</a>
+								<a href="#" class="btn btn-edit" data-toggle="modal" data-target="#form-edit-stable">
+									<i class="fas fa-pen"></i>
+									Setup stable
+								</a>
 						</div>
 					</div>
 					<div class="stable-body">
@@ -130,8 +133,14 @@
 								</a>
 							</div>
 						</div>
-						
-						<span class="label label-lg label-light-success label-inline font-weight-bold py-4 mt-10">Done</span>
+						<form action="{{route('stable.setup.stable')}}" method="POST">
+							@csrf
+							@if (($horse_count > 0) and ($coach_count > 0) and ($package_count > 0) and ($slot_count > 0) and ($data_setup == 1))
+								<button type="submit" class="btn btn-add-new mt-10">SUBMIT</button>
+							@else
+								<button type="submit" class="btn btn-add-new mt-10" disabled>SUBMIT</button>
+							@endif
+						</form>
 					</div>
 				</div>
 				<!--end::Container-->
