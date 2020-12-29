@@ -66,10 +66,10 @@
                                             <hr>
                                             
                                             <h5>Reminder :</h5>
-                                            <p class="table-danger">
+                                            {{-- <p class="table-danger">
                                                 If you don't pay for 1 hour then your booking will expired
-                                            </p>
-                                            <div>Payment expires in <span id="time">60:00</span> minutes!</div>
+                                            </p> --}}
+                                            <div class="table-danger">Payment expires in <span id="time">60:00</span> minutes.</div>
                                             <div class="bank-number">
                                                 <div class="card-bank">
                                                     <div class="bank">
