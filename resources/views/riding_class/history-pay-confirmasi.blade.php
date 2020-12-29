@@ -150,36 +150,36 @@
     $(document).ready(function () {
     //tampil edit detail
     });
-    function startTimer(duration, display) {
-        var timer = duration, minutes, seconds;
-        setInterval(function () {
-            minutes = parseInt(timer / 60, 10);
-            seconds = parseInt(timer % 60, 10);
+    // Set the date we're counting down to
+    var countDownDate = new Date("{{date('F d, Y G:i:s', strtotime($status_booking->created_at) + 60 * 60 ) }}").getTime();
 
-            minutes = minutes < 10 ? "0" + minutes : minutes;
-            seconds = seconds < 10 ? "0" + seconds : seconds;
+    // Update the count down every 1 second
+    var x = setInterval(function() {
 
-            display.text(minutes + ":" + seconds);
-
-            if (--timer < 0) {
-                timer = duration;
-            }
-        }, 1000);
-    }
-
-    jQuery(function ($) {
-        var BookingDate = new Date(' {{ $status_booking->created_at }} ').getTime();
-        // Get today's date and time
-        var now = new Date().getTime();
+    // Get today's date and time
+    var now = new Date().getTime();
         
-        // Find the distance between now and the count down date
-        var distance = Math.abs(now - bookingDate);
+    // Find the distance between now and the count down date
+    var distance = countDownDate - now;
 
+        
+    // Time calculations for days, hours, minutes and seconds
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        var sejam = distance - 60 * 60,
-            display = $('#time');
-
-        startTimer(sejam, display);
-    });
-    </script>
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+        
+    // Output the result in an element with id="demo"
+    document.getElementById("time").innerHTML =  minutes + ":" + seconds;
+        
+    // If the count down is over, write some text 
+    if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("time").innerHTML = "";
+    }
+    }, 1000);
+</script>
 @endsection
