@@ -110,7 +110,7 @@ class StableController extends Controller
         }
         $stable->save();
 
-        Alert::success('Update Stable Success.', 'Success')->persistent(true)->autoClose(3600);
+        Alert::success('Setup Stable Success.', 'Success')->persistent(true)->autoClose(3600);
         return redirect()->back();
     }
 

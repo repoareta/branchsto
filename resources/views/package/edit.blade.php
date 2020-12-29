@@ -87,6 +87,32 @@
                                                 @endif
                                             </div>																				
                                         </div>
+                                        <div class="form-group row">									
+                                            <div class="col-12 col-sm-6 col-md-5 col-lg-4 mb-3">
+                                                <label>Session Usage</label>
+                                                <div class="radio-inline">
+                                                    <label class="radio">
+                                                    <input type="radio" @php if($data->session_usage == 'Yes') echo 'checked'; @endphp name="session" value="Yes">
+                                                    <span></span>Yes</label>
+                                                    <label class="radio">
+                                                    <input type="radio" name="session" value="" @php if($data->session_usage == null) echo 'checked'; @endphp>
+                                                    <span></span>No</label>
+                                                    <label class="radio">
+                                                </div>
+                                            </div>										
+                                            <div class="col-12 col-sm-6 col-md-5 col-lg-4 mb-3">
+                                                <label>Package Status</label>
+                                                <div class="radio-inline">
+                                                    <label class="radio">
+                                                    <input type="radio" @php if($data->package_status == 'Yes') echo 'checked'; @endphp name="status" value="Yes">
+                                                    <span></span>Publish</label>
+                                                    <label class="radio">
+                                                    <input type="radio" name="status" value="" @php if($data->package_status == null) echo 'checked'; @endphp>
+                                                    <span></span>Draft</label>
+                                                    <label class="radio">
+                                                </div>
+                                            </div>										
+                                        </div>
                                         {{-- <div class="form-group row">
                                             <div class="col-12 col-sm-6 col-md-5 col-lg-4 mb-3">
                                                 <label>Upload Logo</label>
