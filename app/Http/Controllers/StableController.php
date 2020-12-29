@@ -9,11 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 // load model
-use App\Models\Stable;
-use App\Models\Province;
-use App\Models\City;
-use App\Models\District;
-use App\Models\Village;
+use App\Models\{Stable, Coach, Horse, Package, Slot, Province, City, District, Village};
 
 //load form request (for validation)
 use App\Http\Requests\StableStore;
@@ -28,7 +24,29 @@ class StableController extends Controller
         $city = City::find($data->city_id);
         $district = District::find($data->district_id);
         $village = Village::find($data->village_id);
-        return view('management_stable.index',compact('data', 'province','city','district','village'));
+        $horse_count = Horse::where('stable_id',$data->id)->where('user_id',Auth::user()->id)->count();
+        $coach_count = Coach::where('stable_id',$data->id)->where('user_id',Auth::user()->id)->count();
+        $package_count = Package::where('stable_id',$data->id)->where('user_id',Auth::user()->id)->count();
+        $slot_count = Slot::where('user_id',Auth::user()->id)->count();
+        $data_stable = Stable::with(['user','horse'])->where('user_id', Auth::user()->id)->first();
+        if($data_stable->capacity_of_stable > 0 and  $data_stable->number_of_coach > 0 and $data_stable->capacity_of_arena > 0){
+            $data_setup = 1;
+        }else{
+            $data_setup = 0;
+        }
+        return view('management_stable.index',
+        compact(
+            'data', 
+            'province',
+            'city',
+            'district',
+            'village',
+            'horse_count',
+            'coach_count',
+            'package_count',
+            'slot_count',
+            'data_setup'
+        ));
     }
 
     public function menu()
@@ -97,6 +115,7 @@ class StableController extends Controller
     }
 
 
+    // list close tiket
     public function stable_close(Request $request)
     {
         $data_list  = DB::table('slot_user as a')
@@ -106,7 +125,7 @@ class StableController extends Controller
         ->select('b.date','b.time_start','b.time_end','a.qr_code_status','a.id','name')->get();
         return view('stable_close.index',compact('data_list'));
     }
-
+    // close tiket
     public function close(Request $request){
         DB::table('slot_user')->where('id', $request->id)
         ->update([
@@ -114,4 +133,23 @@ class StableController extends Controller
         ]);
         return response()->json();
     }
+
+    public function keyStable(Request $request)
+    {
+        $data = Stable::where('user_id', Auth::user()->id)->first();
+        if($data->id == $request->key){
+            Alert::success('Input Key Success.', 'Success')->persistent(true)->autoClose(3600);
+            return redirect()->route('stable.index');
+        }else{
+            Alert::info('Input Key Failed.', 'Failed')->persistent(true)->autoClose(3600);
+            return redirect()->back();
+        }
+    }
+
+    public function setupStable(Request $request)
+    {
+        Alert::success('Submit Success.', 'Success')->persistent(true)->autoClose(3600);
+        return redirect()->back();
+    }
+    
 }
