@@ -72,7 +72,7 @@
                                                 </a>
                                             </div>
                                             <div class="navi-item mb-2">
-                                                <a href="{{route('myprofile.info')}}" class="navi-link py-4 active">
+                                                <a href="{{route('myprofile.info')}}" class="navi-link py-4">
                                                     <span class="navi-icon mr-2">
                                                         <span class="svg-icon">
                                                             <!--begin::Svg Icon | path:assets/media/svg/icons/Code/Compiling.svg-->
@@ -90,7 +90,7 @@
                                                 </a>
                                             </div>
                                             <div class="navi-item mb-2">
-                                                <a href="{{route('myprofile.password')}}" class="navi-link py-4">
+                                                <a href="{{route('myprofile.password')}}" class="navi-link py-4 active">
                                                     <span class="navi-icon mr-2">
                                                         <span class="svg-icon">
                                                             <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Shield-user.svg-->
@@ -118,23 +118,50 @@
                             <!--end::Aside-->
                             <!--begin::Content-->
                             <div class="flex-row-fluid ml-lg-8">
-                                <!--begin::Card-->
-                                <div class="card card-custom card-stretch">
-                                    <!--begin::Header-->
-                                    <div class="card-header pt-5 pb-3 pl-5">
-                                        <div class="card-title align-items-start flex-column">
-                                            <h3 class="card-label font-weight-bolder text-dark">Account Information</h3>
-                                            <span class="text-muted font-weight-bold font-size-sm mt-1">Your account information</span>
+
+                                <form action="{{route('myprofile.change-password')}}" method="post">
+                                @csrf
+                                @method('PATCH')
+                                    <!--begin::Card-->
+                                    <div class="card card-custom card-stretch">
+                                        <!--begin::Header-->
+                                        <div class="card-header pt-5 pb-3 pl-5">
+                                            <div class="card-title align-items-start flex-column">
+                                                <h3 class="card-label font-weight-bolder text-dark">Change Password</h3>
+                                                <span class="text-muted font-weight-bold font-size-sm mt-1">Change your password to new password</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="card-body">
+                                        <div class="card-body">
+                                            <div class="form-group row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label text-alert">Current Password</label>
+                                                <div class="col-lg-9 col-xl-6">
+                                                    <input type="password" class="form-control form-control-lg form-control-solid mb-2" name="old_password" value="" placeholder="Current password">
+                                                    <a href="{{ route('password.request') }}" class="text-sm font-weight-bold">Forgot password ?</a>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label text-alert">New Password</label>
+                                                <div class="col-lg-9 col-xl-6">
+                                                    <input type="password" class="form-control form-control-lg form-control-solid" name="password" value="" placeholder="New password">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label text-alert">Verify Password</label>
+                                                <div class="col-lg-9 col-xl-6">
+                                                    <input type="password" class="form-control form-control-lg form-control-solid" name="password_confirmation" value="" placeholder="Verify password">
+                                                </div>
+                                            </div>
+                                            <div class="text-right col-xl-9 col-lg-9">
+                                                <button type="submit" class="btn btn-add-new">Save</button>
+                                                <button type="reset" class="btn btn-secondary">Cancel</button>
+                                            </div>
+                                        </div>
+                                        <!--end::Header-->
+                                        <!--begin::Form-->
                                         
+                                        <!--end::Form-->
                                     </div>
-                                    <!--end::Header-->
-                                    <!--begin::Form-->
-                                    
-                                    <!--end::Form-->
-                                </div>
+                                </form>
                             </div>
                             <!--end::Content-->
                         </div>

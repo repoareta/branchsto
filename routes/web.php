@@ -158,6 +158,9 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
 
     Route::name('myprofile.')->prefix('my-profile')->group(function (){
         route::get('/', [MyProfileController::class, 'index'])->name('index');
+        route::get('/info', [MyProfileController::class, 'info'])->name('info');
+        route::get('/password', [MyProfileController::class, 'password'])->name('password');
+        route::patch('/password', [MyProfileController::class, 'change_password'])->name('change-password');
         route::patch('/', [MyProfileController::class, 'update'])->name('update');
         route::get('city', [MyProfileController::class, 'getCity'])->name('city');
         route::get('district', [MyProfileController::class, 'getDistrict'])->name('district');

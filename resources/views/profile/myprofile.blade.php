@@ -72,7 +72,7 @@
                                                 </a>
                                             </div>
                                             <div class="navi-item mb-2">
-                                                <a href="custom/apps/profile/profile-1/account-information.html" class="navi-link py-4">
+                                                <a href="{{route('myprofile.info')}}" class="navi-link py-4">
                                                     <span class="navi-icon mr-2">
                                                         <span class="svg-icon">
                                                             <!--begin::Svg Icon | path:assets/media/svg/icons/Code/Compiling.svg-->
@@ -90,7 +90,7 @@
                                                 </a>
                                             </div>
                                             <div class="navi-item mb-2">
-                                                <a href="custom/apps/profile/profile-1/change-password.html" class="navi-link py-4">
+                                                <a href="{{route('myprofile.password')}}" class="navi-link py-4">
                                                     <span class="navi-icon mr-2">
                                                         <span class="svg-icon">
                                                             <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Shield-user.svg-->
@@ -125,10 +125,6 @@
                                         <div class="card-title align-items-start flex-column">
                                             <h3 class="card-label font-weight-bolder text-dark">Personal Information</h3>
                                             <span class="text-muted font-weight-bold font-size-sm mt-1">Update your personal information</span>
-                                        </div>
-                                        <div class="card-toolbar">
-                                            <button type="reset" class="btn btn-success mr-2">Save Changes</button>
-                                            <button type="reset" class="btn btn-secondary">Cancel</button>
                                         </div>
                                     </div>
                                     <!--end::Header-->
@@ -170,10 +166,10 @@
                                                     <div class="form-group">
 														<div class="radio-inline">
 															<label class="radio">
-															<input type="radio" name="sex" value="male" checked="<?php if($data->sex == 'male') echo 'checked'; ?>">
+															<input type="radio" name="sex" value="male" <?php if($data->sex == 'male') echo 'checked'; ?>>
 															<span></span>Male</label>
 															<label class="radio">
-															<input type="radio" name="sex" value="female" checked="<?php if($data->sex == 'female') echo 'checked'; ?>">
+															<input type="radio" name="sex" value="female" <?php if($data->sex == 'female') echo 'checked'; ?>>
 															<span></span>Female</label>														
 														</div>
 													</div>
