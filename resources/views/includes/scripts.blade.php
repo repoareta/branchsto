@@ -83,6 +83,8 @@
 <script src="{{url('assets/js/pages/crud/file-upload/image-input.js')}}"></script>
 <script src="{{url('assets/uppy/uppy.min.js')}}"></script>
 <script src="{{url('vendor/jsvalidation/js/jsvalidation.js')}}" type="text/javascript"></script>
+<script src="{{url('assets/js/pages/crud/forms/widgets/bootstrap-datepicker.js')}}"></script>
+
 
 
 <!-- treeview JS -->
@@ -93,7 +95,7 @@
     $(document).ready(function() {
     		$("#kt_sidebar_mobile_toggle").click(function(){
 				$("#kt_sidebar").addClass('active');
-				$("#kt_sidebar").after('<div class="sidebar-menu-wrapper-overlay" id="overlaySidebar"></div>');
+				$("#kt_sidebar").after('<div class="spridinidebar-menu-wrapper-overlay" id="overlaySidebar"></div>');
 			});
             $('#kt_body').on('click', '#overlaySidebar', function() {
                 $("#kt_sidebar").removeClass('active');
