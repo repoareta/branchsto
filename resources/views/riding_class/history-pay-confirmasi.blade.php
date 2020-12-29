@@ -168,8 +168,17 @@
     }
 
     jQuery(function ($) {
-        var sejam = 60 * 60,
+        var BookingDate = new Date(' {{ $status_booking->created_at }} ').getTime();
+        // Get today's date and time
+        var now = new Date().getTime();
+        
+        // Find the distance between now and the count down date
+        var distance = Math.abs(now - bookingDate);
+
+
+        var sejam = distance - 60 * 60,
             display = $('#time');
+
         startTimer(sejam, display);
     });
     </script>
