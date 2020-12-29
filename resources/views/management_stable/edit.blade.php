@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="title-text" id="exampleModalLabel">EDIT STABLE</h4>
+                <h4 class="title-text" id="exampleModalLabel">SETUP STABLE</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
@@ -130,7 +130,7 @@
         </div>
     </div>
 </div>
-<!--Modal-->
+<!--Modal--> 
 @push('add-script')
 <script>
         $('#province').change(function(){

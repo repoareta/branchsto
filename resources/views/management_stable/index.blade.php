@@ -21,6 +21,7 @@
 								<path d="M29 17H15" stroke="#C4C4C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 								<path d="M22 24L15 17L22 10" stroke="#C4C4C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 								</svg>
+								
 						</a>
 						<div class="profile">
 							<div class="profile-item">
@@ -50,7 +51,7 @@
 							</div>
 							<a href="#" class="btn btn-edit" data-toggle="modal" data-target="#form-edit-stable">
 								<i class="fas fa-pen"></i>
-								Edit stable profile
+								Setup stable
 							</a>
 						</div>
 					</div>
@@ -65,6 +66,11 @@
 										<div class="text">
 											<div class="title-card">Horse</div>
 											<div class="subtitle-card">Manage all your horse here</div>
+											@if($horse_count > 0)
+												<span class="label label-lg label-light-success label-inline font-weight-bold py-4">Done</span>
+											@else
+												<span class="label label-lg label-light-danger label-inline font-weight-bold py-4">Setup Horse</span>
+											@endif
 										</div>
 									</div>
 								</a>
@@ -78,6 +84,11 @@
 										<div class="text">
 											<div class="title-card">Package</div>
 											<div class="subtitle-card">Manage all your package here</div>
+											@if($package_count > 0)
+												<span class="label label-lg label-light-success label-inline font-weight-bold py-4">Done</span>
+											@else
+												<span class="label label-lg label-light-danger label-inline font-weight-bold py-4">Setup Package</span>
+											@endif										
 										</div>
 									</div>
 								</a>
@@ -91,6 +102,11 @@
 										<div class="text">
 											<div class="title-card">Schedule</div>
 											<div class="subtitle-card">Manage all your schedule here</div>
+											@if($slot_count > 0)
+												<span class="label label-lg label-light-success label-inline font-weight-bold py-4">Done</span>
+											@else
+												<span class="label label-lg label-light-danger label-inline font-weight-bold py-4">Setup Schedule</span>
+											@endif										
 										</div>
 									</div>
 								</a>
@@ -104,11 +120,18 @@
 										<div class="text">
 											<div class="title-card">Coach</div>
 											<div class="subtitle-card">Manage all your coach here</div>
+											@if($coach_count > 0)
+												<span class="label label-lg label-light-success label-inline font-weight-bold py-4">Done</span>
+											@else
+												<span class="label label-lg label-light-danger label-inline font-weight-bold py-4">Setup Coach</span>
+											@endif										
 										</div>
 									</div>
 								</a>
 							</div>
 						</div>
+						
+						<span class="label label-lg label-light-success label-inline font-weight-bold py-4 mt-10">Done</span>
 					</div>
 				</div>
 				<!--end::Container-->

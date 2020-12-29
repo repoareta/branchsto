@@ -7,20 +7,11 @@ use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Support\Facades\Auth;
 
 // load controllers
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;   
-use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\Auth\{LoginController, RegisterController,ResetPasswordController,VerificationController};
+use App\Http\Controllers\{ProfileController,StableController,HorseController,PackageController,SlotController,CoachController,RidingClassController};
 use App\Http\Controllers\CompetitionsController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\StableController;
-use App\Http\Controllers\HorseController;
-use App\Http\Controllers\PackageController;
-use App\Http\Controllers\SlotController;
 use App\Http\Controllers\ClubController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CoachController;
-use App\Http\Controllers\RidingClassController;
 
 // App Owner Controller
 use App\Http\Controllers\AppOwner\DashboardController;
@@ -156,8 +147,9 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
         route::get('menu', [StableController::class, 'menu'])->name('menu');
         route::post('store', [StableController::class, 'store'])->name('store');
         route::put('update', [StableController::class, 'update'])->name('update');
+        route::post('key/stable', [StableController::class, 'keyStable'])->name('key.stable');
     });
-
+ 
     Route::name('horse.')->prefix('horse')->group(function () {
         route::get('/', [HorseController::class, 'index'])->name('index');
         route::get('list/json', [HorseController::class, 'listJson'])->name('list.json');
