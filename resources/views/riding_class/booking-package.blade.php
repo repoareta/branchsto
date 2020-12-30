@@ -68,6 +68,11 @@
                                                             <td>:</td>
                                                             <td >
                                                                 @if ($list_detail->session_usage == null)
+                                                                    <div class="form-group row">
+                                                                        <div class="col-lg-4 col-md-9 col-sm-12">
+                                                                            <input type="text" id="kt_datepicker_6">
+                                                                        </div>
+                                                                    </div>
                                                                 @else
                                                                     <div class="card-body">
                                                                         <ul id="browser" class="filetree">
@@ -131,7 +136,7 @@
                                         <div class="image">					
                                             <div class="register">
                                                 <a href="#">
-                                                    REGISTER NOW
+                                                    BOOKING NOW
                                                 </a>
                                                 <a href="#">
                                                     <img src="{{url('assets/media/branchsto/double-arrow.svg')}}" alt="">
@@ -229,7 +234,15 @@ $(document).ready(function () {
             }
         });
     });  
-});
 
+    $('#kt_datepicker_6').datepicker({
+        todayHighlight: true,
+		orientation: "bottom left",
+        autoclose: true,
+        minDate: true
+    });
+
+    
+});
 </script>
 @endpush
