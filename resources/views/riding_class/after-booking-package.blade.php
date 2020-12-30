@@ -36,35 +36,62 @@
                                                 <b>Stable  {{$item['stable_name']}}</b>
                                             </p>
                                             @endforeach
-                                            @foreach ($data_list_slot as $row)   
-                                                <input type="hidden" name="slot_id[]" value="{{$row['slot_id']}}">                                             
-                                                @foreach (DB::table('slots')->where('id',$row['slot_id'])->get() as $item1)
+
+                                            @if ($data_session_usage == null)
+                                            {{-- detail riding class --}}
+                                                @foreach ($data_list_slot as $row)   
+                                                    <input type="hidden" name="slot_id[]" value="{{$row['slot_id']}}">                                             
+                                                    @foreach (DB::table('slots')->where('id',$row['slot_id'])->get() as $item1)
+                                                        <table class="table table-borderless table-dark mb-10">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td width="15%" scope="row">Day</td>
+                                                                    <td width="5%" scope="row">:</td>
+                                                                    <td  scope="row">{{date('l',strtotime($item1->date))}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="15%" scope="row">Date</td>
+                                                                    <td width="5%" scope="row">:</td>
+                                                                    <td  scope="row">{{$item1->date}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="15%" scope="row">Session</td>
+                                                                    <td width="5%" scope="row">:</td>
+                                                                    <td  scope="row">{{date('H:i', strtotime($item1->time_start))}} - {{date('H:i', strtotime($item1->time_end))}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    @endforeach
+                                                <hr>
+                                                @endforeach
+                                                {{-- end detail riding class --}}
+                                            @else
+                                            {{-- pony rise --}}
+                                                @foreach ($data_list_package as $item)
+                                                    <input type="hidden" value="{{$item['booking_at']}}" name="booking_at">
                                                     <table class="table table-borderless table-dark mb-10">
                                                         <tbody>
                                                             <tr>
                                                                 <td width="15%" scope="row">Day</td>
                                                                 <td width="5%" scope="row">:</td>
-                                                                <td  scope="row">{{date('l',strtotime($item1->date))}}</td>
+                                                                <td  scope="row">{{date('l',strtotime($item['booking_at']))}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td width="15%" scope="row">Date</td>
                                                                 <td width="5%" scope="row">:</td>
-                                                                <td  scope="row">{{$item1->date}}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td width="15%" scope="row">Session</td>
-                                                                <td width="5%" scope="row">:</td>
-                                                                <td  scope="row">{{date('H:i', strtotime($item1->time_start))}} - {{date('H:i', strtotime($item1->time_end))}}</td>
+                                                                <td  scope="row">{{$item['booking_at']}}</td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
-                                                    <input type="hidden" name="price_subtotal[]" value="{{$item['price_subtotal']}}">
-                                                    @php
-                                                        $sum_tot_Price = $item['price_subtotal'];
-                                                    @endphp
                                                 @endforeach
-                                            <hr>
-                                            @endforeach
+                                                {{-- end pony ride --}}
+                                            @endif
+                                            <input type="hidden" name="price_subtotal[]" value="{{$item['price_subtotal']}}">
+                                            @php
+                                                $sum_tot_Price = $item['price_subtotal'];
+                                            @endphp
+
+
                                             <h4>
                                                 <b>Price : Rp. {{number_format($sum_tot_Price,0,'.','.')}}</b>
                                             </h4>
