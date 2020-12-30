@@ -37,8 +37,9 @@
                                             </p>
                                             @endforeach
 
-                                            @if ($data_session_usage == null)
+                                            @if ($data_session_usage == 'riding_class')
                                             {{-- detail riding class --}}
+                                                <input type="hidden" name="usage_status" value="riding_class">
                                                 @foreach ($data_list_slot as $row)   
                                                     <input type="hidden" name="slot_id[]" value="{{$row['slot_id']}}">                                             
                                                     @foreach (DB::table('slots')->where('id',$row['slot_id'])->get() as $item1)
@@ -67,6 +68,7 @@
                                                 {{-- end detail riding class --}}
                                             @else
                                             {{-- pony rise --}}
+                                                <input type="hidden" name="usage_status" value="pony_ride">
                                                 @foreach ($data_list_package as $item)
                                                     <input type="hidden" value="{{$item['booking_at']}}" name="booking_at">
                                                     <table class="table table-borderless table-dark mb-10">

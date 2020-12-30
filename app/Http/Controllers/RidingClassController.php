@@ -54,7 +54,7 @@ class RidingClassController extends Controller
         session()->forget("data_list_slot");
         session()->forget("data_list_package");
         session()->forget("session_usage");
-        if($request->session_usage == null){
+        if($request->usage_status == 'pony_ride'){
             $data1 = array(
                 'package_id'            => $request->package_id,
                 'package_name'          => $request->package_name,
@@ -64,8 +64,10 @@ class RidingClassController extends Controller
                 'price_subtotal'        => $request->price_subtotal,
                 'booking_at'            => $request->date_pony_ride,
             );
+            $data2 =  $request->usage_status;
+
             session()->push('data_list_package', $data1);
-            session()->push('session_usage', $request->session_usage);
+            session()->put('session_usage', $data2);
             return redirect()->route('riding_class.pesan.addCart');
         }else{
             $data = $request->all();
@@ -86,11 +88,10 @@ class RidingClassController extends Controller
                 'price_total'           => $request->price_total,
                 'price_subtotal'        => $request->price_subtotal,
             );
-            $data2 = array(
-                'session_usages'        => $request->session_usage,
-            );
+            $data2 =  $request->usage_status;
+
             session()->push('data_list_package', $data1);
-            session()->push('session_usage', $data2);
+            session()->put('session_usage', $data2);
             return redirect()->route('riding_class.pesan.addCart');
         }
     }
@@ -103,7 +104,7 @@ class RidingClassController extends Controller
         } else {
             $data_list_slot = session("data_list_slot");
             $data_list_package = session("data_list_package");
-            $data_session_usage = session("session_usage");
+            $data_session_usage = session()->get("session_usage");
             $data_payment = DB::table('bank_payments')->get();
             return view('riding_class.after-booking-package', compact('data_list_slot', 'data_list_package', 'data_payment', 'data_session_usage'));
         }
@@ -111,11 +112,10 @@ class RidingClassController extends Controller
 
     public function booking_payment(Request $request, Booking $booking, BookingDetail $booking_detail)
     {
-           
         if (session("data_list_package") == null) {
             return redirect()->route('riding_class.search_class');
         } else {
-            if(!session('session_usage') == null){
+            if($request->usage_status == 'pony_ride'){
                 $noUrutAkhir = BookingDetail::whereDate('booking_at', '=', Carbon::parse($request->booking_at)->toDateString())->max('queue_no');
                 if($noUrutAkhir) {
                     $noUrutAkhir  = sprintf("%03s", abs($noUrutAkhir + 1));
@@ -150,10 +150,9 @@ class RidingClassController extends Controller
                 ->leftJoin('packages as d', 'c.package_id', '=', 'd.id')
                 ->leftJoin('stables as e', 'd.stable_id', '=', 'e.id')
                 ->select('d.session_usage', 'c.booking_at','c.queue_no', 'd.name','session_usage', 'e.name as stable_name', 'c.price_subtotal')->get();
-    
                 $data_payment = DB::table('bank_payments')->where('id', $request->payment)->first();
                 
-                return view('riding_class.history-pay', compact('data_list', 'data_booking_id', 'data_payment'));
+                return view('riding_class.history-pay', compact('data_list', 'data_booking_id', 'data_payment','request'));
             }else{
                 
                 $data = $request->all();
@@ -170,6 +169,7 @@ class RidingClassController extends Controller
                     $booking_detail->package_id = $row['package_id'];
                     $booking_detail->price_subtotal = $row['price_subtotal'];
                     $booking_detail->booking_id = $booking->id;
+                    $booking_detail->booking_at     = null;
                     $booking_detail->save();
         
                     foreach ($data['slot_id'] as $item => $value) {
@@ -196,16 +196,16 @@ class RidingClassController extends Controller
                 session()->forget("data_list_package");
                 $data_booking_id = $booking->id;
                 $data_list = DB::table('slot_user as a')
-                ->where('c.booking_id', $data_booking_id)
-                ->leftJoin('slots as b', 'a.slot_id', '=', 'b.id')
-                ->leftJoin('booking_details as c', 'a.booking_detail_id', '=', 'c.id')
-                ->leftJoin('packages as d', 'c.package_id', '=', 'd.id')
-                ->leftJoin('stables as e', 'd.stable_id', '=', 'e.id')
-                ->select('b.date', 'b.time_start', 'b.time_end', 'd.name', 'e.name as stable_name', 'c.price_subtotal')->get();
+                    ->where('c.booking_id', $data_booking_id)
+                    ->leftJoin('slots as b', 'a.slot_id', '=', 'b.id')
+                    ->leftJoin('booking_details as c', 'a.booking_detail_id', '=', 'c.id')
+                    ->leftJoin('packages as d', 'c.package_id', '=', 'd.id')
+                    ->leftJoin('stables as e', 'd.stable_id', '=', 'e.id')
+                    ->select('b.date', 'b.time_start', 'b.time_end', 'd.name', 'e.name as stable_name', 'c.price_subtotal')->get();
     
                 $data_payment = DB::table('bank_payments')->where('id', $request->payment)->first();
                 
-                return view('riding_class.history-pay', compact('data_list', 'data_booking_id', 'data_payment'));
+                return view('riding_class.history-pay', compact('data_list', 'data_booking_id', 'data_payment','request'));
             }
         }
     }
@@ -245,25 +245,29 @@ class RidingClassController extends Controller
     public function booking_list_qrcode(Request $request)
     {
         $data_booking_id = $request->booking_id;
-        if(!BookingDetail::where('booking_id', $data_booking_id)->select('booking_at')->first() == null){
+        $data_cekstatus = BookingDetail::where('booking_id', $data_booking_id)->select('booking_at')->first();
+        if(!$data_cekstatus->booking_at == null){
             $data_list = DB::table('booking_details as c')
-            ->where('c.booking_id', $data_booking_id)
-            ->leftJoin('packages as d', 'c.package_id', '=', 'd.id')
-            ->leftJoin('stables as e', 'd.stable_id', '=', 'e.id')
-            ->select('d.session_usage', 'c.booking_at','c.queue_no', 'd.name','session_usage', 'e.name as stable_name', 'c.price_subtotal')->get();
+                ->where('c.booking_id', $data_booking_id)
+                ->leftJoin('packages as d', 'c.package_id', '=', 'd.id')
+                ->leftJoin('stables as e', 'd.stable_id', '=', 'e.id')
+                ->select('d.session_usage', 'c.booking_at','c.queue_no', 'd.name','session_usage', 'e.name as stable_name', 'c.price_subtotal')->get();
+            
             $status_booking = Booking::select('*')->where('id', $data_booking_id)->first();
             $booking_detail = BookingDetail::select('*')->where('booking_id', $data_booking_id)->limit(1)->get();
             $data_payment = DB::table('bank_payments')->where('id', $status_booking->bank_payment_id)->first();
+            
             return view('riding_class.history-pay-confirmasi', compact('data_list', 'data_booking_id', 'status_booking', 'booking_detail', 'data_payment'));
             
         }else{
             $data_list = DB::table('slot_user as a')
-            ->where('c.booking_id', $data_booking_id)
-            ->leftJoin('slots as b', 'a.slot_id', '=', 'b.id')
-            ->leftJoin('booking_details as c', 'a.booking_detail_id', '=', 'c.id')
-            ->leftJoin('packages as d', 'c.package_id', '=', 'd.id')
-            ->leftJoin('stables as e', 'd.stable_id', '=', 'e.id')
-            ->select('b.date', 'b.time_start', 'b.time_end', 'd.name','session_usage', 'e.name as stable_name')->get();
+                ->where('c.booking_id', $data_booking_id)
+                ->leftJoin('slots as b', 'a.slot_id', '=', 'b.id')
+                ->leftJoin('booking_details as c', 'a.booking_detail_id', '=', 'c.id')
+                ->leftJoin('packages as d', 'c.package_id', '=', 'd.id')
+                ->leftJoin('stables as e', 'd.stable_id', '=', 'e.id')
+                ->select('b.date', 'b.time_start', 'b.time_end', 'd.name','session_usage', 'e.name as stable_name')->get();
+            
             $status_booking = Booking::select('*')->where('id', $data_booking_id)->first();
             $booking_detail = BookingDetail::select('*')->where('booking_id', $data_booking_id)->limit(1)->get();
             $data_payment = DB::table('bank_payments')->where('id', $status_booking->bank_payment_id)->first();
