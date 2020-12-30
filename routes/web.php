@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 // load controllers
 use App\Http\Controllers\Auth\{LoginController, RegisterController,ResetPasswordController,VerificationController};
-use App\Http\Controllers\{ProfileController,StableController,HorseController,PackageController,SlotController,CoachController,RidingClassController};
+use App\Http\Controllers\{MyProfileController,ProfileController,StableController,HorseController,PackageController,SlotController,CoachController,RidingClassController};
 use App\Http\Controllers\CompetitionsController;
 use App\Http\Controllers\ClubController;
 use App\Http\Controllers\AuthController;
@@ -129,6 +129,22 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
             route::get('detail/stable/{id}', [StableApprovalController::class, 'detailStable2'])->name('detail.stable');
             route::patch('approv/stable/{id}', [StableApprovalController::class, 'approvStable2'])->name('approv.stable');
             route::patch('unapprov/stable/{id}', [StableApprovalController::class, 'unapprovStable2'])->name('unapprov.stable');
+
+            // Horse Stable Approval
+            route::get('detail/horse/{id}', [StableApprovalController::class, 'horse'])->name('detail.horse');
+            route::get('detail/horse/list/{id}', [StableApprovalController::class, 'horseListJson'])->name('detail.horse.json');
+            
+            // Package Stable Approval
+            route::get('detail/package/{id}', [StableApprovalController::class, 'package'])->name('detail.package');
+            route::get('detail/package/list/{id}', [StableApprovalController::class, 'packageListJson'])->name('detail.package.json');
+            
+            // Schedule Stable Approval
+            route::get('detail/schedule/{id}', [StableApprovalController::class, 'schedule'])->name('detail.schedule');
+            route::get('detail/schedule/list/{id}', [StableApprovalController::class, 'scheduleListJson'])->name('detail.schedule.json');
+            
+            // Coach Stable Approval
+            route::get('detail/coach/{id}', [StableApprovalController::class, 'coach'])->name('detail.coach');
+            route::get('detail/coach/list/{id}', [StableApprovalController::class, 'coachListJson'])->name('detail.coach.json');
         });
         
         // Package Approval

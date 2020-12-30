@@ -71,7 +71,7 @@
                                                     <span class="navi-text font-size-lg">Personal Information</span>
                                                 </a>
                                             </div>
-                                            <div class="navi-item mb-2">
+                                            {{-- <div class="navi-item mb-2">
                                                 <a href="{{route('myprofile.info')}}" class="navi-link py-4">
                                                     <span class="navi-icon mr-2">
                                                         <span class="svg-icon">
@@ -88,7 +88,7 @@
                                                     </span>
                                                     <span class="navi-text font-size-lg">Account Information</span>
                                                 </a>
-                                            </div>
+                                            </div> --}}
                                             <div class="navi-item mb-2">
                                                 <a href="{{route('myprofile.password')}}" class="navi-link py-4 active">
                                                     <span class="navi-icon mr-2">
@@ -136,7 +136,7 @@
                                                 <label class="col-xl-3 col-lg-3 col-form-label text-alert">Current Password</label>
                                                 <div class="col-lg-9 col-xl-6">
                                                     <input type="password" class="form-control form-control-lg form-control-solid mb-2" name="old_password" value="" placeholder="Current password">
-                                                    <a href="{{ route('password.request') }}" class="text-sm font-weight-bold">Forgot password ?</a>
+                                                    {{-- <a href="{{ route('password.request') }}" class="text-sm font-weight-bold">Forgot password ?</a> --}}
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -146,9 +146,9 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-xl-3 col-lg-3 col-form-label text-alert">Verify Password</label>
+                                                <label class="col-xl-3 col-lg-3 col-form-label text-alert">Confirm New Password</label>
                                                 <div class="col-lg-9 col-xl-6">
-                                                    <input type="password" class="form-control form-control-lg form-control-solid" name="password_confirmation" value="" placeholder="Verify password">
+                                                    <input type="password" class="form-control form-control-lg form-control-solid" name="password_confirmation" value="" placeholder="Confirm new password">
                                                 </div>
                                             </div>
                                             <div class="text-right col-xl-9 col-lg-9">

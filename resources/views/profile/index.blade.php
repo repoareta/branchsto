@@ -47,7 +47,14 @@
 												<img src="{{url('assets/media/branchsto/chess-gold-icon.svg')}}" alt="">
 												<div class="title">Stable</div>
 												<div class="subtitle">Registered</div>	
-													<span class="label label-lg label-light-warning label-inline">Pending.</span>											
+													<span class="label label-lg label-light-warning label-inline">Pending Approval Step 1.</span>											
+											</div>
+										@elseif ($data->approval_status == 'Email Sent')
+											<div class="card-body-premium pointer-link" data-toggle="modal" id="form-stable-pending">
+												<img src="{{url('assets/media/branchsto/chess-gold-icon.svg')}}" alt="">
+												<div class="title">Stable</div>
+												<div class="subtitle">Registered</div>	
+													<span class="label label-lg label-light-warning label-inline">Pending Approval Step 2.</span>											
 											</div>
 										@else
 											<div class="card-body-premium pointer-link" data-toggle="modal" id="form-stable-ready">

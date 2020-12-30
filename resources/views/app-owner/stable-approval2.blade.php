@@ -22,7 +22,7 @@
                         <div class="stable-body data">
                             <div class="d-flex justify-content-start align-items-center">
                                 <h6 class="title-text mb-0 table-danger">
-                                    LIST STABLE APPROVAL
+                                    LIST STABLE APPROVAL STEP 2
                                 </h6>
                             </div>
                             <div class="card mt-10">
@@ -47,7 +47,7 @@
                             </div>
                             <div class="d-flex justify-content-start align-items-center mt-20">
                                 <h6 class="title-text mb-0 table-success">
-                                    LIST STABLE APPROVED
+                                    LIST STABLE APPROVED STEP 2
                                 </h6>
                             </div>
                             <div class="card mt-10">
