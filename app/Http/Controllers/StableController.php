@@ -118,10 +118,10 @@ class StableController extends Controller
     // list close tiket
     public function stable_close(Request $request)
     {
-        $data_booking = BookingDetail::where('booking_id', $request->id)->select('booking_at')->first();
+        $data_booking = BookingDetail::where('id', $request->id)->select('booking_at')->first();
         if(!$data_booking->booking_at == null){
             $data_list  = DB::table('bookings as a')
-            ->where('a.id',$request->id)
+            ->where('b.id',$request->id)
             ->leftJoin('booking_details as b', 'b.booking_id', '=', 'a.id')
             ->leftJoin('users as c', 'c.id', '=', 'a.user_id')
             ->select('b.booking_at','b.queue_no','b.queue_status','b.id','c.name')->get();
