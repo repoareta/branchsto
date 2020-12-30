@@ -29,7 +29,7 @@
 									<!--end::Actions-->
 
 									<!--begin::Dropdown-->
-									<div class="dropdown dropdown-inline" data-toggle="tooltip" title="Quick actions" data-placement="left">
+									<div class="dropdown dropdown-inline-head" data-toggle="tooltip" title="Quick actions" data-placement="left">
 										<a href="#" class="btn btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 											<span class="svg-icon svg-icon-success svg-icon-2x">
 

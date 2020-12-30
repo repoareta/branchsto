@@ -40663,7 +40663,7 @@ code {
   .dropdown-menu.dropdown-menu-xxl {
     width: 600px; } }
 
-.dropdown-inline {
+.dropdown-inline-head {
   display: inline-block; }
 
 .dropdown.dropdown-hover:hover > .dropdown-menu {

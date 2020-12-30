@@ -7,6 +7,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\File;
 
 // load model
 use App\Models\User;
@@ -26,7 +27,11 @@ class MyProfileController extends Controller
         $Query->birth_date = Carbon::parse($request->birth_date);
         $Query->phone = $request->phone;
         $Query->address = $request->address;
-
+        if ($request->file('photo')) {
+            File::delete(public_path('/storage/myprofile/photo/'.$Query->photo));
+            $Query->photo = $request->file('photo')->getClientOriginalName();
+            $photo_new_path = $request->file('photo')->storeAs('myprofile/photo', $Query->photo, 'public');
+        }
         if($Query){
             $Query->update();
             Alert::success('Profile Updated', 'Success.')->persistent(true)->autoClose(3600);

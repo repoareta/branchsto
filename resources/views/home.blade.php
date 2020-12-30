@@ -1515,7 +1515,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
 											<!--<i class="flaticon2-calendar-1"></i>-->
 										</a>
-										<div class="dropdown dropdown-inline" data-toggle="kt-tooltip" title="Quick actions" data-placement="left">
+										<div class="dropdown dropdown-inline-head" data-toggle="kt-tooltip" title="Quick actions" data-placement="left">
 											<a href="#" class="btn btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 												<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon kt-svg-icon--success kt-svg-icon--md">
 													<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -2558,7 +2558,7 @@ License: You must have a valid license purchased only from themeforest(the above
 										</div>
 									</div>
 									<div class="kt-chat__right">
-										<div class="dropdown dropdown-inline">
+										<div class="dropdown dropdown-inline-head">
 											<button type="button" class="btn btn-clean btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 												<i class="flaticon-more-1"></i>
 											</button>

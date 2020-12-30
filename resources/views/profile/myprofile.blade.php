@@ -26,7 +26,11 @@
                                         <!--begin::User-->
                                         <div class="d-flex align-items-center">
                                             <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
-                                                <div class="symbol-label" style="background-image:url('{{url('assets/media/branchsto/profile.png')}}')"></div>
+                                                @if ($data->photo)
+                                                    <div class="symbol-label" style="background-image:url('{{asset('storage/myprofile/photo/'.$data->photo)}}')"></div>
+                                                @else
+                                                    <div class="symbol-label" style="background-image:url('{{url('assets/media/branchsto/profile.png')}}')"></div>
+                                                @endif
                                                 <i class="symbol-badge bg-success"></i>
                                             </div>
                                             <div>
@@ -134,14 +138,14 @@
                                         @method('PATCH')
                                         <!--begin::Body-->
                                         <div class="card-body">
-                                            {{-- <div class="form-group row">
+                                            <div class="form-group row">
                                                 <label class="col-xl-3 col-lg-3 col-form-label">Avatar</label>
                                                 <div class="col-lg-9 col-xl-6">
                                                     <div class="image-input image-input-outline" id="kt_profile_avatar" style="background-image: url(assets/media/users/blank.png)">
                                                         <div class="image-input-wrapper" style="background-image: url(assets/media/users/300_21.jpg)"></div>
                                                         <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
                                                             <i class="fa fa-pen icon-sm text-muted"></i>
-                                                            <input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg" />
+                                                            <input type="file" name="photo" accept=".png, .jpg, .jpeg" />
                                                             <input type="hidden" name="profile_avatar_remove" />
                                                         </label>
                                                         <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
@@ -153,7 +157,7 @@
                                                     </div>
                                                     <span class="form-text text-muted">Allowed file types: png, jpg, jpeg.</span>
                                                 </div>
-                                            </div> --}}
+                                            </div>
                                             <div class="form-group row">
                                                 <label class="col-xl-3 col-lg-3 col-form-label">Name</label>
                                                 <div class="col-lg-9 col-xl-6">
