@@ -158,10 +158,10 @@
                                         <div class="subtitle">
                                             {{strtoupper($list_detail->name)}}
                                         </div>
-                                        <table class="table package-detail">
+                                        <table class="table package-detail mt-10">
                                             <tr>
                                                 <td>
-                                                    
+                                                    Attendance : {{$list_detail->attendance}}
                                                 </td>
                                                 <td class="text-right">
                                                     Rp. {{number_format($list_detail->price,0,'.','.')}}
