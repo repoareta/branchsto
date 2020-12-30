@@ -18,12 +18,16 @@
 						<div class="container-fluid profile">
 							<section class="profile-header">
 								<div class="profile">
-									<img src="{{url('assets/media/branchsto/profile.png')}}" alt="" class="rounded-circle">
+									@if (Auth::user()->photo)
+										<img src="{{asset('storage/myprofile/photo/'.Auth::user()->photo)}}" alt="" height="100px" class="rounded-circle">										
+									@else
+										<img src="{{url('assets/media/branchsto/profile.png')}}" alt="" class="rounded-circle">
+									@endif										
 									<div class="username">
 										{{Auth::user()->name}}
 									</div>
 									<div class="location">
-										<img src="{{url('assets/media/branchsto/lemail.svg')}}" alt="">
+										<img src="{{url('assets/media/branchsto/email.svg')}}" alt="">
 										{{Auth::user()->email}}
 									</div>
 								</div>
