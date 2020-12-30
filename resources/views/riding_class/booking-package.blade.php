@@ -241,7 +241,7 @@ $(document).ready(function () {
         todayHighlight: true,
 		orientation: "bottom left",
         autoclose: true,
-        minDate: true
+        startDate: new Date()
     });
 </script>
 @endpush
