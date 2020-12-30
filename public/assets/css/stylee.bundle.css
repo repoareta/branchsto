@@ -10922,7 +10922,7 @@ code {
 .btn.dropdown-toggle.dropdown-toggle-split:after {
   right: 1px; }
 
-.dropdown.dropdown-inline {
+.dropdown.dropdown-inline-head {
   display: inline-block; }
 
 .dropup .nav-link.dropdown-toggle:after,

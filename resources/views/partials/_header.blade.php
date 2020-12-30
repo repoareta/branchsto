@@ -100,8 +100,8 @@
 		</div>
 		<!--end::Desktop Search-->
 		<!--begin::Dropdown-->
-		<div class="dropdown dropdown-inline" data-toggle="tooltip" title="Notification" data-placement="left">
-			<a href="#" class="btn btn-icon btn-notif ml-3 h-50px w-50px flex-shrink-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		<div class="dropdown dropdown-inline-head" data-toggle="tooltip" title="Notification" data-placement="left">
+			<button type="button" class="btn btn-icon btn-notif ml-3 h-50px w-50px flex-shrink-0" id="notifUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<span class="svg-icon svg-icon-lg">
 					<!--begin::Svg Icon | path:assets/media/svg/icons/Media/Equalizer.svg-->
 					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -110,8 +110,8 @@
 						</svg>
 					<!--end::Svg Icon-->
 				</span>
-			</a>
-			<div class="dropdown-menu dropdown-menu-md dropdown-menu-right p-0">
+			</button>
+			<div class="dropdown-menu dropdown-menu-md dropdown-menu-right p-0" id="notifUserOpen">
 				<!--begin::Navigation-->
 				<ul class="navi navi-hover py-5">
 					<li class="navi-item">
@@ -183,7 +183,7 @@
 		</div>
 		<!--end::Dropdown-->
 		<!--begin::Dropdown-->
-		<div class="dropdown dropdown-inline" data-toggle="tooltip" title="Profile" data-placement="left">
+		<div class="dropdown dropdown-inline-head" data-toggle="tooltip" title="Profile" data-placement="left">
 			<a href="{{route('myprofile.index')}}" class="btn btn-icon btn-user ml-3 h-50px w-50px flex-shrink-0">
 				@if (Auth::user()->photo)
 					<img src="{{asset('storage/myprofile/photo/'.Auth::user()->photo)}}" alt="">
