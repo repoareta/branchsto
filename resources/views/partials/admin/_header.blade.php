@@ -112,7 +112,7 @@
 					<!--end::Svg Icon-->
 				</span>
 			</a>
-			<div class="dropdown-menu dropdown-menu-md dropdown-menu-right p-0">
+			<div class="dropdown-menu dropdown-menu-md dropdown-menu-right p-0" id="notifUserOpen">
 				<!--begin::Navigation-->
 				<ul class="navi navi-hover py-5">
 					<li class="navi-item">
