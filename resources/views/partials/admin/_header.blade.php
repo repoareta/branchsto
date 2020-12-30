@@ -186,7 +186,11 @@
 		<!--begin::Dropdown-->
 		<div class="dropdown dropdown-inline" data-toggle="tooltip" title="Profile" data-placement="left">
 			<a href="{{route('myprofile.index')}}" class="btn btn-icon btn-user ml-3 h-50px w-50px flex-shrink-0" >
-				<img src="{{url('assets/media/branchsto/person-1.png')}}" alt="">
+				@if (Auth::user()->photo)
+					<img src="{{asset('storage/myprofile/photo/'.Auth::user()->photo)}}" alt="">
+				@else					
+					<img src="{{url('assets/media/branchsto/person-1.png')}}" alt="">
+				@endif
 			</a>
 			<div class="dropdown-menu dropdown-menu-md dropdown-menu-right p-0">
 				<!--begin::Navigation-->
