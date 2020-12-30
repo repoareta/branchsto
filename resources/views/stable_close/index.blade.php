@@ -46,44 +46,83 @@
 								<div class="card-body">
 									<div class="table-responsive">
 										<table class="table table-data table-striped" id="dataTable">
-											<thead>
-												<tr>
-												<th scope="col">Name</th>
-												<th scope="col">Date</th>
-												<th scope="col">Time Start</th>
-												<th scope="col">Time End</th>
-												<th scope="col">Status</th>
-												<th scope="col">Action</th>
-												</tr>
-											</thead>
-											<tbody>
-												@foreach ($data_list as $item)
+											@if ($session_usage == 'pony_ride')
+												<thead>
 													<tr>
-														<td>{{$item->name}}</td>
-														<td>{{$item->date}}</td>
-														<td>{{$item->time_start}}</td>
-														<td>{{$item->time_end}}</td>
-														<td>
-															@if($item->qr_code_status == 'Close')
-																<span class='label label-lg label-light-danger label-inline'>Close</span>
-															@else
-																<span class='label label-lg label-light-success label-inline'>Active</span>
-															@endif
-														</td>
-														<td>
-															@if($item->qr_code_status == 'Close')
-																<a href='#' class='btn btn-danger text-center mr-2 '>
-																	<i class='fas fa-ban pointer-link'></i>                    
-																</a>
-															@else
-																<a href='#' data-id="{{$item->id}}" class="btn btn-success text-center mr-2" id="close">
-																	<i class='fas fa-check-circle pointer-link'></i>                  
-																</a>
-															@endif
-														</td>
+													<th scope="col">Name</th>
+													<th scope="col">Date</th>
+													<th scope="col">No Entry</th>
+													<th scope="col">Status</th>
+													<th scope="col">Action</th>
 													</tr>
-												@endforeach
-											</tbody>
+												</thead>
+												<tbody>
+													@foreach ($data_list as $item)
+														<tr>
+															<td>{{$item->name}}</td>
+															<td>{{$item->booking_at}}</td>
+															<td>{{$item->queue_no}}</td>
+															<td>
+																@if($item->queue_status == 'Close')
+																	<span class='label label-lg label-light-danger label-inline'>Close</span>
+																@else
+																	<span class='label label-lg label-light-success label-inline'>Active</span>
+																@endif
+															</td>
+															<td>
+																@if($item->queue_status == 'Close')
+																	<a href='#' class='btn btn-danger text-center mr-2 '>
+																		<i class='fas fa-ban pointer-link'></i>                    
+																	</a>
+																@else
+																	<a href='#' data-id="{{$item->id}}" data-status="{{$session_usage}}" class="btn btn-success text-center mr-2" id="close">
+																		<i class='fas fa-check-circle pointer-link'></i>                  
+																	</a>
+																@endif
+															</td>
+														</tr>
+													@endforeach
+												</tbody>
+											@else	
+												<thead>
+													<tr>
+													<th scope="col">Name</th>
+													<th scope="col">Date</th>
+													<th scope="col">Time Start</th>
+													<th scope="col">Time End</th>
+													<th scope="col">Status</th>
+													<th scope="col">Action</th>
+													</tr>
+												</thead>
+												<tbody>
+													@foreach ($data_list as $item)
+														<tr>
+															<td>{{$item->name}}</td>
+															<td>{{$item->date}}</td>
+															<td>{{$item->time_start}}</td>
+															<td>{{$item->time_end}}</td>
+															<td>
+																@if($item->qr_code_status == 'Close')
+																	<span class='label label-lg label-light-danger label-inline'>Close</span>
+																@else
+																	<span class='label label-lg label-light-success label-inline'>Active</span>
+																@endif
+															</td>
+															<td>
+																@if($item->qr_code_status == 'Close')
+																	<a href='#' class='btn btn-danger text-center mr-2 '>
+																		<i class='fas fa-ban pointer-link'></i>                    
+																	</a>
+																@else
+																	<a href='#' data-id="{{$item->id}}" data-status="{{$session_usage}}" class="btn btn-success text-center mr-2" id="close">
+																		<i class='fas fa-check-circle pointer-link'></i>                  
+																	</a>
+																@endif
+															</td>
+														</tr>
+													@endforeach
+												</tbody>
+											@endif
 										</table>
 									</div>
 								</div>
@@ -119,6 +158,7 @@
 		$('#dataTable tbody').on( 'click', '#close', function (e) {
 			e.preventDefault();
 			var id = $(this).attr('data-id');
+			var session_usage = $(this).attr('data-status');
 			console.log(id);
 			Swal.fire({
 				title: "Are you sure?",
@@ -136,6 +176,7 @@
 						dataType: 'json',
 						data: {
 							"id": id,
+							"session_usage": session_usage,
 							"_token": "{{ csrf_token() }}",
 						},
 						success: function () {
