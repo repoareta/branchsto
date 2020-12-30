@@ -175,7 +175,7 @@ class StableController extends Controller
             ]);
             return response()->json();
         }
-    }
+    } 
 
     public function keyStable(Request $request)
     {
