@@ -67,11 +67,11 @@
                                                             <td >Choose Date</td>
                                                             <td>:</td>
                                                             <td >
-                                                                <input type="hidden" value="{{$list_detail->session_usage}}" name="session_usage">
                                                                 @if ($list_detail->session_usage == null)
                                                                     <div class="form-group row">
                                                                         <div class="col-lg-4 col-md-9 col-sm-12">
-                                                                            <input type="text" id="kt_datepicker_6" name="date_pony_ride" required>
+                                                                            <input type="text" id="kt_datepicker_6" name="date_pony_ride" required autocomplete='off'>
+                                                                            <input type="hidden" name="usage_status" value="pony_ride">
                                                                         </div>
                                                                     </div>
                                                                 @else
@@ -100,6 +100,7 @@
                                                                             @endforeach
                                                                         </ul>
                                                                     </div>
+                                                                    <input type="hidden" name="usage_status" value="riding_class">
                                                                 @endif
                                                             </td>
                                                         </tr>

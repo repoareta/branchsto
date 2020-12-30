@@ -31,7 +31,7 @@
                                                 $sum_tot_Price = 0;
                                             @endphp
                                             @foreach ($data_list as $item)
-                                                @if ($item->session_usage == null)
+                                                @if ($request->usage_status == 'pony_ride')
                                                     <h4>
                                                         Package {{$item->name}}
                                                     </h4>
