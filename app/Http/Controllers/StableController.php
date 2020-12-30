@@ -157,7 +157,7 @@ class StableController extends Controller
     public function keyStable(Request $request)
     {
         $data = Stable::where('user_id', Auth::user()->id)->first();
-        if($data->id == $request->key){
+        if($data->key_stable == $request->key){
             Alert::success('Input Key Success.', 'Success')->persistent(true)->autoClose(3600);
             return redirect()->route('stable.index');
         }else{
