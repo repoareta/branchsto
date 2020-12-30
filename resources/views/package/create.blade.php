@@ -87,10 +87,10 @@
                                                 <div class="radio-inline">
                                                     <label class="radio">
                                                     <input type="radio" checked="checked" name="session" value="Yes">
-                                                    <span></span>Yes</label>
+                                                    <span></span>Riding Class</label>
                                                     <label class="radio">
                                                     <input type="radio" name="session" value="">
-                                                    <span></span>No</label>
+                                                    <span></span>Pony Ride</label>
                                                     <label class="radio">
                                                 </div>
                                             </div>										
@@ -102,7 +102,7 @@
                                                     <span></span>Publish</label>
                                                     <label class="radio">
                                                     <input type="radio" name="status" value="">
-                                                    <span></span>Draft</label>
+                                                    <span></span>No Publish</label>
                                                     <label class="radio">
                                                 </div>
                                             </div>										

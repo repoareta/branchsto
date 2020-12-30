@@ -93,10 +93,10 @@
                                                 <div class="radio-inline">
                                                     <label class="radio">
                                                     <input type="radio" @php if($data->session_usage == 'Yes') echo 'checked'; @endphp name="session" value="Yes">
-                                                    <span></span>Yes</label>
+                                                    <span></span>Riding Class</label>
                                                     <label class="radio">
                                                     <input type="radio" name="session" value="" @php if($data->session_usage == null) echo 'checked'; @endphp>
-                                                    <span></span>No</label>
+                                                    <span></span>Pony Ride</label>
                                                     <label class="radio">
                                                 </div>
                                             </div>										
@@ -108,7 +108,7 @@
                                                     <span></span>Publish</label>
                                                     <label class="radio">
                                                     <input type="radio" name="status" value="" @php if($data->package_status == null) echo 'checked'; @endphp>
-                                                    <span></span>Draft</label>
+                                                    <span></span>No Publish</label>
                                                     <label class="radio">
                                                 </div>
                                             </div>										

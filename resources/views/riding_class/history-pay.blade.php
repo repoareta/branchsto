@@ -31,31 +31,59 @@
                                                 $sum_tot_Price = 0;
                                             @endphp
                                             @foreach ($data_list as $item)
-                                                <h4>
-                                                    Package {{$item->name}}
-                                                </h4>
-                                                <p>
-                                                    Stable {{$item->stable_name}}
-                                                </p>
-                                                <table class="table table-borderless table-dark mb-10">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td width="15%" scope="row">Day</td>
-                                                            <td width="5%" scope="row">:</td>
-                                                            <td  scope="row">{{date('l',strtotime($item->date))}}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td width="15%" scope="row">Date</td>
-                                                            <td width="5%" scope="row">:</td>
-                                                            <td  scope="row">{{$item->date}}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td width="15%" scope="row">Session</td>
-                                                            <td width="5%" scope="row">:</td>
-                                                            <td  scope="row">{{date('H:i', strtotime($item->time_start))}} - {{date('H:i', strtotime($item->time_end))}}</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                                @if ($item->session_usage == null)
+                                                    <h4>
+                                                        Package {{$item->name}}
+                                                    </h4>
+                                                    <p>
+                                                        Stable {{$item->stable_name}}
+                                                    </p>
+                                                    <table class="table table-borderless table-dark mb-10">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td width="15%" scope="row">Day</td>
+                                                                <td width="5%" scope="row">:</td>
+                                                                <td  scope="row">{{date('l',strtotime($item->booking_at))}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td width="15%" scope="row">Date</td>
+                                                                <td width="5%" scope="row">:</td>
+                                                                <td  scope="row">{{date('d-m-Y', strtotime($item->booking_at))}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td width="15%" scope="row">No</td>
+                                                                <td width="5%" scope="row">:</td>
+                                                                <td  scope="row">{{$item->queue_no}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                @else
+                                                    <h4>
+                                                        Package {{$item->name}}
+                                                    </h4>
+                                                    <p>
+                                                        Stable {{$item->stable_name}}
+                                                    </p>
+                                                    <table class="table table-borderless table-dark mb-10">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td width="15%" scope="row">Day</td>
+                                                                <td width="5%" scope="row">:</td>
+                                                                <td  scope="row">{{date('l',strtotime($item->date))}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td width="15%" scope="row">Date</td>
+                                                                <td width="5%" scope="row">:</td>
+                                                                <td  scope="row">{{$item->date}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td width="15%" scope="row">Session</td>
+                                                                <td width="5%" scope="row">:</td>
+                                                                <td  scope="row">{{date('H:i', strtotime($item->time_start))}} - {{date('H:i', strtotime($item->time_end))}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                @endif
                                                 @php
                                                     $sum_tot_Price =$item->price_subtotal;
                                                 @endphp

@@ -67,10 +67,11 @@
                                                             <td >Choose Date</td>
                                                             <td>:</td>
                                                             <td >
+                                                                <input type="hidden" value="{{$list_detail->session_usage}}" name="session_usage">
                                                                 @if ($list_detail->session_usage == null)
                                                                     <div class="form-group row">
                                                                         <div class="col-lg-4 col-md-9 col-sm-12">
-                                                                            <input type="text" id="kt_datepicker_6">
+                                                                            <input type="text" id="kt_datepicker_6" name="date_pony_ride" required>
                                                                         </div>
                                                                     </div>
                                                                 @else
@@ -234,15 +235,12 @@ $(document).ready(function () {
             }
         });
     });  
-
+});    
     $('#kt_datepicker_6').datepicker({
         todayHighlight: true,
 		orientation: "bottom left",
         autoclose: true,
         minDate: true
     });
-
-    
-});
 </script>
 @endpush

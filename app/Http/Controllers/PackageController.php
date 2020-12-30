@@ -45,7 +45,7 @@ class PackageController extends Controller
                 if($data->package_status == null){
                     return "<span class='label label-lg label-light-danger label-inline'>No Publish.</span>";
                 }else{
-                    return "<span class='label label-lg label-light-success label-inline'>".$data->approval_status." Publish.</span>";
+                    return "<span class='label label-lg label-light-success label-inline'> Publish.</span>";
                 }
             })
             ->addColumn('action', function ($data) {
