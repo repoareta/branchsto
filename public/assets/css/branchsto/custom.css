@@ -1300,3 +1300,8 @@ div#kt_content, .flex-row.page {
   border-radius: 100px;
   padding: 15px 60px;
 }
+
+.dropdown-menu-right {
+  right: 0;
+  left: auto;
+}
