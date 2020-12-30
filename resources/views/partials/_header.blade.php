@@ -100,7 +100,7 @@
 		</div>
 		<!--end::Desktop Search-->
 		<!--begin::Dropdown-->
-		<div class="dropdown dropdown-inline" data-toggle="tooltip" title="Quick actions" data-placement="left">
+		<div class="dropdown dropdown-inline" data-toggle="tooltip" title="Notification" data-placement="left">
 			<a href="#" class="btn btn-icon btn-notif ml-3 h-50px w-50px flex-shrink-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<span class="svg-icon svg-icon-lg">
 					<!--begin::Svg Icon | path:assets/media/svg/icons/Media/Equalizer.svg-->
@@ -183,8 +183,8 @@
 		</div>
 		<!--end::Dropdown-->
 		<!--begin::Dropdown-->
-		<div class="dropdown dropdown-inline" data-toggle="tooltip" title="Quick actions" data-placement="left">
-			<a href="#" class="btn btn-icon btn-user ml-3 h-50px w-50px flex-shrink-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		<div class="dropdown dropdown-inline" data-toggle="tooltip" title="Profile" data-placement="left">
+			<a href="{{route('myprofile.index')}}" class="btn btn-icon btn-user ml-3 h-50px w-50px flex-shrink-0">
 				<img src="{{url('assets/media/branchsto/person-1.png')}}" alt="">
 			</a>
 			<div class="dropdown-menu dropdown-menu-md dropdown-menu-right p-0">

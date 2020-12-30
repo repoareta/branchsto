@@ -127,6 +127,4 @@ class CoachController extends Controller
         Coach::find($request->id)->delete();
         return response()->json();
     }
-
-           
 }

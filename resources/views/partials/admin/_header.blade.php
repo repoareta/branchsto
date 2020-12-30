@@ -22,16 +22,16 @@
 						<li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click"
 							aria-haspopup="true">
 							<a href="javascript:;" class="menu-link menu-toggle">
-								<span class="menu-text active">STABLES</span>
+								<span class="menu-text">STABLES</span>
 								<span class="menu-desc"></span>
 							</a>
 							<div class="menu-submenu menu-submenu-classic menu-submenu-left">
 								<ul class="menu-subnav">
-									<li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
+									{{-- <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
 										<a href="{{route('package_approval.index')}}" class="menu-link">
 											<span class="menu-text">Riding Package Approval</span>
 										</a>
-									</li>
+									</li> --}}
 									<li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
 										<a href="{{route('stable_approval.index')}}" class="menu-link">
 											<span class="menu-text">List Stable Approval Step 1</span>
@@ -101,7 +101,7 @@
 	<div class="align-items-center py-3 form-header">						
 		<!--end::Desktop Search-->
 		<!--begin::Dropdown-->
-		<div class="dropdown dropdown-inline" data-toggle="tooltip" title="Quick actions" data-placement="left">
+		<div class="dropdown dropdown-inline" data-toggle="tooltip" title="Notifications" data-placement="left">
 			<a href="#" class="btn btn-icon btn-notif ml-3 h-50px w-50px flex-shrink-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<span class="svg-icon svg-icon-lg">
 					<!--begin::Svg Icon | path:../assets/media/svg/icons/Media/Equalizer.svg-->
@@ -184,8 +184,8 @@
 		</div>
 		<!--end::Dropdown-->
 		<!--begin::Dropdown-->
-		<div class="dropdown dropdown-inline" data-toggle="tooltip" title="Quick actions" data-placement="left">
-			<a href="#" class="btn btn-icon btn-user ml-3 h-50px w-50px flex-shrink-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		<div class="dropdown dropdown-inline" data-toggle="tooltip" title="Profile" data-placement="left">
+			<a href="{{route('myprofile.index')}}" class="btn btn-icon btn-user ml-3 h-50px w-50px flex-shrink-0" >
 				<img src="{{url('assets/media/branchsto/person-1.png')}}" alt="">
 			</a>
 			<div class="dropdown-menu dropdown-menu-md dropdown-menu-right p-0">
