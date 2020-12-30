@@ -50,7 +50,9 @@
 												<thead>
 													<tr>
 													<th scope="col">Name</th>
+													<th scope="col">Name Package</th>
 													<th scope="col">Date</th>
+													<th scope="col">Day</th>
 													<th scope="col">No Entry</th>
 													<th scope="col">Status</th>
 													<th scope="col">Action</th>
@@ -60,7 +62,9 @@
 													@foreach ($data_list as $item)
 														<tr>
 															<td>{{$item->name}}</td>
-															<td>{{$item->booking_at}}</td>
+															<td>Pony Ride</td>
+															<td>{{date('d-m-Y', strtotime($item->booking_at))}}</td>
+															<td>{{date('l',strtotime($item->booking_at))}}</td>
 															<td>{{$item->queue_no}}</td>
 															<td>
 																@if($item->queue_status == 'Close')
@@ -87,7 +91,9 @@
 												<thead>
 													<tr>
 													<th scope="col">Name</th>
+													<th scope="col">Name Package</th>
 													<th scope="col">Date</th>
+													<th scope="col">Day</th>
 													<th scope="col">Time Start</th>
 													<th scope="col">Time End</th>
 													<th scope="col">Status</th>
@@ -98,9 +104,11 @@
 													@foreach ($data_list as $item)
 														<tr>
 															<td>{{$item->name}}</td>
-															<td>{{$item->date}}</td>
-															<td>{{$item->time_start}}</td>
-															<td>{{$item->time_end}}</td>
+															<td>Riding Class</td>
+															<td>{{date('d-m-Y', strtotime($item->date))}}</td>
+															<td>{{date('l',strtotime($item->date))}}</td>
+															<td>{{date('H:i', strtotime($item->time_start))}}</td>
+															<td>{{date('H:i', strtotime($item->time_end))}}</td>
 															<td>
 																@if($item->qr_code_status == 'Close')
 																	<span class='label label-lg label-light-danger label-inline'>Close</span>
