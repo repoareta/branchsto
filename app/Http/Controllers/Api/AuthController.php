@@ -86,12 +86,37 @@ class AuthController extends Controller
      *
      * @return void
      */
-    public function logout(User $user)
+    public function logout(Request $request, User $user)
     {
         $user->tokens()->delete();
         return response()->json([
             'success' => true,
             'message' => 'User logout sucessfully'
+        ], 200);
+    }
+
+    /**
+     * logout
+     *
+     * @return void
+     */
+    public function check_login(Request $request)
+    {
+        // check token dan id_user
+        $data = User::where('id', $request->user_id)
+        ->where('remember_token', $request->token)
+        ->first();
+        
+        if ($data) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Token check login sucessfully'
+            ], 200);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Token failed'
         ], 200);
     }
 }
