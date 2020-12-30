@@ -71,7 +71,7 @@
                                                     <span class="navi-text font-size-lg">Personal Information</span>
                                                 </a>
                                             </div>
-                                            <div class="navi-item mb-2">
+                                            {{-- <div class="navi-item mb-2">
                                                 <a href="{{route('myprofile.info')}}" class="navi-link py-4">
                                                     <span class="navi-icon mr-2">
                                                         <span class="svg-icon">
@@ -88,7 +88,7 @@
                                                     </span>
                                                     <span class="navi-text font-size-lg">Account Information</span>
                                                 </a>
-                                            </div>
+                                            </div> --}}
                                             <div class="navi-item mb-2">
                                                 <a href="{{route('myprofile.password')}}" class="navi-link py-4">
                                                     <span class="navi-icon mr-2">
