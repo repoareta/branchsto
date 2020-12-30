@@ -61,14 +61,11 @@
 
 <!--end::Global Config-->
 
+
 <!--begin::Global Theme Bundle(used by all pages)-->
 <script src="{{url('assets/plugins/global/plugins.bundle.js')}}"></script>
 <script src="{{url('assets/plugins/custom/prismjs/prismjs.bundle.js')}}"></script>
 <script src="{{url('assets/js/scripts.bundle.js')}}"></script>
-
-<!--end::Global Theme Bundle-->
-<!--begin::Page Scripts(used by this page)-->
-<script src="{{url('assets/js/pages/widgets.js')}}"></script>
 
 <!--begin::Page Vendors(used by this page)-->
 <script src="{{url('assets/plugins/custom/fullcalendar/fullcalendar.bundle.js')}}"></script>
@@ -79,9 +76,12 @@
 <script src="{{url('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
 <script src="{{url('assets/js/pages/crud/datatables/advanced/row-grouping.js')}}"></script>
 {{-- DataTable END --}}
+<!--end::Global Theme Bundle-->
+<!--begin::Page Scripts(used by this page)-->
+<script src="{{url('assets/js/pages/widgets.js')}}"></script>
 
-<script src="{{url('assets/js/pages/crud/file-upload/image-input.js')}}"></script>
-<script src="{{url('assets/uppy/uppy.min.js')}}"></script>
+{{-- <script src="{{url('assets/js/pages/crud/file-upload/image-input.js')}}"></script>
+<script src="{{url('assets/uppy/uppy.min.js')}}"></script> --}}
 <script src="{{url('vendor/jsvalidation/js/jsvalidation.js')}}" type="text/javascript"></script>
 <script src="{{url('assets/js/pages/crud/forms/widgets/bootstrap-datepicker.js')}}"></script>
 
@@ -101,9 +101,9 @@
                 $("#kt_sidebar").removeClass('active');
                 $(this).remove();      //add the class to the clicked element
             });
-            $('#timePickerStart').timepicker('setTime', '12:45 AM');
-            $('#timePickerEnd').timepicker('setTime', '12:45 AM');
-            $('#datePicker').datepicker({});
+            // $('#timePickerStart').timepicker('setTime', '12:45 AM');
+            // $('#timePickerEnd').timepicker('setTime', '12:45 AM');
+            // $('#datePicker').datepicker({});            
     });
 </script>
 <!--end::Page Vendors-->
@@ -143,3 +143,11 @@ foreach(DB::table('bookings')->where('photo', null)->where('approval_status', nu
 @endphp
 
 @yield("scripts")
+<script>
+    $(document).click(function(){
+        $("#notifUserOpen").removeClass('show');
+    });
+    $("#notifUser").click(function(){
+		$("#notifUserOpen").addClass('show');
+	});
+</script>
