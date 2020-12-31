@@ -46,7 +46,7 @@ class SendKeyStableMail extends Notification implements shouldQueue
         return (new MailMessage)
             ->subject('This is your code to access Stable')
             ->line('Stable access code : ')
-            ->line($data->id);
+            ->line($data->key_stable);
     }
 
     /**

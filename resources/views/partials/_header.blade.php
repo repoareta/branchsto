@@ -154,7 +154,7 @@
 				@if (Auth::user()->photo)
 					<img src="{{asset('storage/myprofile/photo/'.Auth::user()->photo)}}" alt="">
 				@else					
-					<img src="{{url('assets/media/branchsto/person-1.png')}}" alt="">
+					<img src="{{url('assets/media/branchsto/profile.png')}}" alt="">
 				@endif
 			</a>
 			<div class="dropdown-menu dropdown-menu-md dropdown-menu-right p-0">

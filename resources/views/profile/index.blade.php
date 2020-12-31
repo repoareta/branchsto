@@ -22,7 +22,7 @@
 										<img src="{{asset('storage/myprofile/photo/'.Auth::user()->photo)}}" alt="" height="100px" class="rounded-circle">										
 									@else
 										<img src="{{url('assets/media/branchsto/profile.png')}}" alt="" class="rounded-circle">
-									@endif										
+									@endif							
 									<div class="username">
 										{{Auth::user()->name}}
 									</div>

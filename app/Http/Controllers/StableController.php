@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Http;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 // load model
 use App\Models\BookingDetail;
@@ -74,9 +75,10 @@ class StableController extends Controller
     {
         return view('management_stable.create');
     }
-
+    
     public function store(StableStore $request, Stable $stable)
     {
+        $key_stable = Carbon::now()->format('Ymd');
         $stable->name               = $request->name;
         $stable->owner              = Auth::user()->name;
         $stable->manager            = '-';
@@ -91,6 +93,7 @@ class StableController extends Controller
         $stable->district_id        = $request->district_id;
         $stable->village_id         = $request->village_id;
         $stable->user_id            = Auth::user()->id;
+        $stable->key_stable         = Auth::user()->id.$key_stable;
         if ($request->file('logo')) {
             $stable->logo = $request->file('logo')->getClientOriginalName();
             $logo_new_path = $request->file('logo')->storeAs('stable/logo', $stable->logo, 'public');
@@ -181,7 +184,6 @@ class StableController extends Controller
     {
         $data = Stable::where('user_id', Auth::user()->id)->first();
         if($data->key_stable == $request->key){
-
             Alert::success('Input Key Success.', 'Success')->persistent(true)->autoClose(3600);
             return redirect()->route('stable.index');
         } else {
