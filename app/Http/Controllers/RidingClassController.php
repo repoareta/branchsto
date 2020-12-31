@@ -123,13 +123,6 @@ class RidingClassController extends Controller
         } else {
             // action bagian pony ride
             if($request->usage_status == 'pony_ride'){
-                $noUrutAkhir = BookingDetail::whereDate('booking_at', '=', Carbon::parse($request->booking_at)->toDateString())->max('queue_no');
-                if($noUrutAkhir) {
-                    $noUrutAkhir  = sprintf("%03s", abs($noUrutAkhir + 1));
-                }
-                else {
-                    $noUrutAkhir = sprintf("%03s", 1);
-                }
                 $data = $request->all();
                 $booking->user_id           = Auth::user()->id;
                 $booking->price_total       = $request->price_total;
@@ -139,7 +132,14 @@ class RidingClassController extends Controller
                 
                 // insert booking detail
                 foreach (session("data_list_package") as $key => $row) {
-        
+                    // no urut untuk pony ride
+                    $noUrutAkhir = BookingDetail::where('package_id', $row['package_id'])->whereDate('booking_at', '=', Carbon::parse($request->booking_at)->toDateString())->max('queue_no');
+                    if($noUrutAkhir) {
+                        $noUrutAkhir  = sprintf("%03s", abs($noUrutAkhir + 1));
+                    }
+                    else {
+                        $noUrutAkhir = sprintf("%03s", 1);
+                    }
                     $booking_detail->package_id     = $row['package_id'];
                     $booking_detail->price_subtotal = $row['price_subtotal'];
                     $booking_detail->booking_id     = $booking->id;
