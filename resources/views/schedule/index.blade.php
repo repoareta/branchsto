@@ -227,6 +227,63 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Generate Schedule -->
+<div class="modal fade" id="modalGenerateSchedule"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header ">
+                <h4 class="title-text " id="title_modal" data-state="add">
+                    GENERATE SCHEDULE
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                @php
+                    date_default_timezone_set('Asia/Jakarta');
+                    $time = date('H:i');
+                @endphp
+                <form action="{{route('schedule.generate')}}" method="POST">
+                    @csrf
+                    <div class="form-group row">
+                        <div class="col-11">
+                            <label>Date</label>
+                            <div class="input-daterange input-group" id="date_range">
+                                <input type="text" class="form-control" name="start">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="la la-ellipsis-h"></i>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" name="end">
+                            </div>
+                        </div>	
+                    </div>	
+                    <div class="form-group row">											
+                        <div class="col-4">
+                            <label>Time Start</label>
+                            <input type="text" class="form-control" name="time1" id="timePicker1">
+                        </div>																								
+                        <div class="col-4">
+                            <label>Time End</label>
+                            <input type="text" class="form-control" name="time2" id="timePicker2">
+                        </div>
+                        <div class="col-3">
+                            <label>Capacity</label>
+                            <input type="number" class="form-control" name="capacity" id="capacity">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">											
+                    <button data-dismiss="modal" class="btn btn-secondary">Cancel</button>
+                    <button type="submit" class="btn btn-add-new font-weight-bold">SAVE</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @push('add-script')
 <script>
@@ -285,6 +342,8 @@ $(document).ready( function () {
     });  
 
     $("#dataTable_filter").append("<button class='btn btn-add-new ml-5' id='openDetail'>Add New +</button>");
+
+    $("#dataTable_filter").append("<button class='btn btn-add-new ml-3'  data-toggle='modal' data-target='#modalGenerateSchedule'>Generate Schedule</button>");
 
     $('#openDetail').click(function(e) {
         e.preventDefault();
@@ -399,8 +458,38 @@ $(document).ready( function () {
 		autoclose: true,
 		// language : 'id',
 		format   : 'yyyy-mm-dd'
-	});
-
+    });
+    $('#date_range').datepicker({
+		todayHighlight: true,
+		orientation: "bottom left",
+		autoclose: true,
+		// language : 'id',
+		format   : 'yyyy-mm-dd'
+    });
+    
+    
 } );
+</script>
+@endpush
+
+{{-- Agar tidak conflict dengan dataTable --}}
+@push('script-no-dt')
+<script>
+    $("#timePicker1").timepicker(
+        {
+            minuteStep: 1,
+            defaultTime: "7:00",
+            showMeridian: !1,
+            snapToStep: !0
+        }
+    );
+    $("#timePicker2").timepicker(
+        {
+            minuteStep: 1,
+            defaultTime: "8:00",
+            showMeridian: !1,
+            snapToStep: !0
+        }
+    );
 </script>
 @endpush

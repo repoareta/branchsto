@@ -66,7 +66,7 @@
 <script src="{{url('assets/plugins/global/plugins.bundle.js')}}"></script>
 <script src="{{url('assets/plugins/custom/prismjs/prismjs.bundle.js')}}"></script>
 <script src="{{url('assets/js/scripts.bundle.js')}}"></script>
-
+@stack('script-no-dt')
 <!--begin::Page Vendors(used by this page)-->
 <script src="{{url('assets/plugins/custom/fullcalendar/fullcalendar.bundle.js')}}"></script>
 <script src="{{url('assets/js/pages/features/miscellaneous/sweetalert2.js') }}" type="text/javascript"></script>
@@ -83,7 +83,6 @@
 {{-- <script src="{{url('assets/js/pages/crud/file-upload/image-input.js')}}"></script>
 <script src="{{url('assets/uppy/uppy.min.js')}}"></script> --}}
 <script src="{{url('vendor/jsvalidation/js/jsvalidation.js')}}" type="text/javascript"></script>
-<script src="{{url('assets/js/pages/crud/forms/widgets/bootstrap-datepicker.js')}}"></script>
 
 
 

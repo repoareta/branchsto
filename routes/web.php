@@ -224,6 +224,7 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
         route::get('schedule/json', [SlotController::class, 'listJson'])->name('index.json');
         route::get('create', [SlotController::class, 'create'])->name('create');
         route::post('store', [SlotController::class, 'store'])->name('store');
+        route::post('generate', [SlotController::class, 'generate'])->name('generate');
         route::get('detail/schedule', [SlotController::class, 'detailSchedule'])->name('detail.schedule');
         route::get('detail/show', [SlotController::class, 'detailShow'])->name('detail.show');
         route::post('update', [SlotController::class, 'update'])->name('update');

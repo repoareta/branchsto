@@ -91,6 +91,49 @@ class SlotController extends Controller
         }
         return redirect()->route('schedule.index');
     }
+    public function generate(Request $request)
+    {
+        $start = $request->start;
+        $end = $request->end;
+        $time1 = date("H:i", strtotime($request->time1));
+        $time2 = date("H:i", strtotime($request->time2));
+        if(strtotime($time1) > strtotime($time2)){
+            Alert::error('Generate Error.', 'End time always greater then start time.');
+            return redirect()->route('schedule.index');
+        }
+        $start = strtotime($start);
+        $end = strtotime($end);        
+        $currentdate = $start;
+
+        while($currentdate < $end)
+        {
+            $currentdate = strtotime('+1 days', $currentdate);
+
+            $data = New Slot;
+
+            $data->date = date('Y-m-d', $currentdate);
+            $data->user_id = Auth::user()->id;
+            $data->time_start = $time1;
+            $data->time_end = $time2;
+            $data->capacity = $request->capacity;
+            $data->capacity_booked = 0;
+
+
+            $data->save();
+
+            if(!$data){
+                Alert::error('Generate Error.', 'Error.')->persistent(true)->autoClose(3600);
+                return redirect()->route('schedule.index');
+            }
+            
+        }
+
+        if($data){
+            Alert::success('Generate Success.', 'Success.')->persistent(true)->autoClose(3600);
+            return redirect()->route('schedule.index'); 
+        }
+
+    }
     public function detailSchedule(Request $request)
     {
         $data= Slot::whereDate('date_start',$request->date)->get();
