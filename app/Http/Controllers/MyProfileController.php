@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image;
 
 // load model
 use App\Models\User;
@@ -30,7 +31,8 @@ class MyProfileController extends Controller
         if ($request->file('photo')) {
             File::delete(public_path('/storage/myprofile/photo/'.$Query->photo));
             $Query->photo = $request->file('photo')->getClientOriginalName();
-            $photo_new_path = $request->file('photo')->storeAs('myprofile/photo', $Query->photo, 'public');
+            $image = Image::make($request->file('photo'))->resize(100,100);
+            $image->save(public_path('/storage/myprofile/photo/'.$Query->photo));
         }
         if($Query){
             $Query->update();

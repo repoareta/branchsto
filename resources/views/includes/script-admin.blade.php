@@ -90,9 +90,12 @@
                 $("#kt_sidebar").removeClass('active');
                 $(this).remove();      //add the class to the clicked element
             });
-            $('#timePickerStart').timepicker('setTime', '12:45 AM');
-            $('#timePickerEnd').timepicker('setTime', '12:45 AM');
-            $('#datePicker').datepicker({});
+            $(document).click(function(){
+                $("#notifUserOpen").removeClass('show');
+            });
+            $("#notifUser").click(function(){
+                $("#notifUserOpen").addClass('show');
+            });
     });
 </script>
 <!--end::Page Vendors-->

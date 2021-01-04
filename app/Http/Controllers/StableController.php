@@ -25,7 +25,7 @@ use App\Models\User;
 //load form request (for validation)
 use App\Http\Requests\StableStore;
 use Illuminate\Support\Facades\File;
-use GrahamCampbell\ResultType\Success;
+use Intervention\Image\Facades\Image;
 
 // load notification
 use App\Notifications\StableCreatedToAppsOwner;
@@ -93,11 +93,7 @@ class StableController extends Controller
         $stable->district_id        = $request->district_id;
         $stable->village_id         = $request->village_id;
         $stable->user_id            = Auth::user()->id;
-        $stable->key_stable         = Auth::user()->id.$key_stable;
-        if ($request->file('logo')) {
-            $stable->logo = $request->file('logo')->getClientOriginalName();
-            $logo_new_path = $request->file('logo')->storeAs('stable/logo', $stable->logo, 'public');
-        }
+        $stable->key_stable         = Auth::user()->id.$key_stable;        
         $stable->save();
 
         $user = User::where('email', 'andhika.ragilkesuma@gmail.com')->first();
@@ -129,9 +125,10 @@ class StableController extends Controller
         $stable->village_id         = $request->village_id;
         $stable->user_id            = Auth::user()->id;
         if ($request->file('logo')) {
-            File::delete(public_path('/storage/stable/logo/'.$stable->photo));
+            File::delete(public_path('/storage/stable/logo/'.$stable->logo));
             $stable->logo = $request->file('logo')->getClientOriginalName();
-            $logo_new_path = $request->file('logo')->storeAs('stable/logo', $stable->logo, 'public');
+            $image = Image::make($request->file('logo'))->resize(100,100);
+            $image->save(public_path('/storage/stable/logo/'.$stable->logo));
         }
         $stable->save();
 
