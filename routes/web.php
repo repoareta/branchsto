@@ -224,6 +224,7 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
         route::get('schedule/json', [SlotController::class, 'listJson'])->name('index.json');
         route::get('create', [SlotController::class, 'create'])->name('create');
         route::post('store', [SlotController::class, 'store'])->name('store');
+        route::post('generate', [SlotController::class, 'generate'])->name('generate');
         route::get('detail/schedule', [SlotController::class, 'detailSchedule'])->name('detail.schedule');
         route::get('detail/show', [SlotController::class, 'detailShow'])->name('detail.show');
         route::post('update', [SlotController::class, 'update'])->name('update');
@@ -257,6 +258,7 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
         route::post('booking/payment', [RidingClassController::class, 'booking_payment'])->name('booking.payment');
         route::get('booking/detail', [RidingClassController::class, 'booking_detail'])->name('booking.detail');
         route::post('confirmation/payment', [RidingClassController::class, 'history_order'])->name('confirmasion.payment');
+        route::post('reschedule', [RidingClassController::class, 'reschedule'])->name('reschedule');
         route::get('booking/list', [RidingClassController::class, 'booking_list_qrcode'])->name('booking.list.qrcode');
         route::get('history/order', [RidingClassController::class, 'historyorderDetail'])->name('history.order');
     });

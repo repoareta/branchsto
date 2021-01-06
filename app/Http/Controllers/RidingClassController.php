@@ -273,12 +273,101 @@ class RidingClassController extends Controller
                 ->leftJoin('packages as d', 'c.package_id', '=', 'd.id')
                 ->leftJoin('stables as e', 'd.stable_id', '=', 'e.id')
                 ->select('b.date', 'b.time_start', 'b.time_end', 'd.name','session_usage', 'e.name as stable_name')->get();
-            
             $status_booking = Booking::select('*')->where('id', $data_booking_id)->first();
             $booking_detail = BookingDetail::select('*')->where('booking_id', $data_booking_id)->limit(1)->get();
             $data_payment = DB::table('bank_payments')->where('id', $status_booking->bank_payment_id)->first();
-            
+                
             return view('riding_class.history-pay-confirmasi', compact('data_list', 'data_booking_id', 'status_booking', 'booking_detail', 'data_payment'));
         }
+    }
+
+    public function reschedule(Request $request)
+    {
+        DB::beginTransaction();
+        $booking_detail = BookingDetail::find($request->id)->first();
+
+        $booking = Booking::find($booking_detail->booking_id)->first();
+
+        if($booking->user_id != $request->uid)
+        {
+            Alert::error('Reschedule Error.', 'Check your own data.');
+            return redirect()->back();
+        }
+
+        $check = Package::find($booking_detail->package_id)->first();
+
+        if($check->session_usage == null)
+        {
+            $booking->approval_status = 'Reschedule';
+            $booking->update();
+
+            if(!$booking){
+                DB::rollback();
+                Alert::error('Reschedule Error.', 'Check your own data.');
+                return redirect()->back();
+            }
+
+            $Query1 = new Booking();
+            $Query1->user_id = Auth::user()->id;
+            $Query1->price_total = $booking->price_total;
+            $Query1->photo = $booking->photo;
+            $Query1->approval_by = $booking->approval_by;
+            $Query1->approval_at = $booking->approval_at;
+            $Query1->approval_status = 'Accepted';
+            $Query1->bank_payment_id = $booking->bank_payment_id;
+
+            $Query1->save();
+            if(!$Query1){
+                DB::rollback();
+                Alert::error('Reschedule Error.', 'Check your own data.');
+                return redirect()->back();
+            }
+
+            $noUrutAkhir = BookingDetail::where('package_id', $check->id)->whereDate('booking_at', '=', Carbon::parse($request->date)->toDateString())->max('queue_no');
+            if($noUrutAkhir) {
+                $noUrutAkhir  = sprintf("%03s", abs($noUrutAkhir + 1));
+            }
+            else {
+                $noUrutAkhir = sprintf("%03s", 1);
+            }
+            $Query2 = new BookingDetail();
+            $Query2->package_id = $booking_detail->package_id;
+            $Query2->price_subtotal = $booking_detail->price_subtotal;
+            $Query2->booking_id = $Query1->id;
+            $Query2->queue_no = $noUrutAkhir;
+            $Query2->booking_at = Carbon::parse($request->date)->toDateString();
+
+            $Query2->save();
+
+            if(!$Query2){
+                DB::rollback();
+                Alert::error('Reschedule Error.', 'Check your own data.');
+                return redirect()->back();
+            }
+
+            $Query3 = BookingDetail::find($Query2->id)->first();
+            $image = QrCode::format('png')
+                ->size(200)
+                ->generate(url("/booking-detail/$Query3->id/confirmation"));
+
+            $output_file = '/img/qr-code/img-' . time() . '.png';
+
+            Storage::disk('public')->put($output_file, $image);
+
+            $Query3->qr_code = $output_file;
+            $Query3->update();
+
+            if(!$Query3){
+                DB::rollback();
+                Alert::error('Reschedule Error.', 'Check your own data.');
+                return redirect()->back();
+            }
+            if($Query3){
+                DB::commit();
+                Alert::success('Reschedule Success.', 'Success.')->persistent(true)->autoClose(3600);
+                return redirect()->back();
+            }
+        }
+        return response()->json($check);die;
     }
 }

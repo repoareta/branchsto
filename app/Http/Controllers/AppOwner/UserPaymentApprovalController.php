@@ -41,7 +41,7 @@ class UserPaymentApprovalController extends Controller
             return $data->approval_status;
         })
         ->addColumn('bank', function ($data) {
-            return $data->bank->account_name;
+            return $data->bank_payment_id;
         })
         ->addColumn('action', function ($data) {
             return
@@ -74,7 +74,7 @@ class UserPaymentApprovalController extends Controller
             return 'Pending';
         })
         ->addColumn('bank', function ($data) {
-            return $data->bank->account_name;
+            return $data->bank_payment_id;
         })
         ->addColumn('action', function ($data) {
             return
