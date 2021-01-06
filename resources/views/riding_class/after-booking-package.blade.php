@@ -67,7 +67,7 @@
                                                 @endforeach
                                                 {{-- end detail riding class --}}
                                             @else
-                                            {{-- pony rise --}}
+                                                {{-- pony rise --}}
                                                 <input type="hidden" name="usage_status" value="pony_ride">
                                                 @foreach ($data_list_package as $item)
                                                     <input type="hidden" value="{{$item['booking_at']}}" name="booking_at">

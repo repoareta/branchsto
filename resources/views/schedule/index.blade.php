@@ -44,6 +44,28 @@
                             </div>
                             <div class="card mt-10">
                                 <div class="card-body">
+                                    <h5 class="title-text">Filter</h5>
+                                    <div class="form-group mb-3 row">
+                                        <div class="col-md-6">
+                                            <label>Date Range</label>
+                                            <div class="input-daterange input-group" id="date_range_filter">
+                                                <input type="text" class="form-control" autocomplete="off" name="from_date" id="from_date">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <i class="la la-ellipsis-h"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="text" class="form-control" name="end_date" autocomplete="off" id="end_date">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <button type="button" name="filter" id="filter" class="btn btn-primary">Filter</button>
+                                            <button type="button" name="refresh" id="refresh" class="btn btn-default">Refresh</button>
+                                        </div>
+                                    </div>
+                                    <div class="divider"></div>
                                     <table class="table" id="dataTable">
                                         <thead>
                                             <tr>
@@ -207,11 +229,11 @@
                     <div class="form-group row">											
                         <div class="col-4">
                             <label>Time Start</label>
-                            <input type="text" class="form-control" name="time1" maxlength="5" id="time1">
+                            <input type="text" class="form-control" name="time1" maxlength="5" id="timePickerEdit1">
                         </div>																								
                         <div class="col-4">
                             <label>Time End</label>
-                            <input type="text" class="form-control" name="time2" maxlength="5" id="time2">
+                            <input type="text" class="form-control" name="time2" maxlength="5" id="timePickerEdit2">
                         </div>
                         <div class="col-3">
                             <label>Capacity</label>
@@ -245,36 +267,52 @@
                     date_default_timezone_set('Asia/Jakarta');
                     $time = date('H:i');
                 @endphp
-                <form action="{{route('schedule.generate')}}" method="POST">
+                <form action="{{route('schedule.generate')}}" class="repeater" method="POST">
                     @csrf
                     <div class="form-group row">
                         <div class="col-11">
                             <label>Date</label>
                             <div class="input-daterange input-group" id="date_range">
-                                <input type="text" class="form-control" name="start">
+                                <input type="text" class="form-control" name="start" autocomplete="off">
                                 <div class="input-group-append">
                                     <span class="input-group-text">
                                         <i class="la la-ellipsis-h"></i>
                                     </span>
                                 </div>
-                                <input type="text" class="form-control" name="end">
+                                <input type="text" class="form-control" name="end" autocomplete="off">
                             </div>
                         </div>	
-                    </div>	
-                    <div class="form-group row">											
-                        <div class="col-4">
-                            <label>Time Start</label>
-                            <input type="text" class="form-control" name="time1" id="timePicker1">
-                        </div>																								
-                        <div class="col-4">
-                            <label>Time End</label>
-                            <input type="text" class="form-control" name="time2" id="timePicker2">
-                        </div>
-                        <div class="col-3">
-                            <label>Capacity</label>
-                            <input type="number" class="form-control" name="capacity" id="capacity">
+                    </div>
+                        <!--
+                            The value given to the data-repeater-list attribute will be used as the
+                            base of rewritten name attributes.  In this example, the first
+                            data-repeater-item's name attribute would become group-a[0][text-input],
+                            and the second data-repeater-item would become group-a[1][text-input]
+                        -->
+                    <div data-repeater-list="group-a">
+                        <div data-repeater-item class="form-group row">											
+                            <div class="col-md-3">
+                                <label>Time Start</label>
+                                <input type="text" class="form-control" name="time1" id="timePickerGen1">
+                            </div>																								
+                            <div class="col-md-3">
+                                <label>Time End</label>
+                                <input type="text" class="form-control" name="time2" id="timePickerGen2">
+                            </div>
+                            <div class="col-md-3">
+                                <label>Capacity</label>
+                                <input type="number" class="form-control" name="capacity" id="capacity">
+                            </div>
+                            <div class="col-md-3 align-self-end">
+                                <button data-repeater-delete type="button" class="btn btn-sm font-weight-bolder btn-light-danger">
+                                    <i class="la la-trash-o"></i>Delete</a>
+                                </button>
+                            </div>
                         </div>
                     </div>
+                    <button data-repeater-create type="button" class="btn btn-sm font-weight-bolder btn-light-primary mt-repeater-add">
+                        <i class="la la-plus"></i>Add</a>
+                    </button>
                 </div>
                 <div class="modal-footer">											
                     <button data-dismiss="modal" class="btn btn-secondary">Cancel</button>
@@ -292,167 +330,17 @@ $(document).ready( function () {
 
     $("#sess1").attr('disabled', true);
     $("#sess2").attr('disabled', true);
-    var t = $('#dataTable').DataTable({
-        scrollX   : true,
-        processing: true,
-        // serverSide: true
-        language: {
-            processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> <br> Loading...'
-        },
-        ajax      : "{{ route('schedule.index.json') }}",
-        columns: [
-                {data: 'date', name: 'date', orderable: false, searchable: false},
-                {data: 'time_start', name: 'time_start'},
-                {data: 'time_end', name: 'time_end'},
-                {data: 'capacity', name: 'capacity'},
-                {data: 'capacity_booked', name: 'capacity_booked'},
-                {data: 'action', name: 'action'},
-        ],
-        columnDefs:[
-            {
-                // hide columns by index number
-                targets: [0],
-                visible: false,
-            },
-        ],
-        order: [[0, 'asc']],
-        rowGroup: {
-            // Uses the 'row group' plugin
-            dataSrc: "date",
-            startRender: function (rows, group) {
-                var collapsed = !!collapsedGroups[group];
 
-                rows.nodes().each(function (r) {
-                    r.style.display = collapsed ? 'none' : '';
-                });    
-
-                // Add category name to the <tr>. NOTE: Hardcoded colspan
-                return $('<tr/>')
-                    .append('<td colspan="6">' + group + ' (' + rows.count() + ')</td>')
-                    .attr('data-name', group)
-                    .toggleClass('collapsed', collapsed);
-            }
+    //Script ini wajib krn kita butuh csrf token setiap kali mengirim request post, patch, put dan delete ke server    
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
 
-    $('#dataTable tbody').on('click', 'tr.dtrg-start', function () {
-        var name = $(this).data('name');
-        collapsedGroups[name] = !collapsedGroups[name];
-        t.draw(false);
-    });  
-
-    $("#dataTable_filter").append("<button class='btn btn-add-new ml-5' id='openDetail'>Add New +</button>");
-
-    $("#dataTable_filter").append("<button class='btn btn-add-new ml-3'  data-toggle='modal' data-target='#modalGenerateSchedule'>Generate Schedule</button>");
-
-    $('#openDetail').click(function(e) {
-        e.preventDefault();
-        $('#modalAddPackage').modal('show');
-        $('#title_modal').data('state', 'add');
-        $(this).find('form').trigger('reset');
-    });
-
-    $('#kt_table tbody').on( 'click', '.view-time', function (e) {
-        e.preventDefault();
-    });
-
-    $("body").on("click","#add-more",function(){ 
-        $("#sess1").attr('disabled', false);
-        $("#sess2").attr('disabled', false);
-        var html = $("#copy").html();
-        $("#after-add-more").after(html);
-    });
-
-    // saat tombol remove dklik control group akan dihapus 
-    $("body").on("click","#remove",function(){ 
-        $(this).parents(".form-group").remove();
-        // $("#sess1").attr('disabled', true);
-        // $("#sess2").attr('disabled', true);
-    });+
-
-    $('#dataTable tbody').on( 'click', '.view-time', function (e) {
-        e.preventDefault();
-        // get value from row					
-        var id = $(this).attr('data-time');
-        $.ajax({
-            url: "{{ route('schedule.detail.show') }}",
-            type: 'GET',
-            data: {
-                "id": id,
-                "_token": "{{ csrf_token() }}",
-            },
-            success: function (response) {
-                // update stuff
-                // append value
-                var time1 = response.time_start;
-                var time2 = response.time_end;
-                console.log(response.date);
-                $('#slot_id').val(response.id);
-                $('#date').val(response.date);
-                $('#time1').val(time1.substr(0,5));
-                $('#time2').val(time1.substr(0,5));
-                $('#capacity').val(response.capacity);
-                // title
-                $('#title_modal').text('Edit data slot');
-                $('#title_modal').data('state', 'update');
-                // open modal
-                $('#modalAddPackageedit').modal('toggle');
-            },
-            error: function () {
-                alert("Terjadi kesalahan, coba lagi nanti");
-            }
-        });
-    });
-
-    $('#dataTable tbody').on( 'click', '.delete-slot', function (e) {
-        e.preventDefault();
-        var id = $(this).attr('data-id');
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!" ,
-            icon: "warning",
-            confirmButtonText: "Delete",
-            confirmButtonColor: '#141D31',
-            showCancelButton: true,
-            reverseButtons: true
-        }).then(function(result) {
-            if (result.value) {
-                $.ajax({
-                    url: "{{ route('schedule.delete') }}",
-                    type: 'DELETE',
-                    dataType: 'json',
-                    data: {
-                        "id": id,
-                        "_token": "{{ csrf_token() }}",
-                    },
-                    success: function () {
-                        Swal.fire({
-                            title: "Delete Data package",
-                            text: "success",
-                            icon: "success",
-                            buttonsStyling: false,
-                            confirmButtonText: "Ok",
-                            customClass: {
-                                confirmButton: "btn btn-dark"
-                            }
-                        }).then(function() {
-                            location.reload();
-                        });
-                    },
-                    error: function () {
-                        alert("An error occurred, please try again later.");
-                    }
-                });
-            }
-        });
-    });
-
-    $('#dataTable tbody').on( 'click', '.edit-package', function (e) {
-        e.preventDefault();
-        var id = $(this).attr('data-id');
-        location.replace("{{url('package/edit')}}"+ '/' +id);
-    });
-    $('#date').datepicker({
+    //jalankan function load_data diawal agar data ter-load
+    load_data();
+    $('#date_range_filter').datepicker({
 		todayHighlight: true,
 		orientation: "bottom left",
 		autoclose: true,
@@ -464,9 +352,209 @@ $(document).ready( function () {
 		orientation: "bottom left",
 		autoclose: true,
 		// language : 'id',
-		format   : 'yyyy-mm-dd'
+        format   : 'yyyy-mm-dd',
+        startDate: new Date(),
     });
+    $('#filter').click(function () {
+        var from_date = $('#from_date').val(); 
+        var end_date = $('#end_date').val(); 
+        console.log(from_date + end_date);
+        if (from_date != '' && end_date != '') {
+            $('#dataTable').DataTable().destroy();
+            load_data(from_date, end_date);
+        } else {
+            alert('Both Date is required');
+        }
+    });
+
+    $('#refresh').click(function () {
+        $('#from_date').val('');
+        $('#end_date').val('');
+        $('#dataTable').DataTable().destroy();
+        $('#date_range_filter').datepicker('remove');
+        $('#date_range_filter').datepicker({
+            todayHighlight: true,
+            orientation: "bottom left",
+            autoclose: true,
+            // language : 'id',
+            format   : 'yyyy-mm-dd'
+        });
+        load_data();
+    });
+
+    function load_data(from_date = '', end_date = '')
+    {
+        var t = $('#dataTable').DataTable({
+            scrollX   : true,
+            processing: true,
+            // serverSide: true
+            language: {
+                processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> <br> Loading...'
+            },
+            ajax: {
+                        url: "{{ route('schedule.index.json') }}",
+                        type: 'GET',
+                        data:{from_date:from_date, end_date:end_date} //jangan lupa kirim parameter tanggal 
+                    },            
+            columns: [
+                    {data: 'date', name: 'date', orderable: false, searchable: false},
+                    {data: 'time_start', name: 'time_start'},
+                    {data: 'time_end', name: 'time_end'},
+                    {data: 'capacity', name: 'capacity'},
+                    {data: 'capacity_booked', name: 'capacity_booked'},
+                    {data: 'action', name: 'action'},
+            ],
+            columnDefs:[
+                {
+                    // hide columns by index number
+                    targets: [0],
+                    visible: false,
+                },
+            ],
+            order: [[0, 'asc']],
+            rowGroup: {
+                // Uses the 'row group' plugin
+                dataSrc: "date",
+                startRender: function (rows, group) {
+                    var collapsed = !!collapsedGroups[group];
     
+                    rows.nodes().each(function (r) {
+                        r.style.display = collapsed ? 'none' : '';
+                    });    
+    
+                    // Add category name to the <tr>. NOTE: Hardcoded colspan
+                    return $('<tr/>')
+                        .append('<td colspan="6">' + group + ' (' + rows.count() + ')</td>')
+                        .attr('data-name', group)
+                        .toggleClass('collapsed', collapsed);
+                }
+            }
+        });
+        $('#dataTable tbody').on('click', 'tr.dtrg-start', function () {
+            var name = $(this).data('name');
+            collapsedGroups[name] = !collapsedGroups[name];
+            t.draw(false);
+        });  
+    
+        $("#dataTable_filter").append("<button class='btn btn-add-new ml-5' id='openDetail'>Add New +</button>");
+    
+        $("#dataTable_filter").append("<button class='btn btn-add-new ml-3'  data-toggle='modal' data-target='#modalGenerateSchedule'>Generate Schedule</button>");
+    
+        $('#openDetail').click(function(e) {
+            e.preventDefault();
+            $('#modalAddPackage').modal('show');
+            $('#title_modal').data('state', 'add');
+            $(this).find('form').trigger('reset');
+        });
+    
+        $('#kt_table tbody').on( 'click', '.view-time', function (e) {
+            e.preventDefault();
+        });
+    
+        $("body").on("click","#add-more",function(){ 
+            $("#sess1").attr('disabled', false);
+            $("#sess2").attr('disabled', false);
+            var html = $("#copy").html();
+            $("#after-add-more").after(html);
+        });
+    
+        // saat tombol remove dklik control group akan dihapus 
+        $("body").on("click","#remove",function(){ 
+            $(this).parents(".form-group").remove();
+            // $("#sess1").attr('disabled', true);
+            // $("#sess2").attr('disabled', true);
+        });+
+    
+        $('#dataTable tbody').on( 'click', '.view-time', function (e) {
+            e.preventDefault();
+            // get value from row					
+            var id = $(this).attr('data-time');
+            $.ajax({
+                url: "{{ route('schedule.detail.show') }}",
+                type: 'GET',
+                data: {
+                    "id": id,
+                    "_token": "{{ csrf_token() }}",
+                },
+                success: function (response) {
+                    // update stuff
+                    // append value
+                    var time1 = response.time_start;
+                    var time2 = response.time_end;
+                    console.log(response.date);
+                    $('#slot_id').val(response.id);
+                    $('#date').val(response.date);
+                    $('#time1').val(time1.substr(0,5));
+                    $('#time2').val(time1.substr(0,5));
+                    $('#capacity').val(response.capacity);
+                    // title
+                    $('#title_modal').text('Edit data slot');
+                    $('#title_modal').data('state', 'update');
+                    // open modal
+                    $('#modalAddPackageedit').modal('toggle');
+                },
+                error: function () {
+                    alert("Terjadi kesalahan, coba lagi nanti");
+                }
+            });
+        });
+    
+        $('#dataTable tbody').on( 'click', '.delete-slot', function (e) {
+            e.preventDefault();
+            var id = $(this).attr('data-id');
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!" ,
+                icon: "warning",
+                confirmButtonText: "Delete",
+                confirmButtonColor: '#141D31',
+                showCancelButton: true,
+                reverseButtons: true
+            }).then(function(result) {
+                if (result.value) {
+                    $.ajax({
+                        url: "{{ route('schedule.delete') }}",
+                        type: 'DELETE',
+                        dataType: 'json',
+                        data: {
+                            "id": id,
+                            "_token": "{{ csrf_token() }}",
+                        },
+                        success: function () {
+                            Swal.fire({
+                                title: "Delete Data package",
+                                text: "success",
+                                icon: "success",
+                                buttonsStyling: false,
+                                confirmButtonText: "Ok",
+                                customClass: {
+                                    confirmButton: "btn btn-dark"
+                                }
+                            }).then(function() {
+                                location.reload();
+                            });
+                        },
+                        error: function () {
+                            alert("An error occurred, please try again later.");
+                        }
+                    });
+                }
+            });
+        });
+    
+        $('#dataTable tbody').on( 'click', '.edit-package', function (e) {
+            e.preventDefault();
+            var id = $(this).attr('data-id');
+            location.replace("{{url('package/edit')}}"+ '/' +id);
+        });
+        $('#date').datepicker({
+            todayHighlight: true,
+            orientation: "bottom left",
+            autoclose: true,
+            // language : 'id',
+            format   : 'yyyy-mm-dd'
+        });
+    }    
     
 } );
 </script>
@@ -475,7 +563,9 @@ $(document).ready( function () {
 {{-- Agar tidak conflict dengan dataTable --}}
 @push('script-no-dt')
 <script>
-    $("#timePicker1").timepicker(
+    $('.repeater').repeater({
+    });
+    $("#timePickerEdit1").timepicker(
         {
             minuteStep: 1,
             defaultTime: "7:00",
@@ -483,7 +573,7 @@ $(document).ready( function () {
             snapToStep: !0
         }
     );
-    $("#timePicker2").timepicker(
+    $("#timePickerEdit2").timepicker(
         {
             minuteStep: 1,
             defaultTime: "8:00",
@@ -491,5 +581,52 @@ $(document).ready( function () {
             snapToStep: !0
         }
     );
+    $.noConflict();
+    jQuery(function($) {
+        $("input[id=timePickerGen1]").each(function () {
+            $(this).timepicker(
+                {
+                    minuteStep: 1,
+                    defaultTime: "7:00",
+                    showMeridian: !1,
+                    snapToStep: !0
+                }
+            );
+        });
+        $("input[id=timePickerGen2]").each(function () {
+            $(this).timepicker(
+                {
+                    minuteStep: 1,
+                    defaultTime: "8:00",
+                    showMeridian: !1,
+                    snapToStep: !0
+                }
+            );
+        });
+        $('.mt-repeater-add').click(function(){
+            $("input[id=timePickerGen1]").each(function () {
+                $(this).timepicker(
+                    {
+                        minuteStep: 1,
+                        defaultTime: "7:00",
+                        showMeridian: !1,
+                        snapToStep: !0
+                    }
+                );
+            });
+            $("input[id=timePickerGen2]").each(function () {
+                $(this).timepicker(
+                    {
+                        minuteStep: 1,
+                        defaultTime: "8:00",
+                        showMeridian: !1,
+                        snapToStep: !0
+                    }
+                );
+            });
+    
+        })
+    });
+
 </script>
 @endpush
