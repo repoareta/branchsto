@@ -140,7 +140,7 @@ class StableController extends Controller
     // list close tiket
     public function stable_close(Request $request)
     {
-        $data_booking = BookingDetail::where('id', $request->id)->select('booking_at')->first();
+        $data_booking = BookingDetail::where('id', $request->id)->first();
         $checkPackage = Package::where('id', $data_booking->package_id)->first();
         if ($checkPackage->session_usage == null) {
             $data_list  = DB::table('bookings as a')

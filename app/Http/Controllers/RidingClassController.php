@@ -219,7 +219,6 @@ class RidingClassController extends Controller
 
     public function history_order(Request $request)
     {
-
         $booking = Booking::find($request->booking_id);
         $booking->updated_at = date('Y-m-d H:i:s');
         $booking->approval_status = null;
@@ -392,9 +391,9 @@ class RidingClassController extends Controller
             
             $image = QrCode::format('png')
                 ->size(200)
-                ->generate(url("/booking-detail/$Query->id/confirmation"));
+                ->generate(url("/booking-detail/$booking_detail->id/confirmation"));
 
-            $output_file = '/img/qr-code/img-' . time() . $Query->id . '.png';
+            $output_file = '/img/qr-code/img-' . time() . $booking_detail->id . $Query->id . '.png';
 
             Storage::disk('public')->put($output_file, $image);
 
