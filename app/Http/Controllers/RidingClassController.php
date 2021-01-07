@@ -327,6 +327,12 @@ class RidingClassController extends Controller
             $Query1->price_subtotal = $booking_detail->price_subtotal;
             $Query1->booking_id = $booking_detail->booking_id;
             $Query1->queue_no = $noUrutAkhir;
+            if(date('Y-m-d',strtotime($booking_detail->booking_at)) == Carbon::parse($request->date)->toDateString())
+            {
+                DB::rollback();
+                Alert::error('Reschedule Error.', 'Cannot choose same date.');
+                return redirect()->back();
+            }
             $Query1->booking_at = Carbon::parse($request->date)->toDateString();
 
             $Query1->save();
@@ -426,9 +432,10 @@ class RidingClassController extends Controller
     {
         $slot_user = DB::table('slot_user')->where('id', Crypt::decryptString($request->id))->first();
         $booking_detail = BookingDetail::where('id', $slot_user->booking_detail_id)->first();
-        $package = DB::table('packages')->where('id', $booking_detail->package_id)->first();
+        $slot_users = DB::table('slot_user')->where('booking_detail_id', $booking_detail->id)->get();
+        $package = DB::table('packages')->where('id', $booking_detail->package_id)->first();        
         $slots = DB::table('slots')->where('id', $slot_user->slot_id)->first(); 
         $slot = DB::table('slots')->select('date', 'user_id')->where('user_id', $package->user_id)->groupBy('date', 'user_id')->orderBy('date', 'asc')->get();
-        return view('riding_class.reschedule', compact('slot_user','booking_detail','slot','slots','package'));
+        return view('riding_class.reschedule', compact('slot_user','slot_users','booking_detail','slot','slots','package'));
     }
 }

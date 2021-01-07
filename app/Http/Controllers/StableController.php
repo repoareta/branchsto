@@ -153,6 +153,7 @@ class StableController extends Controller
         } else {
             $data_list  = DB::table('slot_user as a')
             ->where('a.booking_detail_id', $request->id)
+            ->where('a.qr_code_status', '=' ,null)
             ->leftJoin('slots as b', 'b.id', '=', 'a.slot_id')
             ->leftJoin('users as c', 'c.id', '=', 'a.user_id')
             ->select('b.date', 'b.time_start', 'b.time_end', 'a.qr_code_status', 'a.id', 'c.name')->get();
