@@ -113,19 +113,25 @@
                                             </div>
                                             <div class="form-group mt-10">
                                                 <div class="col-12">
-                                                    <div class="col-lg-9 col-xl-6">
-                                                        <div class="image-input" id="kt_image_2">
-                                                            <div class="image-input-wrapper" style="background-image: url({{url('assets/media/users/user-1.png')}});"></div>
-                                                            <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Upload proof of payment">
-                                                                <i class="fa fa-pen icon-sm text-muted"></i>
-                                                                <input type="file" name="photo" accept=".png, .jpg, .jpeg">
-                                                                <input type="hidden" name="file_remove" value="0">
-                                                            </label>
-                                                            <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="" data-original-title="Cancel">
-                                                                <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                                            </span>
+                                                    <div class="form-group row">
+                                                        <div class="col-lg-9 col-xl-6">
+                                                            <label>Picture Proof of Payment</label>
+                                                            <div class="image-input image-input-outline" id="kt_profile_avatar" style="background-image: url(assets/media/users/blank.png)">
+                                                                <div class="image-input-wrapper" style="background-image: url(assets/media/users/300_21.jpg)"></div>
+                                                                <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
+                                                                    <i class="fa fa-pen icon-sm text-muted"></i>
+                                                                    <input type="file" name="photo" accept=".png, .jpg, .jpeg" />
+                                                                    <input type="hidden" name="profile_avatar_remove" />
+                                                                </label>
+                                                                <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
+                                                                    <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                                </span>
+                                                                <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove avatar">
+                                                                    <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                                </span>
+                                                            </div>
+                                                            <span class="form-text text-muted">Allowed file types: png, jpg, jpeg.</span>
                                                         </div>
-                                                        <span class="form-text text-muted">Upload proof of paymen types: png, jpg, jpeg.</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -154,6 +160,7 @@
 <!--end::Main-->
 @endsection
 @section('scripts')
+<script src="{{url('assets/js/pages/custom/profile/profile.js')}}"></script>
 <script type="text/javascript">
     $(document).ready(function () {
     //tampil edit detail

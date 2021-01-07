@@ -260,6 +260,7 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
         route::post('confirmation/payment', [RidingClassController::class, 'history_order'])->name('confirmasion.payment');
         route::post('reschedule', [RidingClassController::class, 'reschedule'])->name('reschedule');
         route::get('booking/list', [RidingClassController::class, 'booking_list_qrcode'])->name('booking.list.qrcode');
+        route::get('booking/list/slotuser', [RidingClassController::class, 'slot_user'])->name('booking.list.slot_user');
         route::get('history/order', [RidingClassController::class, 'historyorderDetail'])->name('history.order');
     });
         // untuk close package

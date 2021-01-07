@@ -1,5 +1,6 @@
 @extends('layout.index')
 @section('content')
+
 <!--begin::Main-->
 @include('partials._header-mobile')
 <div class="d-flex flex-column flex-root">
@@ -25,144 +26,213 @@
                                 <div class="col-lg-6 order-md-2 order-2 order-lg-1">
                                     <div class="card card-booking">
                                         @csrf
-                                        @foreach ($booking_detail as $detail)
-                                            <div class="card-body">
-                                                @foreach ($data_list as $item)
-                                                    @if ($item->session_usage == null)
-                                                        <h4>
-                                                            Package {{$item->name}}
-                                                        </h4>
-                                                        <p>
-                                                            Stable {{$item->stable_name}}
-                                                        </p>
-                                                        <table class="table table-borderless table-dark mb-5">
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td width="15%" scope="row">Day</td>
-                                                                    <td width="5%" scope="row">:</td>
-                                                                    <td  scope="row">{{date('l',strtotime($item->booking_at))}}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td width="15%" scope="row">Date</td>
-                                                                    <td width="5%" scope="row">:</td>
-                                                                    <td  scope="row">{{date('d-m-Y', strtotime($item->booking_at))}}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td width="15%" scope="row">No</td>
-                                                                    <td width="5%" scope="row">:</td>
-                                                                    <td  scope="row">{{$item->queue_no}}</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
+                                        <div class="card-body">                                            
+                                            @if ($cekPackage->session_usage == null)
+                                                <h4>
+                                                    Package {{$data_list[0]->name}}
+                                                </h4>
+                                                <p>
+                                                    Stable {{$data_list[0]->stable_name}}
+                                                </p>
+                                                <table class="table table-borderless table-dark mb-5">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td width="15%" scope="row">Day</td>
+                                                            <td width="5%" scope="row">:</td>
+                                                            <td  scope="row">{{date('l',strtotime($booking_detail->booking_at))}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="15%" scope="row">Date</td>
+                                                            <td width="5%" scope="row">:</td>
+                                                            <td  scope="row">{{date('d-m-Y', strtotime($booking_detail->booking_at))}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="15%" scope="row">No</td>
+                                                            <td width="5%" scope="row">:</td>
+                                                            <td  scope="row">{{$booking_detail->queue_no}}</td>
+                                                        </tr>
+                                                        @if($status_booking->approval_status == 'Accepted')
+                                                            <tr>
+                                                                <td width="15%" scope="row">Status</td>
+                                                                <td width="5%" scope="row">:</td>
+                                                                <td  scope="row">
+                                                                    @if ($booking_detail->queue_status == null)
+                                                                        <span class="label label-lg label-light-success label-inline">
+                                                                            Active
+                                                                        </span>
+                                                                    @else
+                                                                        <span class="label label-lg label-light-danger label-inline">
+                                                                            {{$booking_detail->queue_status}}
+                                                                        </span>
+                                                                    @endif
+                                                                </td>
+                                                            </tr>                                                        
+                                                        @endif
+                                                    </tbody>
+                                                </table>
+                                                @if ($count_booking > 1)
+                                                <span class="label label-lg label-light-danger label-inline mb-5">
+                                                    You are not allowed to reschedule again
+                                                </span>
+                                                @else
+                                                    @if($status_booking->approval_status == 'Accepted')
                                                         <div class="table-danger d-none">Payment expires in <span id="time">60:00</span> minutes.</div>
-                                                        <button class="btn btn-light-success font-weight-bold mr-2 mb-5" data-toggle='modal' id="reSchedulePony" data-id="{{$detail->id}}">
+                                                        <button class="btn btn-light-success font-weight-bold mr-2 mb-5" data-toggle='modal' id="reSchedulePony" data-id="{{$booking_detail->id}}">
                                                             <i class="far fa-calendar-alt"></i>
                                                             Reschedule
                                                         </button>
-                                                    @else
-                                                        <h4>
-                                                            Package {{$item->name}}
-                                                        </h4>
-                                                        <p>
-                                                            Stable {{$item->stable_name}}
-                                                        </p>
-                                                        <table class="table table-borderless table-dark mb-10">
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td width="15%" scope="row">Day</td>
-                                                                    <td width="5%" scope="row">:</td>
-                                                                    <td  scope="row">{{date('l',strtotime($item->date))}}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td width="15%" scope="row">Date</td>
-                                                                    <td width="5%" scope="row">:</td>
-                                                                    <td  scope="row">{{$item->date}}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td width="15%" scope="row">Session</td>
-                                                                    <td width="5%" scope="row">:</td>
-                                                                    <td  scope="row">{{date('H:i', strtotime($item->time_start))}} - {{date('H:i', strtotime($item->time_end))}}</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
                                                     @endif
-                                                @endforeach
-                                                
-                                                <p class="mb-0">
-                                                    @if ($status_booking->approval_status == 'Expired')
-                                                        
-                                                    @else
-                                                        <h4>
-                                                            <b>Price : {{number_format($status_booking->price_total)}}</b>
-                                                        </h4>
-                                                    @endif
+                                                @endif
+                                            @else
+                                                @foreach ($data_list as $item)
+                                                <h4>
+                                                    Package {{$item->name}}
+                                                </h4>
+                                                <p>
+                                                    Stable {{$item->stable_name}}
                                                 </p>
-                                                <hr>
-                                                <h5>Reminder :</h5>
-                                                @if ($status_booking->photo == null )
-                                                    @if ($status_booking->approval_status == 'Expired')
-                                                        <p class="table-danger">
-                                                        <b> Time Limit For The Payment Is 1 Hour Or Your Booking Will Expire.</b>
-                                                        </p>
-                                                    @else
-                                                        {{-- <p class="table-danger">
-                                                            If you don't pay for 1 hour then your booking will expired
-                                                        </p> --}}
-                                                        <div class="table-danger">Payment expires in <span id="time">60:00</span> minutes.</div>
-                                                        <form action="{{route('riding_class.confirmasion.payment')}}" method="POST" enctype="multipart/form-data">
-                                                            @csrf
-                                                            <div class="bank-number">
-                                                                <div class="card-bank">
-                                                                    <div class="bank">
-                                                                        <img src="{{ asset('storage/'.$data_payment->photo) }}" alt="">
-                                                                        <div class="text">
-                                                                            <div class="name">{{$data_payment->account_name}}</div>
-                                                                            <div class="number">{{$data_payment->account_number}}</div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div>															
+                                                <table class="table table-borderless table-dark mb-10">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td width="15%" scope="row">Day</td>
+                                                            <td width="5%" scope="row">:</td>
+                                                            <td  scope="row">{{date('l',strtotime($item->date))}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="15%" scope="row">Date</td>
+                                                            <td width="5%" scope="row">:</td>
+                                                            <td  scope="row">{{$item->date}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="15%" scope="row">Session</td>
+                                                            <td width="5%" scope="row">:</td>
+                                                            <td  scope="row">{{$item->time_start}} - {{$item->time_end}}</td>
+                                                        </tr>                                                                                                                    
+                                                            @if ($item->qr_code_status == null)
+                                                                <tr>
+                                                                    <td width="15%" scope="row">Status</td>
+                                                                    <td width="5%" scope="row">:</td>
+                                                                    <td  scope="row">
+                                                                        <span class="label label-lg label-light-success label-inline">
+                                                                            Active
+                                                                        </span>
+                                                                    </td>
+                                                                </tr>
+                                                            @else
+                                                            <tr>
+                                                                <td width="15%" scope="row">Status</td>
+                                                                <td width="5%" scope="row">:</td>
+                                                                <td  scope="row">
+                                                                    <span class="label label-lg label-light-success label-inline">
+                                                                        {{$item->qr_code_status}}
+                                                                    </span>
+                                                                </td>
+                                                            </tr>
+                                                            @endif
+                                                    </tbody>
+                                                </table>
+                                                <div class="table-danger d-none">Payment expires in <span id="time">60:00</span> minutes.</div>
+                                                @if(!$check_schedule)
+                                                    <form id="formSchedule{{$item->slot_user_id}}" method='get' action="{{route("riding_class.booking.list.slot_user")}}">
+                                                        @csrf
+                                                            {!! Form::hidden('id', Crypt::encryptString($item->slot_user_id)) !!}
+                                                            <button class="btn btn-light-success font-weight-bold mr-2 mb-5" id="reSchedule{{$item->slot_user_id}}" data-id="{{$item->slot_user_id}}">
+                                                                <i class="far fa-calendar-alt"></i>
+                                                                Reschedule
+                                                            </button>
+                                                    </form>
+                                                @else
+                                                    <span class="label label-lg label-light-danger label-inline mb-5">
+                                                        You are not allowed to reschedule again
+                                                    </span>
+                                                @endif
+                                                
+                                                <div class="image mb-19">  
+                                                    <img src="{{ asset('storage'.$item->qr_code) }}" />
+                                                </div>
+                                                @endforeach
+                                            @endif                                            
+                                            <p class="mb-0">
+                                                @if ($status_booking->approval_status == 'Expired')
+                                                    
+                                                @else
+                                                    <h4>
+                                                        <b>Price : {{number_format($status_booking->price_total)}}</b>
+                                                    </h4>
+                                                @endif
+                                            </p>
+                                            <hr>
+                                            <h5>Reminder :</h5>
+                                            @if ($status_booking->photo == null )
+                                                @if ($status_booking->approval_status == 'Expired')
+                                                    <p class="table-danger">
+                                                    <b> Time Limit For The Payment Is 1 Hour Or Your Booking Will Expire.</b>
+                                                    </p>
+                                                @else
+                                                    {{-- <p class="table-danger">
+                                                        If you don't pay for 1 hour then your booking will expired
+                                                    </p> --}}
+                                                    <div class="table-danger">Payment expires in <span id="time">60:00</span> minutes.</div>
+                                                    <form action="{{route('riding_class.confirmasion.payment')}}" method="POST" enctype="multipart/form-data">
+                                                        @csrf
+                                                        <div class="bank-number">
+                                                            <div class="card-bank">
+                                                                <div class="bank">
+                                                                    <img src="{{ asset('storage/'.$data_payment->photo) }}" alt="">
+                                                                    <div class="text">
+                                                                        <div class="name">{{$data_payment->account_name}}</div>
+                                                                        <div class="number">{{$data_payment->account_number}}</div>
                                                                     </div>
                                                                 </div>
+                                                                <div>															
+                                                                </div>
                                                             </div>
-                                                            <div class="form-group mt-10">
-                                                                <div class="col-12">
+                                                        </div>
+                                                        <div class="form-group mt-10">
+                                                            <div class="col-12">
+                                                                <div class="form-group row">
                                                                     <div class="col-lg-9 col-xl-6">
-                                                                        <div class="image-input" id="kt_image_2">
-                                                                            <div class="image-input-wrapper" style="background-image: url({{url('assets/media/users/user-1.png')}});"></div>
-                                                                            <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Upload proof of payment">
+                                                                        <label>Picture Proof of Payment</label>
+                                                                        <div class="image-input image-input-outline" id="kt_profile_avatar" style="background-image: url(assets/media/users/blank.png)">
+                                                                            <div class="image-input-wrapper" style="background-image: url(assets/media/users/300_21.jpg)"></div>
+                                                                            <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
                                                                                 <i class="fa fa-pen icon-sm text-muted"></i>
-                                                                                <input type="file" name="photo" accept=".png, .jpg, .jpeg">
-                                                                                <input type="hidden" name="file_remove" value="0">
+                                                                                <input type="file" name="photo" accept=".png, .jpg, .jpeg" />
+                                                                                <input type="hidden" name="profile_avatar_remove" />
                                                                             </label>
-                                                                            <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="" data-original-title="Cancel">
+                                                                            <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
+                                                                                <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                                            </span>
+                                                                            <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove avatar">
                                                                                 <i class="ki ki-bold-close icon-xs text-muted"></i>
                                                                             </span>
                                                                         </div>
-                                                                        <span class="form-text text-muted">Upload proof of payment types: png, jpg, jpeg.</span>
+                                                                        <span class="form-text text-muted">Allowed file types: png, jpg, jpeg.</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                                
-                                                            <input type="hidden" name="booking_id" value="{{$status_booking->id}}">
-                                                            <button type="submit" class="btn btn-payment w-100" id="add-payment">
-                                                                PAYMENT
-                                                            </button> 
-                                                        </form>
-                                                    @endif                                           
+                                                        </div>
+                                                            
+                                                        <input type="hidden" name="booking_id" value="{{$status_booking->id}}">
+                                                        <button type="submit" class="btn btn-payment w-100" id="add-payment">
+                                                            PAYMENT
+                                                        </button> 
+                                                    </form>
+                                                @endif                                           
+                                            @else
+                                                @if ($status_booking->approval_status == null)
+                                                    <span class="label label-lg label-light-danger label-inline">Pending.</span> 
                                                 @else
-                                                    @if ($status_booking->approval_status == null)
-                                                        <span class="label label-lg label-light-danger label-inline">Pending.</span> 
-                                                    @else
-                                                        <span class="label label-lg label-light-success label-inline">{{$status_booking->approval_status}}.</span> 
+                                                    <span class="label label-lg label-light-success label-inline">{{$status_booking->approval_status}}.</span> 
+
+                                                    @if($booking_detail->qr_code)
                                                         <div class="image">  
-                                                            @foreach ($booking_detail as $row)
-                                                                <img src="{{ asset('storage'.$row->qr_code) }}" />                                                       
-                                                            @endforeach                                    
+                                                            <img src="{{ asset('storage'.$booking_detail->qr_code) }}" />                              
                                                         </div>
                                                     @endif
                                                 @endif
-                                            </div>                                            
-                                        @endforeach
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -172,6 +242,7 @@
                 </div>
                 <!--end::Entry-->
             </div>
+
             <!-- Modal -->
             <div class="modal fade" id="modalReschedulePony" tabindex="-1" role="dialog" aria-labelledby="modalReschedulePony" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -189,43 +260,14 @@
                                 You have only one chance to rescheduling package
                             </p>
                             <form method="POST" action="{{route('riding_class.reschedule')}}">
-                                @csrf
-                                @foreach ($booking_detail as $detail)                                
-                                    {{ Form::hidden('id', $detail->id) }}
+                                @csrf                              
+                                    {{ Form::hidden('id', Crypt::encryptString($booking_detail->id)) }}
                                     {{ Form::hidden('uid', Auth::user()->id) }}
                                     <div class="form-group d-flex justify-content-center">
-                                        <div id="datePicker">                                        
+                                        <div id="datePickerPony">                                        
                                             <input type="hidden" name="date" id="my_hidden_input">
                                         </div>
-                                    </div>                                
-                                    @foreach ($data_list as $item)
-                                    @if ($item->session_usage == null)
-                                        @else
-                                            <div class="form-group">
-                                                <label>Start Time</label>
-                                                <div class="input-group timepicker">
-                                                    <input class="form-control" id="timePickerStart" readonly="readonly" name="time1" placeholder="Select time" type="text">
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text">
-                                                            <i class="la la-clock-o"></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>End Time</label>
-                                                <div class="input-group timepicker">
-                                                    <input class="form-control" id="timePickerEnd" readonly="readonly" name="time2" placeholder="Select time" type="text">
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text">
-                                                            <i class="la la-clock-o"></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endif
-                                    @endforeach
-                                @endforeach
+                                    </div>
                             </div>
                             <div class="modal-footer">											
                                 <button class="btn btn-secondary" data-dismiss="modal">RESET</button>
@@ -234,7 +276,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>            
 			<!--end::Content-->
 			@include('partials._footer')
 		</div>
@@ -244,6 +286,7 @@
 <!--end::Main-->
 @endsection
 @section('scripts')
+<script src="{{url('assets/js/pages/custom/profile/profile.js')}}"></script>
 <script type="text/javascript">
     $(document).ready(function () {
     //tampil edit detail
@@ -282,35 +325,43 @@
         
 
     $('body').on('click', '#reSchedulePony', function () {
-        // var id = $(this).data('id');
-        // $.get('{{route('package_approval.index')}}'+'/detail/package/' + id , function (data) {
-        //     $('#package_number').html(data.package_number);
-        //     $('#name').html(data.name);
-        //     if(data.user_id == null){
-        //         $('#owner').html('Something when wrong');
-        //     }else{
-        //         $('#owner').html(data.user.name);
-        //     }
-        //     $('#description').html(data.description);
-        //     $('#price').html(data.price);
-        //     $('#photo').attr('src','{{asset("storage/package/photo/")}}/'+(data.photo));
-        //     $('#approval_at').html(data.approval_at);
-        //     if(data.approval_by == null){
-        //         $('#approval_by').html('Need Approval');    
-        //     }else{
-        //         $('#approval_by').html(data.approvalby_package.name);
-        //     }
-        //     $('#approval_status').html(data.approval_status);
-        //     if(data.approval_at == null){
-        //         $('#approval_at').html('Need Approval');    
-        //     }
-        //     if(data.approval_status == null){
-        //         $('#approval_status').html('Need Approval');    
-        //     }                    
-        //     $('#stable').html(data.stable.name);
-        //     $('#attendance').html(data.attendance);
-        // })
-        $('#modalReschedulePony').modal('show');
+        Swal.fire({
+            title: 'Are you sure?',
+            icon: 'info',
+            text: 'You are only have one chance to reschedule.',
+            type: 'info',
+            showCancelButton: true,
+            confirmButtonText: 'Accept',
+            cancelButtonText: 'Cancel',
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }).then(function(getAction) {
+            if (getAction.value === true) {
+                $('#modalReschedulePony').modal('show');                
+            }
+        });        
+    });
+
+    $('body').on('click', '#reSchedule', function () {
+        Swal.fire({
+            title: 'Are you sure?',
+            icon: 'info',
+            text: 'You are only have one chance to reschedule.',
+            type: 'info',
+            showCancelButton: true,
+            confirmButtonText: 'Accept',
+            cancelButtonText: 'Cancel',
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }).then(function(getAction) {
+            if (getAction.value === true) {
+                var id = $(this).data('id');
+                $.get('{{route('riding_class.booking.list.qrcode')}}'+'/slotuser/' + id , function (data) {
+                    $('#name').val(data.name);
+                    $('#modalReschedule').modal('show');                
+                });
+            }
+        });        
     });
 
 </script>
@@ -328,6 +379,9 @@
         defaultTime: "7:00",
         showMeridian: !1,
         snapToStep: !0
+    });
+    $('#datePickerPony').datepicker({
+        startDate: new Date(),
     });
     $('#datePicker').datepicker({
         startDate: new Date(),
