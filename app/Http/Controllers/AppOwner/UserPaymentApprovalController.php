@@ -10,10 +10,12 @@ use Carbon\Carbon;
 
 // load model
 use App\Models\Booking;
+use App\Models\Package;
 
 // load plugin
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class UserPaymentApprovalController extends Controller
@@ -34,14 +36,14 @@ class UserPaymentApprovalController extends Controller
         })        
         ->editColumn('photo', function ($data) {
             return $data->photo ? '
-                <a href="' . asset('storage/booking/photo/'.$data->photo) . '" target="_blank"><img src="' . asset('storage/booking/photo/'.$data->photo) . '" style="max-width: 200px"></a>
+                <a href="' . asset('storage/booking/photo/'.$data->photo) . '" target="_blank"><img src="' . asset('storage/booking/photo/'.$data->photo) . '" style="max-width: 100px"></a>
             ' : '';
         })
         ->addColumn('approval_status', function ($data) {
             return $data->approval_status;
         })
         ->addColumn('bank', function ($data) {
-            return $data->bank_payment_id;
+            return $data->bank->account_number;
         })
         ->addColumn('action', function ($data) {
             return
@@ -67,14 +69,14 @@ class UserPaymentApprovalController extends Controller
         })        
         ->editColumn('photo', function ($data) {
             return $data->photo ? '
-                <a href="' . asset('storage/booking/photo/'.$data->photo) . '" target="_blank"><img src="' . asset('storage/booking/photo/'.$data->photo) . '" style="max-width: 200px"></a>
+                <a href="' . asset('storage/booking/photo/'.$data->photo) . '" target="_blank"><img src="' . asset('storage/booking/photo/'.$data->photo) . '" style="max-width: 100px"></a>
             ' : '';
         })
         ->addColumn('approval_status', function ($data) {
             return 'Pending';
         })
         ->addColumn('bank', function ($data) {
-            return $data->bank_payment_id;
+            return $data->bank->account_number;
         })
         ->addColumn('action', function ($data) {
             return
@@ -159,22 +161,44 @@ class UserPaymentApprovalController extends Controller
             'approval_at' => Carbon::now()
         ]);
 
+
         foreach ($data->booking_detail as $key => $row) {
-            $image = QrCode::format('png')
-                ->size(200)
-                ->generate(url("/booking-detail/$row->id/confirmation"));
 
-            $output_file = '/img/qr-code/img-' . time() . '.png';
+            $cek_package = Package::find($row->package_id);            
+            if($cek_package->session_usage == null){
+                $image = QrCode::format('png')
+                    ->size(200)
+                    ->generate(url("/booking-detail/$row->id/confirmation"));
+    
+                $output_file = '/img/qr-code/img-' . time() . $row->id . '.png';
+    
+                Storage::disk('public')->put($output_file, $image);
+    
+                $row->qr_code = $output_file;
+                $row->save();
+            }else{
+                
+                $slot_user = DB::table('slot_user')
+                ->where('booking_detail_id', $row->id)
+                ->get();
+                
+                foreach($slot_user as $user){
+                    $image = QrCode::format('png')
+                        ->size(200)
+                        ->generate(url("/booking-detail/$user->id/confirmation"));
+        
+                    $output_file = '/img/qr-code/img-' . time() . $user->id . '.png';
 
-            Storage::disk('public')->put($output_file, $image);
+                    Storage::disk('public')->put($output_file, $image);
 
-            $row->qr_code = $output_file;
-            $row->save();
+                    DB::table('slot_user')->where('id',$user->id)->update([
+                        'qr_code' => $output_file
+                    ]);
+                }                
+            }
 
             sleep(1); // add delay 1 seconds
         }
-
-        
 
         Alert::success($data->name.' Accepted', 'Success.')->persistent(true)->autoClose(3600);
         return redirect()->back();

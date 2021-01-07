@@ -17,6 +17,7 @@ use App\Models\Package;
 use App\Models\Booking;
 use App\Models\Province;
 use App\Models\BookingDetail;
+use App\Models\SlotUser;
 
 // load plugin
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -169,7 +170,6 @@ class RidingClassController extends Controller
                 $booking->bank_payment_id   = $request->payment;
                 $booking->save(); // save booking
     
-              
                 // insert booking detail
                 foreach (session("data_list_package") as $key => $row) {
         
@@ -185,8 +185,8 @@ class RidingClassController extends Controller
                                 'booking_detail_id' => $booking_detail->id,
                                 'slot_id'           => $data['slot_id'][$item],
                                 'user_id'           => Auth::user()->id,
-                                'qr_code'           => '-',
-                                'qr_code_status'    => '-',
+                                'created_at'        => Carbon::now(),
+                                'updated_at'        => Carbon::now(),
                             ]);
                         }
                         //update slot capacity_booked
@@ -243,6 +243,7 @@ class RidingClassController extends Controller
             ->leftJoin('packages as d', 'c.package_id', '=', 'd.id')
             ->leftJoin('stables as e', 'd.stable_id', '=', 'e.id')
             ->leftJoin('bookings as f', 'c.booking_id', '=', 'f.id')
+            ->where('f.approval_status', '!=','Reschedule')
             ->select('f.id', 'd.name', 'e.name as stable_name','f.approval_status')->groupBy('f.id', 'e.name', 'd.name')->get();
 
         return view('riding_class.history_order', compact('data', 'data_list', 'province'));
@@ -251,8 +252,9 @@ class RidingClassController extends Controller
     public function booking_list_qrcode(Request $request)
     {
         $data_booking_id = $request->booking_id;
-        $data_cekstatus = BookingDetail::where('booking_id', $data_booking_id)->select('booking_at')->first();
-        if(!$data_cekstatus->booking_at == null){
+        $data_cekstatus = BookingDetail::where('booking_id', $data_booking_id)->first();        
+        $cekPackage = Package::where('id', $data_cekstatus->package_id)->first();
+        if($cekPackage->session_usage == null){
             $data_list = DB::table('booking_details as c')
                 ->where('c.booking_id', $data_booking_id)
                 ->leftJoin('packages as d', 'c.package_id', '=', 'd.id')
@@ -260,33 +262,41 @@ class RidingClassController extends Controller
                 ->select('d.session_usage', 'c.booking_at','c.queue_no', 'd.name','session_usage', 'e.name as stable_name', 'c.price_subtotal')->get();
             
             $status_booking = Booking::select('*')->where('id', $data_booking_id)->first();
-            $booking_detail = BookingDetail::select('*')->where('booking_id', $data_booking_id)->limit(1)->get();
+            $booking_detail = BookingDetail::select('*')->where('booking_id', $data_booking_id)->get();
             $data_payment = DB::table('bank_payments')->where('id', $status_booking->bank_payment_id)->first();
+            $count_booking = count($booking_detail);
             
-            return view('riding_class.history-pay-confirmasi', compact('data_list', 'data_booking_id', 'status_booking', 'booking_detail', 'data_payment'));
+            if($count_booking > 1)
+            {
+                $booking_detail = BookingDetail::All()->where('booking_id', $data_booking_id)->max();                
+            }else{
+                $booking_detail = BookingDetail::All()->where('booking_id', $data_booking_id)->first();
+            }            
+            return view('riding_class.history-pay-confirmasi', compact('data_list', 'data_booking_id', 'status_booking', 'booking_detail', 'data_payment', 'count_booking', 'cekPackage'));
             
         }else{
             $data_list = DB::table('slot_user as a')
                 ->where('c.booking_id', $data_booking_id)
-                ->leftJoin('slots as b', 'a.slot_id', '=', 'b.id')
+                ->leftJoin('slots as b', 'b.id', '=', 'a.slot_id')
                 ->leftJoin('booking_details as c', 'a.booking_detail_id', '=', 'c.id')
                 ->leftJoin('packages as d', 'c.package_id', '=', 'd.id')
                 ->leftJoin('stables as e', 'd.stable_id', '=', 'e.id')
-                ->select('b.date', 'b.time_start', 'b.time_end', 'd.name','session_usage', 'e.name as stable_name')->get();
+                ->select('b.date', 'b.time_start', 'b.time_end', 'd.name','session_usage', 'e.name as stable_name', 'a.qr_code_status', 'a.qr_code', 'a.id as slot_user_id', 'a.slot_id as slot_id')->get();
             $status_booking = Booking::select('*')->where('id', $data_booking_id)->first();
-            $booking_detail = BookingDetail::select('*')->where('booking_id', $data_booking_id)->limit(1)->get();
+            $booking_detail = BookingDetail::select('*')->where('booking_id', $data_booking_id)->first();
             $data_payment = DB::table('bank_payments')->where('id', $status_booking->bank_payment_id)->first();
-                
-            return view('riding_class.history-pay-confirmasi', compact('data_list', 'data_booking_id', 'status_booking', 'booking_detail', 'data_payment'));
+            $slot_user = DB::table('slot_user')->where('booking_detail_id', $booking_detail->id)->get();
+            $check_schedule = SlotUser::where('booking_detail_id', $booking_detail->id)->where('qr_code_status', 'Reschedule')->first();
+
+            return view('riding_class.history-pay-confirmasi', compact('data_list', 'data_booking_id', 'status_booking', 'booking_detail', 'data_payment', 'cekPackage','check_schedule', 'slot_user'));
         }
     }
 
     public function reschedule(Request $request)
     {
         DB::beginTransaction();
-        $booking_detail = BookingDetail::find($request->id)->first();
-
-        $booking = Booking::find($booking_detail->booking_id)->first();
+        $booking_detail = BookingDetail::find(Crypt::decryptString($request->id));
+        $booking = Booking::find($booking_detail->booking_id);
 
         if($booking->user_id != $request->uid)
         {
@@ -294,32 +304,15 @@ class RidingClassController extends Controller
             return redirect()->back();
         }
 
-        $check = Package::find($booking_detail->package_id)->first();
-
+        $check = Package::find($booking_detail->package_id);
         if($check->session_usage == null)
         {
-            $booking->approval_status = 'Reschedule';
-            $booking->update();
+            $booking_detail->queue_status = 'Reschedule';
+            $booking_detail->update();
 
-            if(!$booking){
+            if(!$booking_detail){
                 DB::rollback();
-                Alert::error('Reschedule Error.', 'Check your own data.');
-                return redirect()->back();
-            }
-
-            $Query1 = new Booking();
-            $Query1->user_id = Auth::user()->id;
-            $Query1->price_total = $booking->price_total;
-            $Query1->photo = $booking->photo;
-            $Query1->approval_by = $booking->approval_by;
-            $Query1->approval_at = $booking->approval_at;
-            $Query1->approval_status = 'Accepted';
-            $Query1->bank_payment_id = $booking->bank_payment_id;
-
-            $Query1->save();
-            if(!$Query1){
-                DB::rollback();
-                Alert::error('Reschedule Error.', 'Check your own data.');
+                Alert::error('Reschedule Error.', 'Check your own data 1.');
                 return redirect()->back();
             }
 
@@ -330,44 +323,113 @@ class RidingClassController extends Controller
             else {
                 $noUrutAkhir = sprintf("%03s", 1);
             }
-            $Query2 = new BookingDetail();
-            $Query2->package_id = $booking_detail->package_id;
-            $Query2->price_subtotal = $booking_detail->price_subtotal;
-            $Query2->booking_id = $Query1->id;
-            $Query2->queue_no = $noUrutAkhir;
-            $Query2->booking_at = Carbon::parse($request->date)->toDateString();
+            $Query1 = new BookingDetail();
+            $Query1->package_id = $booking_detail->package_id;
+            $Query1->price_subtotal = $booking_detail->price_subtotal;
+            $Query1->booking_id = $booking_detail->booking_id;
+            $Query1->queue_no = $noUrutAkhir;
+            $Query1->booking_at = Carbon::parse($request->date)->toDateString();
 
-            $Query2->save();
+            $Query1->save();
 
-            if(!$Query2){
+            if(!$Query1){
                 DB::rollback();
-                Alert::error('Reschedule Error.', 'Check your own data.');
+                Alert::error('Reschedule Error.', 'Check your own data 2.');
                 return redirect()->back();
             }
-
-            $Query3 = BookingDetail::find($Query2->id)->first();
+            
             $image = QrCode::format('png')
                 ->size(200)
-                ->generate(url("/booking-detail/$Query3->id/confirmation"));
+                ->generate(url("/booking-detail/$Query1->id/confirmation"));
 
-            $output_file = '/img/qr-code/img-' . time() . '.png';
+            $output_file = '/img/qr-code/img-' . time() . $Query1->id .'.png';
 
             Storage::disk('public')->put($output_file, $image);
 
-            $Query3->qr_code = $output_file;
-            $Query3->update();
+            $Query1->qr_code = $output_file;
+            $Query1->update();
 
-            if(!$Query3){
+            if(!$Query1){
                 DB::rollback();
-                Alert::error('Reschedule Error.', 'Check your own data.');
+                Alert::error('Reschedule Error.', 'Check your own data 3.');
                 return redirect()->back();
             }
-            if($Query3){
+            if($Query1){
                 DB::commit();
                 Alert::success('Reschedule Success.', 'Success.')->persistent(true)->autoClose(3600);
                 return redirect()->back();
             }
         }
-        return response()->json($check);die;
+        else{
+            $slot_user = SlotUser::where('id', Crypt::decryptString($request->slot_user_id))->first();
+            $slot_user->qr_code_status = 'Reschedule';
+
+            $slot_user->update();
+
+            $slot = Slot::find($slot_user->slot_id);
+            $slotCapacity = $slot->capacity_booked - 1;
+            $slot->capacity_booked = $slotCapacity;
+            $slot->update();
+
+            if(!$slot_user)
+            {
+                DB::rollback();
+                Alert::error('Reschedule Error.', 'Check your own data 1.');
+                return redirect()->back();
+            }
+            
+            $Query = new SlotUser();
+            $Query->slot_id = $request->slot_id;
+            $Query->user_id = Auth::user()->id;
+            $Query->booking_detail_id = $booking_detail->id;
+            $Query->qr_code_status = null;
+            $Query->save();
+            if(!$Query){
+                DB::rollback();
+                Alert::error('Reschedule Error.', 'Check your own data 2.');
+                return redirect()->back();
+            }
+            
+            $image = QrCode::format('png')
+                ->size(200)
+                ->generate(url("/booking-detail/$Query->id/confirmation"));
+
+            $output_file = '/img/qr-code/img-' . time() . $Query->id . '.png';
+
+            Storage::disk('public')->put($output_file, $image);
+
+            $Query->qr_code = $output_file;
+            $Query->update();
+
+            if(!$Query){
+                DB::rollback();
+                Alert::error('Reschedule Error.', 'Check your own data 3.');
+                return redirect()->back();
+            }
+
+            $slot = Slot::find($request->slot_id);
+            $slotCapacity = $slot->capacity_booked + 1;
+            $slot->capacity_booked = $slotCapacity;
+            $slot->update();
+
+            if(!$slot){
+                DB::rollback();
+                Alert::error('Reschedule Error.', 'Check your own data 4.');
+                return redirect()->back();
+            }
+            DB::commit();
+            Alert::success('Reschedule Success.', 'Success.')->persistent(true)->autoClose(3600);
+            return redirect()->route('riding_class.history.order');
+        }
+    }
+
+    public function slot_user(Request $request)
+    {
+        $slot_user = DB::table('slot_user')->where('id', Crypt::decryptString($request->id))->first();
+        $booking_detail = BookingDetail::where('id', $slot_user->booking_detail_id)->first();
+        $package = DB::table('packages')->where('id', $booking_detail->package_id)->first();
+        $slots = DB::table('slots')->where('id', $slot_user->slot_id)->first(); 
+        $slot = DB::table('slots')->select('date', 'user_id')->where('user_id', $package->user_id)->groupBy('date', 'user_id')->orderBy('date', 'asc')->get();
+        return view('riding_class.reschedule', compact('slot_user','booking_detail','slot','slots','package'));
     }
 }

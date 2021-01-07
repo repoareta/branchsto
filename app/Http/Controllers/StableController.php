@@ -141,7 +141,8 @@ class StableController extends Controller
     public function stable_close(Request $request)
     {
         $data_booking = BookingDetail::where('id', $request->id)->select('booking_at')->first();
-        if (!$data_booking->booking_at == null) {
+        $checkPackage = Package::where('id', $data_booking->package_id)->first();
+        if ($checkPackage->session_usage == null) {
             $data_list  = DB::table('bookings as a')
             ->where('b.id', $request->id)
             ->leftJoin('booking_details as b', 'b.booking_id', '=', 'a.id')
