@@ -85,71 +85,80 @@
                                                 @endif
                                             @else
                                                 @foreach ($data_list as $item)
-                                                <h4>
-                                                    Package {{$item->name}}
-                                                </h4>
-                                                <p>
-                                                    Stable {{$item->stable_name}}
-                                                </p>
-                                                <table class="table table-borderless table-dark mb-10">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td width="15%" scope="row">Day</td>
-                                                            <td width="5%" scope="row">:</td>
-                                                            <td  scope="row">{{date('l',strtotime($item->date))}}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td width="15%" scope="row">Date</td>
-                                                            <td width="5%" scope="row">:</td>
-                                                            <td  scope="row">{{$item->date}}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td width="15%" scope="row">Session</td>
-                                                            <td width="5%" scope="row">:</td>
-                                                            <td  scope="row">{{$item->time_start}} - {{$item->time_end}}</td>
-                                                        </tr>                                                                                                                    
-                                                            @if ($item->qr_code_status == null)
+                                                    @if ($item->qr_code_status == 'Reschedule')
+                                                                
+                                                    @else
+                                                        <h4>
+                                                            Package {{$item->name}}
+                                                        </h4>
+                                                        <p>
+                                                            Stable {{$item->stable_name}}
+                                                        </p>
+                                                        <table class="table table-borderless table-dark mb-10">
+                                                            <tbody>
                                                                 <tr>
-                                                                    <td width="15%" scope="row">Status</td>
+                                                                    <td width="15%" scope="row">Day</td>
                                                                     <td width="5%" scope="row">:</td>
-                                                                    <td  scope="row">
-                                                                        <span class="label label-lg label-light-success label-inline">
-                                                                            Active
-                                                                        </span>
-                                                                    </td>
+                                                                    <td  scope="row">{{date('l',strtotime($item->date))}}</td>
                                                                 </tr>
-                                                            @else
-                                                            <tr>
-                                                                <td width="15%" scope="row">Status</td>
-                                                                <td width="5%" scope="row">:</td>
-                                                                <td  scope="row">
-                                                                    <span class="label label-lg label-light-success label-inline">
-                                                                        {{$item->qr_code_status}}
-                                                                    </span>
-                                                                </td>
-                                                            </tr>
-                                                            @endif
-                                                    </tbody>
-                                                </table>
-                                                <div class="table-danger d-none">Payment expires in <span id="time">60:00</span> minutes.</div>
-                                                @if(!$check_schedule)
-                                                    <form id="formSchedule{{$item->slot_user_id}}" method='get' action="{{route("riding_class.booking.list.slot_user")}}">
-                                                        @csrf
-                                                            {!! Form::hidden('id', Crypt::encryptString($item->slot_user_id)) !!}
-                                                            <button class="btn btn-light-success font-weight-bold mr-2 mb-5" id="reSchedule{{$item->slot_user_id}}" data-id="{{$item->slot_user_id}}">
-                                                                <i class="far fa-calendar-alt"></i>
-                                                                Reschedule
-                                                            </button>
-                                                    </form>
-                                                @else
-                                                    <span class="label label-lg label-light-danger label-inline mb-5">
-                                                        You are not allowed to reschedule again
-                                                    </span>
-                                                @endif
-                                                
-                                                <div class="image mb-19">  
-                                                    <img src="{{ asset('storage'.$item->qr_code) }}" />
-                                                </div>
+                                                                <tr>
+                                                                    <td width="15%" scope="row">Date</td>
+                                                                    <td width="5%" scope="row">:</td>
+                                                                    <td  scope="row">{{$item->date}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="15%" scope="row">Session</td>
+                                                                    <td width="5%" scope="row">:</td>
+                                                                    <td  scope="row">{{$item->time_start}} - {{$item->time_end}}</td>
+                                                                </tr>                                                                                                                    
+                                                                    @if ($item->qr_code_status == null)
+                                                                    @if($status_booking->approval_status == 'Accepted')
+                                                                    <tr>
+                                                                        <td width="15%" scope="row">Status</td>
+                                                                        <td width="5%" scope="row">:</td>
+                                                                        <td  scope="row">
+                                                                            <span class="label label-lg label-light-success label-inline">
+                                                                                Active
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    @endif
+                                                                    @else                                                                
+                                                                            <tr>
+                                                                                <td width="15%" scope="row">Status</td>
+                                                                                <td width="5%" scope="row">:</td>
+                                                                                <td  scope="row">
+                                                                                    <span class="label label-lg label-light-danger label-inline">
+                                                                                        {{$item->qr_code_status}}
+                                                                                    </span>
+                                                                                </td>
+                                                                            </tr>
+                                                                    @endif
+                                                            </tbody>
+                                                        </table>
+                                                        <div class="table-danger d-none">Payment expires in <span id="time">60:00</span> minutes.</div>
+                                                        @if(!$check_schedule)
+                                                        @if($status_booking->approval_status == 'Accepted')
+                                                            <form id="formSchedule{{$item->slot_user_id}}" method='get' action="{{route("riding_class.booking.list.slot_user")}}">
+                                                                @csrf
+                                                                    {!! Form::hidden('id', Crypt::encryptString($item->slot_user_id)) !!}
+                                                                    <button class="btn btn-light-success font-weight-bold mr-2 mb-5" id="reSchedule{{$item->slot_user_id}}" data-id="{{$item->slot_user_id}}">
+                                                                        <i class="far fa-calendar-alt"></i>
+                                                                        Reschedule
+                                                                    </button>
+                                                            </form>
+                                                        @endif
+                                                        @else
+                                                            <span class="label label-lg label-light-danger label-inline mb-5">
+                                                                You are not allowed to reschedule again
+                                                            </span>
+                                                        @endif
+                                                        @if($status_booking->approval_status == 'Accepted')
+                                                        <div class="image mb-19">  
+                                                            <img src="{{ asset('storage'.$item->qr_code) }}" />
+                                                        </div>
+                                                        @endif
+                                                    @endif
                                                 @endforeach
                                             @endif                                            
                                             <p class="mb-0">

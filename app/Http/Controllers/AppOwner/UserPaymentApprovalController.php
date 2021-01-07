@@ -185,9 +185,9 @@ class UserPaymentApprovalController extends Controller
                 foreach($slot_user as $user){
                     $image = QrCode::format('png')
                         ->size(200)
-                        ->generate(url("/booking-detail/$user->id/confirmation"));
+                        ->generate(url("/booking-detail/$row->id/confirmation"));
         
-                    $output_file = '/img/qr-code/img-' . time() . $user->id . '.png';
+                    $output_file = '/img/qr-code/img-' . time() . $row->id . $user->id . '.png';
 
                     Storage::disk('public')->put($output_file, $image);
 
