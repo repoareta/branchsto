@@ -22,10 +22,10 @@
                                 </h5>
                                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 font-size-lg mb-0">
                                     <li class="breadcrumb-item">
-                                        <a href="">HOME</a>
+                                        <a href="{{route('competitions.index')}}">HOME</a>
                                     </li>
                                     <li class="breadcrumb-item">
-                                        <a href="">LIST PACKAGE</a>
+                                        <a href="{{route('riding_class.search_class')}}">LIST PACKAGE</a>
                                     </li>
                                 </ul>
                             </div>

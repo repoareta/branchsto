@@ -304,6 +304,7 @@ class RidingClassController extends Controller
             $booking_detail = BookingDetail::select('*')->where('booking_id', $data_booking_id)->get();
             $data_payment = DB::table('bank_payments')->where('id', $status_booking->bank_payment_id)->first();
             $count_booking = count($booking_detail);
+            $slot_user = null;
             
             if($count_booking > 1)
             {
@@ -311,7 +312,7 @@ class RidingClassController extends Controller
             }else{
                 $booking_detail = BookingDetail::All()->where('booking_id', $data_booking_id)->first();
             }            
-            return view('riding_class.history-pay-confirmasi', compact('data_list', 'data_booking_id', 'status_booking', 'booking_detail', 'data_payment', 'count_booking', 'cekPackage'));
+            return view('riding_class.history-pay-confirmasi', compact('data_list', 'data_booking_id', 'status_booking', 'booking_detail', 'data_payment', 'count_booking', 'cekPackage', 'slot_user'));
             
         }else{
             $data_list = DB::table('slot_user as a')                
@@ -439,7 +440,12 @@ class RidingClassController extends Controller
             $end = substr($request->time,9);
             $slotID = Slot::where('user_id', $slot->user_id)->where('date', $request->date)
             ->where('time_start', $start)->where('time_end', $end)->first();
-
+            if($slot->id == $slotID->id)
+            {
+                DB::rollback();
+                Alert::error('Reschedule Error.', 'Cannot choose same date and time.');
+                return redirect()->back();
+            }
             $Query->slot_id = $slotID->id;
             $Query->user_id = Auth::user()->id;
             $Query->booking_detail_id = $booking_detail->id;
