@@ -73,18 +73,30 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         @foreach ($data_list as $item)
-                                        <a href="{{route('riding_class.booking.list.qrcode', ['booking_id' => $item->id])}}" class="card-history">
-                                            <div class="title">{{$item->name}} - {{$item->stable_name}}</div>
-                                            @if($item->approval_status == null)
-                                                <span class='label label-lg label-light-warning label-inline'>Pending.</span>
-                                            @endif
-                                            @if($item->approval_status == 'Accepted')
-                                                <span class='label label-lg label-light-success label-inline'>Accepted.</span>
-                                            @endif
-                                            @if($item->approval_status == 'Expired')
+                                        <?php if ($item->approval_status == 'Reschedule'){ ?>
+                                            <a disabled aria-disabled="true" class="card-history">
+                                                <div class="title">{{$item->name}} - {{$item->stable_name}}</div>
+                                                <span class='label label-lg label-light-danger label-inline'>Reschedule.</span>
+                                            </a>
+                                        <?php }elseif ($item->approval_status == 'Decline'){ ?>
+                                            <a disabled aria-disabled="true" class="card-history">
+                                                <div class="title">{{$item->name}} - {{$item->stable_name}}</div>
                                                 <span class='label label-lg label-light-danger label-inline'>Expired.</span>
-                                            @endif
-                                        </a>
+                                            </a>
+                                        <?php }else{ ?>
+                                            <a href="{{route('riding_class.booking.list.qrcode', ['booking_id' => $item->id])}}" class="card-history">
+                                                <div class="title">{{$item->name}} - {{$item->stable_name}}</div>
+                                                @if($item->approval_status == null)
+                                                    <span class='label label-lg label-light-warning label-inline'>Pending.</span>
+                                                @endif
+                                                @if($item->approval_status == 'Accepted')
+                                                    <span class='label label-lg label-light-success label-inline'>Accepted.</span>
+                                                @endif
+                                                @if($item->approval_status == 'Expired')
+                                                    <span class='label label-lg label-light-danger label-inline'>Expired.</span>
+                                                @endif
+                                            </a>
+                                        <?php } ?>
                                         @endforeach
                                     </div>
                                 </div>

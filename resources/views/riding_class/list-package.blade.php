@@ -42,24 +42,12 @@
                                                     <input type="text" name="name" class="form-control" placeholder="Stable Name">
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="input-group date">
-                                                        <input type="text" class="form-control" readonly="readonly" placeholder="Date">
-                                                        <div class="input-group-append">
-                                                            <span class="input-group-text">
-                                                                <i class="la la-calendar-check-o"></i>
-                                                            </span>
-                                                        </div>
-                                                    </div>
+                                                    <label>Date</label>
+                                                    <input type="text" class="form-control" autocomplete="off" name="date" id="datePicker">
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="input-group date">
-                                                        <input type="text" class="form-control" readonly="readonly" placeholder="Time">
-                                                        <div class="input-group-append">
-                                                            <span class="input-group-text">
-                                                                <i class="la la-calendar-check-o"></i>
-                                                            </span>
-                                                        </div>
-                                                    </div>
+                                                    <label>Time Start</label>
+                                                    <input type="text" class="form-control" autocomplete="off" name="time_start" id="timePicker">
                                                 </div>
                                                 <div class="d-flex justify-content-between align-self-end">
                                                     <button class="btn btn-secondary">RESET</button>
@@ -70,54 +58,118 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-9">
+                                    @if ($data)
                                     <div class="row">
-                                        @foreach ($data as $row)
-                                        <div class="col-lg-4 col-md-6 col-12 my-5">
-                                            <div class="competition-card package">
-                                                <div class="image">					
-                                                    <div class="register">
-                                                        <a href="{{route('riding_class.booking_class', ['id' => Crypt::encryptString($row->id)])}}">
-                                                            BOOKING NOW
-                                                            <img src="{{url('assets/media/branchsto/double-arrow.svg')}}" alt="">
-                                                        </a>
+                                    @foreach ($data as $stable)
+                                        @if ($data && $data2)
+                                            @foreach ($data2 as $time)
+                                                @if ($time->user_id == $stable->user_id)
+                                                    @foreach ($stable->package as $package)
+                                                    <div class="col-lg-4 col-md-6 col-12 my-5">
+                                                        <div class="competition-card package">
+                                                            <div class="image">					
+                                                                <div class="register">
+                                                                    <a href="{{route('riding_class.booking_class', ['id' => Crypt::encryptString($package->id),
+                                                                        'time_start' => $time->time_start, 'date' => $time->date])}}">
+                                                                        BOOKING NOW
+                                                                        <img src="{{url('assets/media/branchsto/double-arrow.svg')}}" alt="">
+                                                                    </a>
+                                                                </div>
+                                                                <div class="live">Priority</div>
+                                                                @if ($package->photo)
+                                                                    <img src="{{asset('storage/package/photo/'.$package->photo)}}" alt="">                                                        
+                                                                @else
+                                                                    <img src="{{url('assets/media/branchsto/Rectangle 140.png')}}" alt="">                                                        
+                                                                @endif
+                                                                <div class="overlay"></div>
+                                                            </div>
+                                                            <div class="title">
+                                                                {{strtoupper($stable->name)}}
+                                                            </div>
+                                                            <div class="subtitle">
+                                                                {{strtoupper($package->name)}}
+                                                            </div>
+                                                            <table class="table package">
+                                                                <tr>
+                                                                    <td>
+                                                                        Rp. {{number_format($package->price,0,'.','.')}}
+                                                                    </td>
+                                                                    <td class="text-right">
+                                                                        <a href="">
+                                                                            <i class="fas fa-share-alt"></i>
+                                                                        </a>
+                                                                        <a href="">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
+                                                                                <path d="M14 10L11 14V28C11 28.5304 11.2107 29.0391 11.5858 29.4142C11.9609 29.7893 12.4696 30 13 30H27C27.5304 30 28.0391 29.7893 28.4142 29.4142C28.7893 29.0391 29 28.5304 29 28V14L26 10H14Z" stroke="#2A4158" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                                <path d="M11 14H29" stroke="#2A4158" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                                <path d="M24 18C24 19.0609 23.5786 20.0783 22.8284 20.8284C22.0783 21.5786 21.0609 22 20 22C18.9391 22 17.9217 21.5786 17.1716 20.8284C16.4214 20.0783 16 19.0609 16 18" stroke="#2A4158" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                                </svg>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>                                            
+                                                    @endforeach                                                    
+                                                @endif
+                                            @endforeach                                            
+                                        @else
+                                            @foreach ($stable->package as $package)
+                                                <div class="col-lg-4 col-md-6 col-12 my-5">
+                                                    <div class="competition-card package">
+                                                        <div class="image">					
+                                                            <div class="register">
+                                                                <a href="{{route('riding_class.booking_class', ['id' => Crypt::encryptString($package->id)])}}">
+                                                                    BOOKING NOW
+                                                                    <img src="{{url('assets/media/branchsto/double-arrow.svg')}}" alt="">
+                                                                </a>
+                                                            </div>
+                                                            <div class="live">Priority</div>
+                                                            @if ($package->photo)
+                                                                <img src="{{asset('storage/package/photo/'.$package->photo)}}" alt="">                                                        
+                                                            @else
+                                                                <img src="{{url('assets/media/branchsto/Rectangle 140.png')}}" alt="">                                                        
+                                                            @endif
+                                                            <div class="overlay"></div>
+                                                        </div>
+                                                        <div class="title">
+                                                            {{strtoupper($stable->name)}}
+                                                        </div>
+                                                        <div class="subtitle">
+                                                            {{strtoupper($package->name)}}
+                                                        </div>
+                                                        <table class="table package">
+                                                            <tr>
+                                                                <td>
+                                                                    Rp. {{number_format($package->price,0,'.','.')}}
+                                                                </td>
+                                                                <td class="text-right">
+                                                                    <a href="">
+                                                                        <i class="fas fa-share-alt"></i>
+                                                                    </a>
+                                                                    <a href="">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
+                                                                            <path d="M14 10L11 14V28C11 28.5304 11.2107 29.0391 11.5858 29.4142C11.9609 29.7893 12.4696 30 13 30H27C27.5304 30 28.0391 29.7893 28.4142 29.4142C28.7893 29.0391 29 28.5304 29 28V14L26 10H14Z" stroke="#2A4158" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                            <path d="M11 14H29" stroke="#2A4158" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                            <path d="M24 18C24 19.0609 23.5786 20.0783 22.8284 20.8284C22.0783 21.5786 21.0609 22 20 22C18.9391 22 17.9217 21.5786 17.1716 20.8284C16.4214 20.0783 16 19.0609 16 18" stroke="#2A4158" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                            </svg>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
                                                     </div>
-                                                    <div class="live">Priority</div>
-                                                    @if ($row->photo)
-                                                        <img src="{{asset('storage/package/photo/'.$row->photo)}}" alt="">                                                        
-                                                    @else
-                                                        <img src="{{url('assets/media/branchsto/Rectangle 140.png')}}" alt="">                                                        
-                                                    @endif
-                                                    <div class="overlay"></div>
-                                                </div>
-                                                <div class="title">
-                                                    {{strtoupper($row->stable->name)}}
-                                                </div>
-                                                <div class="subtitle">
-                                                    {{strtoupper($row->name)}}
-                                                </div>
-                                                <table class="table package">
-                                                    <tr>
-                                                        <td>
-                                                            Rp. {{number_format($row->price,0,'.','.')}}
-                                                        </td>
-                                                        <td class="text-right">
-                                                            <a href="">
-                                                                <i class="fas fa-share-alt"></i>
-                                                            </a>
-                                                            <a href="">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
-                                                                    <path d="M14 10L11 14V28C11 28.5304 11.2107 29.0391 11.5858 29.4142C11.9609 29.7893 12.4696 30 13 30H27C27.5304 30 28.0391 29.7893 28.4142 29.4142C28.7893 29.0391 29 28.5304 29 28V14L26 10H14Z" stroke="#2A4158" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                                                    <path d="M11 14H29" stroke="#2A4158" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                                                    <path d="M24 18C24 19.0609 23.5786 20.0783 22.8284 20.8284C22.0783 21.5786 21.0609 22 20 22C18.9391 22 17.9217 21.5786 17.1716 20.8284C16.4214 20.0783 16 19.0609 16 18" stroke="#2A4158" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                                                    </svg>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        @endforeach
+                                                </div>                                            
+                                            @endforeach                                            
+                                        @endif
+                                    @endforeach
                                     </div>
+                                    @else
+                                    <div class="row h-100 text-center align-items-center">
+                                        <div class="col-12">
+                                            <h3 class="secondary-text">No Data, Please Search Again</h3>
+                                        </div>
+                                    </div>
+                                    @endif
                                 </div>
                             </div>							
                         </div>
@@ -136,5 +188,21 @@
 <!--end::Main-->
 
 @endsection
-@push('add-script')
+@push('script-no-dt')
+<script>
+    $('#datePicker').datepicker({
+        todayHighlight: true,
+        startDate: new Date(),
+        orientation: "bottom left",
+        autoclose: true,
+        // language : 'id',
+        format   : 'yyyy-mm-dd'
+    });
+    $('#timePicker').timepicker({
+        minuteStep: 1,
+        defaultTime: null,
+        showMeridian: !1,
+        snapToStep: !0
+    });
+</script>
 @endpush

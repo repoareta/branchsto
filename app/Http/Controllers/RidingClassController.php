@@ -28,28 +28,71 @@ class RidingClassController extends Controller
     //tampilan list package
     public function search_list_class(Request $request)
     {
-        $Query = Package::select('*')->where('approval_status', 'Accepted');
-        if ($request->has('name') && $request->name != null) {
-            $Query->where(function ($query) use ($request) {
-                $query->orWhereRaw("lower(name) like '%" . strtolower($request->name) . "%'");
-            });
-        }
-        if ($request->has('date') && $request->date != null) {
-            $Query->where('date', $request->date);
-        }
-        if ($request->has('time') && $request->time != null) {
-            $Query->where('time', $request->time);
-        }
+        $data = '';
+        $data2 = '';
+        if($request->all()){
 
-        $data = $Query->get();
-        return view('riding_class.list-package', compact('data'));
+            if($request->date && $request->time_start){
+
+                $Query = Stable::with(['package' => function($q){
+                    $q->where('packages.session_usage', 'Yes');
+                }])->where('approval_status', 'Accepted');
+
+                if ($request->has('name') && $request->name != null) {
+                    $Query->where(function ($query) use ($request) {    
+                        $query->orWhereRaw("lower(name) like '%" . strtolower($request->name) . "%'");
+                    });
+                }
+    
+    
+                $Query2 = Slot::select('*');
+                if ($request->has('date') && $request->date != null) {
+                    $Query2->where('date', $request->date);
+                    if ($request->has('time_start') && $request->time_start != null) {
+                        $Query2->where('time_start', $request->time_start);
+                    }else{
+                        $Query2 = null;
+                    }
+                }else{
+                    $Query2 = null;
+                }
+                // // return response()->json($Query2->get());
+                // // return response()->json($Query2->get());die;
+                // var_dump(count($Query2->get()));die;
+                // // var_dump(($Query2));die;
+                if(count($Query2->get()) == 0){
+                    $data = '';
+                }else{
+                    $data = $Query->get();
+                    $data2 = $Query2->get();
+                }
+                // return response()->json($Query->first());
+            }else if($request->name){
+                $Query = Stable::with(['package' => function($q){
+                    $q->where('packages.session_usage', null);
+                }])->where('approval_status', 'Accepted');
+                if ($request->has('name') && $request->name != null) {
+                    $Query->where(function ($query) use ($request) {
+    
+                        $query->orWhereRaw("lower(name) like '%" . strtolower($request->name) . "%'");
+                    });
+                }
+                
+                $data = $Query->get();
+            }else{
+                $data = '';
+            }
+
+        }
+        return view('riding_class.list-package', compact('data','data2'));
     }
 
     // tampilan booking package untuk memilih choose date
     public function booking_class(Request $request)
     {
         $list_detail = Package::with(['stable'])->where('id', Crypt::decryptString($request->id))->first();
-        $data_slot = Slot::select('date', 'user_id')->where('user_id', $list_detail->user_id)->groupBy('date', 'user_id')->orderBy('date', 'asc')->get();
+        $data_slot = Slot::select('*')->where('user_id', $list_detail->user_id)->
+        where('time_start', $request->time_start)->where('date', $request->date)->get();
         return view('riding_class.booking-package', compact('list_detail', 'data_slot'));
     }
     
@@ -75,15 +118,13 @@ class RidingClassController extends Controller
             session()->put('session_usage', $data2);
             return redirect()->route('riding_class.pesan.addCart');
         }else{
-            $data = $request->all();
-            foreach ($data['chackbox'] as $item => $value) {
-                if (!$data['chackbox'][$item] == null) {
-                    $data2 = array(
-                        'slot_id'               => $data['chackbox'][$item],
-                    );
-                    session()->push('data_list_slot', $data2);
-                }
-            }
+            $data2 = array(
+                'slot_id'               => $request->slot_id,
+                'time_start'            => $request->time_start,
+                'time_end'              => $request->time_end,
+                'date'                  => $request->date,
+            );
+            session()->push('data_list_slot', $data2);
 
             $data1 = array(
                 'package_id'            => $request->package_id,
@@ -93,10 +134,11 @@ class RidingClassController extends Controller
                 'price_total'           => $request->price_total,
                 'price_subtotal'        => $request->price_subtotal,
             );
-            $data2 =  $request->usage_status;
+            $data2 =  'riding_class';
 
             session()->push('data_list_package', $data1);
             session()->put('session_usage', $data2);
+            // var_dump(session("data_list_slot"));die;
             return redirect()->route('riding_class.pesan.addCart');
         }
     }
@@ -108,7 +150,7 @@ class RidingClassController extends Controller
         if (session("data_list_package") == null) {
             return redirect()->route('riding_class.search_class');
         } else {
-            $data_list_slot = session("data_list_slot");
+            $data_list_slot = session("data_list_slot");            
             $data_list_package = session("data_list_package");
             $data_session_usage = session()->get("session_usage");
             $data_payment = DB::table('bank_payments')->get();
@@ -178,22 +220,20 @@ class RidingClassController extends Controller
                     $booking_detail->booking_id = $booking->id;
                     $booking_detail->booking_at     = null;
                     $booking_detail->save();
-        
-                    foreach ($data['slot_id'] as $item => $value) {
-                        if (!$data['slot_id'][$item] == null) {
-                            DB::table('slot_user')->insert([
-                                'booking_detail_id' => $booking_detail->id,
-                                'slot_id'           => $data['slot_id'][$item],
-                                'user_id'           => Auth::user()->id,
-                                'created_at'        => Carbon::now(),
-                                'updated_at'        => Carbon::now(),
-                            ]);
-                        }
-                        //update slot capacity_booked
-                        $count = DB::table('slot_user')->where('slot_id', $data['slot_id'][$item])->count();
-                        $slot = Slot::find($data['slot_id'][$item]);
-                        $slot->capacity_booked   = $count;
-                        $slot->save();
+
+                    if (!$data['slot_id'] == null) {
+                        DB::table('slot_user')->insert([
+                            'booking_detail_id' => $booking_detail->id,
+                            'slot_id'           => $data['slot_id'],
+                            'user_id'           => Auth::user()->id,
+                            'created_at'        => Carbon::now(),
+                            'updated_at'        => Carbon::now(),
+                        ]);
+                    //update slot capacity_booked
+                    $count = DB::table('slot_user')->where('slot_id', $data['slot_id'])->count();
+                    $slot = Slot::find($data['slot_id']);
+                    $slot->capacity_booked   = $count;
+                    $slot->save();
     
                     }
                 }
@@ -238,11 +278,11 @@ class RidingClassController extends Controller
         $province = Province::all();
         $data = Stable::with(['user'])->where('user_id', Auth::user()->id)->first();
         $data_list = DB::table('booking_details as c')
+            ->orderBy('id','DESC')
             ->where('f.user_id', Auth::user()->id)
             ->leftJoin('packages as d', 'c.package_id', '=', 'd.id')
             ->leftJoin('stables as e', 'd.stable_id', '=', 'e.id')
             ->leftJoin('bookings as f', 'c.booking_id', '=', 'f.id')
-            ->where('f.approval_status', '!=','Reschedule')
             ->select('f.id', 'd.name', 'e.name as stable_name','f.approval_status')->groupBy('f.id', 'e.name', 'd.name')->get();
 
         return view('riding_class.history_order', compact('data', 'data_list', 'province'));
@@ -283,11 +323,21 @@ class RidingClassController extends Controller
                 ->select('b.date', 'b.time_start', 'b.time_end', 'd.name','session_usage', 'e.name as stable_name', 'a.qr_code_status', 'a.qr_code', 'a.id as slot_user_id', 'a.slot_id as slot_id')->get();
             $status_booking = Booking::select('*')->where('id', $data_booking_id)->first();
             $booking_detail = BookingDetail::select('*')->where('booking_id', $data_booking_id)->first();
+            $package = Package::select('*')->where('id', $booking_detail->package_id)->first();
             $data_payment = DB::table('bank_payments')->where('id', $status_booking->bank_payment_id)->first();
             $slot_user = DB::table('slot_user')->where('booking_detail_id', $booking_detail->id)->get();
+            $slots = Slot::where('user_id', $package->user_id)->get();
             $check_schedule = SlotUser::where('booking_detail_id', $booking_detail->id)->where('qr_code_status', 'Reschedule')->first();
 
-            return view('riding_class.history-pay-confirmasi', compact('data_list', 'data_booking_id', 'status_booking', 'booking_detail', 'data_payment', 'cekPackage','check_schedule', 'slot_user'));
+            return view('riding_class.history-pay-confirmasi', compact('data_list', 'data_booking_id', 'status_booking', 'booking_detail', 'data_payment', 'cekPackage','check_schedule', 'slot_user', 'slots'));
+        }
+    }
+
+    public function get_slot(Request $request)
+    {
+        if($request->ajax()){
+            $slot = Slot::where('date',$request->date)->where('user_id', $request->id)->get();
+            return response()->json($slot);
         }
     }
 
@@ -384,7 +434,12 @@ class RidingClassController extends Controller
             }
             
             $Query = new SlotUser();
-            $Query->slot_id = $request->slot_id;
+
+            $start = substr($request->time,-9);
+            $end = substr($request->time,9);
+            $slotID = Slot::where('user_id', $slot->user_id)->where('date', $request->date)
+            ->where('time_start', $start)->where('time_end', $end)->first();
+            $Query->slot_id = $slotID;
             $Query->user_id = Auth::user()->id;
             $Query->booking_detail_id = $booking_detail->id;
             $Query->qr_code_status = null;
@@ -412,7 +467,7 @@ class RidingClassController extends Controller
                 return redirect()->back();
             }
 
-            $slot = Slot::find($request->slot_id);
+            $slot = Slot::find($slotID);
             $slotCapacity = $slot->capacity_booked + 1;
             $slot->capacity_booked = $slotCapacity;
             $slot->update();

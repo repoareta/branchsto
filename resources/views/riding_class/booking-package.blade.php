@@ -63,47 +63,37 @@
                                                             <td>:</td>
                                                             <td >{{number_format($list_detail->price,0,'.','.')}}</td>
                                                         </tr>
+                                                        @if ($list_detail->session_usage == null)
                                                         <tr>
                                                             <td >Choose Date</td>
                                                             <td>:</td>
                                                             <td >
-                                                                @if ($list_detail->session_usage == null)
-                                                                    <div class="form-group row">
-                                                                        <div class="col-lg-4 col-md-9 col-sm-12">
-                                                                            <input type="text" id="kt_datepicker_6" name="date_pony_ride" required autocomplete='off'>
-                                                                            <input type="hidden" name="usage_status" value="pony_ride">
-                                                                        </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-lg-4 col-md-9 col-sm-12">
+                                                                        <input type="text" id="kt_datepicker_6" name="date_pony_ride" required autocomplete='off'>
+                                                                        <input type="hidden" name="usage_status" value="pony_ride">
                                                                     </div>
-                                                                @else
-                                                                    <div class="card-body">
-                                                                        <ul id="browser" class="filetree">
-                                                                            @foreach ($data_slot as $item)
-                                                                            <li  class="closed"><span class="folder pointer-link kt-subheader__breadcrumbs-link" >{{$item->date}}</span>
-                                                                                <ul class="jstree-container-ul jstree-children">
-                                                                                    @foreach (DB::table('slots')->where('user_id',$item->user_id)->where('date', $item->date)->where('capacity','<>','0')->orderBy('time_start','asc')->get() as $item)
-                                                                                        <li style="margin-left:-30px">
-                                                                                            <span class="file pointer-link kt-subheader__breadcrumbs-link pointer-link" data-toggle="kt-tooltip" data-placement="top" title="Click Time">
-                                                                                                {{$item->time_start}} - {{$item->time_end}}
-                                                                                                @if ($item->capacity > $item->capacity_booked)
-                                                                                                    <input type="checkbox" name="chackbox[]" data-exval="1" value="{{$item->id}}" class="ponter-link">
-                                                                                                @else
-                                                                                                    <input type="checkbox" disabled>
-                                                                                                @endif
-                                                                                                <input type="hidden" name="time1[]" value="{{$item->time_start}}" class="ponter-link">
-                                                                                                <input type="hidden" name="time2[]" value="{{$item->time_end}}" class="ponter-link">
-                                                                                                <input type="hidden" name="date[]" value="{{$item->date}}" class="ponter-link">
-                                                                                            </span>
-                                                                                        </li>
-                                                                                    @endforeach
-                                                                                </ul>
-                                                                            </li>
-                                                                            @endforeach
-                                                                        </ul>
-                                                                    </div>
-                                                                    <input type="hidden" name="usage_status" value="riding_class">
-                                                                @endif
+                                                                </div>
                                                             </td>
                                                         </tr>
+                                                        @else
+                                                        @foreach ($data_slot as $item)
+                                                            <input type="hidden" name="slot_id" value="{{$item->id}}">
+                                                            <input type="hidden" name="time_start" value="{{$item->time_start}}">
+                                                            <input type="hidden" name="time_end" value="{{$item->time_end}}">
+                                                            <input type="hidden" name="date" value="{{$item->date}}">
+                                                            <tr>
+                                                                <th scope="row">Date</th>
+                                                                <td>:</td>
+                                                                <td >{{$item->date}}</td>
+                                                            </tr>                                          
+                                                            <tr>
+                                                                <th scope="row">Time</th>
+                                                                <td>:</td>
+                                                                <td >{{$item->time_start}} - {{$item->time_end}}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                        @endif
                                                     </tbody>
                                                 </table>
                                                 <span class="form-text text-muted" id="result"></span>
@@ -126,7 +116,7 @@
                                                     @if ($list_detail->session_usage == null)
                                                         <button type="submit" class="btn btn-add-new font-weight-bold">CHECKOUT</button>
                                                     @else
-                                                        <button type="submit" disabled class="btn btn-add-new font-weight-bold" id="submitbutton">CHECKOUT</button>
+                                                        <button type="submit" class="btn btn-add-new font-weight-bold">CHECKOUT</button>
                                                     @endif
                                                 </div>
                                             </form>

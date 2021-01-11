@@ -41,28 +41,26 @@
                                             {{-- detail riding class --}}
                                                 <input type="hidden" name="usage_status" value="riding_class">
                                                 @foreach ($data_list_slot as $row)   
-                                                    <input type="hidden" name="slot_id[]" value="{{$row['slot_id']}}">                                             
-                                                    @foreach (DB::table('slots')->where('id',$row['slot_id'])->get() as $item1)
+                                                    <input type="hidden" name="slot_id" value="{{$row['slot_id']}}">
                                                         <table class="table table-borderless table-dark mb-10">
                                                             <tbody>
                                                                 <tr>
                                                                     <td width="15%" scope="row">Day</td>
                                                                     <td width="5%" scope="row">:</td>
-                                                                    <td  scope="row">{{date('l',strtotime($item1->date))}}</td>
+                                                                    <td  scope="row">{{date('l',strtotime($row['date']))}}</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td width="15%" scope="row">Date</td>
                                                                     <td width="5%" scope="row">:</td>
-                                                                    <td  scope="row">{{$item1->date}}</td>
+                                                                    <td  scope="row">{{$row['date']}}</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td width="15%" scope="row">Session</td>
                                                                     <td width="5%" scope="row">:</td>
-                                                                    <td  scope="row">{{date('H:i', strtotime($item1->time_start))}} - {{date('H:i', strtotime($item1->time_end))}}</td>
+                                                                    <td  scope="row">{{date('H:i', strtotime($row['time_start']))}} - {{date('H:i', strtotime($row['time_end']))}}</td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
-                                                    @endforeach
                                                 <hr>
                                                 @endforeach
                                                 {{-- end detail riding class --}}
