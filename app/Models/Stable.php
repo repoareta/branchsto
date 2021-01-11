@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use willvincent\Rateable\Rateable;
 
 class Stable extends Model
 {
-    use HasFactory;
+    use HasFactory, Rateable;
 
     /**
     * Get the owner of stable
@@ -68,5 +69,4 @@ class Stable extends Model
     {
         return $this->belongsTo(User::class, 'approval_by', 'id');
     }
-
 }
