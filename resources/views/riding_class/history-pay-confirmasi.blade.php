@@ -85,80 +85,72 @@
                                                 @endif
                                             @else
                                                 @foreach ($data_list as $item)
-                                                    @if ($item->qr_code_status == 'Reschedule')
-                                                                
+                                                    <h4>
+                                                        Package {{$item->name}}
+                                                    </h4>
+                                                    <p>
+                                                        Stable {{$item->stable_name}}
+                                                    </p>
+                                                    <table class="table table-borderless table-dark mb-10">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td width="15%" scope="row">Day</td>
+                                                                <td width="5%" scope="row">:</td>
+                                                                <td  scope="row">{{date('l',strtotime($item->date))}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td width="15%" scope="row">Date</td>
+                                                                <td width="5%" scope="row">:</td>
+                                                                <td  scope="row">{{$item->date}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td width="15%" scope="row">Session</td>
+                                                                <td width="5%" scope="row">:</td>
+                                                                <td  scope="row">{{$item->time_start}} - {{$item->time_end}}</td>
+                                                            </tr>                                                                                                                    
+                                                                @if ($item->qr_code_status == null)
+                                                                @if($status_booking->approval_status == 'Accepted')
+                                                                <tr>
+                                                                    <td width="15%" scope="row">Status</td>
+                                                                    <td width="5%" scope="row">:</td>
+                                                                    <td  scope="row">
+                                                                        <span class="label label-lg label-light-success label-inline">
+                                                                            Active
+                                                                        </span>
+                                                                    </td>
+                                                                </tr>
+                                                                @endif
+                                                                @else                                                                
+                                                                        <tr>
+                                                                            <td width="15%" scope="row">Status</td>
+                                                                            <td width="5%" scope="row">:</td>
+                                                                            <td  scope="row">
+                                                                                <span class="label label-lg label-light-danger label-inline">
+                                                                                    {{$item->qr_code_status}}
+                                                                                </span>
+                                                                            </td>
+                                                                        </tr>
+                                                                @endif
+                                                        </tbody>
+                                                    </table>
+                                                    <div class="table-danger d-none">Payment expires in <span id="time">60:00</span> minutes.</div>
+                                                    @if(!$check_schedule)
+                                                        @if($status_booking->approval_status == 'Accepted')
+                                                            <button class="btn btn-light-success font-weight-bold mr-2 mb-5" id="reSchedule">
+                                                                <i class="far fa-calendar-alt"></i>
+                                                                Reschedule
+                                                            </button>
+                                                        @endif
                                                     @else
-                                                        <h4>
-                                                            Package {{$item->name}}
-                                                        </h4>
-                                                        <p>
-                                                            Stable {{$item->stable_name}}
-                                                        </p>
-                                                        <table class="table table-borderless table-dark mb-10">
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td width="15%" scope="row">Day</td>
-                                                                    <td width="5%" scope="row">:</td>
-                                                                    <td  scope="row">{{date('l',strtotime($item->date))}}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td width="15%" scope="row">Date</td>
-                                                                    <td width="5%" scope="row">:</td>
-                                                                    <td  scope="row">{{$item->date}}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td width="15%" scope="row">Session</td>
-                                                                    <td width="5%" scope="row">:</td>
-                                                                    <td  scope="row">{{$item->time_start}} - {{$item->time_end}}</td>
-                                                                </tr>                                                                                                                    
-                                                                    @if ($item->qr_code_status == null)
-                                                                    @if($status_booking->approval_status == 'Accepted')
-                                                                    <tr>
-                                                                        <td width="15%" scope="row">Status</td>
-                                                                        <td width="5%" scope="row">:</td>
-                                                                        <td  scope="row">
-                                                                            <span class="label label-lg label-light-success label-inline">
-                                                                                Active
-                                                                            </span>
-                                                                        </td>
-                                                                    </tr>
-                                                                    @endif
-                                                                    @else                                                                
-                                                                            <tr>
-                                                                                <td width="15%" scope="row">Status</td>
-                                                                                <td width="5%" scope="row">:</td>
-                                                                                <td  scope="row">
-                                                                                    <span class="label label-lg label-light-danger label-inline">
-                                                                                        {{$item->qr_code_status}}
-                                                                                    </span>
-                                                                                </td>
-                                                                            </tr>
-                                                                    @endif
-                                                            </tbody>
-                                                        </table>
-                                                        <div class="table-danger d-none">Payment expires in <span id="time">60:00</span> minutes.</div>
-                                                        @if(!$check_schedule)
-                                                        @if($status_booking->approval_status == 'Accepted')
-                                                            <form id="formSchedule{{$item->slot_user_id}}" method='get' action="{{route("riding_class.booking.list.slot_user")}}">
-                                                                @csrf
-                                                                    {!! Form::hidden('id', Crypt::encryptString($item->slot_user_id)) !!}
-                                                                    <button class="btn btn-light-success font-weight-bold mr-2 mb-5" id="reSchedule{{$item->slot_user_id}}" data-id="{{$item->slot_user_id}}">
-                                                                        <i class="far fa-calendar-alt"></i>
-                                                                        Reschedule
-                                                                    </button>
-                                                            </form>
-                                                        @endif
-                                                        @else
-                                                            <span class="label label-lg label-light-danger label-inline mb-5">
-                                                                You are not allowed to reschedule again
-                                                            </span>
-                                                        @endif
-                                                        @if($status_booking->approval_status == 'Accepted')
+                                                        <span class="label label-lg label-light-danger label-inline mb-5">
+                                                            You are not allowed to reschedule again
+                                                        </span>
+                                                    @endif
+                                                    @if($status_booking->approval_status == 'Accepted')
                                                         <div class="image mb-19">  
                                                             <img src="{{ asset('storage'.$item->qr_code) }}" />
                                                         </div>
-                                                        @endif
-                                                    @endif
+                                                    @endif                                                    
                                                 @endforeach
                                             @endif                                            
                                             <p class="mb-0">
@@ -233,7 +225,6 @@
                                                     <span class="label label-lg label-light-danger label-inline">Pending.</span> 
                                                 @else
                                                     <span class="label label-lg label-light-success label-inline">{{$status_booking->approval_status}}.</span> 
-
                                                     @if($booking_detail->qr_code)
                                                         <div class="image">  
                                                             <img src="{{ asset('storage'.$booking_detail->qr_code) }}" />                              
@@ -277,6 +268,48 @@
                                             <input type="hidden" name="date" id="my_hidden_input">
                                         </div>
                                     </div>
+                            </div>
+                            <div class="modal-footer">											
+                                <button class="btn btn-secondary" data-dismiss="modal">RESET</button>
+                                <button type="submit" class="btn btn-add-new font-weight-bold">SAVE</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+            <!-- Modal -->
+            <div class="modal fade" id="modalReschedule" tabindex="-1" role="dialog" aria-labelledby="modalReschedulePony" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header justify-content-end">										
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <i aria-hidden="true" class="ki ki-close"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body justify-content-center">
+                            <h2 class="title-text ">
+                                RESCHEDULE
+                            </h2>
+                            <p class="title-desc">
+                                You have only one chance to rescheduling package
+                            </p>
+                            <form method="POST" action="{{route('riding_class.reschedule')}}">
+                                @csrf
+                                @foreach ($slot_user as $item)
+                                    {{ Form::hidden('id', Crypt::encryptString($item->id)) }}
+                                    {{ Form::hidden('uid', Auth::user()->id) }}
+                                    <div class="form-group d-flex justify-content-center">
+                                        @foreach ($slots as $item)
+                                        <div id="datePicker" data-id="{{$item->user_id}}">                                        
+                                            <input type="hidden" name="date" value="" id="my_hidden_input">
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                    <div class="form-group d-flex justify-content-center">
+                                        <select name="time" id="selectTime" class="form-control w-100">
+                                        </select>
+                                    </div>
+                                @endforeach                              
                             </div>
                             <div class="modal-footer">											
                                 <button class="btn btn-secondary" data-dismiss="modal">RESET</button>
@@ -364,11 +397,7 @@
             closeOnCancel: false
         }).then(function(getAction) {
             if (getAction.value === true) {
-                var id = $(this).data('id');
-                $.get('{{route('riding_class.booking.list.qrcode')}}'+'/slotuser/' + id , function (data) {
-                    $('#name').val(data.name);
-                    $('#modalReschedule').modal('show');                
-                });
+                $('#modalReschedule').modal('show');
             }
         });        
     });
@@ -377,6 +406,12 @@
 @endsection
 @push('script-no-dt')
 <script>
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
     $('#timePickerStart').timepicker({
         minuteStep: 1,
         defaultTime: "7:00",
@@ -393,7 +428,48 @@
         startDate: new Date(),
     });
     $('#datePicker').datepicker({
+        format   : 'yyyy-mm-dd',
         startDate: new Date(),
+    }).on('changeDate', function(e) {
+        var id = $(this).data('id');       
+        var $time = $("#selectTime");
+        $.ajax({
+            type: "GET",
+            url: '{{route("riding_class.booking.list.qrcode")}}/slots',
+            data: {
+                date: e.date.toDateString(),
+                id: id
+            },
+            dataType: 'json',
+            success: function(data) {
+                $time.empty();
+                console.log(data);
+                var len = 0;
+                if(data != null){
+                    len = data.length;
+                }
+
+                if(len > 0){
+                // Read data and create <option >
+                for(var i=0; i<len; i++){
+
+                    var start = data[i].time_start;
+                    var end = data[i].time_end;
+
+                    var option = "<option value='"+start+"-"+end+"'>"+start+"-"+end+"</option>"; 
+
+                    $time.append(option); 
+                }
+                $time.select2();
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    });
+    $('#selectTime').select2({
+        dropdownParent: $('#modalReschedule')
     });
 </script>
 @endpush
