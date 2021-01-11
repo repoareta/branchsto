@@ -314,7 +314,7 @@ class RidingClassController extends Controller
             return view('riding_class.history-pay-confirmasi', compact('data_list', 'data_booking_id', 'status_booking', 'booking_detail', 'data_payment', 'count_booking', 'cekPackage'));
             
         }else{
-            $data_list = DB::table('slot_user as a')
+            $data_list = DB::table('slot_user as a')                
                 ->where('c.booking_id', $data_booking_id)
                 ->leftJoin('slots as b', 'b.id', '=', 'a.slot_id')
                 ->leftJoin('booking_details as c', 'a.booking_detail_id', '=', 'c.id')
@@ -344,7 +344,7 @@ class RidingClassController extends Controller
     public function reschedule(Request $request)
     {
         DB::beginTransaction();
-        $booking_detail = BookingDetail::find(Crypt::decryptString($request->id));
+        $booking_detail = BookingDetail::find(Crypt::decryptString($request->bkid));        
         $booking = Booking::find($booking_detail->booking_id);
 
         if($booking->user_id != $request->uid)
@@ -416,7 +416,7 @@ class RidingClassController extends Controller
             }
         }
         else{
-            $slot_user = SlotUser::where('id', Crypt::decryptString($request->slot_user_id))->first();
+            $slot_user = SlotUser::where('id', Crypt::decryptString($request->id))->first();
             $slot_user->qr_code_status = 'Reschedule';
 
             $slot_user->update();
@@ -435,11 +435,12 @@ class RidingClassController extends Controller
             
             $Query = new SlotUser();
 
-            $start = substr($request->time,-9);
+            $start = substr($request->time,0,8);
             $end = substr($request->time,9);
             $slotID = Slot::where('user_id', $slot->user_id)->where('date', $request->date)
             ->where('time_start', $start)->where('time_end', $end)->first();
-            $Query->slot_id = $slotID;
+
+            $Query->slot_id = $slotID->id;
             $Query->user_id = Auth::user()->id;
             $Query->booking_detail_id = $booking_detail->id;
             $Query->qr_code_status = null;
@@ -467,7 +468,7 @@ class RidingClassController extends Controller
                 return redirect()->back();
             }
 
-            $slot = Slot::find($slotID);
+            $slot = Slot::find($slotID->id);
             $slotCapacity = $slot->capacity_booked + 1;
             $slot->capacity_booked = $slotCapacity;
             $slot->update();
