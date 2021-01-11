@@ -146,7 +146,7 @@
                                                             You are not allowed to reschedule again
                                                         </span>
                                                     @endif
-                                                    @if($status_booking->approval_status == 'Accepted')
+                                                    @if($status_booking->approval_status == 'Accepted' && $item->qr_code_status == null)
                                                         <div class="image mb-19">  
                                                             <img src="{{ asset('storage'.$item->qr_code) }}" />
                                                         </div>
@@ -261,7 +261,7 @@
                             </p>
                             <form method="POST" action="{{route('riding_class.reschedule')}}">
                                 @csrf                              
-                                    {{ Form::hidden('id', Crypt::encryptString($booking_detail->id)) }}
+                                    {{ Form::hidden('bkid', Crypt::encryptString($booking_detail->id)) }}
                                     {{ Form::hidden('uid', Auth::user()->id) }}
                                     <div class="form-group d-flex justify-content-center">
                                         <div id="datePickerPony">                                        
@@ -295,21 +295,23 @@
                             </p>
                             <form method="POST" action="{{route('riding_class.reschedule')}}">
                                 @csrf
-                                @foreach ($slot_user as $item)
-                                    {{ Form::hidden('id', Crypt::encryptString($item->id)) }}
-                                    {{ Form::hidden('uid', Auth::user()->id) }}
-                                    <div class="form-group d-flex justify-content-center">
-                                        @foreach ($slots as $item)
-                                        <div id="datePicker" data-id="{{$item->user_id}}">                                        
-                                            <input type="hidden" name="date" value="" id="my_hidden_input">
+                                @if($slot_user)
+                                    @foreach ($slot_user as $item)
+                                        {{ Form::hidden('id', Crypt::encryptString($item->id)) }}
+                                        {{ Form::hidden('bkid', Crypt::encryptString($booking_detail->id)) }}
+                                        {{ Form::hidden('uid', Auth::user()->id) }}
+                                        <div class="form-group d-flex justify-content-center">
+                                            <div id="datePicker" data-id="{{$slots[0]->user_id}}">                                        
+                                                <input type="hidden" name="date" value="" id="my_hidden_input">
+                                            </div>
                                         </div>
-                                        @endforeach
-                                    </div>
-                                    <div class="form-group d-flex justify-content-center">
-                                        <select name="time" id="selectTime" class="form-control w-100">
-                                        </select>
-                                    </div>
-                                @endforeach                              
+                                        <div class="form-group d-flex justify-content-center">
+                                            <select name="time" id="selectTime" class="form-control w-100">
+                                            </select>
+                                        </div>
+                                    @endforeach                              
+                                @else
+                                @endif
                             </div>
                             <div class="modal-footer">											
                                 <button class="btn btn-secondary" data-dismiss="modal">RESET</button>
