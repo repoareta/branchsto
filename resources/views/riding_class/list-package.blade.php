@@ -2,6 +2,17 @@
 @section('content')
 <!--begin::Main-->
 @include('partials._header-mobile')
+
+<style>
+    .star-rating {
+        /* line-height:32px; */
+        font-size:1em;
+    }
+
+    .star-rating .fa-star{
+        color: orange;
+    }
+</style>
 <div class="d-flex flex-column flex-root">
     <!--begin::Page-->
     <div class="d-flex flex-row flex-column-fluid page">
@@ -84,6 +95,16 @@
                                                                 <div class="overlay"></div>
                                                             </div>
                                                             <div class="title">
+                                                                <div class="star-rating">
+                                                                <span class="far fa-star" data-rating="1"></span>
+                                                                <span class="far fa-star" data-rating="2"></span>
+                                                                <span class="far fa-star" data-rating="3"></span>
+                                                                <span class="far fa-star" data-rating="4"></span>
+                                                                <span class="far fa-star" data-rating="5"></span>
+                                                                <input type="hidden" name="rating_stable" class="rating-value" value="2.56">
+                                                                </div>
+                                                            </div>
+                                                            <div class="title">
                                                                 {{strtoupper($stable->name)}}
                                                             </div>
                                                             <div class="subtitle">
@@ -131,6 +152,16 @@
                                                                 <img src="{{url('assets/media/branchsto/Rectangle 140.png')}}" alt="">                                                        
                                                             @endif
                                                             <div class="overlay"></div>
+                                                        </div>
+                                                        <div class="title">
+                                                            <div class="star-rating">
+                                                            <span class="far fa-star" data-rating="1"></span>
+                                                            <span class="far fa-star" data-rating="2"></span>
+                                                            <span class="far fa-star" data-rating="3"></span>
+                                                            <span class="far fa-star" data-rating="4"></span>
+                                                            <span class="far fa-star" data-rating="5"></span>
+                                                            <input type="hidden" name="rating_stable" class="rating-value" value="2.56">
+                                                            </div>
                                                         </div>
                                                         <div class="title">
                                                             {{strtoupper($stable->name)}}
