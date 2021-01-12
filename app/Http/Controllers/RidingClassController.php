@@ -150,7 +150,7 @@ class RidingClassController extends Controller
         if (session("data_list_package") == null) {
             return redirect()->route('riding_class.search_class');
         } else {
-            $data_list_slot = session("data_list_slot");            
+            $data_list_slot = session("data_list_slot");        
             $data_list_package = session("data_list_package");
             $data_session_usage = session()->get("session_usage");
             $data_payment = DB::table('bank_payments')->get();
@@ -203,7 +203,7 @@ class RidingClassController extends Controller
                 $data_payment = DB::table('bank_payments')->where('id', $request->payment)->first();
                 
                 return view('riding_class.history-pay', compact('data_list', 'data_booking_id', 'data_payment','request'));
-                
+
             }else{
                 // action bagian riding class
                 $data = $request->all();
@@ -211,7 +211,6 @@ class RidingClassController extends Controller
                 $booking->price_total       = $request->price_total;
                 $booking->bank_payment_id   = $request->payment;
                 $booking->save(); // save booking
-    
                 // insert booking detail
                 foreach (session("data_list_package") as $key => $row) {
         
@@ -232,13 +231,12 @@ class RidingClassController extends Controller
                     //update slot capacity_booked
                     $count = DB::table('slot_user')->where('slot_id', $data['slot_id'])->count();
                     $slot = Slot::find($data['slot_id']);
-                    $slot->capacity_booked   = $count;
+                    $slot->capacity_booked   = $count;                                        
                     $slot->save();
     
                     }
                 }
-                
-               
+
                 session()->forget("data_list_slot");
                 session()->forget("data_list_package");
                 $data_booking_id = $booking->id;
@@ -249,9 +247,7 @@ class RidingClassController extends Controller
                     ->leftJoin('packages as d', 'c.package_id', '=', 'd.id')
                     ->leftJoin('stables as e', 'd.stable_id', '=', 'e.id')
                     ->select('b.date', 'b.time_start', 'b.time_end', 'd.name', 'e.name as stable_name', 'c.price_subtotal')->get();
-    
                 $data_payment = DB::table('bank_payments')->where('id', $request->payment)->first();
-                
                 return view('riding_class.history-pay', compact('data_list', 'data_booking_id', 'data_payment','request'));
             }
         }

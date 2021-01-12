@@ -2,7 +2,7 @@
 @section('content')
 <!--begin::Main-->
 @include('partials._header-mobile')
-
+@push('add-style')
 <style>
     .star-rating {
         /* line-height:32px; */
@@ -13,6 +13,7 @@
         color: orange;
     }
 </style>
+@endpush
 <div class="d-flex flex-column flex-root">
     <!--begin::Page-->
     <div class="d-flex flex-row flex-column-fluid page">
@@ -29,14 +30,14 @@
                         <div class="stable-body">
                             <div class="d-flex justify-content-start align-items-center">
                                 <h5 class="title-text mb-0">
-                                    LIST PACKAGE
+                                    WELCOME, {{strtoupper(Auth::user()->name)}}
                                 </h5>
                                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 font-size-lg mb-0">
                                     <li class="breadcrumb-item">
                                         <a href="{{route('competitions.index')}}">HOME</a>
                                     </li>
                                     <li class="breadcrumb-item">
-                                        <a href="{{route('riding_class.search_class')}}">LIST PACKAGE</a>
+                                        <a href="{{route('riding_class.search_class')}}">SEARCH RIDING CLASS</a>
                                     </li>
                                 </ul>
                             </div>
@@ -45,20 +46,21 @@
                                     <div class="card h-100">
                                         <div class="card-body">
                                             <h6 class="title-text">
-                                                FILTER
+                                                SEARCH RIDING CLASS
                                             </h6>
                                             <form action="{{route('riding_class.search_class')}}" method="GET">
                                                 {{-- @csrf --}}
                                                 <div class="form-group">
-                                                    <input type="text" name="name" class="form-control" placeholder="Stable Name">
+                                                    <label>Stable Name</label>
+                                                    <input type="text" name="name" class="form-control" placeholder="Enter Stable Name">
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Date</label>
-                                                    <input type="text" class="form-control" autocomplete="off" name="date" id="datePicker">
+                                                    <input type="text" class="form-control" autocomplete="off" name="date" id="datePicker" placeholder="Enter Date">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>Time Start</label>
-                                                    <input type="text" class="form-control" autocomplete="off" name="time_start" id="timePicker">
+                                                    <label>Start Time</label>
+                                                    <input type="text" class="form-control" autocomplete="off" name="time_start" id="timePicker" placeholder="Enter Start Time">
                                                 </div>
                                                 <div class="d-flex justify-content-between align-self-end">
                                                     <button class="btn btn-secondary">RESET</button>
