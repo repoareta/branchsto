@@ -124,7 +124,7 @@
                                                 </div>
                                             </div>
                                             <button type="submit" class="btn btn-payment w-100">
-                                                BOOKING
+                                                PAY NOW
                                             </button>
                                         </form>
                                         </div>
