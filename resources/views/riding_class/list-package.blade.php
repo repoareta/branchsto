@@ -225,10 +225,12 @@
 <script src="{{ asset('assets/jquery-bar-rating-master/dist/jquery.barrating.min.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function () {
-    @foreach($data as $stable)
-        $('.rating_stable_{{ $stable->id }}')
-        .barrating('set', {{ floor($stable->averageRating) }});
-    @endforeach
+    @if($data)
+        @foreach($data as $stable)
+            $('.rating_stable_{{ $stable->id }}')
+            .barrating('set', {{ floor($stable->averageRating) }});
+        @endforeach
+    @endif
 });
 </script>
 @endsection
