@@ -17,6 +17,7 @@ use App\Models\Stable;
 
 //load form request (for validation)
 use App\Http\Requests\HorseStore;
+
 class HorseController extends Controller
 {
     public function index()
@@ -53,7 +54,7 @@ class HorseController extends Controller
                 return $data->breed->name;
             })
             ->addColumn('action', function ($data) {
-                return 
+                return
                 "<a href='javascript:void(0)' class='btn btn-info text-center mr-2' >
                     <i class='fas fa-pen edit-horse pointer-link' data-id='".$data->id."'></i>
                 </a>
@@ -70,16 +71,16 @@ class HorseController extends Controller
         $horseSex = HorseSex::all();
         $horseBreed = HorseBreed::all();
         $data_stable = Stable::with(['user','horse'])->where('user_id', Auth::user()->id)->first();
-        if($data_stable->capacity_of_stable > 0 and  $data_stable->number_of_coach > 0 and $data_stable->capacity_of_arena > 0){
-            if($data_stable->horse->where('stable_id', $data_stable->id)->where('user_id', $data_stable->user_id)->count() < $data_stable->capacity_of_stable){
+        if ($data_stable->capacity_of_stable > 0 and  $data_stable->number_of_coach > 0 and $data_stable->capacity_of_arena > 0) {
+            if ($data_stable->horse->where('stable_id', $data_stable->id)->where('user_id', $data_stable->user_id)->count() < $data_stable->capacity_of_stable) {
                 $data = 1;
-            }else{
+            } else {
                 $data = 0;
             };
-        }else{
+        } else {
             $data = 0;
         }
-        return view('horse.create',compact('data','data_stable', 'horseSex', 'horseBreed'));
+        return view('horse.create', compact('data', 'data_stable', 'horseSex', 'horseBreed'));
     }
 
     public function store(HorseStore $request, Horse $horse)
@@ -105,7 +106,7 @@ class HorseController extends Controller
         $horseSex = HorseSex::all();
         $horseBreed = HorseBreed::all();
         $data= Horse::find($id);
-        return view('horse.edit',compact('data','horseSex', 'horseBreed'));
+        return view('horse.edit', compact('data', 'horseSex', 'horseBreed'));
     }
     public function update(HorseStore $request, Horse $horse)
     {
@@ -120,7 +121,7 @@ class HorseController extends Controller
         $horse->pedigree_female        = $request->pedigree_female;
         $horse->stable_id       = $request->stable_id;
         $horse->user_id         = Auth::user()->id;
-        $horse->save(); 
+        $horse->save();
 
         Alert::success('Update Success.', 'Success.')->persistent(true)->autoClose(3600);
         return redirect()->route('horse.index');
@@ -130,5 +131,18 @@ class HorseController extends Controller
     {
         Horse::find($request->id)->delete();
         return response()->json();
+    }
+
+    public function rating(Request $request)
+    {
+        $horse = Horse::find($request->horse_id);
+
+        // Add a rating of 5, from the currently authenticated user
+        $horse->rate($request->rating);
+
+        return response()->json([
+            'success' => true,
+            'message' => $horse->averageRating
+        ], 200);
     }
 }

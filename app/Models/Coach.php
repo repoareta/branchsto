@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use willvincent\Rateable\Rateable;
 
 class Coach extends Model
 {
-    use HasFactory;
+    use HasFactory, Rateable;
 
     /**
     * Get the owner of coach

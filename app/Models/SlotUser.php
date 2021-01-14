@@ -9,5 +9,19 @@ class SlotUser extends Model
 {
     use HasFactory;
 
-    protected $table = 'slot_user';
+    /**
+    * Get the horses of stable
+    */
+    public function horse()
+    {
+        return $this->belongsTo(Horse::class);
+    }
+
+    /**
+    * Get the coach of stable
+    */
+    public function coach()
+    {
+        return $this->belongsTo(Coach::class);
+    }
 }
