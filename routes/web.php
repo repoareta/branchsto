@@ -7,8 +7,18 @@ use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Support\Facades\Auth;
 
 // load controllers
-use App\Http\Controllers\Auth\{LoginController, RegisterController,ResetPasswordController,VerificationController};
-use App\Http\Controllers\{MyProfileController,ProfileController,StableController,HorseController,PackageController,SlotController,CoachController,RidingClassController};
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\MyProfileController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StableController;
+use App\Http\Controllers\HorseController;
+use App\Http\Controllers\PackageController;
+use App\Http\Controllers\SlotController;
+use App\Http\Controllers\CoachController;
+use App\Http\Controllers\RidingClassController;
 use App\Http\Controllers\CompetitionsController;
 use App\Http\Controllers\ClubController;
 use App\Http\Controllers\AuthController;
@@ -60,45 +70,39 @@ Auth::routes(['verify' => 'true']);
 Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
 
     // App Owner
-    Route::group(['prefix' => 'owner'], function(){
+    Route::group(['prefix' => 'owner'], function () {
 
         // Dashboard
         Route::get('/', [DashboardController::class, 'index'])->name('owner.dashboard');
     
         // Bank Account
-        Route::group(['prefix' => 'bank'], function(){
-    
+        Route::group(['prefix' => 'bank'], function () {
             Route::get('/', [BankPaymentController::class, 'index'])->name('owner.bank');
             route::get('list/json', [BankPaymentController::class, 'listJson'])->name('owner.bank.list.json');
             Route::post('store', [BankPaymentController::class, 'store'])->name('owner.bank.store');
             Route::get('edit/{id}', [BankPaymentController::class, 'edit'])->name('owner.bank.edit');
             Route::patch('update', [BankPaymentController::class, 'update'])->name('owner.bank.update');
             Route::delete('delete', [BankPaymentController::class, 'delete'])->name('owner.bank.delete');
-    
         });
 
         // Horse Sex
-        Route::group(['prefix' => 'horse-sex'], function(){
-    
+        Route::group(['prefix' => 'horse-sex'], function () {
             Route::get('/', [HorseSexController::class, 'index'])->name('owner.horse-sex');
             route::get('list/json', [HorseSexController::class, 'listJson'])->name('owner.horse-sex.list.json');
             Route::post('store', [HorseSexController::class, 'store'])->name('owner.horse-sex.store');
             Route::get('edit/{id}', [HorseSexController::class, 'edit'])->name('owner.horse-sex.edit');
             Route::patch('update', [HorseSexController::class, 'update'])->name('owner.horse-sex.update');
             Route::delete('delete', [HorseSexController::class, 'delete'])->name('owner.horse-sex.delete');
-    
         });
     
         // Horse Breed
-        Route::group(['prefix' => 'horse-breed'], function(){
-    
+        Route::group(['prefix' => 'horse-breed'], function () {
             Route::get('/', [HorseBreedController::class, 'index'])->name('owner.horse-breed');
             route::get('list/json', [HorseBreedController::class, 'listJson'])->name('owner.horse-breed.list.json');
             Route::post('store', [HorseBreedController::class, 'store'])->name('owner.horse-breed.store');
             Route::get('edit/{id}', [HorseBreedController::class, 'edit'])->name('owner.horse-breed.edit');
             Route::patch('update', [HorseBreedController::class, 'update'])->name('owner.horse-breed.update');
             Route::delete('delete', [HorseBreedController::class, 'delete'])->name('owner.horse-breed.delete');
-    
         });
         
         // User Payment Approval
@@ -108,7 +112,7 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
             route::get('list/unapprov/booking', [UserPaymentApprovalController::class, 'listJsonUnapprov'])->name('owner.userpayment.listJson.unapprov');
             route::get('detail/booking/{id}', [UserPaymentApprovalController::class, 'detailBooking'])->name('owner.userpayment.detail.booking');
             route::patch('approv/booking/{id}', [UserPaymentApprovalController::class, 'approvBooking'])->name('owner.userpayment.approv.booking');
-            route::patch('unapprov/booking/{id}', [UserPaymentApprovalController::class, 'unapprovBooking'])->name('owner.userpayment.unapprov.booking'); 
+            route::patch('unapprov/booking/{id}', [UserPaymentApprovalController::class, 'unapprovBooking'])->name('owner.userpayment.unapprov.booking');
         });
 
         // Stable Approval
@@ -156,7 +160,6 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
             route::patch('approv/package/{id}', [PackageApprovalController::class, 'approvPackage'])->name('approv.package');
             route::patch('unapprov/package/{id}', [PackageApprovalController::class, 'unapprovPackage'])->name('unapprov.package');
         });
-
     });
 
 
@@ -172,7 +175,7 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
         route::get('village', [ProfileController::class, 'getVillage'])->name('village');
     });
 
-    Route::name('myprofile.')->prefix('my-profile')->group(function (){
+    Route::name('myprofile.')->prefix('my-profile')->group(function () {
         route::get('/', [MyProfileController::class, 'index'])->name('index');
         route::get('/info', [MyProfileController::class, 'info'])->name('info');
         route::get('/password', [MyProfileController::class, 'password'])->name('password');
@@ -184,12 +187,13 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
     });
 
     Route::name('stable.')->prefix('stable')->group(function () {
-        route::get('/', [StableController::class, 'index'])->name('index');        
+        route::get('/', [StableController::class, 'index'])->name('index');
         route::get('menu', [StableController::class, 'menu'])->name('menu');
         route::post('store', [StableController::class, 'store'])->name('store');
         route::put('update', [StableController::class, 'update'])->name('update');
         route::post('key/stable', [StableController::class, 'keyStable'])->name('key.stable');
         route::post('setup/stable', [StableController::class, 'setupStable'])->name('setup.stable');
+        route::post('rating', [StableController::class, 'rating'])->name('rating');
     });
  
     Route::name('horse.')->prefix('horse')->group(function () {
@@ -200,6 +204,7 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
         route::get('edit/{id}', [HorseController::class, 'edit'])->name('edit');
         route::put('update', [HorseController::class, 'update'])->name('update');
         route::delete('delete', [HorseController::class, 'delete'])->name('delete');
+        route::post('rating', [HorseController::class, 'rating'])->name('rating');
     });
 
     Route::name('package.')->prefix('package')->group(function () {
@@ -209,7 +214,7 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
         route::post('store', [PackageController::class, 'store'])->name('store');
         route::get('edit/{id}', [PackageController::class, 'edit'])->name('edit');
         route::post('update', [PackageController::class, 'update'])->name('update');
-        route::delete('delete', [PackageController::class, 'delete'])->name('delete');    
+        route::delete('delete', [PackageController::class, 'delete'])->name('delete');
         Route::name('slot.')->group(function () {
             route::get('slot/json', [SlotController::class, 'detail_index_json'])->name('detail.index.json');
             route::post('slot/store', [SlotController::class, 'detail_store'])->name('detail.store');
@@ -240,6 +245,7 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
         route::get('edit/{id}', [CoachController::class, 'edit'])->name('edit');
         route::put('update', [CoachController::class, 'update'])->name('update');
         route::delete('delete', [CoachController::class, 'delete'])->name('delete');
+        route::post('rating', [CoachController::class, 'rating'])->name('rating');
     });
 
     Route::name('club.')->prefix('club')->group(function () {
@@ -264,9 +270,7 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
         route::get('booking/list/slotuser', [RidingClassController::class, 'slot_user'])->name('booking.list.slot_user');
         route::get('history/order', [RidingClassController::class, 'historyorderDetail'])->name('history.order');
     });
-        // untuk close package
-        route::get('booking-detail/{id}/confirmation', [StableController::class, 'stable_close'])->name('index');
-        route::post('close/json', [StableController::class, 'close'])->name('close');
-
-    
+    // untuk close package
+    route::get('booking-detail/{id}/confirmation', [StableController::class, 'stable_close'])->name('index');
+    route::post('close/json', [StableController::class, 'close'])->name('close');
 });

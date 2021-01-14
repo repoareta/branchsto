@@ -16,6 +16,8 @@
 <link href="{{url('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{url('assets/css/branchsto/custom.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{url('assets/css/branchsto/responsive.css')}}" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+<link href='{{ asset('assets/jquery-bar-rating-master/dist/themes/fontawesome-stars.css') }}' rel='stylesheet' type='text/css'>
 
 <!--end::Global Theme Styles-->
 
@@ -25,5 +27,21 @@
 <style>
     .pointer-link {
         cursor: pointer;
+    }
+
+    .star-rating {
+        /* line-height:32px; */
+        font-size:1em;
+    }
+
+    .star-rating .fa-star{
+        color: orange;
+    }
+
+    .br-theme-fontawesome-stars .br-widget a.br-active:after {
+        color: orange;
+    }
+    .br-theme-fontawesome-stars .br-widget a.br-selected:after {
+        color: orange;
     }
 </style>

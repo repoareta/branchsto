@@ -93,7 +93,7 @@ class StableController extends Controller
         $stable->district_id        = $request->district_id;
         $stable->village_id         = $request->village_id;
         $stable->user_id            = Auth::user()->id;
-        $stable->key_stable         = Auth::user()->id.$key_stable;        
+        $stable->key_stable         = Auth::user()->id.$key_stable;
         $stable->save();
 
         $user = User::where('email', 'andhika.ragilkesuma@gmail.com')->first();
@@ -127,7 +127,7 @@ class StableController extends Controller
         if ($request->file('logo')) {
             File::delete(public_path('/storage/stable/logo/'.$stable->logo));
             $stable->logo = $request->file('logo')->getClientOriginalName();
-            $image = Image::make($request->file('logo'))->resize(100,100);
+            $image = Image::make($request->file('logo'))->resize(100, 100);
             $image->save(public_path('/storage/stable/logo/'.$stable->logo));
         }
         $stable->save();
@@ -153,7 +153,7 @@ class StableController extends Controller
         } else {
             $data_list  = DB::table('slot_user as a')
             ->where('a.booking_detail_id', $request->id)
-            ->where('a.qr_code_status', '=' ,null)
+            ->where('a.qr_code_status', '=', null)
             ->leftJoin('slots as b', 'b.id', '=', 'a.slot_id')
             ->leftJoin('users as c', 'c.id', '=', 'a.user_id')
             ->select('b.date', 'b.time_start', 'b.time_end', 'a.qr_code_status', 'a.id', 'c.name')->get();
@@ -177,12 +177,12 @@ class StableController extends Controller
             ]);
             return response()->json();
         }
-    } 
+    }
 
     public function keyStable(Request $request)
     {
         $data = Stable::where('user_id', Auth::user()->id)->first();
-        if($data->key_stable == $request->key){
+        if ($data->key_stable == $request->key) {
             Alert::success('Input Key Success.', 'Success')->persistent(true)->autoClose(3600);
             return redirect()->route('stable.index');
         } else {
@@ -195,5 +195,18 @@ class StableController extends Controller
     {
         Alert::success('Submit Success.', 'Success')->persistent(true)->autoClose(3600);
         return redirect()->back();
+    }
+
+    public function rating(Request $request)
+    {
+        $stable = Stable::find($request->stable_id);
+
+        // Add a rating of 5, from the currently authenticated user
+        $stable->rate($request->rating);
+
+        return response()->json([
+            'success' => true,
+            'message' => $stable->averageRating
+        ], 200);
     }
 }

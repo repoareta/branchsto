@@ -84,8 +84,6 @@
 <script src="{{url('assets/uppy/uppy.min.js')}}"></script> --}}
 <script src="{{url('vendor/jsvalidation/js/jsvalidation.js')}}" type="text/javascript"></script>
 
-
-
 <!-- treeview JS -->
 <script type="text/javascript" src="{{ asset('tree/jquery.treeview.js')}}"></script>
 <!-- end treeview JS -->

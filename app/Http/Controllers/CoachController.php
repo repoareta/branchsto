@@ -50,7 +50,7 @@ class CoachController extends Controller
                 return $data->certified;
             })
             ->addColumn('action', function ($data) {
-                return 
+                return
                 "<a href='javascript:void(0)' class='btn btn-info text-center mr-2' >
                     <i class='fas fa-pen edit-coach pointer-link' data-id='".$data->id."'></i>
                 </a>
@@ -65,15 +65,16 @@ class CoachController extends Controller
     public function create()
     {
         $data_stable = Stable::with(['user','coach'])->where('user_id', Auth::user()->id)->first();
-        if($data_stable->capacity_of_stable > 0 and  $data_stable->number_of_coach > 0 and $data_stable->capacity_of_arena > 0){
-            if($data_stable->coach->where('stable_id', $data_stable->id)->where('user_id', $data_stable->user_id)->count() < $data_stable->number_of_coach){
+        if ($data_stable->capacity_of_stable > 0 and  $data_stable->number_of_coach > 0 and $data_stable->capacity_of_arena > 0) {
+            if ($data_stable->coach->where('stable_id', $data_stable->id)->where('user_id', $data_stable->user_id)->count() < $data_stable->number_of_coach) {
                 $data = 1;
-            }else{
+            } else {
                 $data = 0;
             };
-        }else{
+        } else {
             $data = 0;
-        }        return view('coach.create',compact('data','data_stable'));
+        }
+        return view('coach.create', compact('data', 'data_stable'));
     }
 
     public function store(CoachStore $request, Coach $coach)
@@ -94,12 +95,12 @@ class CoachController extends Controller
         $coach->save();
 
         Alert::success('Create Data Success.', 'Success.')->persistent(true)->autoClose(3600);
-        return redirect()->route('coach.index');  
+        return redirect()->route('coach.index');
     }
     public function edit($id)
     {
         $data = Coach::find($id);
-        return view('coach.edit',compact('data'));
+        return view('coach.edit', compact('data'));
     }
     public function update(CoachStore $request, Coach $coach)
     {
@@ -120,11 +121,24 @@ class CoachController extends Controller
         $coach->save();
 
         Alert::success('Update Data Success.', 'Success.')->persistent(true)->autoClose(3600);
-        return redirect()->route('coach.index'); 
+        return redirect()->route('coach.index');
     }
     public function delete(Request $request)
     {
         Coach::find($request->id)->delete();
         return response()->json();
+    }
+
+    public function rating(Request $request)
+    {
+        $coach = Coach::find($request->coach_id);
+
+        // Add a rating of 5, from the currently authenticated user
+        $coach->rate($request->rating);
+
+        return response()->json([
+            'success' => true,
+            'message' => $coach->averageRating
+        ], 200);
     }
 }
