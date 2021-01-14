@@ -81,6 +81,13 @@
                                                         @endif
                                                     </tbody>
                                                 </table>
+
+                                                Branchsto (stable) rating
+                                                <br>
+                                                Coach Name (coach) rating
+                                                <br>
+                                                Horse Name (coach) rating
+
                                                 @if ($count_booking > 1)
                                                 <span class="label label-lg label-light-danger label-inline mb-5">
                                                     You are not allowed to reschedule again
@@ -148,7 +155,66 @@
                                                                         </tr>
                                                                 @endif
                                                         </tbody>
-                                                    </table>                                                    
+                                                     </table>
+
+                                                    <div class="d-flex mb-3">
+                                                        <span class="text-dark-50 flex-root font-weight-bold">
+                                                            Stable
+                                                        </span>
+
+                                                        <span class="text-dark-50 flex-root font-weight-bold">
+                                                            {{$item->stable_name}}
+                                                        </span>
+                                                        <span class="text-dark flex-root font-weight-bold">
+                                                            <select class='rating-stable' id='rating_stable_{{ $item->stable_id }}' data-id='rating_stable_{{ $item->stable_id }}'>
+                                                                <option value="1" >1</option>
+                                                                <option value="2" >2</option>
+                                                                <option value="3" >3</option>
+                                                                <option value="4" >4</option>
+                                                                <option value="5" >5</option>
+                                                            </select>
+                                                        </span>
+                                                    </div>
+
+                                                    <div class="d-flex mb-3">
+                                                        <span class="text-dark-50 flex-root font-weight-bold">
+                                                            Coach
+                                                        </span>
+
+                                                        <span class="text-dark-50 flex-root font-weight-bold">
+                                                            {{$item->coach_name}}
+                                                        </span>
+                                                        <span class="text-dark flex-root font-weight-bold">
+                                                            <select class='rating-coach' id='rating_coach_{{ $item->coach_id }}' data-id='rating_coach_{{ $item->coach_id }}'>
+                                                                <option value="1" >1</option>
+                                                                <option value="2" >2</option>
+                                                                <option value="3" >3</option>
+                                                                <option value="4" >4</option>
+                                                                <option value="5" >5</option>
+                                                            </select>
+                                                        </span>
+                                                    </div>
+
+                                                    <div class="d-flex mb-3">
+                                                        <span class="text-dark-50 flex-root font-weight-bold">
+                                                            Horse
+                                                        </span>
+
+                                                        <span class="text-dark-50 flex-root font-weight-bold">
+                                                            {{$item->horse_name}}
+                                                        </span>
+                                                        <span class="text-dark flex-root font-weight-bold">
+                                                            <select class='rating-horse' id='rating_horse_{{ $item->horse_id }}' data-id='rating_horse_{{ $item->horse_id }}'>
+                                                                <option value="1" >1</option>
+                                                                <option value="2" >2</option>
+                                                                <option value="3" >3</option>
+                                                                <option value="4" >4</option>
+                                                                <option value="5" >5</option>
+                                                            </select>
+                                                        </span>
+                                                    </div>
+
+                                                    <div class="table-danger d-none">Payment expires in <span id="time">60:00</span> minutes.</div>
                                                     @if(!$check_schedule)
                                                         @if($status_booking->approval_status == 'Accepted' && $item->qr_code_status == null)
                                                             <button class="btn btn-light-success font-weight-bold mr-2 mb-5" id="reSchedule">
@@ -345,11 +411,26 @@
 <!--end::Main-->
 @endsection
 @section('scripts')
+<script src="{{ asset('assets/jquery-bar-rating-master/dist/jquery.barrating.min.js') }}" type="text/javascript"></script>
 <script src="{{url('assets/js/pages/custom/profile/profile.js')}}"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-    //tampil edit detail
+        @foreach($data_list_dua as $item)
+            $('#rating_stable_{{ $item->horse->stable->id }}').barrating('set', {{ floor($item->horse->stable->averageRating) }});
+            
+            // cek jika
+            // stable_id = 8
+            // slot_user_id = 8
+            // @if($item->horse->stable->id > 8)
+            //     $('#rating_stable_{{ $item->horse->stable->id }}_{{ $item->id }}').barrating('readonly', true);
+            // @endif
+
+            $('#rating_coach_{{ $item->coach_id }}').barrating('set', {{ floor($item->coach->averageRating) }});
+            
+            $('#rating_horse_{{ $item->horse_id }}').barrating('set', {{ floor($item->horse->averageRating) }});
+        @endforeach
     });
+
     // Set the date we're counting down to
     var countDownDate = new Date("{{date('F d, Y G:i:s', strtotime($status_booking->created_at) + 60 * 60 ) }}").getTime();
 
@@ -490,8 +571,109 @@
         dropdownParent: $('#modalReschedule')
     });
 </script>
-<script src="{{url('assets/js/pages/custom/profile/profile.js')}}"></script>
 <script type="text/javascript">
-    
-    </script>
+$(function() {
+
+    $('.rating-stable').barrating({
+        theme: 'fontawesome-stars',
+        onSelect: function(value, text, event) {
+
+            // Get element id by data-id attribute
+            var el = this;
+            var el_id = el.$elem.data('id');
+
+            // rating was selected by a user
+            if (typeof(event) !== 'undefined') {
+                
+                var split_id = el_id.split("_");
+
+                var stable_id = split_id[2];  // postid
+
+                // AJAX Request
+                $.ajax({
+                    url: "{{ route('stable.rating') }}",
+                    type: 'post',
+                    data: {
+                        stable_id: stable_id,
+                        rating   : value,
+                        _token   : "{{ csrf_token() }}",
+                    },
+                    dataType: 'json',
+                    success: function(data){
+                        console.log(data);
+                        $('#rating_stable_' + stable_id).barrating('readonly', true);
+                    }
+                });
+            }
+        }
+    });
+
+    $('.rating-coach').barrating({
+        theme: 'fontawesome-stars',
+        onSelect: function(value, text, event) {
+
+            // Get element id by data-id attribute
+            var el = this;
+            var el_id = el.$elem.data('id');
+
+            // rating was selected by a user
+            if (typeof(event) !== 'undefined') {
+                
+                var split_id = el_id.split("_");
+
+                var coach_id = split_id[2];  // postid
+
+                // AJAX Request
+                $.ajax({
+                    url: "{{ route('coach.rating') }}",
+                    type: 'post',
+                    data: {
+                        coach_id: coach_id,
+                        rating  : value,
+                        _token  : "{{ csrf_token() }}",
+                    },
+                    dataType: 'json',
+                    success: function(data){
+                        console.log(data);
+                    }
+                });
+            }
+        }
+    });
+
+    $('.rating-horse').barrating({
+        theme: 'fontawesome-stars',
+        onSelect: function(value, text, event) {
+
+            // Get element id by data-id attribute
+            var el = this;
+            var el_id = el.$elem.data('id');
+
+            // rating was selected by a user
+            if (typeof(event) !== 'undefined') {
+                
+                var split_id = el_id.split("_");
+
+                var horse_id = split_id[2];  // postid
+
+                // AJAX Request
+                $.ajax({
+                    url: "{{ route('horse.rating') }}",
+                    type: 'post',
+                    data: {
+                        horse_id: horse_id,
+                        rating   : value,
+                        _token   : "{{ csrf_token() }}",
+                    },
+                    dataType: 'json',
+                    success: function(data){
+                        console.log(data);
+                    }
+                });
+            }
+        }
+    });
+});
+
+</script>
 @endpush

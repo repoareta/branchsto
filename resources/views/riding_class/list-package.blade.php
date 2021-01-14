@@ -97,14 +97,13 @@
                                                                 <div class="overlay"></div>
                                                             </div>
                                                             <div class="title">
-                                                                <div class="star-rating">
-                                                                <span class="far fa-star" data-rating="1"></span>
-                                                                <span class="far fa-star" data-rating="2"></span>
-                                                                <span class="far fa-star" data-rating="3"></span>
-                                                                <span class="far fa-star" data-rating="4"></span>
-                                                                <span class="far fa-star" data-rating="5"></span>
-                                                                <input type="hidden" name="rating_stable" class="rating-value" value="2.56">
-                                                                </div>
+                                                                <select class='rating-stable rating_stable_{{ $stable->id }}'>
+                                                                    <option value="1" >1</option>
+                                                                    <option value="2" >2</option>
+                                                                    <option value="3" >3</option>
+                                                                    <option value="4" >4</option>
+                                                                    <option value="5" >5</option>
+                                                                </select>
                                                             </div>
                                                             <div class="title">
                                                                 {{strtoupper($stable->name)}}
@@ -221,8 +220,23 @@
 <!--end::Main-->
 
 @endsection
+@section('scripts')
+
+<script src="{{ asset('assets/jquery-bar-rating-master/dist/jquery.barrating.min.js') }}" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+    @foreach($data as $stable)
+        $('.rating_stable_{{ $stable->id }}')
+        .barrating('set', {{ floor($stable->averageRating) }});
+    @endforeach
+});
+</script>
+@endsection
+
 @push('script-no-dt')
+
 <script>
+    
     $('#datePicker').datepicker({
         todayHighlight: true,
         startDate: new Date(),
@@ -237,5 +251,16 @@
         showMeridian: !1,
         snapToStep: !0
     });
+</script>
+
+<script type="text/javascript">
+$(function() {
+
+    $('.rating-stable').barrating({
+        theme: 'fontawesome-stars',
+        readonly: true
+    });
+});
+
 </script>
 @endpush
