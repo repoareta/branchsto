@@ -39,6 +39,7 @@ Auth::routes(['verify' => true]);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout/{user}', [AuthController::class, 'logout']);
+Route::post('/login-check', [AuthController::class, 'login_check']);
 
 Route::post('/password/email', [ForgotPasswordController::class, 'sendResetLinkEmail']);
 Route::post('/password/reset', [ResetPasswordController::class, 'reset']);
