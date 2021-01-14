@@ -100,7 +100,7 @@ class AuthController extends Controller
      *
      * @return void
      */
-    public function check_login(Request $request)
+    public function login_check(Request $request)
     {
         // check token dan id_user
         $data = User::where('id', $request->user_id)
