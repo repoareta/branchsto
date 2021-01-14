@@ -195,16 +195,15 @@ class RidingClassController extends Controller
                     ->leftJoin('stables as e', 'd.stable_id', '=', 'e.id')
                     ->select('d.session_usage', 'c.booking_at', 'c.queue_no', 'd.name', 'session_usage', 'e.name as stable_name', 'c.price_subtotal')->get();
                 $data_payment = DB::table('bank_payments')->where('id', $request->payment)->first();
-                
-                return view('riding_class.history-pay', compact('data_list', 'data_booking_id', 'data_payment', 'request'));
-            } else {
+                return view('riding_class.history-pay', compact('data_list', 'data_booking_id', 'data_payment','request'));
+
+            }else{
                 // action bagian riding class
                 $data = $request->all();
                 $booking->user_id           = Auth::user()->id;
                 $booking->price_total       = $request->price_total;
                 $booking->bank_payment_id   = $request->payment;
                 $booking->save(); // save booking
-    
                 // insert booking detail
                 foreach (session("data_list_package") as $key => $row) {
                     $booking_detail->package_id = $row['package_id'];
@@ -221,15 +220,15 @@ class RidingClassController extends Controller
                             'created_at'        => Carbon::now(),
                             'updated_at'        => Carbon::now(),
                         ]);
-                        //update slot capacity_booked
-                        $count = DB::table('slot_users')->where('slot_id', $data['slot_id'])->count();
-                        $slot = Slot::find($data['slot_id']);
-                        $slot->capacity_booked   = $count;
-                        $slot->save();
+
+                    //update slot capacity_booked
+                    $count = DB::table('slot_user')->where('slot_id', $data['slot_id'])->count();
+                    $slot = Slot::find($data['slot_id']);
+                    $slot->capacity_booked   = $count;                                        
+                    $slot->save();
                     }
                 }
-                
-               
+
                 session()->forget("data_list_slot");
                 session()->forget("data_list_package");
                 $data_booking_id = $booking->id;
@@ -240,10 +239,8 @@ class RidingClassController extends Controller
                     ->leftJoin('packages as d', 'c.package_id', '=', 'd.id')
                     ->leftJoin('stables as e', 'd.stable_id', '=', 'e.id')
                     ->select('b.date', 'b.time_start', 'b.time_end', 'd.name', 'e.name as stable_name', 'c.price_subtotal')->get();
-    
                 $data_payment = DB::table('bank_payments')->where('id', $request->payment)->first();
-                
-                return view('riding_class.history-pay', compact('data_list', 'data_booking_id', 'data_payment', 'request'));
+                return view('riding_class.history-pay', compact('data_list', 'data_booking_id', 'data_payment','request'));
             }
         }
     }
@@ -295,6 +292,7 @@ class RidingClassController extends Controller
             $booking_detail = BookingDetail::select('*')->where('booking_id', $data_booking_id)->get();
             $data_payment = DB::table('bank_payments')->where('id', $status_booking->bank_payment_id)->first();
             $count_booking = count($booking_detail);
+            $slot_user = null;
             
             if ($count_booking > 1) {
                 $booking_detail = BookingDetail::All()->where('booking_id', $data_booking_id)->max();
@@ -360,7 +358,7 @@ class RidingClassController extends Controller
     public function reschedule(Request $request)
     {
         DB::beginTransaction();
-        $booking_detail = BookingDetail::find(Crypt::decryptString($request->id));
+        $booking_detail = BookingDetail::find(Crypt::decryptString($request->bkid));        
         $booking = Booking::find($booking_detail->booking_id);
 
         if ($booking->user_id != $request->uid) {
@@ -426,8 +424,9 @@ class RidingClassController extends Controller
                 Alert::success('Reschedule Success.', 'Success.')->persistent(true)->autoClose(3600);
                 return redirect()->back();
             }
-        } else {
-            $slot_user = SlotUser::where('id', Crypt::decryptString($request->slot_user_id))->first();
+        }
+        else{
+            $slot_user = SlotUser::where('id', Crypt::decryptString($request->id))->first();
             $slot_user->qr_code_status = 'Reschedule';
 
             $slot_user->update();
@@ -444,12 +443,17 @@ class RidingClassController extends Controller
             }
             
             $Query = new SlotUser();
-
-            $start = substr($request->time, -9);
-            $end = substr($request->time, 9);
+            $start = substr($request->time,0,8);
+            $end = substr($request->time,9);
             $slotID = Slot::where('user_id', $slot->user_id)->where('date', $request->date)
             ->where('time_start', $start)->where('time_end', $end)->first();
-            $Query->slot_id = $slotID;
+            if($slot->id == $slotID->id)
+            {
+                DB::rollback();
+                Alert::error('Reschedule Error.', 'Cannot choose same date and time.');
+                return redirect()->back();
+            }
+            $Query->slot_id = $slotID->id;
             $Query->user_id = Auth::user()->id;
             $Query->booking_detail_id = $booking_detail->id;
             $Query->qr_code_status = null;
@@ -477,7 +481,7 @@ class RidingClassController extends Controller
                 return redirect()->back();
             }
 
-            $slot = Slot::find($slotID);
+            $slot = Slot::find($slotID->id);
             $slotCapacity = $slot->capacity_booked + 1;
             $slot->capacity_booked = $slotCapacity;
             $slot->update();

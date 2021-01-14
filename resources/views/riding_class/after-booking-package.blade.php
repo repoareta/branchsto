@@ -18,7 +18,13 @@
                         <div class="stable-body">
                             <div class="d-flex justify-content-center align-items-center">
                                 <h4 class="title-text mb-0">
-                                    BOOKING DETAIL
+                                <?php if(Request::routeIs('riding_class.pesan.addCart')){  ?>
+                                    PAYMENT METHOD
+                                <?php }elseif(Request::routeIs('riding_class.booking.payment')){ ?>
+                                    PAYMENT CONFIRMATION
+                                <?php }elseif(Request::routeIs('riding_class.booking.list.qrcode')){ ?>
+                                    ORDER STATUS
+                                <?php } ?>
                                 </h4>
                             </div>
                             <div class="row justify-content-center mt-5">
@@ -44,6 +50,11 @@
                                                     <input type="hidden" name="slot_id" value="{{$row['slot_id']}}">
                                                         <table class="table table-borderless table-dark mb-10">
                                                             <tbody>
+                                                                <tr>
+                                                                    <td width="15%" scope="row">Name</td>
+                                                                    <td width="5%" scope="row">:</td>
+                                                                    <td  scope="row">{{Auth::user()->name}}</td>
+                                                                </tr>
                                                                 <tr>
                                                                     <td width="15%" scope="row">Day</td>
                                                                     <td width="5%" scope="row">:</td>
@@ -113,7 +124,7 @@
                                                 </div>
                                             </div>
                                             <button type="submit" class="btn btn-payment w-100">
-                                                BOOKING
+                                                PAY NOW
                                             </button>
                                         </form>
                                         </div>

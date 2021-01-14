@@ -25,4 +25,5 @@ class BookingDetail extends Model
     {
         return $this->belongsTo(Package::class);
     }
+
 }

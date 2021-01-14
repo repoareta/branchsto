@@ -24,11 +24,13 @@ use App\Models\User;
 
 //load form request (for validation)
 use App\Http\Requests\StableStore;
+use App\Models\SlotUser;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 
 // load notification
 use App\Notifications\StableCreatedToAppsOwner;
+use Illuminate\Contracts\Support\Htmlable;
 
 class StableController extends Controller
 {
@@ -142,6 +144,8 @@ class StableController extends Controller
     {
         $data_booking = BookingDetail::where('id', $request->id)->first();
         $checkPackage = Package::where('id', $data_booking->package_id)->first();
+        $data_stable = Stable::where('id', $checkPackage->stable_id)->first();
+        
         if ($checkPackage->session_usage == null) {
             $data_list  = DB::table('bookings as a')
             ->where('b.id', $request->id)
@@ -149,7 +153,7 @@ class StableController extends Controller
             ->leftJoin('users as c', 'c.id', '=', 'a.user_id')
             ->select('b.booking_at', 'b.queue_no', 'b.queue_status', 'b.id', 'c.name')->get();
             $session_usage = 'pony_ride';
-            return view('stable_close.index', compact('data_list', 'session_usage'));
+            return view('stable_close.index', compact('data_list','data_booking','data_stable' , 'session_usage'));
         } else {
             $data_list  = DB::table('slot_user as a')
             ->where('a.booking_detail_id', $request->id)
@@ -158,9 +162,38 @@ class StableController extends Controller
             ->leftJoin('users as c', 'c.id', '=', 'a.user_id')
             ->select('b.date', 'b.time_start', 'b.time_end', 'a.qr_code_status', 'a.id', 'c.name')->get();
             $session_usage = 'riding_class';
-            return view('stable_close.index', compact('data_list', 'session_usage'));
+            return view('stable_close.index', compact('data_list','data_booking','data_stable' , 'session_usage'));
         }
     }
+
+    public function jsonHorseCoach(Request $request)
+    {
+        if($request->ajax()){
+            $horse = Horse::where('stable_id', $request->id)->get();
+            $coach = Coach::where('stable_id', $request->id)->get();
+
+            $data = [
+                $horse,
+                $coach,
+                $request->id_slot,            
+            ];
+
+            return response()->json($data);
+        }
+    }
+
+    public function assignHorseCoach(Request $request)
+    {
+        $Query = SlotUser::find($request->id);        
+        $Query->horse_id = $request->horse_id;
+        $Query->coach_id = $request->coach_id;
+        $Query->qr_code_status = 'Close';
+        $Query->update();
+
+        Alert::success('Close.', 'Success')->persistent(true)->autoClose(3600);
+        return redirect()->back();
+    }
+
     // close tiket
     public function close(Request $request)
     {

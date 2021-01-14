@@ -19,7 +19,13 @@
                         <div class="stable-body">
                             <div class="d-flex justify-content-center align-items-center">
                                 <h4 class="title-text mb-0">
-                                    BOOKING DETAIL
+                                    <?php if(Request::routeIs('riding_class.pesan.addCart')){  ?>
+                                        PAYMENT METHOD
+                                    <?php }elseif(Request::routeIs('riding_class.booking.payment')){ ?>
+                                        PAYMENT CONFIRMATION
+                                    <?php }elseif(Request::routeIs('riding_class.booking.list.qrcode')){ ?>
+                                        ORDER STATUS
+                                    <?php } ?>
                                 </h4>
                             </div>
                             <div class="row justify-content-center mt-5">
@@ -36,6 +42,11 @@
                                                 </p>
                                                 <table class="table table-borderless table-dark mb-5">
                                                     <tbody>
+                                                        <tr>
+                                                            <td width="15%" scope="row">Name</td>
+                                                            <td width="5%" scope="row">:</td>
+                                                            <td  scope="row">{{$status_booking->user->name}}</td>
+                                                        </tr>
                                                         <tr>
                                                             <td width="15%" scope="row">Day</td>
                                                             <td width="5%" scope="row">:</td>
@@ -82,8 +93,8 @@
                                                     You are not allowed to reschedule again
                                                 </span>
                                                 @else
-                                                    @if($status_booking->approval_status == 'Accepted')
-                                                        <div class="table-danger d-none">Payment expires in <span id="time">60:00</span> minutes.</div>
+                                                    @if($status_booking->approval_status == 'Accepted' && $booking_detail->queue_status == null)
+                                                        <div class="table-danger">Payment expires in <span id="time">60:00</span> minutes.</div>
                                                         <button class="btn btn-light-success font-weight-bold mr-2 mb-5" data-toggle='modal' id="reSchedulePony" data-id="{{$booking_detail->id}}">
                                                             <i class="far fa-calendar-alt"></i>
                                                             Reschedule
@@ -100,6 +111,11 @@
                                                     </p>
                                                     <table class="table table-borderless table-dark mb-10">
                                                         <tbody>
+                                                            <tr>
+                                                                <td width="15%" scope="row">Name</td>
+                                                                <td width="5%" scope="row">:</td>
+                                                                <td  scope="row">{{$status_booking->user->name}}</td>
+                                                            </tr>
                                                             <tr>
                                                                 <td width="15%" scope="row">Day</td>
                                                                 <td width="5%" scope="row">:</td>
@@ -139,7 +155,7 @@
                                                                         </tr>
                                                                 @endif
                                                         </tbody>
-                                                    </table>
+                                                     </table>
 
                                                     <div class="d-flex mb-3">
                                                         <span class="text-dark-50 flex-root font-weight-bold">
@@ -200,7 +216,7 @@
 
                                                     <div class="table-danger d-none">Payment expires in <span id="time">60:00</span> minutes.</div>
                                                     @if(!$check_schedule)
-                                                        @if($status_booking->approval_status == 'Accepted')
+                                                        @if($status_booking->approval_status == 'Accepted' && $item->qr_code_status == null)
                                                             <button class="btn btn-light-success font-weight-bold mr-2 mb-5" id="reSchedule">
                                                                 <i class="far fa-calendar-alt"></i>
                                                                 Reschedule
@@ -211,7 +227,7 @@
                                                             You are not allowed to reschedule again
                                                         </span>
                                                     @endif
-                                                    @if($status_booking->approval_status == 'Accepted')
+                                                    @if($status_booking->approval_status == 'Accepted' && $item->qr_code_status == null)
                                                         <div class="image mb-19">  
                                                             <img src="{{ asset('storage'.$item->qr_code) }}" />
                                                         </div>
@@ -326,7 +342,7 @@
                             </p>
                             <form method="POST" action="{{route('riding_class.reschedule')}}">
                                 @csrf                              
-                                    {{ Form::hidden('id', Crypt::encryptString($booking_detail->id)) }}
+                                    {{ Form::hidden('bkid', Crypt::encryptString($booking_detail->id)) }}
                                     {{ Form::hidden('uid', Auth::user()->id) }}
                                     <div class="form-group d-flex justify-content-center">
                                         <div id="datePickerPony">                                        
@@ -360,21 +376,23 @@
                             </p>
                             <form method="POST" action="{{route('riding_class.reschedule')}}">
                                 @csrf
-                                @foreach ($slot_user as $item)
-                                    {{ Form::hidden('id', Crypt::encryptString($item->id)) }}
-                                    {{ Form::hidden('uid', Auth::user()->id) }}
-                                    <div class="form-group d-flex justify-content-center">
-                                        @foreach ($slots as $item)
-                                        <div id="datePicker" data-id="{{$item->user_id}}">                                        
-                                            <input type="hidden" name="date" value="" id="my_hidden_input">
+                                @if($slot_user)
+                                    @foreach ($slot_user as $item)
+                                        {{ Form::hidden('id', Crypt::encryptString($item->id)) }}
+                                        {{ Form::hidden('bkid', Crypt::encryptString($booking_detail->id)) }}
+                                        {{ Form::hidden('uid', Auth::user()->id) }}
+                                        <div class="form-group d-flex justify-content-center">
+                                            <div id="datePicker" data-id="{{$slots[0]->user_id}}">                                        
+                                                <input type="hidden" name="date" value="" id="my_hidden_input">
+                                            </div>
                                         </div>
-                                        @endforeach
-                                    </div>
-                                    <div class="form-group d-flex justify-content-center">
-                                        <select name="time" id="selectTime" class="form-control w-100">
-                                        </select>
-                                    </div>
-                                @endforeach                              
+                                        <div class="form-group d-flex justify-content-center">
+                                            <select name="time" id="selectTime" class="form-control w-100">
+                                            </select>
+                                        </div>
+                                    @endforeach                              
+                                @else
+                                @endif
                             </div>
                             <div class="modal-footer">											
                                 <button class="btn btn-secondary" data-dismiss="modal">RESET</button>
@@ -487,6 +505,7 @@
 @push('script-no-dt')
 <script>
 
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -552,7 +571,6 @@
         dropdownParent: $('#modalReschedule')
     });
 </script>
-
 <script type="text/javascript">
 $(function() {
 
@@ -658,5 +676,4 @@ $(function() {
 });
 
 </script>
-
 @endpush
