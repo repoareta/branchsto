@@ -24,7 +24,7 @@ use App\Http\Controllers\AppOwner\UserPaymentApprovalController;
 
 route::get('/', function () {
     return redirect()->route('competitions.index');
-});
+})->name('home');
 route::get('home', function () {
     return redirect()->route('competitions.index');
 });
@@ -264,9 +264,12 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
         route::get('booking/list/slotuser', [RidingClassController::class, 'slot_user'])->name('booking.list.slot_user');
         route::get('history/order', [RidingClassController::class, 'historyorderDetail'])->name('history.order');
     });
-        // untuk close package
-        route::get('booking-detail/{id}/confirmation', [StableController::class, 'stable_close'])->name('index');
-        route::post('close/json', [StableController::class, 'close'])->name('close');
+
+    // untuk close package
+    route::get('booking-detail/{id}/confirmation', [StableController::class, 'stable_close']);
+    route::get('booking-detail/confirmation/json', [StableController::class, 'jsonHorseCoach']);
+    route::post('booking-detail/confirmation/close', [StableController::class, 'assignHorseCoach'])->name('booking_details.close');
+    route::post('close/json', [StableController::class, 'close'])->name('close');
 
     
 });

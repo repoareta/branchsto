@@ -35,7 +35,7 @@
 										<a href="{{route('competitions.index')}}">HOME</a>
 									</li>
 									<li class="breadcrumb-item">
-										<a href="{{route('stable.index')}}">MANAGE BOOKING</a>
+										<a href="{{route('stable.index')}}">MANAGE STABLE</a>
 									</li>
 									<li class="breadcrumb-item">
 										<a href=""  class="text-muted">LIST BOOKING</a>
@@ -118,13 +118,13 @@
 															</td>
 															<td>
 																@if($item->qr_code_status == 'Close')
-																	<a href='#' class='btn btn-danger text-center mr-2 '>
-																		<i class='fas fa-ban pointer-link'></i>                    
-																	</a>
+																<a href='#' class='btn btn-danger text-center mr-2 '>
+																	<i class='fas fa-ban pointer-link'></i>                    
+																</a>
 																@else
-																	<a href='#' data-id="{{$item->id}}" data-status="{{$session_usage}}" class="btn btn-success text-center mr-2" id="close">
-																		<i class='fas fa-check-circle pointer-link'></i>                  
-																	</a>
+																<button data-id="{{$data_stable->id}}" data-id-slot="{{$item->id}}" class="btn btn-success text-center mr-2" type="button" id="assign">
+																	<i class='fas fa-check-circle pointer-link'></i>
+																</button>
 																@endif
 															</td>
 														</tr>
@@ -134,6 +134,38 @@
 										</table>
 									</div>
 								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Modal-->
+					<div class="modal fade" id="modalAssign" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">Asign Horse And Coach</H1></h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<i aria-hidden="true" class="ki ki-close"></i>
+									</button>
+								</div>
+								<div class="modal-body">
+									<form action="{{route('booking_details.close')}}" method="post">
+										@csrf
+										<input type="hidden" name="id" id="idSlotUser" value="">			
+										<div class="form-group">
+											<label>Horse</label>
+											<select name="horse_id" id="horseSel" class="form-control"></select>
+										</div>
+										<div class="form-group">
+											<label>Coach</label>
+											<select name="coach_id" id="coachSel" class="form-control"></select>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+										<button type="submit" class="btn btn-primary font-weight-bold">Save changes</button>
+									</div>
+								</form>
 							</div>
 						</div>
 					</div>
@@ -153,6 +185,13 @@
 @push('add-script')
 <script type="text/javascript">
     $(document).ready( function () {
+
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+	
         var t = $('#dataTable').DataTable({
 			scrollX   : true,
 			processing: true,
@@ -203,6 +242,63 @@
 						},
 						error: function () {
 							alert("An error occurred, please try again later.");
+						}
+					});
+				}
+			});
+		});
+
+		$('#dataTable tbody').on( 'click', '#assign', function (e) {
+			var id = $(this).data('id');
+			var idSlot = $(this).data('id-slot');
+			var $horse = $("#horseSel");
+			var $coach = $("#coachSel");
+			Swal.fire({
+				title: "Are you sure?",
+				text: "Close!" ,
+				icon: "warning",
+				confirmButtonText: "Close",
+				confirmButtonColor: '#141D31',
+				showCancelButton: true,
+				reverseButtons: true
+			}).then(function(result) {
+				if (result.value) {
+					$.ajax({
+						type: "GET",
+						url: '{{route("home")}}/booking-detail/confirmation/json',
+						data: {
+							id: id,
+							id_slot: idSlot,
+						},
+						dataType: 'json',
+						success: function(data) {
+							$('#modalAssign').modal('show');
+							$('#idSlotUser').val(data[2]);						
+							console.log(data[2]);
+							var len = 0;
+							if(data != null){
+								len = data.length;
+							}
+		
+							if(len > 0){
+								// Read data and create <option >
+								for(var i=0; i<len; i++){
+		
+									var horse_id = data[0][i].id;
+									var horse_name = data[0][i].name;
+									var coach_id = data[1][i].id;
+									var coach_name = data[1][i].name;
+		
+									var option1 = "<option value='"+horse_id+"'>"+horse_name+"</option>"; 
+									var option2 = "<option value='"+coach_id+"'>"+coach_name+"</option>"; 
+		
+									$horse.append(option1);
+									$coach.append(option2);
+								}
+							}
+						},
+						error: function (error) {
+							console.log(error);
 						}
 					});
 				}
