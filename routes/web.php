@@ -29,7 +29,7 @@ route::get('home', function () {
     return redirect()->route('competitions.index');
 });
 route::get('test', function () {
-    return view('profile.myprofile');
+    return view('pages.booking1');
 });
 
 // App Owner Route
