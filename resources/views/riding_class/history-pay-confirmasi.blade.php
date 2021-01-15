@@ -132,17 +132,17 @@
                                                                 <td  scope="row">{{$item->time_start}} - {{$item->time_end}}</td>
                                                             </tr>                                                                                                                    
                                                                 @if ($item->qr_code_status == null)
-                                                                @if($status_booking->approval_status == 'Accepted')
-                                                                <tr>
-                                                                    <td width="15%" scope="row">Status</td>
-                                                                    <td width="5%" scope="row">:</td>
-                                                                    <td  scope="row">
-                                                                        <span class="label label-lg label-light-success label-inline">
-                                                                            Active
-                                                                        </span>
-                                                                    </td>
-                                                                </tr>
-                                                                @endif
+                                                                    @if($status_booking->approval_status == 'Accepted')
+                                                                    <tr>
+                                                                        <td width="15%" scope="row">Status</td>
+                                                                        <td width="5%" scope="row">:</td>
+                                                                        <td  scope="row">
+                                                                            <span class="label label-lg label-light-success label-inline">
+                                                                                Active
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    @endif
                                                                 @else                                                                
                                                                         <tr>
                                                                             <td width="15%" scope="row">Status</td>
@@ -155,8 +155,8 @@
                                                                         </tr>
                                                                 @endif
                                                         </tbody>
-                                                     </table>
-
+                                                    </table>
+                                                    @if($status_booking->approval_status == 'Accepted' && $item->qr_code_status == 'Close')
                                                     <div class="d-flex mb-3">
                                                         <span class="text-dark-50 flex-root font-weight-bold">
                                                             Stable
@@ -213,7 +213,7 @@
                                                             </select>
                                                         </span>
                                                     </div>
-
+                                                    @endif
                                                     <div class="table-danger d-none">Payment expires in <span id="time">60:00</span> minutes.</div>
                                                     @if(!$check_schedule)
                                                         @if($status_booking->approval_status == 'Accepted' && $item->qr_code_status == null)
@@ -278,7 +278,7 @@
                                                                         <div class="image-input image-input-outline" id="kt_profile_avatar" style="background-image: url(assets/media/users/blank.png)">
                                                                             <div class="image-input-wrapper" style="background-image: url(assets/media/users/300_21.jpg)"></div>
                                                                             <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
-                                                                                <i class="fa fa-pen icon-sm text-muted"></i>
+                                                                                <i class="fas fa-pen icon-sm text-muted"></i>
                                                                                 <input type="file" name="photo" accept=".png, .jpg, .jpeg" />
                                                                                 <input type="hidden" name="profile_avatar_remove" />
                                                                             </label>
@@ -415,20 +415,24 @@
 <script src="{{url('assets/js/pages/custom/profile/profile.js')}}"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        @foreach($data_list_dua as $item)
-            $('#rating_stable_{{ $item->horse->stable->id }}').barrating('set', {{ floor($item->horse->stable->averageRating) }});
-            
-            // cek jika
-            // stable_id = 8
-            // slot_user_id = 8
-            // @if($item->horse->stable->id > 8)
-            //     $('#rating_stable_{{ $item->horse->stable->id }}_{{ $item->id }}').barrating('readonly', true);
-            // @endif
+        @if($data_list_dua == null)
 
-            $('#rating_coach_{{ $item->coach_id }}').barrating('set', {{ floor($item->coach->averageRating) }});
-            
-            $('#rating_horse_{{ $item->horse_id }}').barrating('set', {{ floor($item->horse->averageRating) }});
-        @endforeach
+        @else
+            @foreach($data_list_dua as $item)
+                $('#rating_stable_{{ $item->horse->stable->id }}').barrating('set', {{ floor($item->horse->stable->averageRating) }});
+                
+                // cek jika
+                // stable_id = 8
+                // slot_user_id = 8
+                // @if($item->horse->stable->id > 8)
+                //     $('#rating_stable_{{ $item->horse->stable->id }}_{{ $item->id }}').barrating('readonly', true);
+                // @endif
+
+                $('#rating_coach_{{ $item->coach_id }}').barrating('set', {{ floor($item->coach->averageRating) }});
+                
+                $('#rating_horse_{{ $item->horse_id }}').barrating('set', {{ floor($item->horse->averageRating) }});
+            @endforeach
+        @endif
     });
 
     // Set the date we're counting down to
@@ -635,6 +639,7 @@ $(function() {
                     dataType: 'json',
                     success: function(data){
                         console.log(data);
+                        $('#rating_coach_' + coach_id).barrating('readonly', true);
                     }
                 });
             }
@@ -668,6 +673,7 @@ $(function() {
                     dataType: 'json',
                     success: function(data){
                         console.log(data);
+                        $('#rating_horse_' + horse_id).barrating('readonly', true);
                     }
                 });
             }

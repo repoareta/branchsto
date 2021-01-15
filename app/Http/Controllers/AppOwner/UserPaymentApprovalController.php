@@ -178,7 +178,7 @@ class UserPaymentApprovalController extends Controller
                 $row->save();
             }else{
                 
-                $slot_user = DB::table('slot_user')
+                $slot_user = DB::table('slot_users')
                 ->where('booking_detail_id', $row->id)
                 ->get();
                 
@@ -191,7 +191,7 @@ class UserPaymentApprovalController extends Controller
 
                     Storage::disk('public')->put($output_file, $image);
 
-                    DB::table('slot_user')->where('id',$user->id)->update([
+                    DB::table('slot_users')->where('id',$user->id)->update([
                         'qr_code' => $output_file
                     ]);
                 }                

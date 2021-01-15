@@ -155,7 +155,7 @@ class StableController extends Controller
             $session_usage = 'pony_ride';
             return view('stable_close.index', compact('data_list','data_booking','data_stable' , 'session_usage'));
         } else {
-            $data_list  = DB::table('slot_user as a')
+            $data_list  = DB::table('slot_users as a')
             ->where('a.booking_detail_id', $request->id)
             ->where('a.qr_code_status', '=', null)
             ->leftJoin('slots as b', 'b.id', '=', 'a.slot_id')
@@ -204,7 +204,7 @@ class StableController extends Controller
             ]);
             return response()->json();
         } else {
-            DB::table('slot_user')->where('id', $request->id)
+            DB::table('slot_users')->where('id', $request->id)
             ->update([
                 'qr_code_status' => 'Close',
             ]);
