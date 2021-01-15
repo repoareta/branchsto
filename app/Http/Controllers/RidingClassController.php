@@ -222,7 +222,7 @@ class RidingClassController extends Controller
                         ]);
 
                     //update slot capacity_booked
-                    $count = DB::table('slot_user')->where('slot_id', $data['slot_id'])->count();
+                    $count = DB::table('slot_users')->where('slot_id', $data['slot_id'])->count();
                     $slot = Slot::find($data['slot_id']);
                     $slot->capacity_booked   = $count;                                        
                     $slot->save();
@@ -339,9 +339,15 @@ class RidingClassController extends Controller
             $check_schedule = SlotUser::where('booking_detail_id', $booking_detail->id)->where('qr_code_status', 'Reschedule')->first();
 
 
-            $data_list_dua = SlotUser::where('booking_detail_id', $booking_detail->id)->get();
-
-            // dd($data_list_dua->booking_detail->booking->stable->averageRating);
+            $data_list_dua = SlotUser::where('booking_detail_id', $booking_detail->id)->where('qr_code_status', '!=', 'Reschedule')->get();
+            // return response()->json($data_list_dua);die;
+            foreach($data_list_dua as $item){
+                if($item->horse_id && $item->coach_id){
+                    $data_list_dua = SlotUser::where('booking_detail_id', $booking_detail->id)->where('qr_code_status', '!=', 'Reschedule')->get();
+                }else{
+                    $data_list_dua = null;
+                }
+            }
 
             return view('riding_class.history-pay-confirmasi', compact('data_list', 'data_list_dua', 'data_booking_id', 'status_booking', 'booking_detail', 'data_payment', 'cekPackage', 'check_schedule', 'slot_user', 'slots'));
         }

@@ -91,7 +91,7 @@
 												<thead>
 													<tr>
 													<th scope="col">Name</th>
-													<th scope="col">Name Package</th>
+													<th scope="col">Package Name</th>
 													<th scope="col">Date</th>
 													<th scope="col">Day</th>
 													<th scope="col">Time Start</th>
@@ -122,7 +122,7 @@
 																	<i class='fas fa-ban pointer-link'></i>                    
 																</a>
 																@else
-																<button data-id="{{$data_stable->id}}" data-id-slot="{{$item->id}}" class="btn btn-success text-center mr-2" type="button" id="assign">
+																<button data-id="{{$data_stable->id}}" data-id-slot="{{$item->id}}" class="btn btn-success text-center mr-2" type="button" id="assign{{$item->id}}">
 																	<i class='fas fa-check-circle pointer-link'></i>
 																</button>
 																@endif
@@ -137,21 +137,21 @@
 							</div>
 						</div>
 					</div>
-
+					
 					<!-- Modal-->
 					<div class="modal fade" id="modalAssign" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
 						<div class="modal-dialog modal-dialog-centered" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLabel">Asign Horse And Coach</H1></h5>
+									<h5 class="modal-title" id="exampleModalLabel">Assign Horse And Coach</H1></h5>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<i aria-hidden="true" class="ki ki-close"></i>
 									</button>
 								</div>
 								<div class="modal-body">
-									<form action="{{route('booking_details.close')}}" method="post">
+									<form action="{{route('booking_details.close')}}" id="formAssign" data-id="" method="post">
 										@csrf
-										<input type="hidden" name="id" id="idSlotUser" value="">			
+										<input type="hidden" name="id" id="idSlotUser" value="0">			
 										<div class="form-group">
 											<label>Horse</label>
 											<select name="horse_id" id="horseSel" class="form-control"></select>
@@ -248,62 +248,87 @@
 			});
 		});
 
-		$('#dataTable tbody').on( 'click', '#assign', function (e) {
+		@foreach ($data_list as $item)
+		$('#dataTable tbody').on( 'click', '#assign{{$item->id}}', function (e) {
+			e.preventDefault();
 			var id = $(this).data('id');
 			var idSlot = $(this).data('id-slot');
 			var $horse = $("#horseSel");
 			var $coach = $("#coachSel");
-			Swal.fire({
-				title: "Are you sure?",
-				text: "Close!" ,
-				icon: "warning",
-				confirmButtonText: "Close",
-				confirmButtonColor: '#141D31',
-				showCancelButton: true,
-				reverseButtons: true
-			}).then(function(result) {
-				if (result.value) {
-					$.ajax({
-						type: "GET",
-						url: '{{route("home")}}/booking-detail/confirmation/json',
-						data: {
-							id: id,
-							id_slot: idSlot,
-						},
-						dataType: 'json',
-						success: function(data) {
-							$('#modalAssign').modal('show');
-							$('#idSlotUser').val(data[2]);						
-							console.log(data[2]);
-							var len = 0;
-							if(data != null){
-								len = data.length;
-							}
-		
-							if(len > 0){
-								// Read data and create <option >
-								for(var i=0; i<len; i++){
-		
-									var horse_id = data[0][i].id;
-									var horse_name = data[0][i].name;
-									var coach_id = data[1][i].id;
-									var coach_name = data[1][i].name;
-		
-									var option1 = "<option value='"+horse_id+"'>"+horse_name+"</option>"; 
-									var option2 = "<option value='"+coach_id+"'>"+coach_name+"</option>"; 
-		
-									$horse.append(option1);
-									$coach.append(option2);
-								}
-							}
-						},
-						error: function (error) {
-							console.log(error);
+			var $button = $("#assign{{$item->id}}");
+			$horse.find('option').remove();
+			$coach.find('option').remove();
+			var a = $('#formAssign').data('id'); //getter
+			$('#formAssign').attr("data-id","{{$item->id}}"); //setter
+			var form = $.ajax({
+				type: "GET",
+				async: false,
+				url: '{{route("home")}}/booking-detail/confirmation/json',
+				data: {
+					id: id,
+					id_slot: idSlot,
+				},
+				dataType: 'json',
+				success: function(data) {
+					$('#idSlotUser').val(data[2]);
+					var len = 0;
+					if(data != null){
+						len = data.length;
+					}
+
+					if(len > 0){
+						// Read data and create <option >
+						for(var i=0; i<len; i++){
+
+							var horse_id = data[0][i].id;
+							var horse_name = data[0][i].name;
+							var coach_id = data[1][i].id;
+							var coach_name = data[1][i].name;
+
+							var option1 = "<option value='"+horse_id+"'>"+horse_name+"</option>"; 
+							var option2 = "<option value='"+coach_id+"'>"+coach_name+"</option>"; 
+
+							$horse.append(option1);
+							$coach.append(option2);
 						}
-					});
+					}
+				},
+				error: function (error) {
+					console.log(error);
 				}
+			});	
+			$('#modalAssign').modal('show');
+			$("#formAssign").submit(function(e) {
+				e.preventDefault();
+				var form = this;
+
+				Swal.fire({
+					title: "Are you sure?",
+					icon: "warning",
+					confirmButtonText: "Confirm",
+					confirmButtonColor: '#141D31',
+					showCancelButton: true,
+					reverseButtons: true
+				}).then(function(result) {
+					if (result.value) {
+						form.submit();
+					}
+				});
 			});
+			// Swal.fire({
+			// 	title: "Are you sure?",
+			// 	text: "Confirmation!" ,
+			// 	icon: "warning",
+			// 	confirmButtonText: "Confirm",
+			// 	confirmButtonColor: '#141D31',
+			// 	showCancelButton: true,
+			// 	reverseButtons: true
+			// }).then(function(result) {
+			// 	if (result.value) {
+			// 	}
+			// });
 		});
+		@endforeach
     } );
 </script>
 @endpush
