@@ -163,7 +163,7 @@
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
-										<button type="submit" class="btn btn-primary font-weight-bold">Save changes</button>
+										<button type="submit" class="btn btn-primary font-weight-bold">Submit</button>
 									</div>
 								</form>
 							</div>
