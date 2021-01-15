@@ -420,7 +420,7 @@
         @else
             @foreach($data_list_dua as $item)
                 $('#rating_stable_{{ $item->horse->stable->id }}').barrating('set', {{ floor($item->horse->stable->averageRating) }});
-                
+                $('#rating_stable_{{ $item->horse->stable->id }}').barrating('readonly', true);
                 // cek jika
                 // stable_id = 8
                 // slot_user_id = 8
@@ -429,8 +429,10 @@
                 // @endif
 
                 $('#rating_coach_{{ $item->coach_id }}').barrating('set', {{ floor($item->coach->averageRating) }});
-                
+                $('#rating_coach_{{ $item->coach_id }}').barrating('readonly', true);
+
                 $('#rating_horse_{{ $item->horse_id }}').barrating('set', {{ floor($item->horse->averageRating) }});
+                $('#rating_horse_{{ $item->horse_id }}').barrating('readonly', true);
             @endforeach
         @endif
     });
@@ -580,6 +582,7 @@ $(function() {
 
     $('.rating-stable').barrating({
         theme: 'fontawesome-stars',
+        initialRating: '0',
         onSelect: function(value, text, event) {
 
             // Get element id by data-id attribute
@@ -614,6 +617,7 @@ $(function() {
 
     $('.rating-coach').barrating({
         theme: 'fontawesome-stars',
+        initialRating: '0',
         onSelect: function(value, text, event) {
 
             // Get element id by data-id attribute
@@ -648,6 +652,7 @@ $(function() {
 
     $('.rating-horse').barrating({
         theme: 'fontawesome-stars',
+        initialRating: '0',
         onSelect: function(value, text, event) {
 
             // Get element id by data-id attribute
