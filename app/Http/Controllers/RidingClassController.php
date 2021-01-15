@@ -222,6 +222,7 @@ class RidingClassController extends Controller
                         ]);
 
                     //update slot capacity_booked
+                    
                     $count = DB::table('slot_users')->where('slot_id', $data['slot_id'])->count();
                     $slot = Slot::find($data['slot_id']);
                     $slot->capacity_booked   = $count;                                        
