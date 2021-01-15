@@ -260,7 +260,8 @@ $(function() {
 
     $('.rating-stable').barrating({
         theme: 'fontawesome-stars',
-        readonly: true
+        readonly: true,
+        initialRating: '0'
     });
 });
 
