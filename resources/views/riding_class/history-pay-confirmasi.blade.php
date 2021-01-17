@@ -420,7 +420,10 @@
         @else
             @foreach($data_list_dua as $item)
                 $('#rating_stable_{{ $item->horse->stable->id }}').barrating('set', {{ floor($item->horse->stable->averageRating) }});
-                $('#rating_stable_{{ $item->horse->stable->id }}').barrating('readonly', true);
+
+                @if($item->horse->stable->averageRating > 0)
+                    $('#rating_stable_{{ $item->horse->stable->id }}').barrating('readonly', true);
+                @endif
                 // cek jika
                 // stable_id = 8
                 // slot_user_id = 8
@@ -429,10 +432,14 @@
                 // @endif
 
                 $('#rating_coach_{{ $item->coach_id }}').barrating('set', {{ floor($item->coach->averageRating) }});
-                $('#rating_coach_{{ $item->coach_id }}').barrating('readonly', true);
+                @if($item->coach->averageRating > 0)
+                    $('#rating_coach_{{ $item->coach_id }}').barrating('readonly', true);
+                @endif
 
                 $('#rating_horse_{{ $item->horse_id }}').barrating('set', {{ floor($item->horse->averageRating) }});
-                $('#rating_horse_{{ $item->horse_id }}').barrating('readonly', true);
+                @if($item->coach->averageRating > 0)
+                    $('#rating_horse_{{ $item->horse_id }}').barrating('readonly', true);
+                @endif
             @endforeach
         @endif
     });
