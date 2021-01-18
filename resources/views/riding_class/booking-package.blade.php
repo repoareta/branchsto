@@ -134,9 +134,9 @@
                                                     </div>
                                                     <a href="{{ URL::previous() }}" class="btn btn-secondary">BACK</a>
                                                     @if ($list_detail->session_usage == null)
-                                                        <button type="submit" class="btn btn-add-new font-weight-bold">SUBMIT</button>
+                                                        <button type="submit" class="btn btn-add-new font-weight-bold">BOOK</button>
                                                     @else
-                                                        <button type="submit" class="btn btn-add-new font-weight-bold">SUBMIT</button>
+                                                        <button type="submit" class="btn btn-add-new font-weight-bold">BOOK</button>
                                                     @endif
                                                 </div>
                                             </form>
