@@ -41,33 +41,44 @@
                                         @csrf @method('put')	
                                         <div class="form-group row">
                                             <div class="col-4">
+                                                <label>Coach Name</label>
                                                 <input type="hidden" class="form-control" name="coach_id" value="{{$data->id}}">
                                                 <input type="hidden" class="form-control" name="stable_id" value="{{$data->stable_id}}">
                                                 <input type="text" class="form-control" name="name" value="{{$data->name}}" placeholder="Horse name">
                                             </div>
                                             <div class="col-4">
-                                                <input type="date" class="form-control" name="birth_date" value="{{$data->birth_date}}" placeholder="Birth Date">
+                                                <label>Birth Date</label>
+                                                <input type="text" class="form-control" name="birth_date" id="date" value="{{$data->name}}" required autocomplete="off" placeholder="Enter Date">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-4">
-                                                <select class="form-control" name="sex">
-                                                    <option value="">Sex</option>
+                                                <label>Sex</label>
+                                                <select class="form-control" name="sex">                                                    
                                                     <option value="Male" @php if('Male'  == $data->sex ) echo 'selected' ; @endphp>Male</option>
                                                     <option value="Female" @php if('Female'  == $data->sex ) echo 'selected' ; @endphp>Female</option>
                                                 </select>
                                             </div>
                                             <div class="col-4">
-                                                <input type="text" class="form-control" name="contact_number" value="{{$data->contact_number}}" placeholder="Contact Number">
+                                                <label>Contact Number</label>
+                                                <input type="number" min="0" class="form-control" name="contact_number" value="{{$data->contact_number}}" placeholder="Contact Number">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-4">
-                                                <input type="text" class="form-control" name="experience" value="{{$data->experience}}" placeholder="Experience">
+                                                <label>Experience</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="experience" value="{{$data->experience}}" placeholder="Experience">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">
+                                                            Years
+                                                        </span>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="col-4">
-                                                <select class="form-control" name="certified">
-                                                    <option value="">Certified</option>
+                                                <label>Ceritified</label>
+                                                <select class="form-control" name="certified">                                                    
                                                     <option value="Yes" @php if('Yes'  == $data->certified ) echo 'selected' ; @endphp>Yes</option>
                                                     <option value="No" @php if('No'  == $data->certified ) echo 'selected' ; @endphp>No</option>
                                                 </select>
@@ -97,6 +108,13 @@
 @endsection
 @push('add-script')
 <script>
+    $('#date').datepicker({
+            todayHighlight: true,
+            orientation: "bottom left",
+            autoclose: true,
+            // language : 'id',
+            format   : 'yyyy-mm-dd'
+        });
     $(document).ready( function () {
         $('#dataTable').DataTable();
         $("#dataTable_filter").append("<button class='btn btn-add-new'>Add New +</button>")

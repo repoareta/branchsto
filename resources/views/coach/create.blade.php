@@ -54,7 +54,7 @@
                                             </div>
                                             <div class="col-4">
                                                 <label>Birth Date</label>
-                                                <input type="date" class="form-control" name="birth_date" placeholder="Birth Date">
+                                                <input type="text" class="form-control" name="birth_date" id="date" required autocomplete="off" placeholder="Enter Date">
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -67,13 +67,20 @@
                                             </div>
                                             <div class="col-4">
                                                 <label>Contact Number</label>
-                                                <input type="text" class="form-control" name="contact_number" placeholder="Contact Number">
+                                                <input type="number" min="0" class="form-control" name="contact_number" placeholder="Contact Number">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-4">
                                                 <label>Experience</label>
-                                                <input type="text" class="form-control" name="experience" placeholder="Experience">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="experience" placeholder="Experience">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">
+                                                            Years
+                                                        </span>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="col-4">
                                                 <label>Certified</label>
@@ -130,5 +137,13 @@
             })
         })
     } );
+
+    $('#date').datepicker({
+            todayHighlight: true,
+            orientation: "bottom left",
+            autoclose: true,
+            // language : 'id',
+            format   : 'yyyy-mm-dd'
+        });
 </script>
 @endpush

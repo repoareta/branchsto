@@ -68,13 +68,13 @@
                                             </div>
                                             <div class="col-4">
                                                 <label>Birth Date</label>
-                                                <input type="date" class="form-control" name="birth_date" placeholder="Birth Date" autocomplete='off'>
+                                                <input type="text" class="form-control" name="birth_date" id="date" required autocomplete="off" placeholder="Enter Date">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-4">
                                                 <label>Passport Number</label>
-                                                <input type="number" class="form-control" name="passport_number" placeholder="Passport Number" autocomplete='off'>
+                                                <input type="number" min="0" class="form-control" name="passport_number" placeholder="Passport Number" autocomplete='off'>
                                             </div>
                                             <div class="col-4">
                                                 <label>Horse Breed</label>
@@ -124,6 +124,13 @@
 @push('add-script')
 {!! JsValidator::formRequest('App\Http\Requests\HorseStore', '#formhorse') !!}
 <script>
+    $('#date').datepicker({
+            todayHighlight: true,
+            orientation: "bottom left",
+            autoclose: true,
+            // language : 'id',
+            format   : 'yyyy-mm-dd'
+        });
     $(document).ready( function () {
         $('#dataTable').DataTable();
         $("#dataTable_filter").append("<button class='btn btn-add-new'>Add New +</button>");

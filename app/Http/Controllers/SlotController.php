@@ -34,11 +34,11 @@ class SlotController extends Controller
                 //Jika tanggal awal(input('from_date')) hingga tanggal akhir(input('end_date')) adalah sama maka
                 if($request->input('from_date') === $request->input('end_date')){
                     //kita filter tanggalnya sesuai dengan request input('from_date')
-                    $data = Slot::whereDate('date','=', $request->input('from_date'))->get();
+                    $data = Slot::where('user_id',Auth::user()->id)->whereDate('date','=', $request->input('from_date'))->get();
                 }
                 else{
                     //kita filter dari tanggal awal ke akhir
-                    $data = Slot::whereBetween('date', array($request->input('from_date'), $request->input('end_date')))->get();
+                    $data = Slot::where('user_id',Auth::user()->id)->whereBetween('date', array($request->input('from_date'), $request->input('end_date')))->get();
                 }
             }else{
                 $data = Slot::where('user_id',Auth::user()->id)->orderBy('time_start', 'asc')->get();
@@ -120,6 +120,7 @@ class SlotController extends Controller
         $data = $dataAll['group-a'];
         // var_dump(range(intval('07:00:00'),intval('16:00:00')));die;
         $period = new CarbonPeriod($start, '1 day', $end);
+        
         foreach($period as $date)
         {            
             if (count($data) > 0) {
@@ -135,16 +136,27 @@ class SlotController extends Controller
                         if($capacity == null){
                             Alert::error('Generate Error.', 'Capacity cannot be null.')->persistent(true)->autoClose(3600);
                             return redirect()->route('schedule.index');
-                        }             
-                        $data2 = array(
-                            'user_id'    => Auth::user()->id,
-                            'date'       => $date->format('Y-m-d'),
-                            'time_start' => $time1,
-                            'time_end'   => $time2,
-                            'capacity'   => $capacity,
-                            'capacity_booked'   => 0,
-                        );
-                        Slot::create($data2);
+                        }
+                        
+                        $cekDB = Slot::where('user_id', Auth::user()->id)
+                                    ->where('date', $date->format('Y-m-d'))
+                                    ->where('time_start', $time1)
+                                    ->where('time_end', $time2)
+                                    ->get();
+                        if(count($cekDB) > 0){
+                            Alert::error('Generate Error.', 'Cannot save same Date & Time')->persistent(true)->autoClose(3600);
+                            return redirect()->route('schedule.index');
+                        }else{
+                            $data2 = array(
+                                'user_id'    => Auth::user()->id,
+                                'date'       => $date->format('Y-m-d'),
+                                'time_start' => $time1,
+                                'time_end'   => $time2,
+                                'capacity'   => $capacity,
+                                'capacity_booked'   => 0,
+                            );
+                            Slot::create($data2);
+                        }
                     }
                 }
             }

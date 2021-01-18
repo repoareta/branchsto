@@ -14,60 +14,60 @@
                     <div class="form-group row">
                         <div class="col-sm-6">
                             <label>Stable Name</label>
-                            <input type="hidden" name="stable_id" class="form-control" value="{{$data->id}}">
-                            <input type="text" name="name" class="form-control" value="{{$data->name}}" placeholder="Stable Name">
+                            <input type="hidden" name="stable_id" class="form-control" autocomplete="off" value="{{$data->id}}">
+                            <input type="text" name="name" class="form-control" autocomplete="off" value="{{$data->name}}" placeholder="Stable Name">
                         </div>
                         <div class="col-sm-6">
                             <label>Stable Owner</label>
-                            <input type="hidden" name="user_id" class="form-control" value="{{$data->user_id}}">
-                            <input type="text" name="owner" class="form-control" value="{{$data->owner}}" placeholder="Stable Owner">
+                            <input type="hidden" name="user_id" class="form-control" autocomplete="off" value="{{$data->user_id}}">
+                            <input type="text" name="owner" class="form-control" autocomplete="off" value="{{$data->owner}}" placeholder="Stable Owner">
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-6">
                             <label>Manager</label>
-                            <input type="text" name="manager" class="form-control" value="{{$data->manager}}" placeholder="Manager">
+                            <input type="text" name="manager" class="form-control" autocomplete="off" value="{{$data->manager}}" placeholder="Manager">
                         </div>
                         <div class="col-sm-6">
                             <label>Contact Person</label>
-                            <input type="text" name="contact_person" class="form-control" value="{{$data->contact_person}}" placeholder="Contact Person">
+                            <input type="text" name="contact_person" class="form-control" autocomplete="off" value="{{$data->contact_person}}" placeholder="Contact Person">
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-6">
                             <label>Contact Number</label>
-                            <input type="number" name="contact_number" class="form-control" value="{{$data->contact_number}}" placeholder="Contact Number">
+                            <input type="number" min="0" name="contact_number" class="form-control" autocomplete="off" value="{{$data->contact_number}}" placeholder="Contact Number">
                         </div>
                         <div class="col-sm-6">
                             <label>Capacity Of Stable</label>
-                            <input type="number" name="capacity_of_stable" class="form-control" value="{{$data->capacity_of_stable}}" placeholder="Capacity Of Stable">
+                            <input type="number" min="0" name="capacity_of_stable" class="form-control" autocomplete="off" value="{{$data->capacity_of_stable}}" placeholder="Capacity Of Stable">
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-6">
                             <label>Capacity Of Arena</label>
-                            <input type="number" name="capacity_of_arena" class="form-control" value="{{$data->capacity_of_arena}}" placeholder="Capacity Of Arena">
+                            <input type="number" min="0" name="capacity_of_arena" class="form-control" autocomplete="off" value="{{$data->capacity_of_arena}}" placeholder="Capacity Of Arena">
                         </div>
                         <div class="col-sm-6">
                             <label>Number Of Coach</label>
-                            <input type="number" name="number_of_coach" class="form-control"  value="{{$data->number_of_coach}}" placeholder="Number Of Coach">
+                            <input type="number" min="0" name="number_of_coach" class="form-control" autocomplete="off"  value="{{$data->number_of_coach}}" placeholder="Number Of Coach">
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-6">
                             <label>Address</label>
-                            <textarea type="text" name="address" class="form-control" placeholder="Address">{{$data->address}}</textarea>
+                            <textarea type="text" name="address" class="form-control" autocomplete="off" placeholder="Address">{{$data->address}}</textarea>
                         </div>                        
                         <div class="col-sm-6">
                             <label>Logo</label>
-                            <input type="file" name="logo" class="form-control">
+                            <input type="file" name="logo" class="form-control" autocomplete="off">
                         </div>                        
                     </div>
                     <hr>
                     <div class="form-group row">
                         <div class="col-sm-6">
                             <label>Province</label>                            
-                            <select name="province_id" id="province" class="form-control">
+                            <select name="province_id" id="province" class="form-control" autocomplete="off">
                                 @foreach ($province as $item)                                                                       
                                     <option value="{{$item->id}}" {{$data->province_id == $item->id  ? 'selected' : ''}}>{{$item->name}}</option>
                                 @endforeach
@@ -75,7 +75,7 @@
                         </div>
                         <div class="col-sm-6">
                             <label>City</label>
-                            <select name="city_id" id="city" class="form-control">
+                            <select name="city_id" id="city" class="form-control" autocomplete="off">
                                 <option value="{{$city->id}}">{{$city->name}}</option>
                             </select>
                         </div>
@@ -83,13 +83,13 @@
                     <div class="form-group row">
                         <div class="col-sm-6">
                             <label>District</label>
-                            <select name="district_id" id="district" class="form-control">              
+                            <select name="district_id" id="district" class="form-control" autocomplete="off">              
                                 <option value="{{$district->id}}">{{$district->name}}</option>
                             </select>
                         </div>
                         <div class="col-sm-6">
                             <label>Village</label>
-                            <select name="village_id" id="village" class="form-control">  
+                            <select name="village_id" id="village" class="form-control" autocomplete="off">  
                                 <option value="{{$village->id}}">{{$village->name}}</option>  
                             </select>
                         </div>
@@ -99,17 +99,17 @@
                     <div class="form-group row">
                         <div class="col-sm-6">
                             <label>Bank Account Number</label>
-                            <input type="number" name="account_number" class="form-control" value="{{$data->account_number}}" placeholder="Bank Account Number">
+                            <input type="number" min="0" name="account_number" class="form-control" autocomplete="off" value="{{$data->account_number}}" placeholder="Bank Account Number">
                         </div>
                         <div class="col-sm-6">
                             <label>Bank Account Name</label>
-                            <input type="text" name="account_name" class="form-control"  value="{{$data->account_name}}" placeholder="Bank Account Name">
+                            <input type="text" name="account_name" class="form-control" autocomplete="off"  value="{{$data->account_name}}" placeholder="Bank Account Name">
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-6">
                             <label>Bank Branch</label>
-                            <input type="text" name="branch" class="form-control"  value="{{$data->branch}}" placeholder="Bank Branch">
+                            <input type="text" name="branch" class="form-control" autocomplete="off"  value="{{$data->branch}}" placeholder="Bank Branch">
                         </div>
                     </div>                
                     <div class="modal-footer">

@@ -59,7 +59,7 @@
                                             </div>
                                             <div class="col-12 col-sm-6 col-md-5 col-lg-4 mb-3">
                                                 <label>Package Number</label>
-                                                <input type="text" class="form-control" name="package_number" value="{{$data->package_number}}" placeholder="Package Number">
+                                                <input type="number" min="0" class="form-control" name="package_number" value="{{$data->package_number}}" placeholder="Package Number">
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -69,13 +69,20 @@
                                             </div>
                                             <div class="col-12 col-sm-6 col-md-5 col-lg-4 mb-3">
                                                 <label>Price</label>
-                                                <input type="text" class="form-control" name="price" value="{{$data->price}}">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            RP
+                                                        </span>
+                                                    </div>
+                                                    <input type="number" min="0" class="form-control" autocomplete="off" name="price" value="{{$data->price}}" placeholder="Price">
+                                                </div>
                                             </div>												
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-12 col-sm-6 col-md-5 col-lg-4 mb-3">
                                                 <label>Attendance</label>
-                                                <input type="text" class="form-control" name="attendance" value="{{$data->attendance}}">
+                                                <input type="number" min="0" class="form-control" name="attendance" value="{{$data->attendance}}">
                                             </div>	
                                             <div class="col-12 col-sm-6 col-md-5 col-lg-4 mb-3">
                                                 <label>Photo</label>
