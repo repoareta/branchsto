@@ -52,7 +52,12 @@
                                                 {{-- @csrf --}}
                                                 <div class="form-group">
                                                     <label>Stable Name</label>
-                                                    <input type="text" name="name" class="form-control" placeholder="Enter Stable Name">
+                                                    <select name="name" id="stable_search" class="form-control">
+                                                        @foreach ($stables as $stable)
+                                                            <option value="">Enter Stable Name</option>
+                                                            <option value="{{$stable->name}}">{{$stable->name}}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Date</label>
@@ -234,11 +239,13 @@ $(document).ready(function () {
 });
 </script>
 @endsection
-
 @push('script-no-dt')
+<script type="text/javascript">
 
-<script>
-    
+    $('#stable_search').select2({
+        placeholder: "Enter Stable"
+    });
+
     $('#datePicker').datepicker({
         todayHighlight: true,
         startDate: new Date(),
@@ -253,6 +260,7 @@ $(document).ready(function () {
         showMeridian: !1,
         snapToStep: !0
     });
+
 </script>
 
 <script type="text/javascript">
