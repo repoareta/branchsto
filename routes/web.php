@@ -227,8 +227,8 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
     Route::name('schedule.')->prefix('schedule')->group(function () {
         route::get('/', [SlotController::class, 'index'])->name('index');
         route::get('schedule/json', [SlotController::class, 'listJson'])->name('index.json');
-        route::get('create', [SlotController::class, 'create'])->name('create');
-        route::post('store', [SlotController::class, 'store'])->name('store');
+        // route::get('create', [SlotController::class, 'create'])->name('create');
+        // route::post('store', [SlotController::class, 'store'])->name('store');
         route::post('generate', [SlotController::class, 'generate'])->name('generate');
         route::get('detail/schedule', [SlotController::class, 'detailSchedule'])->name('detail.schedule');
         route::get('detail/show', [SlotController::class, 'detailShow'])->name('detail.show');
