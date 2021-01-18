@@ -110,7 +110,8 @@ class AuthController extends Controller
         if ($data) {
             return response()->json([
                 'success' => true,
-                'message' => 'Token check login sucessfully'
+                'message' => 'Token check login sucessfully',
+                'user'    => $data,
             ], 200);
         }
 
