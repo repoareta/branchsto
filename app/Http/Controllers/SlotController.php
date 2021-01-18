@@ -113,6 +113,7 @@ class SlotController extends Controller
 
     public function generate(Request $request)
     {
+        DB::beginTransaction();        
         $start = Carbon::createFromFormat('Y-m-d',$request->start);
         $end = Carbon::createFromFormat('Y-m-d',$request->end);
         $dataAll = $request->all();
@@ -130,10 +131,12 @@ class SlotController extends Controller
                         $time2 = date("H:i", strtotime($item['time2']));
                         $capacity = $item['capacity'];
                         if($time1 > $time2){
+                            DB::rollback();
                             Alert::error('Generate Error.', 'End time always greater then start time.');
                             return redirect()->route('schedule.index');
                         }   
                         if($capacity == null){
+                            DB::rollback();
                             Alert::error('Generate Error.', 'Capacity cannot be null.')->persistent(true)->autoClose(3600);
                             return redirect()->route('schedule.index');
                         }
@@ -144,6 +147,7 @@ class SlotController extends Controller
                                     ->where('time_end', $time2)
                                     ->get();
                         if(count($cekDB) > 0){
+                            DB::rollback();
                             Alert::error('Generate Error.', 'Cannot save same Date & Time')->persistent(true)->autoClose(3600);
                             return redirect()->route('schedule.index');
                         }else{
@@ -155,15 +159,24 @@ class SlotController extends Controller
                                 'capacity'   => $capacity,
                                 'capacity_booked'   => 0,
                             );
-                            Slot::create($data2);
+                            Slot::create($data2);                            
                         }
+                    }else{
+                        DB::rollback();
+                        Alert::error('Generate Error.', 'Time cannot be null.')->persistent(true)->autoClose(3600);
+                        return redirect()->route('schedule.index');
                     }
                 }
+            }else{
+                DB::rollback();
+                Alert::error('Generate Error.', 'Time cannot be null.')->persistent(true)->autoClose(3600);
+                return redirect()->route('schedule.index');
             }
             
         }
 
         if($data){
+            DB::commit();
             Alert::success('Generate Success.', 'Success.')->persistent(true)->autoClose(3600);
             return redirect()->route('schedule.index'); 
         }
