@@ -28,6 +28,7 @@ class RidingClassController extends Controller
     //tampilan list package
     public function search_list_class(Request $request)
     {
+        $stables = Stable::select("id", "name")->where('approval_status', 'Accepted')->get();        
         $data = '';
         $data2 = '';
         if ($request->all()) {
@@ -69,6 +70,7 @@ class RidingClassController extends Controller
                 $Query = Stable::with(['package' => function ($q) {
                     $q->where('packages.session_usage', null);
                 }])->where('approval_status', 'Accepted');
+
                 if ($request->has('name') && $request->name != null) {
                     $Query->where(function ($query) use ($request) {
                         $query->orWhereRaw("lower(name) like '%" . strtolower($request->name) . "%'");
@@ -80,7 +82,7 @@ class RidingClassController extends Controller
                 $data = '';
             }
         }
-        return view('riding_class.list-package', compact('data', 'data2'));
+        return view('riding_class.list-package', compact('data', 'data2', 'stables'));
     }
 
     // tampilan booking package untuk memilih choose date
