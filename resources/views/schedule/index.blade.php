@@ -98,109 +98,6 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="modalAddPackage"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header ">
-                <h4 class="title-text " id="title_modal" data-state="add">
-                    ADD SCHEDULE
-                </h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki ki-close"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                @php
-                    date_default_timezone_set('Asia/Jakarta');
-                    $time = date('H:i');
-                @endphp
-                <form action="{{route('schedule.store')}}" method="POST">
-                    @csrf
-                    <div class="form-group row">
-                        <div class="col-11">
-                            <label>Date</label>
-                            <input type="hidden" class="form-control" name="id" id="id">
-                            <input type="date" class="form-control" name="tanggal" required>
-                        </div>	
-                    </div>	
-                    <div class="form-group row">											
-                        <div class="col-4">
-                            <label>Time Start</label>
-                            <input type="text" class="form-control" name="time1[]" maxlength="5" value="08:00">
-                        </div>																								
-                        <div class="col-4">
-                            <label>Time End</label>
-                            <input type="text" class="form-control" name="time2[]" maxlength="5" value="09:00">
-                        </div>
-                        <div class="col-3">
-                            <label>Capacity</label>
-                            <input type="text" class="form-control" name="capacity[]" value="0">
-                        </div>
-                    </div>
-                    <div class="form-group row">											
-                        <div class="col-4">
-                            <label>Time Start</label>
-                            <input type="text" class="form-control" name="time1[]" maxlength="5" value="09:00">
-                        </div>																								
-                        <div class="col-4">
-                            <label>Time End</label>
-                            <input type="text" class="form-control" name="time2[]" maxlength="5" value="10:00">
-                        </div>
-                        <div class="col-3">
-                            <label>Capacity</label>
-                            <input type="text" class="form-control" name="capacity[]" value="0">
-                        </div>
-                    </div>
-                    <div class="form-group row" id="after-add-more">											
-                        <div class="col-4">
-                            <label>Time Start</label>
-                            <input type="text" class="form-control" name="time1[]" maxlength="5" value="10:00">
-                        </div>																								
-                        <div class="col-4">
-                            <label>Time End</label>
-                            <input type="text" class="form-control" name="time2[]" maxlength="5" value="11:00">
-                        </div>
-                        <div class="col-3">
-                            <label>Capacity</label>
-                            <input type="text" class="form-control" name="capacity[]" value="0">
-                        </div>
-                        <div class="col-1">
-                            <label for=""></label>
-                            <i class="fas fa-plus-circle pointer-link text-dark icon-2x mt-10" id="add-more"></i> 
-                        </div>
-                    </div>
-                    <div  hidden id="copy">
-                        <div  class="form-group row">											
-                            <div class="col-4">
-                                <label>Time Start</label>
-                                <input type="text" class="form-control" name="time1[]" maxlength="5" value="">
-                            </div>																								
-                            <div class="col-4">
-                                <label>Time End</label>
-                                <input type="text" class="form-control" name="time2[]" maxlength="5" value="">
-                            </div>
-                            <div class="col-3">
-                                <label>Capacity</label>
-                                <input type="text" class="form-control" name="capacity[]" value="0">
-                            </div>
-                            <div class="col-1">
-                                <label for=""></label>
-                                <i class="fas fa-times-circle pointer-link text-danger icon-2x mt-10" id="remove"></i> 
-                            </div>																								
-                            <div class="col-1">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">											
-                    <button data-dismiss="modal" class="btn btn-secondary">Cancel</button>
-                    <button type="submit" class="btn btn-add-new font-weight-bold">SAVE</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal -->
 <div class="modal fade" id="modalAddPackageedit"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -435,8 +332,6 @@ $(document).ready( function () {
             collapsedGroups[name] = !collapsedGroups[name];
             t.draw(false);
         });  
-    
-        $("#dataTable_filter").append("<button class='btn btn-add-new ml-5' id='openDetail'>Add New +</button>");
     
         $("#dataTable_filter").append("<button class='btn btn-add-new ml-3'  data-toggle='modal' data-target='#modalGenerateSchedule'>Generate Schedule</button>");
     
