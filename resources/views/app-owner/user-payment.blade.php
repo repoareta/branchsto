@@ -35,7 +35,7 @@
                                                 <th scope="col">User</th>													                                                												
                                                 <th scope="col">Image</th>													
                                                 <th scope="col">Status</th>									
-                                                <th scope="col">Bank</th>									
+                                                <th scope="col">Bank Account Name</th>									
                                                 <th scope="col">Action</th>
                                                 </tr>
                                             </thead>
@@ -58,7 +58,7 @@
                                                 <th scope="col">User</th>													                                                												
                                                 <th scope="col">Image</th>													
                                                 <th scope="col">Status</th>	
-                                                <th scope="col">Bank</th>										
+                                                <th scope="col">Bank Account Name</th>										
                                                 <th scope="col">Action</th>
                                                 </tr>
                                             </thead>
@@ -92,19 +92,27 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-8">
                             <p class="mb-0">User</p>
                             <h4 class="mb-4" id="user"></h4>                            
                             <p class="mb-0">Image</p>
-                            <img src="" alt="" id="photo">
+                            <img src="" alt="" id="photo" width="100px" class="mb-4">
+                            <p class="mb-0">Bank Account Name</p>
+                            <h4 class="mb-4" id="bank_name"></h4>
+                            <p class="mb-0">Bank Account Number</p>
+                            <h4 class="mb-4" id="bank_number"></h4>
+                            <p class="mb-0">Package</p>
+                            <h4 class="mb-4" id="package"></h4>
+                            <p class="mb-0">Stable</p>
+                            <h4 class="mb-4" id="stable"></h4>
                             <p class="mb-0">Status</p>
                             <h4 class="mb-4" id="approval_status"></h4>
+                            <p class="mb-0">Payment Date & Time</p>
+                            <h4 class="mb-4" id="created_at"></h4>
                             <p class="mb-0">Approval By</p>
                             <h4 class="mb-4" id="approval_by"></h4>
                             <p class="mb-0">Approval At</p>
                             <h4 class="mb-4" id="approval_at"></h4>
-                            <p class="mb-0">Bank</p>
-                            <h4 class="mb-4" id="bank"></h4>
                         </div>
                     </div>
                 </div>
@@ -164,23 +172,29 @@
             $('body').on( 'click', '#openBtn', function () {
                 var id = $(this).data('id');
                 $.get('{{route('owner.userpayment.index')}}'+'/detail/booking/' + id , function (data) {
-                    $('#user').html(data.user.name);
-                    $('#price_total').html(data.price_total);
-                    $('#approval_status').html(data.approval_status);    
-                    $('#approval_at').html(data.approval_at);    
-                    $('#photo').attr('src','{{asset("storage/booking/photo/")}}/'+(data.photo));                
-                    if(data.approval_status == null){
+
+                    var date = data[0].created_at;
+                    $('#user').html(data[0].user.name);
+                    $('#price_total').html(data[0].price_total);
+                    $('#created_at').html(date.slice(0,10)+'  '+date.slice(11,19));    
+                    $('#approval_status').html(data[0].approval_status);    
+                    $('#approval_at').html(data[0].approval_at);
+                    $('#photo').attr('src','{{asset("storage/booking/photo/")}}/'+(data[0].photo));                
+                    $('#package').html(data[1].package.name);
+                    $('#stable').html(data[2].name);
+                    if(data[0].approval_status == null){
                         $('#approval_status').html('Need Approval');    
                     }
-                    if(data.approval_by == null){
+                    if(data[0].approval_by == null){
                         $('#approval_by').html('Need Approval');    
                     }else{
-                        $('#approval_by').html(data.approvalby_booking.name);
+                        $('#approval_by').html(data[0].approvalby_booking.name);
                     }
-                    if(data.approval_at == null){
+                    if(data[0].approval_at == null){
                         $('#approval_at').html('Need Approval');    
                     }
-                    $('#bank').html(data.bank.account_name);
+                    $('#bank_name').html(data[0].bank.account_name);
+                    $('#bank_number').html(data[0].bank.account_number);
                     $('#modalDetail').modal('show');
                 })
             });              

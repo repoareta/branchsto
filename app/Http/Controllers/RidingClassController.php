@@ -81,7 +81,11 @@ class RidingClassController extends Controller
             } else {
                 $data = '';
             }
+
+            $request->flash();
         }
+
+        session()->flashInput($request->input());
         return view('riding_class.list-package', compact('data', 'data2', 'stables'));
     }
 

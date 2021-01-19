@@ -11,6 +11,8 @@ use Carbon\Carbon;
 // load model
 use App\Models\Booking;
 use App\Models\Package;
+use App\Models\Stable;
+use App\Models\BookingDetail;
 
 // load plugin
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -43,7 +45,7 @@ class UserPaymentApprovalController extends Controller
             return $data->approval_status;
         })
         ->addColumn('bank', function ($data) {
-            return $data->bank->account_number;
+            return $data->bank->account_name;
         })
         ->addColumn('action', function ($data) {
             return
@@ -148,8 +150,15 @@ class UserPaymentApprovalController extends Controller
 
     public function detailBooking($id)
     {
-        $booking = Booking::with(['bank','user','approvalby_booking'])->find($id);
-        return response()->json($booking);
+        $booking = Booking::with(['bank','user','approvalby_booking', 'booking_detail'])->find($id);
+        $bookingDetail = BookingDetail::with(['package'])->where('booking_id', $id)->first();
+        $stable = Stable::find($bookingDetail->package->stable_id);
+        $data = [
+            $booking,
+            $bookingDetail,
+            $stable
+        ];
+        return response()->json($data);
     }
 
     public function approvBooking($id)

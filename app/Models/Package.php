@@ -19,7 +19,7 @@ class Package extends Model
 
     public function stable()
     {
-        return $this->belongsTo(Stable::class);
+        return $this->hasMany(Stable::class);
     }
 
     public function user()

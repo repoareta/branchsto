@@ -154,7 +154,7 @@
                                                 
                                             <input type="hidden" name="booking_id" value="{{$data_booking_id}}">
                                             <button type="submit" class="btn btn-payment w-100" id="add-payment">
-                                                PAYMENT
+                                                PAYMENT CONFIRMATION
                                             </button>
                                         </div>
                                     </form>
