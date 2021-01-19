@@ -36,9 +36,8 @@
                                                     <div class="mr-3">
                                                         <div class="d-flex align-items-center mr-3">
                                                             <!--begin::Name-->
-                                                            <a href="#" class="d-flex align-items-center text-dark text-hover-primary font-size-h5 font-weight-bold mr-3">David Smith</a>
+                                                            <a href="#" class="d-flex align-items-center text-dark text-hover-primary font-size-h5 font-weight-bold mr-3">Merlynn Park Hotel</a>
                                                             <!--end::Name-->
-                                                            <span class="label label-light-success label-inline font-weight-bolder mr-1">Customer</span>
                                                         </div>
                                                         <!--begin::Contacts-->
                                                         <div class="d-flex flex-wrap my-2">

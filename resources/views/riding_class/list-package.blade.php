@@ -53,22 +53,22 @@
                                                 <div class="form-group">
                                                     <label>Stable Name</label>
                                                     <select name="name" id="stable_search" class="form-control">
+                                                        <option value="{{ old('name') }}">{{ old('name') }}</option>
                                                         @foreach ($stables as $stable)
-                                                            <option value="">Enter Stable Name</option>
                                                             <option value="{{$stable->name}}">{{$stable->name}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Date</label>
-                                                    <input type="text" class="form-control" autocomplete="off" name="date" id="datePicker" placeholder="Enter Date">
+                                                    <input type="text" class="form-control" autocomplete="off" name="date" id="datePicker" value="{{old('date') }}" placeholder="Enter Date">
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Start Time</label>
-                                                    <input type="text" class="form-control" autocomplete="off" name="time_start" id="timePicker" placeholder="Enter Start Time">
+                                                    <input type="text" class="form-control" autocomplete="off" name="time_start" id="timePicker" value="{{ old('time_start') }}" placeholder="Enter Start Time">
                                                 </div>
                                                 <div class="d-flex justify-content-between align-self-end">
-                                                    <button class="btn btn-secondary">RESET</button>
+                                                    <a href="{{route('riding_class.search_class')}}" class="btn btn-secondary">RESET</a>
                                                     <button class="btn btn-add-new">SEARCH</button>
                                                 </div>
                                             </form>

@@ -14,7 +14,7 @@ class Booking extends Model
     */
     public function booking_detail()
     {
-        return $this->hasMany(BookingDetail::class);
+        return $this->hasOne(BookingDetail::class);
     }
     public function bank()
     {
