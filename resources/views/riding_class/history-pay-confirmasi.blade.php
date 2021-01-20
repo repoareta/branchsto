@@ -213,8 +213,7 @@
                                                             </select>
                                                         </span>
                                                     </div>
-                                                    @endif
-                                                    <div class="table-danger d-none">Payment expires in <span id="time">60:00</span> minutes.</div>
+                                                    @endif                                                    
                                                     @if(!$check_schedule)
                                                         @if($status_booking->approval_status == 'Accepted' && $item->qr_code_status == null)
                                                             <button class="btn btn-light-success font-weight-bold mr-2 mb-5" id="reSchedule">
