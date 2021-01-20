@@ -24,4 +24,12 @@ class SlotUser extends Model
     {
         return $this->belongsTo(Coach::class);
     }
+
+    /**
+    * Get the user of stable
+    */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

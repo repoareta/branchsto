@@ -121,6 +121,9 @@
 																<a href='#' class='btn btn-danger text-center mr-2 '>
 																	<i class='fas fa-ban pointer-link'></i>                    
 																</a>
+																<a href='javascript:void(0)' data-toggle='modal' data-id='{{$item->id}}' class='btn btn-info text-center mr-2' id='openBtn' data-toggle='Detail' data-placement='top' title='Detail'>
+																	<i class='fas fa-eye'></i>
+																</a>
 																@else
 																<button data-id="{{$data_stable->id}}" data-id-slot="{{$item->id}}" class="btn btn-success text-center mr-2" type="button" id="assign{{$item->id}}">
 																	<i class='fas fa-check-circle pointer-link'></i>
@@ -170,6 +173,36 @@
 						</div>
 					</div>
 					<!--end::Container-->
+
+					<!-- Modal -->
+					<div class="modal fade" id="modalDetail"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-content">
+								<div class="modal-header ">
+									<h4 class="title-text " id="title_modal" data-state="add">
+										ASSIGN DETAILS
+									</h4>
+								</div>
+								<div class="modal-body">
+									<div class="row">
+											<div class="col-sm-8">
+												<p class="mb-0">Name</p>
+												<h4 class="mb-4" id="name"></h4>
+												<p class="mb-0">Horse</p>
+												<h4 class="mb-4" id="horse"></h4>
+												<p class="mb-0">Coach</p>
+												<h4 class="mb-4" id="coach"></h4>
+											</div>
+										</div>
+									</div>
+									<div class="modal-footer">											
+										<button data-dismiss="modal" class="btn btn-add-new font-weight-bold">Close</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Modal -->
 				</div>
 				<!--end::Entry-->
 			</div>
@@ -329,6 +362,17 @@
 			// });
 		});
 		@endforeach
+
+		$('body').on( 'click', '#openBtn', function () {
+                var id = $(this).data('id');
+                $.get('{{route("booking_details.assign_details")}}/' + id , function (data) {
+                    
+                    $('#name').html(data.user.name);
+                    $('#horse').html(data.horse.name);
+                    $('#coach').html(data.coach.name);
+                    $('#modalDetail').modal('show');
+                })
+            });
     } );
 </script>
 @endpush

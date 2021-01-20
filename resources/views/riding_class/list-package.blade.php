@@ -255,7 +255,7 @@ $(document).ready(function () {
         format   : 'yyyy-mm-dd'
     });
     $('#timePicker').timepicker({
-        minuteStep: 1,
+        minuteStep: 60,
         defaultTime: null,
         showMeridian: !1,
         snapToStep: !0

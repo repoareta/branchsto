@@ -78,7 +78,7 @@ class UserPaymentApprovalController extends Controller
             return 'Pending';
         })
         ->addColumn('bank', function ($data) {
-            return $data->bank->account_number;
+            return $data->bank->account_name;
         })
         ->addColumn('action', function ($data) {
             return
@@ -165,48 +165,42 @@ class UserPaymentApprovalController extends Controller
     {
         $data = Booking::find($id);
         Booking::where('id', $data->id)->update([
-            'approval_status' => 'Accepted',
-            'approval_by' => Auth::user()->id,
-            'approval_at' => Carbon::now()
-        ]);
+                'approval_status' => 'Accepted',
+                'approval_by' => Auth::user()->id,
+                'approval_at' => Carbon::now()
+            ]);
+        $bookingDetail = $data->booking_detail;
+        $cek_package = Package::find($bookingDetail->package_id);            
+        if($cek_package->session_usage == null){
+            $image = QrCode::format('png')
+                ->size(200)
+                ->generate(url("/booking-detail/$bookingDetail->id/confirmation"));
 
+            $output_file = '/img/qr-code/img-' . time() . $bookingDetail->id . '.png';
 
-        foreach ($data->booking_detail as $key => $row) {
+            Storage::disk('public')->put($output_file, $image);
 
-            $cek_package = Package::find($row->package_id);            
-            if($cek_package->session_usage == null){
+            $bookingDetail->qr_code = $output_file;
+            $bookingDetail->save();
+        }else{
+            
+            $slot_user = DB::table('slot_users')
+            ->where('booking_detail_id', $bookingDetail->id)
+            ->get();
+            
+            foreach($slot_user as $user){
                 $image = QrCode::format('png')
                     ->size(200)
-                    ->generate(url("/booking-detail/$row->id/confirmation"));
-    
-                $output_file = '/img/qr-code/img-' . time() . $row->id . '.png';
-    
+                    ->generate(url("/booking-detail/$bookingDetail->id/confirmation"));
+
+                $output_file = '/img/qr-code/img-' . time() . $bookingDetail->id . $user->id . '.png';
+
                 Storage::disk('public')->put($output_file, $image);
-    
-                $row->qr_code = $output_file;
-                $row->save();
-            }else{
-                
-                $slot_user = DB::table('slot_users')
-                ->where('booking_detail_id', $row->id)
-                ->get();
-                
-                foreach($slot_user as $user){
-                    $image = QrCode::format('png')
-                        ->size(200)
-                        ->generate(url("/booking-detail/$row->id/confirmation"));
-        
-                    $output_file = '/img/qr-code/img-' . time() . $row->id . $user->id . '.png';
 
-                    Storage::disk('public')->put($output_file, $image);
-
-                    DB::table('slot_users')->where('id',$user->id)->update([
-                        'qr_code' => $output_file
-                    ]);
-                }                
-            }
-
-            sleep(1); // add delay 1 seconds
+                DB::table('slot_users')->where('id',$user->id)->update([
+                    'qr_code' => $output_file
+                ]);
+            }                
         }
 
         Alert::success($data->name.' Accepted', 'Success.')->persistent(true)->autoClose(3600);

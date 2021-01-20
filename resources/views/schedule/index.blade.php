@@ -462,7 +462,7 @@ $(document).ready( function () {
     });
     $("#timePickerEdit1").timepicker(
         {
-            minuteStep: 1,
+            minuteStep: 60,
             defaultTime: "7:00",
             showMeridian: !1,
             snapToStep: !0
@@ -470,7 +470,7 @@ $(document).ready( function () {
     );
     $("#timePickerEdit2").timepicker(
         {
-            minuteStep: 1,
+            minuteStep: 60,
             defaultTime: "8:00",
             showMeridian: !1,
             snapToStep: !0
@@ -481,7 +481,7 @@ $(document).ready( function () {
         $("input[id=timePickerGen1]").each(function () {
             $(this).timepicker(
                 {
-                    minuteStep: 1,
+                    minuteStep: 60,
                     defaultTime: "7:00",
                     showMeridian: !1,
                     snapToStep: !0
@@ -491,7 +491,7 @@ $(document).ready( function () {
         $("input[id=timePickerGen2]").each(function () {
             $(this).timepicker(
                 {
-                    minuteStep: 1,
+                    minuteStep: 60,
                     defaultTime: "8:00",
                     showMeridian: !1,
                     snapToStep: !0
@@ -502,7 +502,7 @@ $(document).ready( function () {
             $("input[id=timePickerGen1]").each(function () {
                 $(this).timepicker(
                     {
-                        minuteStep: 1,
+                        minuteStep: 60,
                         defaultTime: "7:00",
                         showMeridian: !1,
                         snapToStep: !0
@@ -512,7 +512,7 @@ $(document).ready( function () {
             $("input[id=timePickerGen2]").each(function () {
                 $(this).timepicker(
                     {
-                        minuteStep: 1,
+                        minuteStep: 60,
                         defaultTime: "8:00",
                         showMeridian: !1,
                         snapToStep: !0

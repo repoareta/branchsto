@@ -525,13 +525,13 @@
         }
     });
     $('#timePickerStart').timepicker({
-        minuteStep: 1,
+        minuteStep: 60,
         defaultTime: "7:00",
         showMeridian: !1,
         snapToStep: !0
     });
     $('#timePickerEnd').timepicker({
-        minuteStep: 1,
+        minuteStep: 60,
         defaultTime: "7:00",
         showMeridian: !1,
         snapToStep: !0

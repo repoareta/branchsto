@@ -59,11 +59,8 @@
             position: relative; }
           .kt-login.kt-login--v6 .kt-login__aside .kt-login__wrapper .kt-login__container .kt-login__form .form-control {
             height: 46px;
-            border-radius: 20;
-            border: 10;
             border-bottom: 1px solid rgba(202, 195, 195, 0.8);
             padding: 1rem 0;
-            padding-left: 2rem;
             margin-top: 1rem;
             color: #595d6e; }
             .kt-login.kt-login--v6 .kt-login__aside .kt-login__wrapper .kt-login__container .kt-login__form .form-control::-moz-placeholder {

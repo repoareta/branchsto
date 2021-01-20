@@ -63,13 +63,13 @@
 											<form class="kt-form" id="formregister" action="{{ route('register')}}" method="POST">
 												@csrf
 												<div class="input-group">
-													<input class="form-control" type="text" placeholder="Name" name="name">
+													<input class="form-control pl-4" type="text" placeholder="Name" name="name">
 												</div>
 												<div class="input-group">
-													<input class="form-control" type="email" placeholder="Email" name="email">
+													<input class="form-control pl-4" type="email" placeholder="Email" name="email">
 												</div>
 												<div class="input-group">
-													<input class="form-control" type="password" placeholder="Password" name="password">
+													<input class="form-control pl-4" type="password" placeholder="Password" name="password">
 												</div>
 												{{-- <div class="form-group">
 													<select class="form-control" name="jenis_kelamin">
@@ -90,7 +90,7 @@
 												<div>
 													<button style="color:#fff;background-color:#2A4158" type="submit" class="form-control">Sign Up</button>
 												</div>
-												<div class="kt-login__extra">
+												<div class="kt-login__extra mt-3">
 													<a href="{{route('login')}}">Have any account?</a>
 												</div>
 											</form>

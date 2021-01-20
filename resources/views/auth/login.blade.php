@@ -50,7 +50,7 @@
 									<div class="kt-login__signin">
 										<div class="">
 											@if(\Session::has('notif'))
-											<div class="alert alert-danger alert-block">
+											<div class="alert alert-danger alert-block"
 												<button type="button" class="close" data-dismiss="alert">×&nbsp;&nbsp;&nbsp;</button>
 												<strong>{{Session::get('notif')}}</strong>
 											</div>
@@ -63,10 +63,10 @@
 											<form class="kt-form" id="formcomm" action="{{ route('login')}}" method="post">
 												@csrf
 												<div class="form-group">
-													<input class="form-control" type="text" placeholder="Email " value="" name="email" autocomplete="off">
+													<input class="form-control pl-4" type="text" placeholder="Email " value="" name="email" autocomplete="off">
 												</div>
 												<div class="form-group">
-													<input class="form-control form-control-last" type="password" value="" placeholder="Password" name="password">
+													<input class="form-control pl-4 form-control-last" type="password" value="" placeholder="Password" name="password">
 												</div>
 												<div class="kt-login__actions">
 													<button id="kt_login_signin_submitn" style="color:#fff; background-color:#2A4158" class="form-control">LOGIN</button>
