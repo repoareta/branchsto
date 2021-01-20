@@ -273,7 +273,8 @@ Route::group(['middleware' => ['auth', 'cekstatus:1']], function () {
     });
     // untuk close package
     route::get('booking-detail/{id}/confirmation', [StableController::class, 'stable_close']);
-    route::get('booking-detail/confirmation/json', [StableController::class, 'jsonHorseCoach']);
+    route::get('booking-detail/confirmation/json', [StableController::class, 'jsonHorseCoach'])->name('booking_details.assign_details');
+    route::get('booking-detail/confirmation/json/{id}', [StableController::class, 'detailHorseCoach']);
     route::post('booking-detail/confirmation/close', [StableController::class, 'assignHorseCoach'])->name('booking_details.close');
     route::post('close/json', [StableController::class, 'close'])->name('close');
 });
