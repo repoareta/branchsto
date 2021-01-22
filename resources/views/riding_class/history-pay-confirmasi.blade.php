@@ -271,9 +271,9 @@
                                                         </div>
                                                         <div class="form-group mt-10">
                                                             <div class="col-12">
+                                                                <label>Picture Payment Proof</label>
                                                                 <div class="form-group row">
                                                                     <div class="col-lg-9 col-xl-6">
-                                                                        <label>Picture Proof of Payment</label>
                                                                         <div class="image-input image-input-outline" id="kt_profile_avatar" style="background-image: url(assets/media/users/blank.png)">
                                                                             <div class="image-input-wrapper" style="background-image: url(assets/media/users/300_21.jpg)"></div>
                                                                             <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
