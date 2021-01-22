@@ -144,7 +144,7 @@
                                                     <div class="image-input image-input-outline" id="kt_profile_avatar" style="background-image: url(assets/media/users/blank.png)">
                                                         <div class="image-input-wrapper" style="background-image: url(assets/media/users/300_21.jpg)"></div>
                                                         <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
-                                                            <i class="fa fa-pen icon-sm text-muted"></i>
+                                                            <i class="fas fa-pen icon-sm text-muted"></i>
                                                             <input type="file" name="photo" accept=".png, .jpg, .jpeg" />
                                                             <input type="hidden" name="profile_avatar_remove" />
                                                         </label>
@@ -188,7 +188,7 @@
                                                                 <i class="la la-phone"></i>
                                                             </span>
                                                         </div>
-                                                        <input type="number" name="phone" class="form-control form-control-lg form-control-solid" value="{{$data->phone}}" placeholder="Phone" />
+                                                        <input type="number" name="phone" min="0" class="form-control form-control-lg form-control-solid" value="{{$data->phone}}" placeholder="Phone" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -196,7 +196,10 @@
                                                 <label class="col-xl-3 col-lg-3 col-form-label">Birth Date</label>
                                                 <div class="col-lg-9 col-xl-6">
                                                     <div class="input-group input-group-lg input-group-solid">
-                                                        <input type="date" name="birth_date" class="form-control form-control-lg form-control-solid" value="{{ Carbon\Carbon::parse($data->birth_date)->format('Y-m-d') }}"/>
+                                                        <input type="text" name="birth_date" id="date" class="form-control form-control-lg form-control-solid" value="{{ Carbon\Carbon::parse($data->birth_date)->format('Y-m-d') }}"/>
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text"><i class="la la-calendar-check-o icon-lg"></i></span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -312,6 +315,12 @@
         }else{
             $("#village").empty();
         }   
+    });
+    $('#date').datepicker({
+        orientation: "bottom left",
+        autoclose: true,
+        // language : 'id',
+        format   : 'yyyy-mm-dd'
     });
 </script>
 @endsection

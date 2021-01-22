@@ -243,72 +243,75 @@
                                                 @endif
                                             </p>
                                             <hr>
-                                            <h5>Reminder :</h5>
-                                            @if ($status_booking->photo == null )
-                                                @if ($status_booking->approval_status == 'Expired')
-                                                    <p class="table-danger">
-                                                    <b> Time Limit For The Payment Is 1 Hour Or Your Booking Will Expire.</b>
-                                                    </p>
-                                                @else
-                                                    {{-- <p class="table-danger">
-                                                        If you don't pay for 1 hour then your booking will expired
-                                                    </p> --}}
-                                                    <div class="table-danger">Payment expires in <span id="time">60:00</span> minutes.</div>
-                                                    <form action="{{route('riding_class.confirmasion.payment')}}" method="POST" enctype="multipart/form-data">
-                                                        @csrf
-                                                        <div class="bank-number">
-                                                            <div class="card-bank">
-                                                                <div class="bank">
-                                                                    <img src="{{ asset('storage/'.$data_payment->photo) }}" alt="">
-                                                                    <div class="text">
-                                                                        <div class="name">{{$data_payment->account_name}}</div>
-                                                                        <div class="number">{{$data_payment->account_number}}</div>
-                                                                    </div>
-                                                                </div>
-                                                                <div>															
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group mt-10">
-                                                            <div class="col-12">
-                                                                <label>Picture Payment Proof</label>
-                                                                <div class="form-group row">
-                                                                    <div class="col-lg-9 col-xl-6">
-                                                                        <div class="image-input image-input-outline" id="kt_profile_avatar" style="background-image: url(assets/media/users/blank.png)">
-                                                                            <div class="image-input-wrapper" style="background-image: url(assets/media/users/300_21.jpg)"></div>
-                                                                            <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
-                                                                                <i class="fas fa-pen icon-sm text-muted"></i>
-                                                                                <input type="file" name="photo" accept=".png, .jpg, .jpeg" />
-                                                                                <input type="hidden" name="profile_avatar_remove" />
-                                                                            </label>
-                                                                            <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
-                                                                                <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                                                            </span>
-                                                                            <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove avatar">
-                                                                                <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                                                            </span>
-                                                                        </div>
-                                                                        <span class="form-text text-muted">Allowed file types: png, jpg, jpeg.</span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                            
-                                                        <input type="hidden" name="booking_id" value="{{$status_booking->id}}">
-                                                        <button type="submit" class="btn btn-payment w-100" id="add-payment">
-                                                            PAYMENT
-                                                        </button> 
-                                                    </form>
-                                                @endif                                           
+                                            @if($status_booking->approval_status == 'Accepted' && $item->qr_code_status == 'Close')
                                             @else
-                                                @if ($status_booking->approval_status == null)
-                                                    <span class="label label-lg label-light-danger label-inline">Pending.</span> 
+                                                <h5>Reminder :</h5>
+                                                @if ($status_booking->photo == null )
+                                                    @if ($status_booking->approval_status == 'Expired')
+                                                        <p class="table-danger">
+                                                        <b> Time Limit For The Payment Is 1 Hour Or Your Booking Will Expire.</b>
+                                                        </p>
+                                                    @else
+                                                        {{-- <p class="table-danger">
+                                                            If you don't pay for 1 hour then your booking will expired
+                                                        </p> --}}
+                                                        <div class="table-danger">Payment expires in <span id="time">60:00</span> minutes.</div>
+                                                        <form action="{{route('riding_class.confirmasion.payment')}}" method="POST" enctype="multipart/form-data">
+                                                            @csrf
+                                                            <div class="bank-number">
+                                                                <div class="card-bank">
+                                                                    <div class="bank">
+                                                                        <img src="{{ asset('storage/'.$data_payment->photo) }}" alt="">
+                                                                        <div class="text">
+                                                                            <div class="name">{{$data_payment->account_name}}</div>
+                                                                            <div class="number">{{$data_payment->account_number}}</div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div>															
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group mt-10">
+                                                                <div class="col-12">
+                                                                    <label>Picture Payment Proof</label>
+                                                                    <div class="form-group row">
+                                                                        <div class="col-lg-9 col-xl-6">
+                                                                            <div class="image-input image-input-outline" id="kt_profile_avatar" style="background-image: url(assets/media/users/blank.png)">
+                                                                                <div class="image-input-wrapper" style="background-image: url(assets/media/users/300_21.jpg)"></div>
+                                                                                <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
+                                                                                    <i class="fas fa-pen icon-sm text-muted"></i>
+                                                                                    <input type="file" name="photo" accept=".png, .jpg, .jpeg" />
+                                                                                    <input type="hidden" name="profile_avatar_remove" />
+                                                                                </label>
+                                                                                <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
+                                                                                    <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                                                </span>
+                                                                                <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove avatar">
+                                                                                    <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                                                </span>
+                                                                            </div>
+                                                                            <span class="form-text text-muted">Allowed file types: png, jpg, jpeg.</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                                
+                                                            <input type="hidden" name="booking_id" value="{{$status_booking->id}}">
+                                                            <button type="submit" class="btn btn-payment w-100" id="add-payment">
+                                                                PAYMENT
+                                                            </button> 
+                                                        </form>
+                                                    @endif                                           
                                                 @else
-                                                    <span class="label label-lg label-light-success label-inline">{{$status_booking->approval_status}}.</span> 
-                                                    @if($booking_detail->qr_code)
-                                                        <div class="image">  
-                                                            <img src="{{ asset('storage'.$booking_detail->qr_code) }}" />                              
-                                                        </div>
+                                                    @if ($status_booking->approval_status == null)
+                                                        <span class="label label-lg label-light-danger label-inline">Pending.</span> 
+                                                    @else
+                                                        <span class="label label-lg label-light-success label-inline">{{$status_booking->approval_status}}.</span> 
+                                                        @if($booking_detail->qr_code)
+                                                            <div class="image">  
+                                                                <img src="{{ asset('storage'.$booking_detail->qr_code) }}" />                              
+                                                            </div>
+                                                        @endif
                                                     @endif
                                                 @endif
                                             @endif

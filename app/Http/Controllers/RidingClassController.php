@@ -18,7 +18,7 @@ use App\Models\Booking;
 use App\Models\Province;
 use App\Models\BookingDetail;
 use App\Models\SlotUser;
-
+use App\Models\User;
 // load plugin
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Storage;
@@ -93,6 +93,18 @@ class RidingClassController extends Controller
     public function booking_class(Request $request)
     {
         $list_detail = Package::with(['stable'])->where('id', Crypt::decryptString($request->id))->first();
+        
+        $check_user = User::find(Auth::user()->id);
+        if(
+            $check_user->sex == null &&
+            $check_user->birth_date == null &&
+            $check_user->phone == null &&
+            $check_user->address == null
+        ){
+            Alert::error('Data Error.', 'Please complete your data.')->persistent(true)->autoClose(3600);
+            return redirect()->route('myprofile.index');
+        }
+
         $data_slot = Slot::select('*')->where('user_id', $list_detail->user_id)->
         where('time_start', $request->time_start)->where('date', $request->date)->get();
         return view('riding_class.booking-package', compact('list_detail', 'data_slot'));
