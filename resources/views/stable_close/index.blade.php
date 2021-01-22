@@ -111,9 +111,13 @@
 															<td>{{date('H:i', strtotime($item->time_end))}}</td>
 															<td>
 																@if($item->qr_code_status == 'Close')
-																	<span class='label label-lg label-light-danger label-inline'>Close</span>
-																@else
-																	<span class='label label-lg label-light-success label-inline'>Active</span>
+																	<span class='label label-lg label-light-danger label-inline'>Close</span>											
+																@endif
+																@if($item->qr_code_status == null)
+																	<span class='label label-lg label-light-success label-inline'>Active</span>											
+																@endif
+																@if($item->qr_code_status == 'Reschedule')
+																	<span class='label label-lg label-light-danger label-inline'>Reschedule</span>											
 																@endif
 															</td>
 															<td>
@@ -124,10 +128,16 @@
 																<a href='javascript:void(0)' data-toggle='modal' data-id='{{$item->id}}' class='btn btn-info text-center mr-2' id='openBtn' data-toggle='Detail' data-placement='top' title='Detail'>
 																	<i class='fas fa-eye'></i>
 																</a>
-																@else
+																@endif
+																@if($item->qr_code_status == null)
 																<button data-id="{{$data_stable->id}}" data-id-slot="{{$item->id}}" class="btn btn-success text-center mr-2" type="button" id="assign{{$item->id}}">
 																	<i class='fas fa-check-circle pointer-link'></i>
 																</button>
+																@endif
+																@if($item->qr_code_status == 'Reschedule')
+																<a href='#' class='btn btn-danger text-center mr-2 '>
+																	<i class='fas fa-ban pointer-link'></i>                    
+																</a>
 																@endif
 															</td>
 														</tr>
