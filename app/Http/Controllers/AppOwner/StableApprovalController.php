@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AppOwner;
 
 use App\Http\Controllers\Controller;
 use App\Mail\SendKeyStableMail;
+use App\Mail\StableApproveStep2;
 use Illuminate\Http\Request;
 
 use RealRashid\SweetAlert\Facades\Alert;
@@ -303,6 +304,8 @@ class StableApprovalController extends Controller
     public function approvStable2($id)
     {
         $data = Stable::find($id);
+        $user = User::where('id', $data->user_id)->first();
+                    $user->notify(new StableApproveStep2($data));
         Stable::where('id', $data->id)->update([
             'approval_status' => 'Accepted', 
             'approval_by' => Auth::user()->id,

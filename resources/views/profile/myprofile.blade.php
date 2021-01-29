@@ -211,6 +211,32 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="form-group row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label">Height</label>
+                                                <div class="col-lg-9 col-xl-6">
+                                                    <div class="input-group input-group-lg input-group-solid">
+                                                        <input type="number" name="height" min="0" class="form-control form-control-lg form-control-solid" value="{{$data->height}}" placeholder="Height" />
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">
+                                                                CM
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label">Weight</label>
+                                                <div class="col-lg-9 col-xl-6">
+                                                    <div class="input-group input-group-lg input-group-solid">
+                                                        <input type="number" name="weight" min="0" class="form-control form-control-lg form-control-solid" value="{{$data->weight}}" placeholder="Weight" />
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">
+                                                                KG
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="text-right col-xl-9 col-lg-9">
                                                 <button type="submit" class="btn btn-add-new">Save</button>
                                                 <button type="reset" class="btn btn-secondary">Cancel</button>

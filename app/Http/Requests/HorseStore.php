@@ -27,7 +27,7 @@ class HorseStore extends FormRequest
             'name'            => 'required',
             'owner'           => 'required',
             'birth_date'      => 'required|date_format:Y-m-d|before:today',
-            'horse_sex_id'             => 'required',
+            'horse_sex_id'    => 'required',
         ];
     }
 }

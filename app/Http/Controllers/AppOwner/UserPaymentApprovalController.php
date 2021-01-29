@@ -7,11 +7,13 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Mail\SendNotifUserPaymentApproveMail;
 
 // load model
 use App\Models\Booking;
 use App\Models\Package;
 use App\Models\Stable;
+use App\Models\User;
 use App\Models\BookingDetail;
 
 // load plugin
@@ -200,6 +202,10 @@ class UserPaymentApprovalController extends Controller
                 DB::table('slot_users')->where('id',$user->id)->update([
                     'qr_code' => $output_file
                 ]);
+
+                $user = User::find($data->user_id);
+                
+                $user->notify(new SendNotifUserPaymentApproveMail($cek_package));
             }                
         }
 

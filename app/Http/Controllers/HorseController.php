@@ -67,7 +67,7 @@ class HorseController extends Controller
             ->make(true);
     }
     public function create()
-    {
+    {//
         $horseSex = HorseSex::all();
         $horseBreed = HorseBreed::all();
         $data_stable = Stable::with(['user','horse'])->where('user_id', Auth::user()->id)->first();

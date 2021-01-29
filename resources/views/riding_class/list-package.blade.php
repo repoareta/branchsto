@@ -203,7 +203,7 @@
                                     @else
                                     <div class="row h-100 text-center align-items-center">
                                         <div class="col-12">
-                                            <h3 class="secondary-text">No Data, Please Search Again</h3>
+                                            <h3 class="secondary-text">Please Complete Your Data</h3>
                                         </div>
                                     </div>
                                     @endif
