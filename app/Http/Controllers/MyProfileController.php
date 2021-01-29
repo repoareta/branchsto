@@ -27,6 +27,8 @@ class MyProfileController extends Controller
         $Query->sex = $request->sex;
         $Query->birth_date = Carbon::parse($request->birth_date);
         $Query->phone = $request->phone;
+        $Query->height = $request->height;
+        $Query->weight = $request->weight;
         $Query->address = $request->address;
         if ($request->file('photo')) {
             File::delete(public_path('/storage/myprofile/photo/'.$Query->photo));
@@ -34,6 +36,28 @@ class MyProfileController extends Controller
             $image = Image::make($request->file('photo'))->resize(100,100);
             $image->save(public_path('/storage/myprofile/photo/'.$Query->photo));
         }
+
+        if(session()->get('list_detail') || session()->get('data_slot')){
+
+            $Query->update();
+            $list_detail = session()->get('list_detail')[0];
+            $data_slot   = session()->get('data_slot')[0];
+            
+            if(
+                $Query->sex == null ||
+                $Query->birth_date == null ||
+                $Query->phone == null ||
+                $Query->address == null
+            ){
+                Alert::error('Data Error.', 'Please complete your data.')->persistent(true)->autoClose(3600);
+                return redirect()->route('myprofile.index');
+            }
+            
+            Alert::success('Profile Updated', 'Success.')->persistent(true)->autoClose(3600);            
+            return view('riding_class.booking-package', compact('list_detail', 'data_slot'));
+
+        }
+        
         if($Query){
             $Query->update();
             Alert::success('Profile Updated', 'Success.')->persistent(true)->autoClose(3600);

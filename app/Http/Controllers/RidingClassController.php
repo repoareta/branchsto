@@ -19,6 +19,7 @@ use App\Models\Province;
 use App\Models\BookingDetail;
 use App\Models\SlotUser;
 use App\Models\User;
+
 // load plugin
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Storage;
@@ -93,20 +94,28 @@ class RidingClassController extends Controller
     public function booking_class(Request $request)
     {
         $list_detail = Package::with(['stable'])->where('id', Crypt::decryptString($request->id))->first();
-        
+        $data_slot = Slot::select('*')->where('user_id', $list_detail->user_id)->
+        where('time_start', $request->time_start)->where('date', $request->date)->get();
+
+        session()->forget('list_detail');
+        session()->forget('data_slot');
+        session()->save();
+
+        session()->push('list_detail', $list_detail);
+        session()->push('data_slot', $data_slot);
+
         $check_user = User::find(Auth::user()->id);
         if(
-            $check_user->sex == null &&
-            $check_user->birth_date == null &&
-            $check_user->phone == null &&
+            $check_user->sex == null ||
+            $check_user->birth_date == null ||
+            $check_user->phone == null ||
             $check_user->address == null
         ){
             Alert::error('Data Error.', 'Please complete your data.')->persistent(true)->autoClose(3600);
             return redirect()->route('myprofile.index');
         }
 
-        $data_slot = Slot::select('*')->where('user_id', $list_detail->user_id)->
-        where('time_start', $request->time_start)->where('date', $request->date)->get();
+
         return view('riding_class.booking-package', compact('list_detail', 'data_slot'));
     }
     
@@ -116,6 +125,9 @@ class RidingClassController extends Controller
         session()->forget("data_list_slot");
         session()->forget("data_list_package");
         session()->forget("session_usage");
+        session()->forget('list_detail');
+        session()->forget('data_slot');
+        session()->save();
         if ($request->usage_status == 'pony_ride') {
             $data1 = array(
                 'package_id'            => $request->package_id,
@@ -206,6 +218,7 @@ class RidingClassController extends Controller
 
                 session()->forget("data_list_slot");
                 session()->forget("data_list_package");
+                session()->save();
                 $data_booking_id = $booking->id;
                 $data_list = DB::table('booking_details as c')
                     ->where('c.booking_id', $data_booking_id)
@@ -250,6 +263,7 @@ class RidingClassController extends Controller
 
                 session()->forget("data_list_slot");
                 session()->forget("data_list_package");
+                session()->save();
                 $data_booking_id = $booking->id;
                 $data_list = DB::table('slot_users as a')
                     ->where('c.booking_id', $data_booking_id)
